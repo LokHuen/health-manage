@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "影像学报告解读",
+  "usingComponents": {
+    "uni-popup": "/components/uni-popup/uni-popup",
+    "imaging-report-interpretate-list": "/components/imaging-report-interpretate/imaging-report-interpretate-list"
+  }
+}

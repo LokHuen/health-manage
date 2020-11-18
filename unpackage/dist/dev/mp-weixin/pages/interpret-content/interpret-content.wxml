@@ -1,0 +1,1 @@
+<view class="textarea-box"><textarea class="textarea" placeholder="请在此输入内容"></textarea><view class="button-box"><button class="button" type="default">保存</button><button class="button" type="default">提交</button></view></view>

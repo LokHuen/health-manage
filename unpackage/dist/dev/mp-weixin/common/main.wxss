@@ -1,0 +1,9 @@
+
+page,
+page,
+page {
+	font-family: PingFang SC;
+}
+.prelative{position:relative;}
+.pageredround{width: 12rpx;height: 12rpx;background: #E21313;-webkit-border-radius: 50%;border-radius: 50%;position: absolute;top:-6rpx;right:-6rpx;}
+

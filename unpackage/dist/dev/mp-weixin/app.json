@@ -1,0 +1,51 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/advisoryRecord/advisoryRecord",
+    "pages/interpret-content/interpret-content",
+    "pages/graphic-interpretation/graphic-interpretation",
+    "pages/mine/mine",
+    "pages/chat/index",
+    "pages/work/phone",
+    "pages/work/index",
+    "pages/index/agreement",
+    "pages/index/result",
+    "pages/mine/coupon",
+    "pages/buy-imaging-report/buy-imaging-report",
+    "pages/imaging-report-interpretate/imaging-report-interpretate",
+    "pages/body-report/body-report",
+    "pages/order/order",
+    "pages/work-image-read/work-image-read",
+    "pages/work-image-detail/work-image-detail",
+    "pages/word-image-wait-back/word-image-wait-back",
+    "pages/write-reading-content/write-reading-content"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#ffffff",
+    "backgroundColor": "#FFFFFF"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#333333",
+    "backgroundColor": "#FFFFFF",
+    "list": [
+      {
+        "text": "首页",
+        "selectedIconPath": "static/icon/icon_home_select_tab.png",
+        "iconPath": "static/icon/icon_home_normal_tab.png",
+        "pagePath": "pages/index/index"
+      },
+      {
+        "text": "我的",
+        "selectedIconPath": "static/icon/icon_mine_select_tab.png",
+        "iconPath": "static/icon/icon_mine_normal_tab.png",
+        "pagePath": "pages/mine/mine"
+      }
+    ]
+  },
+  "permission": {},
+  "usingComponents": {}
+}

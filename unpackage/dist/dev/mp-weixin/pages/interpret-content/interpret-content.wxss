@@ -1,0 +1,39 @@
+
+.textarea-box{
+		height: auto;
+		-webkit-box-align: center;
+		-webkit-align-items: center;
+		        align-items: center;
+}
+.textarea{
+		height: 340px;
+		-webkit-border-radius: 5px;
+		        border-radius: 5px;
+		font-size: 15px;
+		color: #333333;
+		word-break: break-word;
+		margin-left: auto;
+		margin-right: auto;
+		width: 85%;
+		border:1px solid #BFBFBF;
+		margin-top: 10px;
+		line-height: 18px;
+		padding: 10px;
+}
+.button-box{
+		margin-top: 30px;
+		height: 40px;
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: flex;
+}
+.button{
+		background-color: #2793EC !important;
+		color: #FFFFFF !important;
+        -webkit-border-radius: 4px;
+                border-radius: 4px;
+		width: 38%;
+}
+	
+
+

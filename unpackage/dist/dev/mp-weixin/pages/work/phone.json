@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "电话解读",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "uni-popup": "/components/uni-popup/uni-popup",
+    "uni-icons": "/components/uni-icons/uni-icons",
+    "imglist": "/components/imgList"
+  }
+}
