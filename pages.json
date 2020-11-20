@@ -1,18 +1,17 @@
 {
 	"pages": [ 
 		{
-			"path": "pages/patient/patient-nutrition-manage",
-			"style": {
-				"navigationBarTitleText": "营养管理"
-			}
-		},
-		{
 				"path": "pages/patient/evaluation-record",
 				"style": {
 					"navigationBarTitleText": "测评记录"
 				}
+		},
+		{
+			"path": "pages/patient/patient-nutrition-manage",
+			"style": {
+				"navigationBarTitleText": "营养管理"
+			}
 		}
-			
 		
 		
 	],

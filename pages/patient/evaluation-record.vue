@@ -1,8 +1,12 @@
 <template>
 	
 	<view>
-		<view class="listContent" v-for="(item, index) in listDatas" :key="index">
-
+		<view class="nodata-tips-box" v-if="listDatas.length==0">
+			<image src="../../static/icon/icon_nodata.png" mode="aspectFit" class="nodata-img"></image>
+			<view class="tip-title">暂无数据</view>
+		</view>
+        
+		<view class="listContent" v-for="(item, index) in listDatas" :key="index" v-if="listDatas.length!=0">
 			<view class="health-list-item">	
 				<view class="health-list-item-avatar-content">
 					<image class="health-list-item-avatar" src="../../static/icon/cry_icon.png"></image>
@@ -26,25 +30,26 @@
 	export default {
 		data() {
 			return {
-				listDatas:[{
-						id:101,
-						title:"可疑或中度营养不良",
-						detail:"免疫治疗后",
-						time:"2020/12/1 12:23",
-						showDetail:true
-					}, {
-						id:102,
-						title:"可疑或中度营养不良",
-						detail:"免疫治疗后",
-						time:"2020/12/2 12:23",
-						showDetail:false
-					},{
-						id:103,
-						title:"可疑或中度营养不良",
-						detail:"免疫治疗后",
-						time:"2020/12/3 12:23",
-						showDetail:true
-					}
+				listDatas:[
+					{
+							id:101,
+							title:"可疑或中度营养不良",
+							detail:"免疫治疗后",
+							time:"2020/12/1 12:23",
+							showDetail:true
+						}, {
+							id:102,
+							title:"可疑或中度营养不良",
+							detail:"免疫治疗后",
+							time:"2020/12/2 12:23",
+							showDetail:false
+						},{
+							id:103,
+							title:"可疑或中度营养不良",
+							detail:"免疫治疗后",
+							time:"2020/12/3 12:23",
+							showDetail:true
+						}
 				]
 			}
 		},
@@ -59,6 +64,15 @@
 
 
 <style lang="scss">	
+    .nodata-tips-box{
+		margin-top: 80rpx;
+		text-align: center;
+		.nodata-img{
+			width: 171rpx;
+			height: 193rpx;
+		}
+	}
+    
 	.listContent {
 		margin-top: 20rpx;
 		margin-left: 50rpx;
