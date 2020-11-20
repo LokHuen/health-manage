@@ -1,6 +1,13 @@
 {
 	"pages": [ 
 		{
+			"path": "pages/patient/patient-submit-sucess",
+			"style": {
+				"navigationBarTitleText": "提交结果"
+			}
+			
+		},
+		{
 				"path": "pages/patient/evaluation-record",
 				"style": {
 					"navigationBarTitleText": "测评记录"

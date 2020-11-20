@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/patient/patient-submit-sucess",
     "pages/patient/evaluation-record",
     "pages/patient/patient-nutrition-manage"
   ],

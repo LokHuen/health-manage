@@ -1,0 +1,1 @@
+<view><view class="health-content"><view class="health-image"><image class="health-status-image" src="../../static/icon/submit_sucess_icon.png"></image></view><view class="health-result">提交成功</view><button class="health-confirm">完成</button></view></view>
