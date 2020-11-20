@@ -92,7 +92,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
-var components
+var components = {
+  uniPopup: function() {
+    return Promise.all(/*! import() | components/uni-popup/uni-popup */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-popup/uni-popup")]).then(__webpack_require__.bind(null, /*! @/components/uni-popup/uni-popup.vue */ 47))
+  }
+}
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -242,6 +246,12 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
+
+
+
+
+
 {
   components: {
     LineChart: LineChart },
@@ -262,6 +272,12 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   methods: {
     showDetailMessage: function showDetailMessage() {
       this.showDetail = !this.showDetail;
+    },
+    showComputing: function showComputing() {
+      this.$refs.popup.open();
+    },
+    closdComputing: function closdComputing() {
+      this.$refs.popup.close();
     } },
 
 

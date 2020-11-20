@@ -235,4 +235,32 @@
   color: #FFFFFF;
   font-size: 17px;
 }
+.container .white-background {
+  text-align: center;
+  background-color: #FFFFFF;
+  height: 350rpx;
+  -webkit-border-radius: 10px 10px 0px 0px;
+          border-radius: 10px 10px 0px 0px;
+}
+.container .white-background .white-background-title {
+  font-size: 14px;
+  color: #666666;
+  padding-top: 35rpx;
+}
+.container .white-background .white-background-subtitle {
+  font-size: 15px;
+  color: #333333;
+  margin-top: 40rpx;
+}
+.container .white-background .white-background-line-space {
+  background-color: #F6F6F6;
+  height: 20rpx;
+  margin-top: 60rpx;
+}
+.container .white-background .white-background-close {
+  font-size: 15px;
+  color: #666666;
+  height: 100rpx;
+  line-height: 100rpx;
+}
 

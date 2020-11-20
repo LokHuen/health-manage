@@ -33,7 +33,7 @@
 						<view class="">
 							标准体重
 						</view>
-						<image src="../../static/icon/wenhaoIcon.png" mode="widthFix" class="askIcon"></image>
+						<image src="../../static/icon/wenhaoIcon.png" mode="widthFix" class="askIcon" @click="showComputing"></image>
 					</view>
 					<view class="health-detail">
 						<text style="font-size: 23px;">60</text>KG
@@ -100,10 +100,16 @@
 		<view class="button-box">
 			<button type="default" class="button">营养测评</button>
 		</view>
-		
-		
-
 		<view style="height: 100px;"></view>
+		<uni-popup ref="popup" type="bottom">
+			<!-- 标准体重计算方法 -->
+			<view class="white-background">
+				<view class="white-background-title">标准体重计算方法</view>
+				<view class="white-background-subtitle">标准体重=身高（cm）-105</view>
+				<view class="white-background-line-space"></view>
+				<view class="white-background-close" @click="closdComputing">关闭</view>
+			</view>
+		</uni-popup>
 		
 	</view>
 </template>
@@ -130,6 +136,12 @@
 		methods: {
 			showDetailMessage(){
 				this.showDetail = !this.showDetail;
+			},
+			showComputing(){
+				this.$refs.popup.open();
+			},
+			closdComputing(){
+				this.$refs.popup.close();
 			}
 		   
 		},
@@ -337,8 +349,7 @@
 				}
 			}
 		}
-		
-		
+	
 		.button-box{
 			position: fixed;
 			bottom: 0;
@@ -353,6 +364,35 @@
 				font-size: 17px;
 			}
 		}
+		
+		.white-background{
+			text-align: center;
+			background-color: #FFFFFF;
+			height: 350rpx;
+			border-radius: 10px 10px 0px 0px;
+			.white-background-title{
+				font-size: 14px;
+				color: #666666;
+				padding-top: 35rpx;
+			}
+			.white-background-subtitle{
+				font-size: 15px;
+				color: #333333;
+				margin-top: 40rpx;
+			}
+			.white-background-line-space{
+				background-color: #F6F6F6;
+				height: 20rpx;
+				margin-top: 60rpx;
+			}
+			.white-background-close{
+				font-size: 15px;
+				color: #666666;
+				height: 100rpx;
+				line-height: 100rpx;
+			}
+		}
+		
 	}
 	
 </style>

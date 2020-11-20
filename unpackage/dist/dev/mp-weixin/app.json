@@ -1,8 +1,8 @@
 {
   "pages": [
+    "pages/patient/patient-nutrition-manage",
     "pages/patient/patient-submit-sucess",
-    "pages/patient/evaluation-record",
-    "pages/patient/patient-nutrition-manage"
+    "pages/patient/evaluation-record"
   ],
   "subPackages": [],
   "window": {
