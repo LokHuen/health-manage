@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "营养管理",
+  "usingComponents": {
+    "line-chart": "/components/stan-ucharts/LineChart"
+  }
+}

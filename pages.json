@@ -1,152 +1,25 @@
 {
-	"pages": [{
-			"path": "pages/index/index",
+	"pages": [ 
+		{
+			"path": "pages/patient/patient-nutrition-manage",
 			"style": {
-				"navigationBarTitleText": "首页",
-				"navigationStyle": "custom",
-				"enablePullDownRefresh": true
+				"navigationBarTitleText": "营养管理"
 			}
 		},
 		{
-			"path": "pages/advisoryRecord/advisoryRecord",
-			"style": {
-				"navigationBarTitleText": "健康体检咨询记录"
-			}
-
-		},
-		{
-			"path": "pages/interpret-content/interpret-content",
-			"style": {
-				"navigationBarTitleText": "解读内容"
-			}
-		},
-		{
-			"path": "pages/graphic-interpretation/graphic-interpretation",
-			"style": {
-				"navigationBarTitleText": "图文解读",
-				"enablePullDownRefresh": true
-			}
-		},
-		{
-			"path": "pages/mine/mine",
-			"style": {
-				"navigationBarTitleText": "我的"
-			}
-		},
-		{
-			"path": "pages/chat/index",
-			"style": {
-				"navigationBarTitleText": "聊天"
-			}
-		},
-		{
-			"path": "pages/work/phone",
-			"style": {
-				"navigationBarTitleText": "电话解读",
-				"enablePullDownRefresh": true
-			}
-		},
-		{
-			"path": "pages/work/index",
-			"style": {
-				"navigationBarTitleText": "解读员工作台"
-			}
-		}, {
-			"path": "pages/index/agreement",
-			"style": {
-				"navigationBarTitleText": ""
-			}
-		}, {
-			"path": "pages/index/result",
-			"style": {
-				"navigationBarTitleText": "预约结果"
-			}
-		}, {
-			"path": "pages/mine/coupon",
-			"style": {
-				"navigationBarTitleText": "优惠券"
-			}
-		}, {
-			"path": "pages/buy-imaging-report/buy-imaging-report",
-			"style": {
-				"navigationBarTitleText": "影像学报告解读"
-			}
-		},
-		{
-			"path": "pages/imaging-report-interpretate/imaging-report-interpretate",
-			"style": {
-				"navigationBarTitleText": "影像学报告解读"
-			}
-		},
-		{
-			"path": "pages/body-report/body-report",
-			"style": {
-				"navigationBarTitleText": "健康体检报告解读服务"
-			}
-		},
-		{
-			"path": "pages/order/order",
-			"style": {
-				"navigationBarTitleText": "订单"
-			}
-		},
-		{
-			"path": "pages/work-image-read/work-image-read",
-			"style": {
-				"navigationBarTitleText": "影像学报告解读",
-				"enablePullDownRefresh": true
-			}
-		},
-		{
-			"path": "pages/work-image-detail/work-image-detail",
-			"style": {
-				"navigationBarTitleText": "详情"
-			}
-		},
-		{
-			"path": "pages/word-image-wait-back/word-image-wait-back",
-			"style": {
-				"navigationBarTitleText": "待回寄",
-				"enablePullDownRefresh": true
-			}
-		},
-		{
-			"path": "pages/write-reading-content/write-reading-content",
-			"style": {
-				"navigationBarTitleText": "解读内容"
-			}
+				"path": "pages/patient/evaluation-record",
+				"style": {
+					"navigationBarTitleText": "测评记录"
+				}
 		}
+			
+		
+		
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#ffffff",
 		"backgroundColor": "#FFFFFF"
-	},
-	"tabBar": {
-		"color": "#999999",
-		"selectedColor": "#333333",
-		"backgroundColor": "#FFFFFF",
-		"list": [{
-				"text": "首页",
-				"selectedIconPath": "static/icon/icon_home_select_tab.png",
-				"iconPath": "static/icon/icon_home_normal_tab.png",
-				"pagePath": "pages/index/index"
-			},
-			{
-				"text": "我的",
-				"selectedIconPath": "static/icon/icon_mine_select_tab.png",
-				"iconPath": "static/icon/icon_mine_normal_tab.png",
-				"pagePath": "pages/mine/mine"
-			}
-		]
-	},
-	"condition": { //模式配置，仅开发期间生效
-		"current": 0, //当前激活的模式(list 的索引项)
-		"list": [{
-			"name": "1", //模式名称
-			"path": "pages/chat/index", //启动页面，必选
-			"query": "" //启动参数，在页面的onLoad函数里面得到
-		}]
 	}
 }

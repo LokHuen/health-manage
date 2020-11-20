@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "健康体检报告解读服务",
-  "usingComponents": {
-    "service-appoint": "/components/service-appoint/service-appoint",
-    "uni-popup": "/components/uni-popup/uni-popup"
-  }
-}

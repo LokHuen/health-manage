@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "我的",
-  "usingComponents": {
-    "uni-popup": "/components/uni-popup/uni-popup",
-    "mine-top": "/components/mine/mineTop"
-  }
-}
