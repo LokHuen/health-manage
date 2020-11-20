@@ -1,0 +1,1 @@
+<view><block wx:for="{{listDatas}}" wx:for-item="item" wx:for-index="index"><view class="health-content"><view class="health-item"><view class="health-item-title">{{item.title}}</view><view class="health-item-detail">{{item.detail}}</view></view></view></block><view class="health-update"><button class="health-update-button">更新信息</button></view></view>
