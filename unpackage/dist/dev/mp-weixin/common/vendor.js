@@ -8088,79 +8088,6 @@ var api = {
 
 /***/ }),
 
-/***/ 82:
-/*!**********************************************************************!*\
-  !*** /Users/weinijun/Desktop/wxsw_gzh/components/uni-popup/popup.js ***!
-  \**********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _message = _interopRequireDefault(__webpack_require__(/*! ./message.js */ 83));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-// 定义 type 类型:弹出类型：top/bottom/center
-var config = {
-  // 顶部弹出
-  top: 'top',
-  // 底部弹出
-  bottom: 'bottom',
-  // 居中弹出
-  center: 'center',
-  // 消息提示
-  message: 'top',
-  // 对话框
-  dialog: 'center',
-  // 分享
-  share: 'bottom' };var _default =
-
-
-{
-  data: function data() {
-    return {
-      config: config };
-
-  },
-  mixins: [_message.default] };exports.default = _default;
-
-/***/ }),
-
-/***/ 83:
-/*!************************************************************************!*\
-  !*** /Users/weinijun/Desktop/wxsw_gzh/components/uni-popup/message.js ***!
-  \************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _created$created$meth;function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default = (_created$created$meth = {
-  created: function created() {
-    if (this.type === 'message') {
-      // 获取自组件对象
-      this.maskShow = false;
-      this.children = null;
-    }
-  } }, _defineProperty(_created$created$meth, "created", function created()
-{
-  if (this.type === 'message') {
-    // 不显示遮罩
-    this.maskShow = false;
-    // 获取子组件对象
-    this.childrenMsg = null;
-  }
-}), _defineProperty(_created$created$meth, "methods",
-{
-  customOpen: function customOpen() {
-    if (this.childrenMsg) {
-      this.childrenMsg.open();
-    }
-  },
-  customClose: function customClose() {
-    if (this.childrenMsg) {
-      this.childrenMsg.close();
-    }
-  } }), _created$created$meth);exports.default = _default;
-
-/***/ }),
-
 /***/ 9:
 /*!**********************************************************!*\
   !*** /Users/weinijun/Desktop/wxsw_gzh/common/request.js ***!
@@ -8206,7 +8133,80 @@ function rq(url) {var data = arguments.length > 1 && arguments[1] !== undefined 
 
 /***/ }),
 
+/***/ 90:
+/*!**********************************************************************!*\
+  !*** /Users/weinijun/Desktop/wxsw_gzh/components/uni-popup/popup.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _message = _interopRequireDefault(__webpack_require__(/*! ./message.js */ 91));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+// 定义 type 类型:弹出类型：top/bottom/center
+var config = {
+  // 顶部弹出
+  top: 'top',
+  // 底部弹出
+  bottom: 'bottom',
+  // 居中弹出
+  center: 'center',
+  // 消息提示
+  message: 'top',
+  // 对话框
+  dialog: 'center',
+  // 分享
+  share: 'bottom' };var _default =
+
+
+{
+  data: function data() {
+    return {
+      config: config };
+
+  },
+  mixins: [_message.default] };exports.default = _default;
+
+/***/ }),
+
 /***/ 91:
+/*!************************************************************************!*\
+  !*** /Users/weinijun/Desktop/wxsw_gzh/components/uni-popup/message.js ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _created$created$meth;function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default = (_created$created$meth = {
+  created: function created() {
+    if (this.type === 'message') {
+      // 获取自组件对象
+      this.maskShow = false;
+      this.children = null;
+    }
+  } }, _defineProperty(_created$created$meth, "created", function created()
+{
+  if (this.type === 'message') {
+    // 不显示遮罩
+    this.maskShow = false;
+    // 获取子组件对象
+    this.childrenMsg = null;
+  }
+}), _defineProperty(_created$created$meth, "methods",
+{
+  customOpen: function customOpen() {
+    if (this.childrenMsg) {
+      this.childrenMsg.open();
+    }
+  },
+  customClose: function customClose() {
+    if (this.childrenMsg) {
+      this.childrenMsg.close();
+    }
+  } }), _created$created$meth);exports.default = _default;
+
+/***/ }),
+
+/***/ 99:
 /*!**********************************************************************************!*\
   !*** /Users/weinijun/Desktop/wxsw_gzh/plugins/stan-ucharts/u-charts/u-charts.js ***!
   \**********************************************************************************/
