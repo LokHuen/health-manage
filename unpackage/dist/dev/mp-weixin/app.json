@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/patient/nutritional-self-test",
     "pages/patient/patient-nutrition-manage",
     "pages/patient/patient-basic-information",
     "pages/patient/patient-submit-sucess",
