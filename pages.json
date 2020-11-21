@@ -1,5 +1,12 @@
 {
 	"pages": [ 
+		
+		{
+			"path": "pages/patient/patient-case-manage",
+			"style": {
+				"navigationBarTitleText": "病例管理"
+			}
+		},
 		{
 			"path": "pages/patient/evaluation-results",
 			"style": {
