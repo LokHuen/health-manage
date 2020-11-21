@@ -61,7 +61,7 @@
 				<view class="tips">
 					指南建议每日总能量：1,800kcal
 				</view>
-				<image src="../../static/icon/wenhaoIcon.png" mode="widthFix" class="ask-icon"></image>
+				<image src="../../static/icon/wenhaoIcon.png" mode="widthFix" class="ask-icon" @click="showEnergyTips"></image>
 			</view>
 			<view class="tips-detail">
 				   脂肪60g，蛋白质90g，碳水化合物225g
@@ -112,7 +112,7 @@
 			</view>
 		</uni-popup>
 		
-		<uni-popup ref="popup1" type="bottom">
+		<uni-popup ref="popupBMI" type="bottom">
 			<!-- BMI -->
 			<view class="white-background-BMI">
 				<view class="white-background-BMI-title">BMI</view>
@@ -120,6 +120,31 @@
 				<view class="white-background-BMI-des2">BMI=体重（kg）除以身高（m）的平方</view>
 				<view class="white-background-BMI-line-space"></view>
 				<view class="white-background-BMI-close" @click="closeBMITips">关闭</view>
+			</view>
+		</uni-popup>
+		
+		<uni-popup ref="popupEnergy" type="bottom">
+			<!-- 能量说明 -->
+			<view class="white-background-energy">
+				<view class="white-background-energy-title">能量值说明</view>
+				<view class="white-background-energy-desc-title">
+					根据恶性肿瘤患者膳食营养处方专家共识     
+				</view>
+				<view class="white-background-energy-desc">
+					1. 每日总能量按每天30kcal/kg计算，每日总能量=体重（kg）×30kcal/kg
+				</view>
+				<view class="white-background-energy-desc">
+					2. 脂肪按总能量的30%计算，脂肪=每日总能量×30%÷9kcal/g
+				</view>
+				<view class="white-background-energy-desc">
+					3.蛋白质按1.5g/(kg.d)计算，蛋白质=体重（kg）×1.5g/(kg.d)×1d
+				</view>
+				<view class="white-background-energy-desc">
+					4.碳水化合物=（每日总能量-脂肪×9kcal/g-蛋白质×4kcal/g）÷4kcal/g
+				</view>
+				<view class="white-background-energy-space-white"></view>
+				<view class="white-background-energy-space-gray"></view>
+				<view class="white-background-energy-close" @click="closeEnergyTips">关闭</view>
 			</view>
 		</uni-popup>
 		
@@ -156,11 +181,17 @@
 				this.$refs.popup.close();
 			},
 			showBMITips(){
-				this.$refs.popup1.open();
+				this.$refs.popupBMI.open();
 				
 			},
 			closeBMITips(){
-				this.$refs.popup1.close();
+				this.$refs.popupBMI.close();
+			},
+			showEnergyTips(){
+				this.$refs.popupEnergy.open();
+			},
+			closeEnergyTips(){
+				this.$refs.popupEnergy.close();
 			}
 		   
 		},
@@ -387,7 +418,6 @@
 		.white-background{
 			text-align: center;
 			background-color: #FFFFFF;
-			height: 350rpx;
 			border-radius: 10px 10px 0px 0px;
 			.white-background-title{
 				font-size: 14px;
@@ -442,6 +472,46 @@
 				height: 20rpx;
 			}
 			.white-background-BMI-close{
+				height: 100rpx;
+				line-height: 100rpx;
+				font-size: 15px;
+				color: #666666;
+			}
+		}
+		.white-background-energy{
+			text-align: center;
+			background-color: #FFFFFF;
+			border-radius: 10px 10px 0px 0px;
+			.white-background-energy-title{
+				font-size: 14px;
+				color: #666666;
+				padding-top: 35rpx;
+			}
+			.white-background-energy-desc-title{
+				margin-left: 60rpx;
+				margin-right: 60rpx;
+				margin-top: 60rpx;
+				text-align: left;
+				color: #333333;
+				font-size: 15px;
+			}
+			.white-background-energy-desc{
+				margin-left: 60rpx;
+				margin-right: 60rpx;
+				margin-top: 20rpx;
+				text-align: left;
+				color: #333333;
+				font-size: 15px;
+			}
+			.white-background-energy-space-white{
+				background-color: #FFFFFF;
+				height: 60rpx;
+			}
+			.white-background-energy-space-gray{
+				background-color: #F6F6F6;
+				height: 20rpx;
+			}
+			.white-background-energy-close{
 				height: 100rpx;
 				line-height: 100rpx;
 				font-size: 15px;

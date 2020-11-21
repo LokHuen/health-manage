@@ -264,6 +264,31 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {
   components: {
     LineChart: LineChart },
@@ -292,11 +317,17 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       this.$refs.popup.close();
     },
     showBMITips: function showBMITips() {
-      this.$refs.popup1.open();
+      this.$refs.popupBMI.open();
 
     },
     closeBMITips: function closeBMITips() {
-      this.$refs.popup1.close();
+      this.$refs.popupBMI.close();
+    },
+    showEnergyTips: function showEnergyTips() {
+      this.$refs.popupEnergy.open();
+    },
+    closeEnergyTips: function closeEnergyTips() {
+      this.$refs.popupEnergy.close();
     } },
 
 

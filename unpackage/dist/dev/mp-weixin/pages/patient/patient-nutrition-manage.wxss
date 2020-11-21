@@ -238,7 +238,6 @@
 .container .white-background {
   text-align: center;
   background-color: #FFFFFF;
-  height: 350rpx;
   -webkit-border-radius: 10px 10px 0px 0px;
           border-radius: 10px 10px 0px 0px;
 }
@@ -296,6 +295,47 @@
   height: 20rpx;
 }
 .container .white-background-BMI .white-background-BMI-close {
+  height: 100rpx;
+  line-height: 100rpx;
+  font-size: 15px;
+  color: #666666;
+}
+.container .white-background-energy {
+  text-align: center;
+  background-color: #FFFFFF;
+  -webkit-border-radius: 10px 10px 0px 0px;
+          border-radius: 10px 10px 0px 0px;
+}
+.container .white-background-energy .white-background-energy-title {
+  font-size: 14px;
+  color: #666666;
+  padding-top: 35rpx;
+}
+.container .white-background-energy .white-background-energy-desc-title {
+  margin-left: 60rpx;
+  margin-right: 60rpx;
+  margin-top: 60rpx;
+  text-align: left;
+  color: #333333;
+  font-size: 15px;
+}
+.container .white-background-energy .white-background-energy-desc {
+  margin-left: 60rpx;
+  margin-right: 60rpx;
+  margin-top: 20rpx;
+  text-align: left;
+  color: #333333;
+  font-size: 15px;
+}
+.container .white-background-energy .white-background-energy-space-white {
+  background-color: #FFFFFF;
+  height: 60rpx;
+}
+.container .white-background-energy .white-background-energy-space-gray {
+  background-color: #F6F6F6;
+  height: 20rpx;
+}
+.container .white-background-energy .white-background-energy-close {
   height: 100rpx;
   line-height: 100rpx;
   font-size: 15px;
