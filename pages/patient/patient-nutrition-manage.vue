@@ -1,4 +1,5 @@
 <template>
+	<!-- 患者营养管理界面 -->
 	<view class="container">
 		<view class="info-box">
 			<image src="" mode="scaleToFill" class="avator"></image>
@@ -45,7 +46,7 @@
 						<view class="">
 							BMI
 						</view>
-						<image src="../../static/icon/wenhaoIcon.png" mode="widthFix" class="askIcon"></image>
+						<image src="../../static/icon/wenhaoIcon.png" mode="widthFix" class="askIcon" @click="showBMITips"></image>
 					</view>
 					<view class="health-detail">
 						<text style="font-size: 23px;">20.2</text>
@@ -111,6 +112,17 @@
 			</view>
 		</uni-popup>
 		
+		<uni-popup ref="popup1" type="bottom">
+			<!-- BMI -->
+			<view class="white-background-BMI">
+				<view class="white-background-BMI-title">BMI</view>
+				<view class="white-background-BMI-des">BMI一般指身体质量指数，是目前国际上常用的衡量人体胖瘦程度以及是否健康的一个标准。</view>
+				<view class="white-background-BMI-des2">BMI=体重（kg）除以身高（m）的平方</view>
+				<view class="white-background-BMI-line-space"></view>
+				<view class="white-background-BMI-close" @click="closeBMITips">关闭</view>
+			</view>
+		</uni-popup>
+		
 	</view>
 </template>
 
@@ -142,6 +154,13 @@
 			},
 			closdComputing(){
 				this.$refs.popup.close();
+			},
+			showBMITips(){
+				this.$refs.popup1.open();
+				
+			},
+			closeBMITips(){
+				this.$refs.popup1.close();
 			}
 		   
 		},
@@ -392,7 +411,43 @@
 				line-height: 100rpx;
 			}
 		}
-		
+		.white-background-BMI{
+			text-align: center;
+			background-color: #FFFFFF;
+			border-radius: 10px 10px 0px 0px;
+			.white-background-BMI-title{
+				font-size: 14px;
+				color: #666666;
+				padding-top: 35rpx;
+			}
+			.white-background-BMI-des{
+				font-size: 15px;
+				color: #333333;
+				margin-top: 40rpx;
+				margin-left: 60rpx;
+				margin-right: 60rpx;
+				text-align: left;
+			}
+			.white-background-BMI-des2{
+				font-size: 15px;
+				color: #333333;
+				margin-left: 60rpx;
+				margin-right: 60rpx;
+				text-align: left;
+				height: 120rpx;
+				line-height: 120rpx;
+			}
+			.white-background-BMI-line-space{
+				background-color: #F6F6F6;
+				height: 20rpx;
+			}
+			.white-background-BMI-close{
+				height: 100rpx;
+				line-height: 100rpx;
+				font-size: 15px;
+				color: #666666;
+			}
+		}
 	}
 	
 </style>

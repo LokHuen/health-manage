@@ -263,4 +263,42 @@
   height: 100rpx;
   line-height: 100rpx;
 }
+.container .white-background-BMI {
+  text-align: center;
+  background-color: #FFFFFF;
+  -webkit-border-radius: 10px 10px 0px 0px;
+          border-radius: 10px 10px 0px 0px;
+}
+.container .white-background-BMI .white-background-BMI-title {
+  font-size: 14px;
+  color: #666666;
+  padding-top: 35rpx;
+}
+.container .white-background-BMI .white-background-BMI-des {
+  font-size: 15px;
+  color: #333333;
+  margin-top: 40rpx;
+  margin-left: 60rpx;
+  margin-right: 60rpx;
+  text-align: left;
+}
+.container .white-background-BMI .white-background-BMI-des2 {
+  font-size: 15px;
+  color: #333333;
+  margin-left: 60rpx;
+  margin-right: 60rpx;
+  text-align: left;
+  height: 120rpx;
+  line-height: 120rpx;
+}
+.container .white-background-BMI .white-background-BMI-line-space {
+  background-color: #F6F6F6;
+  height: 20rpx;
+}
+.container .white-background-BMI .white-background-BMI-close {
+  height: 100rpx;
+  line-height: 100rpx;
+  font-size: 15px;
+  color: #666666;
+}
 

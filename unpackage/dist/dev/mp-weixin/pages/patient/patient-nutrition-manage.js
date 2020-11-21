@@ -252,6 +252,18 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 {
   components: {
     LineChart: LineChart },
@@ -278,6 +290,13 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     },
     closdComputing: function closdComputing() {
       this.$refs.popup.close();
+    },
+    showBMITips: function showBMITips() {
+      this.$refs.popup1.open();
+
+    },
+    closeBMITips: function closeBMITips() {
+      this.$refs.popup1.close();
     } },
 
 
