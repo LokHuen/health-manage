@@ -1,6 +1,12 @@
 {
 	"pages": [ 
 		{
+			"path": "pages/patient/evaluation-results",
+			"style": {
+				"navigationBarTitleText": "测评结果"
+			}
+		},
+		{
 			"path": "pages/patient/nutritional-self-test",
 			"style": {
 				"navigationBarTitleText": "营养自测"

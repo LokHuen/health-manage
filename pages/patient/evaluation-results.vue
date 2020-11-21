@@ -1,27 +1,25 @@
 <template>
-	
 	<view>
-		<view class="nodata-tips-box" v-if="listDatas.length==0">
-			<image src="../../static/icon/icon_nodata.png" mode="aspectFit" class="nodata-img"></image>
-			<view class="tip-title">暂无数据</view>
-		</view>
-        
-		<view class="listContent" v-for="(item, index) in listDatas" :key="index" v-if="listDatas.length!=0">
+		<view class="listContent">
 			<view class="health-list-item">	
 				<view class="health-list-item-avatar-content">
 					<image class="health-list-item-avatar" src="../../static/icon/cry_icon.png"></image>
 				</view>
 				<view class="health-list-item-content">
-					<view class="health-list-item-title">{{item.title}}</view>
+					<view class="health-list-item-title">可疑或中度营养不良</view>
 					<view class="health-list-item-detail">
-						{{item.detail}} 
+						免疫治疗后
 					</view>
-					<view class="health-list-item-time">测评时间：{{item.time}}</view>
-					<view class="line" v-if="item.showDetail"></view>
-					<view class="advice-content" v-if="item.showDetail"> 建议： 由营养师、护师或医生进行患者或患者家庭教育，并可根据患者存在的症状和实验室检查的结果进行药物干预。</view>
+					<view class="health-list-item-time">测评时间：2022/12/1 12:09</view>
+					<view class="line" v-if="showDetail"></view>
+					<view class="advice-content" v-if="showDetail"> 建议： 由营养师、护师或医生进行患者或患者家庭教育，并可根据患者存在的症状和实验室检查的结果进行药物干预。</view>
 				</view>
-                <image class="health-list-item-arrow" :src="item.showDetail?'../../static/icon/right_arrow_top.png':'../../static/icon/right_arrow.png'" mode="widthFix" @click="onClickItem(item)"></image>
+                <image class="health-list-item-arrow" :src="showDetail?'../../static/icon/right_arrow_top.png':'../../static/icon/right_arrow.png'" mode="widthFix" @click="onClickItem"></image>
 			</view>
+		</view>
+		
+		<view class="button-box">
+			<button type="default" class="button">完成</button>
 		</view>
 	</view>
 </template>
@@ -30,32 +28,12 @@
 	export default {
 		data() {
 			return {
-				listDatas:[
-					{
-							id:101,
-							title:"可疑或中度营养不良",
-							detail:"免疫治疗后",
-							time:"2020/12/1 12:23",
-							showDetail:true
-						}, {
-							id:102,
-							title:"可疑或中度营养不良",
-							detail:"免疫治疗后",
-							time:"2020/12/2 12:23",
-							showDetail:false
-						},{
-							id:103,
-							title:"可疑或中度营养不良",
-							detail:"免疫治疗后",
-							time:"2020/12/3 12:23",
-							showDetail:true
-						}
-				]
+				showDetail:true
 			}
 		},
 		methods:{
-			onClickItem(item) {
-				item.showDetail = !item.showDetail;
+			onClickItem() {
+				this.showDetail = !this.showDetail;
 			}
 		}
 	}
@@ -64,15 +42,21 @@
 
 
 <style lang="scss">	
-    .nodata-tips-box{
-		margin-top: 80rpx;
-		text-align: center;
-		.nodata-img{
-			width: 171rpx;
-			height: 193rpx;
+.button-box{
+			position: fixed;
+			bottom: 0;
+			height: 140rpx;
+			width: 100%;
+			.button{
+				height: 90rpx;
+				width: 81%;
+				background-color: #52A29E !important;
+				border-radius: 45rpx;
+				color: #FFFFFF;
+				font-size: 17px;
+			}
 		}
-	}
-    
+
 	.listContent {
 		margin-top: 20rpx;
 		margin-left: 50rpx;
@@ -124,6 +108,7 @@
 					color: #666666;
 					margin-top: 20rpx;
                     padding-bottom: 10rpx;
+					margin-right: 10rpx;
 				}
 			}
 			.health-list-item-arrow {

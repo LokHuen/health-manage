@@ -379,7 +379,7 @@
 					.line{
 						background-color: #CCCCCC;
 						margin-top: 15rpx;
-						height: 4rpx;
+						height: 2rpx;
 						margin-right: 20rpx;
 					}
 					.advice-content{

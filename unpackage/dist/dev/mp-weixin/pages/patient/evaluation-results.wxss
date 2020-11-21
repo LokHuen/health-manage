@@ -24,13 +24,20 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.nodata-tips-box {
-  margin-top: 80rpx;
-  text-align: center;
+.button-box {
+  position: fixed;
+  bottom: 0;
+  height: 140rpx;
+  width: 100%;
 }
-.nodata-tips-box .nodata-img {
-  width: 171rpx;
-  height: 193rpx;
+.button-box .button {
+  height: 90rpx;
+  width: 81%;
+  background-color: #52A29E !important;
+  -webkit-border-radius: 45rpx;
+          border-radius: 45rpx;
+  color: #FFFFFF;
+  font-size: 17px;
 }
 .listContent {
   margin-top: 20rpx;
@@ -85,6 +92,7 @@
   color: #666666;
   margin-top: 20rpx;
   padding-bottom: 10rpx;
+  margin-right: 10rpx;
 }
 .listContent .health-list-item .health-list-item-arrow {
   position: absolute;
