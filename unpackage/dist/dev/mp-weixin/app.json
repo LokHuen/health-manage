@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/doctor/doctor-improve-msg",
     "pages/patient/patient-improve-msg",
     "pages/patient/patient-add-case",
     "pages/patient/patient-case-manage",

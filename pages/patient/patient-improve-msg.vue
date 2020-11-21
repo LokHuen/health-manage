@@ -1,7 +1,7 @@
 <template>
 	<!-- 患者完善界面 -->
 	<view class="container">
-		<view class="title">完善患者资料，医生才能及时掌握您的营养状况和 给予康复指导。</view>
+		<view class="title">完善患者资料，医生才能及时掌握您的营养状况和给予康复指导。</view>
 		<view class="line-space"></view>
 		<view class="name-box">
 			<view class="name-tips">* 患者姓名</view>
@@ -31,7 +31,7 @@
 		<view class="name-box">
 			<view class="name-tips">* 当前体重</view>
 			<input class="name-input" type="text" value="" placeholder="请填写体重" v-model="weight"/>
-			<view class="right-tip">cm</view>
+			<view class="right-tip">kg</view>
 		</view>
 		  <view class="pic-title">病历照片</view>
           <view class="pic-tip">上传出院小结（重要）、影像报告等内容，方便医生 评估病情</view>
