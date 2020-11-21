@@ -13,6 +13,24 @@
 			}
 		},
 		{
+			"path": "pages/authentication/index",
+			"style": {
+				"navigationBarTitleText": "身份认证"
+			}
+		},
+		{
+			"path": "pages/authentication/detail",
+			"style": {
+				"navigationBarTitleText": "身份认证"
+			}
+		},
+		{
+			"path": "pages/authentication/result",
+			"style": {
+				"navigationBarTitleText": "身份认证"
+			}
+		},
+		{
 			"path": "pages/patient/patient-add-case",
 			"style": {
 				"navigationBarTitleText": "新增病例"
