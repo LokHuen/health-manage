@@ -2,13 +2,13 @@
 	<!-- 患者病例管理界面 -->
 	<view class="container">
 		<view class="add-case-box">
-			<view class="dashed-box">+ 新增病例</view>
+			<view class="dashed-box" @click="addCase">+ 新增病例</view>
 			<view class="add-bottom"></view>
 		</view>
 		<view class="pic-content-box" v-for="(item,indexItem) in itemList" :key="indexItem">
 			<view class="pic-time">2022/12/12 21:09 添加</view>
 			<view class="ccimglist">
-				<image v-for="(item,index) in list" :key="index" src="" mode="aspectFill" @click="previewImage(index)" :class="(index==0||index==3||index==6)?'imagelistfirst':'imagelist'"></image>
+				<image v-for="(item,index) in list" :key="index" src="" mode="aspectFill" @click="previewImage(index)" :class="(index%3==0)?'imagelistfirst':'imagelist'"></image>
 			</view>
 		</view>
 		<view style="height: 100rpx;"></view>
@@ -30,6 +30,9 @@
 		methods: {
 			previewImage(index) {
 				console.log(index);
+			},
+			addCase(){
+				
 			}
 		},
 		created() {

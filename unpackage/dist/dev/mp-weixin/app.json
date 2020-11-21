@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/patient/patient-add-case",
     "pages/patient/patient-case-manage",
     "pages/patient/evaluation-results",
     "pages/patient/nutritional-self-test",
@@ -15,5 +16,6 @@
     "navigationBarBackgroundColor": "#ffffff",
     "backgroundColor": "#FFFFFF"
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap93.json"
 }
