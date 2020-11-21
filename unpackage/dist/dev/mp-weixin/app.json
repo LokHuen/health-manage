@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/doctor/doctor-nutrition-manage",
     "pages/doctor/doctor-improve-msg",
     "pages/patient/patient-improve-msg",
     "pages/patient/patient-add-case",
@@ -18,5 +19,6 @@
     "navigationBarBackgroundColor": "#ffffff",
     "backgroundColor": "#FFFFFF"
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap27.json"
 }

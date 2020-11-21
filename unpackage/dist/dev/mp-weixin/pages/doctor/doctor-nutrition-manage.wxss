@@ -1,0 +1,253 @@
+@charset "UTF-8";
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.container .top-box .info-box {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+}
+.container .top-box .info-box .avator {
+  margin-top: 40rpx;
+  background-color: #909399;
+  width: 128rpx;
+  height: 128rpx;
+  -webkit-border-radius: 50%;
+          border-radius: 50%;
+  margin-left: 50rpx;
+}
+.container .top-box .info-box .user-msg-box {
+  padding-top: 50rpx;
+  color: #333333;
+  margin-left: 31rpx;
+}
+.container .top-box .info-box .user-msg-box .name-box {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+}
+.container .top-box .info-box .user-msg-box .name-box .name {
+  font-size: 20px;
+}
+.container .top-box .info-box .user-msg-box .name-box .position {
+  font-size: 14px;
+  margin-left: 10rpx;
+  margin-top: 13rpx;
+}
+.container .top-box .info-box .user-msg-box .msg {
+  margin-top: 10rpx;
+  font-size: 14px;
+}
+.container .top-box .number-box {
+  margin-top: 30rpx;
+  margin-left: 50rpx;
+  margin-right: 50rpx;
+  margin-bottom: 40rpx;
+  height: 176rpx;
+  -webkit-box-shadow: 0px 0px 27px 0px rgba(0, 0, 0, 0.08);
+          box-shadow: 0px 0px 27px 0px rgba(0, 0, 0, 0.08);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+}
+.container .top-box .number-box .count-box {
+  width: 49%;
+  font-size: 13px;
+  color: #333333;
+  text-align: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.container .top-box .number-box .count-box .all-count {
+  padding-top: 30rpx;
+  color: #52A29E;
+  font-size: 25px;
+}
+.container .top-box .number-box .count-box .test-count {
+  padding-top: 30rpx;
+  color: #F8BD63;
+  font-size: 25px;
+}
+.container .top-box .number-box .line-vertical {
+  margin-top: 45rpx;
+  width: 1rpx;
+  height: 100rpx;
+  background-color: #E5E5E5;
+}
+.container .line-space {
+  background-color: #F7F8F8;
+  height: 20rpx;
+}
+.container .screen-box {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  height: 100rpx;
+  color: #333333;
+  font-size: 15px;
+}
+.container .screen-box .all-patien-box {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  height: 100rpx;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  margin-left: 50rpx;
+}
+.container .screen-box .all-patien-box .all-patien {
+  line-height: 100rpx;
+}
+.container .screen-box .all-patien-box .all-arrow {
+  margin-left: 10rpx;
+  width: 27rpx;
+  height: 15rpx;
+}
+.container .listContent {
+  margin-left: 50rpx;
+  margin-right: 50rpx;
+  background-color: #F7F8F8;
+}
+.container .listContent .msg-box {
+  height: 170rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+}
+.container .listContent .msg-box .avator-box {
+  width: 100rpx;
+  height: 100rpx;
+  margin-top: 40rpx;
+  margin-left: 23rpx;
+  -webkit-border-radius: 50%;
+          border-radius: 50%;
+  background-color: #CCCCCC;
+}
+.container .listContent .msg-box .msg-info-box {
+  margin-left: 27rpx;
+  margin-top: 50rpx;
+  color: #333333;
+}
+.container .listContent .msg-box .msg-info-box .msg-info-name {
+  font-size: 16px;
+}
+.container .listContent .msg-box .msg-info-box .msg-info-detail {
+  font-size: 13px;
+}
+.container .listContent .line {
+  background-color: #CCCCCC;
+  height: 2rpx;
+  margin-right: 20rpx;
+  margin-left: 20rpx;
+}
+.container .listContent .no-record-tips {
+  margin-top: 29rpx;
+  margin-left: 20rpx;
+  color: #999999;
+  font-size: 13px;
+  padding-bottom: 40rpx;
+}
+.container .listContent .health-list-item {
+  position: relative;
+  margin-top: 0rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+}
+.container .listContent .health-list-item .health-list-item-avatar-content .health-list-item-avatar {
+  margin-left: 20rpx;
+  margin-top: 25rpx;
+  width: 45rpx;
+  height: 45rpx;
+  -webkit-border-radius: 50%;
+          border-radius: 50%;
+}
+.container .listContent .health-list-item .health-list-item-content {
+  margin-left: 15rpx;
+  margin-top: 25rpx;
+  padding-bottom: 40rpx;
+  width: 100%;
+}
+.container .listContent .health-list-item .health-list-item-content .health-list-item-title {
+  font-size: 30rpx;
+  color: #52A29E;
+}
+.container .listContent .health-list-item .health-list-item-content .health-list-item-detail {
+  color: #999999;
+  font-size: 26rpx;
+  margin-top: 15rpx;
+}
+.container .listContent .health-list-item .health-list-item-content .health-list-item-time {
+  color: #666666;
+  font-size: 26rpx;
+  margin-top: 20rpx;
+  padding-bottom: 10rpx;
+}
+.container .listContent .health-list-item .health-list-item-content .advice-content {
+  font-size: 11px;
+  color: #666666;
+  margin-top: 20rpx;
+  padding-bottom: 10rpx;
+}
+.container .listContent .health-list-item .health-list-item-arrow {
+  position: absolute;
+  width: 35rpx;
+  height: 19rpx;
+  right: 20rpx;
+  top: 120rpx;
+}
+.container .white-background-patient {
+  text-align: center;
+  background-color: #FFFFFF;
+  -webkit-border-radius: 10px 10px 0px 0px;
+          border-radius: 10px 10px 0px 0px;
+  color: #333333;
+  font-size: 15px;
+}
+.container .white-background-patient .first-item {
+  height: 120rpx;
+  line-height: 120rpx;
+}
+.container .white-background-patient .lines {
+  height: 2rpx;
+  margin-left: 200rpx;
+  margin-right: 200rpx;
+  background-color: #DCDCDC;
+}
+.container .white-background-patient .second-item {
+  height: 128rpx;
+  line-height: 128rpx;
+}
+.container .white-background-patient .liness {
+  height: 20rpx;
+  background-color: #F6F6F6;
+}
+.container .white-background-patient .cancel {
+  height: 100rpx;
+  line-height: 100rpx;
+}
+

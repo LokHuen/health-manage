@@ -109,7 +109,7 @@
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "" + ({"components/stan-ucharts/LineChart":"components/stan-ucharts/LineChart","components/uni-popup/uni-popup":"components/uni-popup/uni-popup","components/uni-transition/uni-transition":"components/uni-transition/uni-transition"}[chunkId]||chunkId) + ".wxss";
+/******/ 				var href = "" + ({"components/uni-popup/uni-popup":"components/uni-popup/uni-popup","components/stan-ucharts/LineChart":"components/stan-ucharts/LineChart","components/uni-transition/uni-transition":"components/uni-transition/uni-transition"}[chunkId]||chunkId) + ".wxss";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {
