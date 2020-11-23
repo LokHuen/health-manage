@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "营养管理",
-  "usingComponents": {
-    "uni-popup": "/components/uni-popup/uni-popup",
-    "line-chart": "/components/stan-ucharts/LineChart"
-  }
-}

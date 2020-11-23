@@ -1,1 +1,0 @@
-<view><view class="successbox"><image class="successimg" mode="widthFix" src="../../static/end.png"></image><view class="keytext">信息已提交，等待平台审核</view></view><view data-event-opts="{{[['tap',[['tomine',['$event']]]]]}}" class="successbt" bindtap="__e">完 成</view></view>
