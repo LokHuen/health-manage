@@ -19,18 +19,12 @@
 			const windowUrl = window.location.href;
 			const uid = this.getCache("uid") || option.query.uid;
 			console.log('uid=='+uid);
-<<<<<<< HEAD
 			// if(!uid){
 			// 	window.location.href = this.globalData.baseUrl + '/wx/fwh/user/auth/index?returnUrl=' + encodeURIComponent(windowUrl);
+			// }else{
+			// 	this.setCache('uid',uid);
 			// }
-			this.setCache('uid',uid);
-=======
-			if(!uid){
-				window.location.href = this.globalData.baseUrl + '/wx/fwh/user/auth/index?returnUrl=' + encodeURIComponent(windowUrl);
-			}else{
-				this.setCache('uid',uid);
-			}
->>>>>>> 812a4450c31e987ad91600662d184ae9f5fe1f22
+
 		},
 		onShow: function() {
 			console.log('App Show');

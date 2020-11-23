@@ -1,6 +1,18 @@
 {
 	"pages": [ 
 		{
+			"path": "pages/doctor/doctor-submit-result",
+			"style": {
+				"navigationBarTitleText": "提交结果"
+			}
+		},
+		{
+			"path": "pages/doctor/doctor-center",
+			"style": {
+				"navigationBarTitleText": "个人中心"
+			}
+		},
+		{
 			"path": "pages/authentication/index",
 			"style": {
 				"navigationBarTitleText": "身份认证"
