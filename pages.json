@@ -1,6 +1,24 @@
 {
 	"pages": [ 
 		{
+			"path": "pages/authentication/result",
+			"style": {
+				"navigationBarTitleText": "身份认证"
+			}
+		},
+		{
+			"path": "pages/authentication/detail",
+			"style": {
+				"navigationBarTitleText": "身份认证"
+			}
+		},
+		{
+			"path": "pages/authentication/index",
+			"style": {
+				"navigationBarTitleText": "身份认证"
+			}
+		},
+		{
 			"path": "pages/doctor/patient-detail",
 			"style": {
 				"navigationBarTitleText": "患者详情"
@@ -30,24 +48,7 @@
 				"navigationBarTitleText": "完善信息"
 			}
 		},
-		{
-			"path": "pages/authentication/index",
-			"style": {
-				"navigationBarTitleText": "身份认证"
-			}
-		},
-		{
-			"path": "pages/authentication/detail",
-			"style": {
-				"navigationBarTitleText": "身份认证"
-			}
-		},
-		{
-			"path": "pages/authentication/result",
-			"style": {
-				"navigationBarTitleText": "身份认证"
-			}
-		},
+		
 		{
 			"path": "pages/patient/patient-add-case",
 			"style": {
