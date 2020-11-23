@@ -1,7 +1,6 @@
 <template>
 	<!-- 医生营养管理病例界面 -->
 	<view class="container">
-		
 		<view class="pic-content-box" v-for="(item,indexItem) in itemList" :key="indexItem">
 			<view class="pic-time">2022/12/12 21:09 添加</view>
 			<view class="ccimglist">
@@ -43,9 +42,6 @@
 
 <style lang="scss">
 	.container {
-
-		
-
 		.pic-content-box {
 			.pic-time {
 				font-size: 15px;
@@ -75,7 +71,6 @@
 					margin-left: 31rpx;
 				}
 			}
-
 
 		}
 
