@@ -58,7 +58,9 @@
 			}
 		},
 		onLoad(options){
-			this.$refs.popup.open();
+			this.$nextTick(()=>{
+				this.$refs.popup.open();
+			})
 		},
 		onShow(){
 			
@@ -78,7 +80,7 @@
 		.chooselist{
 			padding-bottom:40rpx;
 			.title{margin-right:42rpx;font-size: 30rpx;}
-			.itemlist{line-height:68rpx;min-width:142rpx;box-sizing:border-box;padding:0 10rpx;margin-right:22rpx;color: #666666;border: 1rpx solid #ddd;border-radius: 6rpx;font-size: 30rpx;text-align:center;}
+			.itemlist{line-height:68rpx;min-width:142rpx;box-sizing:border-box;padding:0 10rpx;margin:4rpx 20rpx 0rpx 0;color: #666666;border: 1rpx solid #ddd;border-radius: 6rpx;font-size: 30rpx;text-align:center;}
 			.itemlist:last-child{margin-right:0;}
 			.itemlist.on{color:#fff;background: #52A29E;border-color:#52A29E;}
 		}

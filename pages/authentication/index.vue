@@ -58,15 +58,15 @@
 			</view>
 			<view class="flex linebox">
 				<view class="lefttext">户主</view>
-				<input class="rightarea" v-model="form.name" maxlength="20" placeholder="请填写户主姓名" />
+				<input class="rightarea" v-model="form.accountName" maxlength="20" placeholder="请填写户主姓名" />
 			</view>
 			<view class="flex linebox" @click="$refs.popup.open()">
 				<view class="lefttext">开户行</view>
-				<view class="rightarea">{{form.rank?form.rank:"点击选择开户行"}}</view>
+				<view class="rightarea">{{form.bank?form.bank:"点击选择开户行"}}</view>
 			</view>
 			<view class="flex linebox">
 				<view class="lefttext">账号</view>
-				<input class="rightarea" type="number" v-model="form.card" maxlength="30" placeholder="请填写银行卡账号" />
+				<input class="rightarea" type="number" v-model="form.accountCode" maxlength="30" placeholder="请填写银行卡账号" />
 			</view>
 
 			<view class="pagebottombt">
@@ -106,12 +106,13 @@
 	export default {
 		data() {
 			return {
+				options:{},
 				baseUrl: app.globalData.baseUrl,
 				imgUrl: app.globalData.imageUrl,
 				form: {
-					name:"",
-					rank:"",
-					card:"",
+					accountName:"",
+					bank:"",
+					accountCode:"",
 					img1:"",
 					img2:"",
 					img3:"",
@@ -120,9 +121,9 @@
 					img6:"",
 				},
 				warn: {
-					name:"请填写户主姓名",
-					rank:"请选择开户行",
-					card:"请填写银行卡账号",
+					accountName:"请填写户主姓名",
+					bank:"请选择开户行",
+					accountCode:"请填写银行卡账号",
 					img1:"请上传身份证人像面",
 					img2:"请上传身份证国徽面",
 					img3:"请上传手持身份证照片",
@@ -139,30 +140,40 @@
 			}
 		},
 		onLoad(options) {
-
+			this.options = options;
+			if(options.id) this.getinfo();
 		},
 		onShow() {
 
 		},
 		methods: {
+			getinfo(){
+				app.loading("连接中");
+				api.saveAuthentication({id:this.options.id}).then(res => {
+					this.form = res.data;
+				    app.loaded();
+				})
+			},
 			sendpicture(index) {
 				uni.chooseImage({
 					count: 1,
 					sourceType: ['album', 'camera'],
 					success: (res) => {
+						app.loading("保存中");
 						var imglist = res.tempFilePaths[0];
-						wx.uploadFile({
+						uni.uploadFile({
 							url: this.baseUrl + "/",
 							filePath: imglist,
 							name: 'file',
 							formData: {},
 							header: {
 								'content-type': 'multipart/form-data',
-								'token': uni.getStorageSync("token"),
+								'uid': uni.getStorageSync("uid"),
 							},
 							success: (rq) => {
-
+								
 							},
+							complete:re=>{app.loaded();}
 						})
 					}
 				})
@@ -177,7 +188,7 @@
 					case 3:this.chooseindex=4;this.chooserank[2]=index;break;
 					case 4:
 						this.chooserank[3]=index;
-						this.form.rank = this.chooserank[0];
+						this.form.bank = this.chooserank[0];
 						this.$refs.popup.close();
 						this.chooseindex = 1;
 						break;
@@ -187,8 +198,10 @@
 				for (let key in this.warn) {
 					if(!this.form[key]) {app.tip(this.warn[key]);return;}
 				}
+				let data = JSON.parse(JSON.stringify(this.form));
+				
 				app.loading("保存中");
-				api.save({}).then(res => {
+				api.saveAuthentication(data).then(res => {
 				    app.loaded();
 				})
 			},
