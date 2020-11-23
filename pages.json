@@ -1,5 +1,12 @@
 {
 	"pages": [ 
+		
+		{
+			"path": "pages/doctor/doctor-case-list",
+			"style": {
+				"navigationBarTitleText": "病例"
+			}
+		},
 		{
 			"path": "pages/doctor/doctor-nutrition-manage",
 			"style": {

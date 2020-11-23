@@ -1,8 +1,12 @@
 {
   "pages": [
+    "pages/doctor/doctor-case-list",
     "pages/doctor/doctor-nutrition-manage",
     "pages/doctor/doctor-improve-msg",
     "pages/patient/patient-improve-msg",
+    "pages/authentication/index",
+    "pages/authentication/detail",
+    "pages/authentication/result",
     "pages/patient/patient-add-case",
     "pages/patient/patient-case-manage",
     "pages/patient/evaluation-results",
@@ -19,6 +23,5 @@
     "navigationBarBackgroundColor": "#ffffff",
     "backgroundColor": "#FFFFFF"
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap27.json"
+  "usingComponents": {}
 }
