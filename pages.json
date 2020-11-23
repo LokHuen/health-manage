@@ -1,6 +1,11 @@
 {
 	"pages": [ 
-		
+		{
+			"path": "pages/doctor/patient-detail",
+			"style": {
+				"navigationBarTitleText": "患者详情"
+			}
+		},
 		{
 			"path": "pages/doctor/doctor-case-list",
 			"style": {

@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/doctor/patient-detail",
     "pages/doctor/doctor-case-list",
     "pages/doctor/doctor-nutrition-manage",
     "pages/doctor/doctor-improve-msg",
