@@ -4,18 +4,25 @@
 	} from "common/api";
 	export default {
 		globalData: {
-			baseUrl: "https://bgjdapi-test.ttxyw.cn",
+			baseUrl: "http://weixinapi-test.cvddr.com",
 			imageUrl: "https://bgjdapi-test.ttxyw.cn/upload/mini",
 			mydata: 1,
 			// AppID:"wx152a400c7aa92a9e",
 			// AppSecret:"05ba4e0d30666a44d2c5be39fabf759d",
 		},
-		onLaunch: function() {
+		onLaunch: function(option) {
 			console.log('App Launch');
-			this.getupdate();
+			// this.getupdate();
 			uni.baseImageUrl='https://bgjdapi-test.ttxyw.cn/upload/mini'
-			//更新用户信息
-			if(this.getCache("token")) this.saveinfo();
+			// //更新用户信息
+			// if(this.getCache("uid")) this.saveinfo();
+			
+			const windowUrl = window.location.href;
+			console uid = this.getCache("uid") || option.uid;
+			if(!uid){
+				window.location.href = this.globalData.baseUrl + '/wx/fwh/user/auth/index?returnUrl=' + encodeURIComponent(windowUrl);
+			}
+			this.setCache('uid',uid);
 		},
 		onShow: function() {
 			console.log('App Show');
