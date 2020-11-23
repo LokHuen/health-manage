@@ -19,6 +19,12 @@
 			}
 		},
 		{
+			"path": "pages/testIndex",
+			"style": {
+				"navigationBarTitleText": "营养自测"
+			}
+		},
+		{
 			"path": "pages/doctor/patient-detail",
 			"style": {
 				"navigationBarTitleText": "患者详情"
