@@ -50,6 +50,7 @@
     "h5" : {
         "router" : {
             "mode" : "history"
-        }
+        },
+        "domain" : "http://weixingzh-test.cvddr.com"
     }
 }
