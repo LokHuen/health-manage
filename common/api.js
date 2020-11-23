@@ -8,7 +8,7 @@ var api = {
 	 // savePost:(data)=>{return rq("/wx/interpret/mri/savePost",data,"POST");},
 	
 	//保存当前用户的身份认证
-	
+	saveAuthentication:(data)=>{return rq("/wx/doctor/authentication/saveAuthentication",data,"POST");},
 }
 
 export {api};
