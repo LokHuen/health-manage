@@ -7,6 +7,12 @@
 			}
 		},
 		{
+			"path": "pages/testIndex",
+			"style": {
+				"navigationBarTitleText": "营养自测"
+			}
+		},
+		{
 			"path": "pages/authentication/result",
 			"style": {
 				"navigationBarTitleText": "身份认证"

@@ -164,6 +164,9 @@
 	page {
 		font-family: PingFang SC;
 	}
+	image{height:auto;}
+	.flex{display: flex;align-items:center;flex-wrap:wrap;}
+	.flex.ct{justify-content: center;}
 	.prelative{position:relative;}
 	.pageredround{width: 12rpx;height: 12rpx;background: #E21313;border-radius: 50%;position: absolute;top:-6rpx;right:-6rpx;}
 </style>
