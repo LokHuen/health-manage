@@ -8,44 +8,26 @@
 			</view>
 			<view class="uploadbox flex" @click="sendpicture(1)">
 				<image src="../../static/auth/1.png" mode="widthFix"></image>
-				<view class="textbox">
-					<view>上传身份证人像面</view>
-					<text>请保持照片中身份证显示完整\n字体清晰可见，亮度均匀</text>
-				</view>
 			</view>
 			<view class="uploadbox flex" @click="sendpicture(2)">
 				<image src="../../static/auth/2.png" mode="widthFix"></image>
-				<view class="textbox">
-					<view>上传身份证国徽面</view>
-					<text>请保持照片中身份证显示完整\n字体清晰可见，亮度均匀</text>
-				</view>
 			</view>
 			<view class="uploadbox flex" @click="sendpicture(3)">
 				<image src="../../static/auth/3.png" mode="widthFix"></image>
-				<view class="textbox">
-					<view>上传手持身份证照片</view>
-					<text>照片中应包含完整身份证\n人像面以及本人胸部以上头像</text>
-				</view>
 			</view>
 			<view class="uploadbox flex" @click="sendpicture(4)">
 				<image src="../../static/auth/4.png" mode="widthFix"></image>
-				<view class="textbox">
-					<view>上传银行卡正面</view>
-					<text>请保持照片中银行卡显示完整\n字体清晰可见，亮度均匀</text>
-				</view>
 			</view>
 			<view class="uploadbox flex" @click="sendpicture(5)">
 				<image src="../../static/auth/5.png" mode="widthFix"></image>
 				<view class="textbox">
-					<view>上传银行卡背面</view>
-					<text>请保持照片中银行卡显示完整\n字体清晰可见，亮度均匀</text>
+					<view>照片必须清晰可见上半身及身份证人像面信息</view>
 				</view>
 			</view>
 			<view class="uploadbox flex" @click="sendpicture(6)">
 				<image src="../../static/auth/6.png" mode="widthFix"></image>
 				<view class="textbox">
-					<view>上传手持银行卡照片</view>
-					<text>照片中应包含完整银行卡正面\n以及本人胸部以上头像</text>
+					<view>照片必须清晰可见上半身及银行卡卡号面信息</view>
 				</view>
 			</view>
 		</view>
@@ -60,7 +42,7 @@
 				<view class="lefttext">户主</view>
 				<input class="rightarea" v-model="form.accountName" maxlength="20" placeholder="请填写户主姓名" />
 			</view>
-			<view class="flex linebox" @click="$refs.popup.open()">
+			<view class="flex linebox" @click="openframe">
 				<view class="lefttext">开户行</view>
 				<view class="rightarea">{{form.bank?form.bank:"点击选择开户行"}}</view>
 			</view>
@@ -80,15 +62,15 @@
 				</view>
 				<scroll-view class="choosebody" scroll-y="true">
 					<view v-show="chooseindex==1" class="itemlist flex" v-for="(item,index) in ranklist" :key="index" @click="choosenext(1,index)">
-						<p>{{item.text}}</p>
+						<p>{{item.name}}</p>
 						<uni-icons type="arrowright" size="15" ></uni-icons>
 					</view>
 					<view v-show="chooseindex==2" class="itemlist flex" v-for="(item,index) in provlist" :key="index" @click="choosenext(2,index)">
-						<p>{{item.text}}</p>
+						<p>{{item.name}}</p>
 						<uni-icons type="arrowright" size="15" ></uni-icons>
 					</view>
 					<view v-show="chooseindex==3" class="itemlist flex" v-for="(item,index) in citylist" :key="index" @click="choosenext(3,index)">
-						<p>{{item.text}}</p>
+						<p>{{item.name}}</p>
 						<uni-icons type="arrowright" size="15" ></uni-icons>
 					</view>
 					<view v-show="chooseindex==4" class="itemlist flex" v-for="(item,index) in childlist" :key="index" @click="choosenext(4,index)">
@@ -154,6 +136,26 @@
 				    app.loaded();
 				})
 			},
+			openframe(){
+				this.$refs.popup.open();
+				this.banklist();
+				this.findProvinces();
+			},
+			banklist(){
+				api.banklist({}).then(res => {
+					this.ranklist = res.data;
+				})
+			},
+			findProvinces(){
+				api.findProvinces({}).then(res => {
+					this.provlist = res.data;
+				})
+			},
+			findCities(){
+				api.findCities({}).then(res => {
+					this.citylist = res.data;
+				})
+			},
 			sendpicture(index) {
 				uni.chooseImage({
 					count: 1,
@@ -183,12 +185,14 @@
 			},
 			choosenext(type,index){
 				switch(type){
-					case 1:this.chooseindex=2;this.chooserank[0]=index;break;
-					case 2:this.chooseindex=3;this.chooserank[1]=index;break;
-					case 3:this.chooseindex=4;this.chooserank[2]=index;break;
+					case 1:this.chooseindex=2;this.chooserank[0]=this.ranklist[index];break;
+					case 2:this.chooseindex=3;this.chooserank[1]=this.provlist[index].id;
+						this.findCities();
+						break;
+					case 3:this.chooseindex=4;this.chooserank[2]=this.citylist[index].id;break;
 					case 4:
 						this.chooserank[3]=index;
-						this.form.bank = this.chooserank[0];
+						this.form.bank = this.chooserank[0].name;
 						this.$refs.popup.close();
 						this.chooseindex = 1;
 						break;
@@ -221,27 +225,18 @@
 		}
 	}
 	.contentbox {
-		padding: 0 30rpx;
+		padding: 0 40rpx;
 
 		.uploadbox {
 			padding: 40rpx 0;
 			border-bottom: 1px solid #eee;
 
 			image {
-				width: 268rpx;
-				margin-right: 36rpx;
+				width: 100%;
 			}
 
 			.textbox {
-				view:nth-child(1) {
-					font-size: 34rpx;
-					padding-bottom: 12rpx;
-				}
-
-				text:nth-child(2) {
-					font-size: 28rpx;
-					color: #707578;
-				}
+				font-size:28rpx;color:#BA0000;padding-top:10rpx;
 			}
 		}
 
@@ -250,21 +245,21 @@
 
 			.bigtitle {
 				padding: 50rpx 0 20rpx;
-				font-size: 44rpx;
+				font-size: 36rpx;
 			}
 
 			.textinfo {
-				font-size: 28rpx;
+				font-size: 26rpx;
 			}
 		}
 
 		.linebox {
 			border-bottom: 1px solid #eee;
-			min-height: 100rpx;
+			min-height: 100rpx;font-size:32rpx;
 			padding: 0 0 0 6rpx;
 
 			.lefttext {
-				width: 100rpx;
+				width: 120rpx;
 				padding-right: 32rpx;
 			}
 
@@ -278,13 +273,13 @@
 			padding: 100rpx 0;
 
 			view {
-				background: #FF460A;
+				background: #52A29E;
 				color: #fff;
 				text-align: center;
-				font-size: 38rpx;
+				font-size: 34rpx;
 				line-height: 88rpx;
-				border-radius: 10rpx;
-				margin: 0 74rpx 0 74rpx;
+				border-radius: 45rpx;
+				margin: 0 20rpx 0 20rpx;
 			}
 		}
 	}

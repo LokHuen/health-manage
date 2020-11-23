@@ -1,7 +1,7 @@
 <template>
 	<view class="">
 		<view class="successbox">
-			<image class="successimg" mode="widthFix" src="../../static/end.png"></image>
+			<image class="successimg" mode="widthFix" src="../../static/finish.png"></image>
 			<view class="keytext">信息已提交，等待平台审核</view>
 			
 		</view>
@@ -36,9 +36,9 @@
 
 <style lang="scss">
 	.successbox{margin:150rpx 0 0;text-align:center;
-		.successimg{width:112rpx;height:auto;}
+		.successimg{width:150rpx;height:auto;}
 		.keytext{font-size: 36rpx;margin:50rpx 0 0rpx;color:#272727;}
 	}
-	.successbt{line-height: 88rpx;background: #E4E4E4;border-radius: 10rpx;font-size: 38rpx;color: #2FAF36;text-align:center;position:fixed;bottom:120rpx;left:50%;margin-left:-180rpx;width:360rpx;}
+	.successbt{line-height: 88rpx;background: #52A29E;border-radius: 45rpx;font-size: 38rpx;color: #fff;text-align:center;position:fixed;bottom:120rpx;left:50%;margin-left:-180rpx;width:400rpx;}
 	page{border-top:1px solid #eee;}
 </style>

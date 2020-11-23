@@ -19,12 +19,11 @@
 			const windowUrl = window.location.href;
 			const uid = this.getCache("uid") || option.query.uid;
 			console.log('uid=='+uid);
-			// if(!uid){
-			// 	window.location.href = this.globalData.baseUrl + '/wx/fwh/user/auth/index?returnUrl=' + encodeURIComponent(windowUrl);
-			// }else{
-			// 	this.setCache('uid',uid);
-			// }
-
+			if(!uid){
+				// window.location.href = this.globalData.baseUrl + '/wx/fwh/user/auth/index?returnUrl=' + encodeURIComponent(windowUrl);
+			}else{
+				this.setCache('uid',uid);
+			}
 		},
 		onShow: function() {
 			console.log('App Show');
@@ -143,7 +142,7 @@
 	html,
 	body,
 	page {
-		font-family: PingFang SC;
+		font-family: PingFang SC;font-size:32rpx;
 	}
 	image{height:auto;}
 	.flex{display: flex;align-items:center;flex-wrap:wrap;}
