@@ -16,9 +16,8 @@
 			uni.baseImageUrl='https://bgjdapi-test.ttxyw.cn/upload/mini'
 			// //更新用户信息
 			// if(this.getCache("uid")) this.saveinfo();
-			
 			const windowUrl = window.location.href;
-			console uid = this.getCache("uid") || option.uid;
+			const uid = this.getCache("uid") || option.uid;
 			if(!uid){
 				window.location.href = this.globalData.baseUrl + '/wx/fwh/user/auth/index?returnUrl=' + encodeURIComponent(windowUrl);
 			}
@@ -167,6 +166,7 @@
 	image{height:auto;}
 	.flex{display: flex;align-items:center;flex-wrap:wrap;}
 	.flex.ct{justify-content: center;}
+
 	.prelative{position:relative;}
 	.pageredround{width: 12rpx;height: 12rpx;background: #E21313;border-radius: 50%;position: absolute;top:-6rpx;right:-6rpx;}
 </style>
