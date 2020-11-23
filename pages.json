@@ -1,6 +1,11 @@
 {
 	"pages": [ 
-		
+		{
+			"path": "pages/doctor/transferred-bankcard",
+			"style": {
+				"navigationBarTitleText": "待转账到银行卡"
+			}
+		},
 		{
 			"path": "pages/doctor/doctor-account-list",
 			"style": {
