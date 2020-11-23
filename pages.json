@@ -7,6 +7,18 @@
 			}
 		},
 		{
+			"path": "pages/patient/test-questions",
+			"style": {
+				"navigationBarTitleText": "营养自测"
+			}
+		},
+		{
+			"path": "pages/patient/patient-nutrition-manage",
+			"style": {
+				"navigationBarTitleText": "营养管理"
+			}
+		},
+		{
 			"path": "pages/authentication/result",
 			"style": {
 				"navigationBarTitleText": "身份认证"
@@ -77,12 +89,6 @@
 			"path": "pages/patient/nutritional-self-test",
 			"style": {
 				"navigationBarTitleText": "营养自测"
-			}
-		},
-		{
-			"path": "pages/patient/patient-nutrition-manage",
-			"style": {
-				"navigationBarTitleText": "营养管理"
 			}
 		},
 		{

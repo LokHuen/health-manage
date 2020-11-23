@@ -23,6 +23,7 @@
 				window.location.href = this.globalData.baseUrl + '/wx/fwh/user/auth/index?returnUrl=' + encodeURIComponent(windowUrl);
 			}
 			this.setCache('uid',uid);
+			
 		},
 		onShow: function() {
 			console.log('App Show');
