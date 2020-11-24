@@ -16,7 +16,7 @@ var api = {
 	//获取短信
 	getCode:(data)=>{return rq("/wx/doctor/loginSms",data,"POST");},
 	//获取分行 列表
-	subBranchList:(data)=>{return rq("/wx/system/bank/getSubBranchList",data,"GET");},
+	subBranchList:(data)=>{return rq("/wx/system/bank/getSubBranchList",data,"POST");},
 
 }
 
