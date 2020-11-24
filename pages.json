@@ -1,6 +1,25 @@
 {
 	"pages": [ 
 		{
+			"path": "pages/doctor/already-transferred-bankcard",
+			"style": {
+				"navigationBarTitleText": "已转账到银行卡"
+			}
+		},
+		
+		{
+			"path": "pages/doctor/doctor-bill-detail",
+			"style": {
+				"navigationBarTitleText": "详情"
+			}
+		},
+         {
+         	"path": "pages/doctor/doctor-business-card",
+         	"style": {
+         		"navigationBarTitleText": "名片码"
+         	}
+         },
+		{
 			"path": "pages/doctor/transferred-bankcard",
 			"style": {
 				"navigationBarTitleText": "待转账到银行卡"
