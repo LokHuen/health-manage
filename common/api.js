@@ -19,6 +19,8 @@ var api = {
 	subBranchList:(data)=>{return rq("/wx/system/bank/getSubBranchList",data,"GET");},
     //完善医生信息
 	saveDoctorInfo:(data)=>{return rq("/wx/doctor/saveRegister",data,"POST");},
+	//新增当前患者病例
+	savePatientCase:(data)=>{return rq("/wx/patient/bl/saveBl",data,"POST");},
 }
 
 export {api};

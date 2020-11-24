@@ -32,7 +32,9 @@
 				console.log(index);
 			},
 			addCase(){
-				
+				uni.navigateTo({
+					url:'patient-add-case'
+				});
 			}
 		},
 		created() {
