@@ -1,6 +1,25 @@
 {
 	"pages": [ 
 		{
+			"path": "pages/patient/patient-improve-msg",
+			"style": {
+				"navigationBarTitleText": "完善信息"
+			}
+		},
+		
+		{
+			"path": "pages/patient/patient-basic-information",
+			"style": {
+				"navigationBarTitleText": "基础信息"
+			}
+		},
+		{
+			"path": "pages/patient/patient-case-manage",
+			"style": {
+				"navigationBarTitleText": "病例管理"
+			}
+		},
+		{
 			"path": "pages/doctor/doctor-improve-msg",
 			"style": {
 				"navigationBarTitleText": "完善信息"
@@ -12,7 +31,6 @@
 				"navigationBarTitleText": "已转账到银行卡"
 			}
 		},
-		
 		{
 			"path": "pages/doctor/doctor-bill-detail",
 			"style": {
@@ -107,12 +125,12 @@
 			}
 		},
 		
-		{
-			"path": "pages/patient/patient-improve-msg",
-			"style": {
-				"navigationBarTitleText": "完善信息"
-			}
-		},
+		// {
+		// 	"path": "pages/patient/patient-improve-msg",
+		// 	"style": {
+		// 		"navigationBarTitleText": "完善信息"
+		// 	}
+		// },
 		
 		{
 			"path": "pages/patient/patient-add-case",
@@ -120,12 +138,7 @@
 				"navigationBarTitleText": "新增病例"
 			}
 		},
-		{
-			"path": "pages/patient/patient-case-manage",
-			"style": {
-				"navigationBarTitleText": "病例管理"
-			}
-		},
+		
 		{
 			"path": "pages/patient/evaluation-results",
 			"style": {
@@ -138,12 +151,7 @@
 				"navigationBarTitleText": "营养自测"
 			}
 		},
-		{
-			"path": "pages/patient/patient-basic-information",
-			"style": {
-				"navigationBarTitleText": "基础信息"
-			}
-		},
+	
 		{
 			"path": "pages/patient/patient-submit-sucess",
 			"style": {

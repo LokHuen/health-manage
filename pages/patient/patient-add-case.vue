@@ -5,38 +5,75 @@
 		  <view class="pic-content-box">
 		  	<view class="ccimglist">
 				<view v-for="(item,index) in list" :key="index" :class="(index%3==0)?'img-box-first':'img-box'">
-					<image  src="" mode="aspectFill" @click="previewImage(index)" class="imagelist"></image>
+					<image  :src="item" mode="aspectFit" @click="previewImage(index)" class="imagelist"></image>
 					<image src="../../static/icon/icon_remove.png" mode="aspectFill" class="remove-icon" @click="remove(index)"></image>
 				</view>
 		  	</view>
 		  </view>
-		  <view class="upload-box" @click="upload">点击上传</view>
+		  <view class="upload-box" @click="chosePic">点击上传</view>
 		  <view class="button-box">
-		  	<button type="default" class="button">提交</button>
+		  	<button type="default" class="button" @click="submit">提交</button>
 		  </view>
 	</view>
 	
 </template>
 
 <script>
+	const app = getApp();
 	export default {
-		components: {
-
-		},
 		data() {
 			return {
-				list: [1, 2, 3, 4, 5,6,7,8],
+				list: []
 			}
 		},
 		methods: {
 			previewImage(index) {
-				console.log(index);
+				uni.previewImage({
+					urls:this.list,
+					current:index
+				})
 			},
 			remove(index){
 				this.list.splice(index,1);
 			},
-			upload(){
-				
+			chosePic(){
+				if(this.list.length>8){
+					app.tip('最多选取9张图片');
+					return;
+				}
+				uni.chooseImage({
+				    count: 9-this.list.length, //默认9
+				    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+				    // sourceType: ['album'], //从相册选择
+				    success: (res)=>{
+					    this.list = this.list.concat(res.tempFilePaths);
+				    }
+				});
+			},
+			submit(){
+				if(this.list.length==0){
+					app.tip('请选择照片');
+					return;
+				}
+				let uploadCount = 0;
+				for (let i = 0; i < this.list.length; i++) {
+					let formData = {'uid':uni.getStorageSync("uid")}
+					uni.uploadFile({
+						url: '/api' + '/wx/patient/bl/saveBl',
+						filePath: this.list[i],
+						name: 'files',
+						formData:formData,
+						success:(res)=>{
+						    uploadCount ++;
+							if(uploadCount == this.list.length){
+								app.tip('上传成功');
+								uni.navigateBack({
+									
+								});
+							}
+						},
+					});
+				}
 			}
 		},
 		created() {

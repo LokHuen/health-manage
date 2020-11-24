@@ -9,7 +9,7 @@
 		</view>
 
 		<view class="health-update">
-			<button class="health-update-button">更新信息</button>
+			<button class="health-update-button" @click="updateInfo">更新信息</button>
 		</view>
 
 	</view>
@@ -17,7 +17,11 @@
 </template>
 
 <script>
+	import http from '../../common/http.js'
 	export default {
+		onLoad() {
+			
+		},
 		data() {
 			return {
 				listDatas: [{
@@ -49,6 +53,14 @@
 					title: "体重",
 					detail: "55kg",
 				}]
+			}
+		},
+		methods:{
+			updateInfo(){
+				console.log(1)
+				http.get("/wx/patient/basicInfo").then((res)=>{
+						console.log(res)
+				})
 			}
 		}
 	}

@@ -4,14 +4,30 @@
 	 <view class="health-content">
 		 <view class="health-image"> <image class="health-status-image" src="../../static/icon/submit_sucess_icon.png"></image></view>
 		 <view class="health-result">提交成功</view>
-		 <button class="health-confirm">完成</button>
+		 <button class="health-confirm" @click="complete">完成</button>
 	 </view>
  </view>
  
 </template>
 
 <script>
- 
+	export default {
+		data() {
+			return {
+				
+			}
+		},
+		methods: {
+			complete(){
+				uni.navigateBack({
+					
+				});
+			}
+		
+		},
+		
+
+	}
 </script>
 
 
