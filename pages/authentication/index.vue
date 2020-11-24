@@ -62,19 +62,19 @@
 					<uni-icons type="arrowleft" size="15" class="backicon" v-show="chooseindex!=1" @click="choosechange"></uni-icons>
 				</view>
 				<scroll-view class="choosebody" scroll-y="true">
-					<view v-show="chooseindex==1" class="itemlist flex" v-for="(item,index) in ranklist" :key="index" @click="choosenext(1,index)">
+					<view v-if="chooseindex==1" class="itemlist flex" v-for="(item,index) in ranklist" :key="index" @click="choosenext(1,index)">
 						<p>{{item.name}}</p>
 						<uni-icons type="arrowright" size="15" ></uni-icons>
 					</view>
-					<view v-show="chooseindex==2" class="itemlist flex" v-for="(item,index) in provlist" :key="index" @click="choosenext(2,index)">
+					<view v-if="chooseindex==2" class="itemlist flex" v-for="(item,index) in provlist" :key="index" @click="choosenext(2,index)">
 						<p>{{item.name}}</p>
 						<uni-icons type="arrowright" size="15" ></uni-icons>
 					</view>
-					<view v-show="chooseindex==3" class="itemlist flex" v-for="(item,index) in citylist" :key="index" @click="choosenext(3,index)">
+					<view v-if="chooseindex==3" class="itemlist flex" v-for="(item,index) in citylist" :key="index" @click="choosenext(3,index)">
 						<p>{{item.name}}</p>
 						<uni-icons type="arrowright" size="15" ></uni-icons>
 					</view>
-					<view v-show="chooseindex==4" class="itemlist flex" v-for="(item,index) in childlist" :key="index" @click="choosenext(4,index)">
+					<view v-if="chooseindex==4" class="itemlist flex" v-for="(item,index) in childlist" :key="index" @click="choosenext(4,index)">
 						<p>{{item.text}}</p>
 						<uni-icons type="arrowright" size="15" ></uni-icons>
 					</view>
@@ -132,7 +132,7 @@
 		methods: {
 			getinfo(){
 				app.loading("连接中");
-				api.saveAuthentication({id:this.options.id}).then(res => {
+				app.saveAuthentication({id:this.options.id}).then(res => {
 					this.form = res.data;
 				    app.loaded();
 				})
@@ -143,22 +143,22 @@
 				
 			},
 			banklist(){ //总行
-				api.banklist({}).then(res => {
+				app.banklist({}).then(res => {
 					this.ranklist = res.data;
 				})
 			},
 			subBranchList(headBankNo,bankProvinceNo,bankCityNo){ //分行
-				api.subBranchList({headBankNo,bankProvinceNo,bankCityNo}).then(res => {
+				app.subBranchList({headBankNo,bankProvinceNo,bankCityNo}).then(res => {
 					this.childlist = res.data;
 				})
 			},
 			findProvinces(name){
-				api.findProvinces({name}).then(res => {
+				app.findProvinces({name}).then(res => {
 					this.provlist = res.data;
 				})
 			},
 			findCities(name,pid){
-				api.findProvinces({name,pid}).then(res => {
+				app.findProvinces({name,pid}).then(res => {
 					this.citylist = res.data;
 				})
 			},
@@ -215,7 +215,7 @@
 				let data = JSON.parse(JSON.stringify(this.form));
 				
 				app.loading("保存中");
-				api.saveAuthentication(data).then(res => {
+				app.saveAuthentication(data).then(res => {
 				    app.loaded();
 				})
 			},
