@@ -67,14 +67,15 @@
 		},
 		methods: {
 			chooseindex(index,index1){
-				this.chooseitem[index].choose = this.chooselist[index].list[index1];
+				if(this.chooseitem[index].choose == this.chooselist[index].list[index1]) this.chooseitem[index].choose = "";
+				else this.chooseitem[index].choose = this.chooselist[index].list[index1];
 			},
 		}
 	}
 </script>
 
 <style lang="scss">
-	.testbox{padding:0 60rpx;
+	.testbox{padding:30rpx 60rpx 0;
 		.question{width:30rpx;}
 		.mintext{font-size:28rpx;color: #666666;padding:20rpx 0 60rpx;}
 		.chooselist{

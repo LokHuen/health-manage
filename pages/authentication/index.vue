@@ -56,7 +56,7 @@
 				<view @click="saveinfo">确定</view>
 			</view>
 		</view>
-		<uni-popup ref="popup" type="bottom">
+		<uni-popup ref="popup" type="bottom" @change="changeframe">
 			<view class="choosebox">
 				<view class="headtitle">{{chooseindex==1?"银行名称":(chooseindex==2?"开户行所在省":(chooseindex==3?"开户行所在市":"开户行名称"))}}
 					<uni-icons type="arrowleft" size="15" class="backicon" v-show="chooseindex!=1" @click="choosechange"></uni-icons>
@@ -75,7 +75,7 @@
 						<uni-icons type="arrowright" size="15" ></uni-icons>
 					</view>
 					<view v-if="chooseindex==4" class="itemlist flex" v-for="(item,index) in childlist" :key="index" @click="choosenext(4,index)">
-						<p>{{item.text}}</p>
+						<p>{{item.name}}</p>
 						<uni-icons type="arrowright" size="15" ></uni-icons>
 					</view>
 				</scroll-view>
@@ -115,16 +115,17 @@
 					img6:"请上传手持银行卡照片",
 				},
 				chooseindex:1, //1 银行 2 省 3 市 4分行
-				ranklist:[{text:"中国银行"},{text:"农业银行"},{text:"中国银行"},{text:"农业银行"},{text:"中国银行"},{text:"农业银行"},{text:"中国银行"},{text:"农业银行"},],
-				provlist:[{text:"广东省"},{text:"云南省"},{text:"广东省"},{text:"云南省"},],
-				citylist:[{text:"广州市"},{text:"深圳市"},],
-				childlist:[{text:"天河分行"},],
+				ranklist:[],
+				provlist:[],
+				citylist:[],
+				childlist:[],
 				chooserank:["","","",""]
 			}
 		},
 		onLoad(options) {
 			this.options = options;
 			if(options.id) this.getinfo();
+			
 		},
 		onShow() {
 
@@ -139,26 +140,38 @@
 			},
 			openframe(){
 				this.$refs.popup.open();
-				this.banklist();
-				
+				if(!this.ranklist[0]) this.banklist();
+				if(!this.provlist[0]) this.findProvinces();
 			},
 			banklist(){ //总行
+				app.loading();
 				app.banklist({}).then(res => {
+					app.loaded();
 					this.ranklist = res.data;
 				})
 			},
 			subBranchList(headBankNo,bankProvinceNo,bankCityNo){ //分行
+				app.loading();
 				app.subBranchList({headBankNo,bankProvinceNo,bankCityNo}).then(res => {
-					this.childlist = res.data;
+					app.loaded();
+					let list = [];
+					for (let key in res.data) {
+						list.push({id:key,name:res.data[key]});
+					}
+					this.childlist = list;
 				})
 			},
-			findProvinces(name){
-				app.findProvinces({name}).then(res => {
+			findProvinces(){
+				app.loading();
+				app.findProvinces({pid:0}).then(res => {
+					app.loaded();
 					this.provlist = res.data;
 				})
 			},
-			findCities(name,pid){
-				app.findProvinces({name,pid}).then(res => {
+			findCities(pid){
+				app.loading();
+				app.findProvinces({pid}).then(res => {
+					app.loaded();
 					this.citylist = res.data;
 				})
 			},
@@ -192,10 +205,9 @@
 			choosenext(type,index){
 				switch(type){
 					case 1:this.chooseindex=2;this.chooserank[0]=this.ranklist[index];
-						this.findProvinces(this.chooserank[0].name);
 						break;
 					case 2:this.chooseindex=3;this.chooserank[1]=this.provlist[index];
-						this.findCities(this.chooserank[1].name,this.chooserank[1].id);
+						this.findCities(this.chooserank[1].id);
 						break;
 					case 3:this.chooseindex=4;this.chooserank[2]=this.citylist[index];
 						this.subBranchList(this.chooserank[0].code,this.chooserank[1].id,this.chooserank[2].id);
@@ -207,6 +219,9 @@
 						this.chooseindex = 1;
 						break;
 				}
+			},
+			changeframe(e){
+				if(!e.show) this.chooseindex = 1;
 			},
 			saveinfo(){
 				for (let key in this.warn) {
@@ -274,7 +289,7 @@
 			}
 
 			.rightarea {
-				flex: 1;
+				flex: 1;font-size:32rpx;
 				color: #888;
 			}
 		}
