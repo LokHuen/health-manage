@@ -17,7 +17,8 @@ var api = {
 	getCode:(data)=>{return rq("/wx/doctor/loginSms",data,"POST");},
 	//获取分行 列表
 	subBranchList:(data)=>{return rq("/wx/system/bank/getSubBranchList",data,"GET");},
-
+    //完善医生信息
+	saveDoctorInfo:(data)=>{return rq("/wx/doctor/saveRegister",data,"POST");},
 }
 
 export {api};

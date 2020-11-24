@@ -30,12 +30,12 @@
 		<view class="name-box">
 			<view class="name-tips">* 验证码</view>
 			<input class="name-input" type="text" value="" placeholder="请填写手机收到的验证码" v-model="code"/>
-			<button type="default" class="code-button" @click="getCode">获取验证码</button>
+			<button type="default" class="code-button" @click="getCode">{{codetext}}</button>
 		</view>
 		
 		  
 		  <view class="button-box">
-		  	<button type="default" class="button">提交</button>
+		  	<button type="default" class="button" @click="submit">提交</button>
 		  </view>
 	</view>
 	
@@ -43,7 +43,6 @@
 
 <script>
 	const app = getApp();
-	// import api from '../../common/api.js'
 	export default {
 		components: {
 
@@ -56,17 +55,65 @@
 				department:'',//科室
 				mobile:'',
 				code:'',
+				bindSale:1,  //	绑定销售id
+				isSend: false,   // 是否发送验证码
+				codetext:'获取验证码'
 			}
 		},
+		onLoad(props) {
+			this.bindSale = props.bindSale||1;
+		},
 		methods: {
+			submit(){
+				if(!this.name || 
+				   !this.position || 
+				   !this.hospital || 
+				   !this.department ||
+				   !this.mobile ||
+				   !this.code){
+					   app.tip('请输入完整信息');
+					   return;
+				   }
+				   app.saveDoctorInfo({
+					   doctorName:this.name,
+					   technicalTitle:this.position,
+					   hospital:this.hospital,
+				       department:this.department,
+					   mobile:this.mobile,
+					   verifyCode:this.code,
+					   bindSale:this.bindSale}).then(res =>{
+					   if(res.status==1){
+						   uni.navigateTo({
+						   	url:'../patient/patient-submit-sucess'
+						   });
+					   }
+				   });
+			},
 			getCode(){
+				if (this.isSend) return;
 				if(!this.mobile){
 					app.tip('请输入手机号码');
+					return;
+				}else if(!/^1[0-9]{10}$/.test(this.mobile)){
+					app.tip('请填写正确的手机号码')
 					return;
 				}
 				app.getCode({mobile:this.mobile}).then(res=>{
 					if(res.status==1){
 						app.tip(res.msg);
+						this.isSend = true
+						let ss = 60
+						this.codeTimer = setInterval(() => { // 倒计时
+						    if (ss <= 1) {
+						        this.codetext = '重新获取'
+						        this.isSend = false
+						        clearInterval(this.codeTimer)
+						        this.isSend = false
+						    } else {
+						        ss--
+						        this.codetext = ss + 's'
+						    }
+						}, 1000)
 					}
 				});
 			}
