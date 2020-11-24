@@ -42,6 +42,8 @@
 </template>
 
 <script>
+	const app = getApp();
+	// import api from '../../common/api.js'
 	export default {
 		components: {
 
@@ -58,12 +60,17 @@
 		},
 		methods: {
 			getCode(){
-				
+				if(!this.mobile){
+					app.tip('请输入手机号码');
+					return;
+				}
+				app.getCode({mobile:this.mobile}).then(res=>{
+					if(res.status==1){
+						app.tip(res.msg);
+					}
+				});
 			}
 		},
-		created() {
-			
-		}
 
 	}
 </script>
@@ -108,6 +115,7 @@
 				color: #FFFFFF;
 				background-color: #52A29E !important;
 				height: 60rpx;
+				line-height: 60rpx;
 				font-size: 13px;
 				right: 10rpx;
 				top: 20rpx;

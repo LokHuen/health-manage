@@ -1,6 +1,12 @@
 {
 	"pages": [ 
 		{
+			"path": "pages/doctor/doctor-improve-msg",
+			"style": {
+				"navigationBarTitleText": "完善信息"
+			}
+		},
+		{
 			"path": "pages/doctor/already-transferred-bankcard",
 			"style": {
 				"navigationBarTitleText": "已转账到银行卡"
@@ -100,12 +106,7 @@
 				"navigationBarTitleText": "营养管理"
 			}
 		},
-		{
-			"path": "pages/doctor/doctor-improve-msg",
-			"style": {
-				"navigationBarTitleText": "完善信息"
-			}
-		},
+		
 		{
 			"path": "pages/patient/patient-improve-msg",
 			"style": {

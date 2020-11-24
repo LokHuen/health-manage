@@ -51,6 +51,20 @@
         "router" : {
             "mode" : "history"
         },
-        "domain" : "http://weixingzh-test.cvddr.com"
+        "domain" : "http://weixingzh-test.cvddr.com",
+		"devServer": {
+		    "proxy": {
+		        "/common/api": {
+		            "target": "http://weixinapi-test.cvddr.com",
+					"changeOrigin": true,
+					"secure": false,
+		            "pathRewrite": {
+		                "^/common/api": ""
+		            }
+		        }
+		    }
+		}
     }
+	
+
 }

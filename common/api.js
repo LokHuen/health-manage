@@ -15,6 +15,8 @@ var api = {
 	findCities:(data)=>{return rq("/wx/patient/findCities",data,"GET");},
 	//获取总行名称、编码
 	banklist:(data)=>{return rq("/wx/system/bank/list",data,"GET");},
+	//获取短信
+	getCode:(data)=>{return rq("/wx/doctor/loginSms",data,"POST");},
 }
 
 export {api};
