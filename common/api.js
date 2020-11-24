@@ -17,6 +17,8 @@ var api = {
 	getCode:(data)=>{return rq("/wx/doctor/loginSms",data,"POST");},
 	//获取分行 列表
 	subBranchList:(data)=>{return rq("/wx/system/bank/getSubBranchList",data,"POST");},
+	//治疗阶段选择
+	getReplyRecord:(data)=>{return rq("/wx/survey/question/getReplyRecord",data,"GET");},
     //完善医生信息
 	saveDoctorInfo:(data)=>{return rq("/wx/doctor/saveRegister",data,"POST");},
 	//新增当前患者病例

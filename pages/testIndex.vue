@@ -5,10 +5,10 @@
 		<view class="flex chooselist" v-for="(item,index) in chooselist" :key="index">
 			<view class="title">{{item.name}}</view>
 			<view class="flex" style="flex:1;justify-content:flex-end;">
-				<view v-for="(item1,index1) in item.list" :key="index1" :class="'itemlist '+(chooseitem[index].choose==item1?'on':'')" @click="chooseindex(index,index1)">{{item1}}</view>
+				<view v-for="(item1,index1) in item.list" :key="index1" :class="'itemlist '+((chooseitem==item1&&chooseclass==item.name)?'on':'')" @click="chooseindex(index,index1)">{{item1}}</view>
 			</view>
 		</view>
-		<view class="pagebottombt">确定</view>
+		<view class="pagebottombt" @click="submitchoose">确定</view>
 		
 		<uni-popup ref="popup" type="bottom">
 			<view class="testbox" style="padding-top:30rpx;background:#fff;border-radius:20rpx 20rpx 0 0;">
@@ -39,14 +39,8 @@
 					{name:'免疫治疗',list:["治疗前","治疗中","治疗后"]},
 					{name:'康复治疗',list:["康复期"]},
 				],
-				chooseitem:[
-					{choose:""},
-					{choose:""},
-					{choose:""},
-					{choose:""},
-					{choose:""},
-					{choose:""},
-				],
+				chooseitem:"",
+				chooseclass:"",
 				frameinfo:[
 					{name:'前',text:"代表您将要进行的下一个治疗阶段，例:您准备进行化疗，选择化疗前。"},
 					{name:'中',text:"代表您现在正在进行的治疗阶段，例:您正在进行靶向治疗，选择靶向中。"},
@@ -67,8 +61,17 @@
 		},
 		methods: {
 			chooseindex(index,index1){
-				if(this.chooseitem[index].choose == this.chooselist[index].list[index1]) this.chooseitem[index].choose = "";
-				else this.chooseitem[index].choose = this.chooselist[index].list[index1];
+				this.chooseclass = this.chooselist[index].name;
+				this.chooseitem = this.chooselist[index].list[index1];
+			},
+			submitchoose(){
+				if(!this.chooseclass) {app.tip("请选择其中一个选项");return;}
+				app.getReplyRecord({surveyId:1,phase:this.chooseclass+":"+this.chooseitem}).then(res=>{
+					app.tip("保存成功");
+					uni.navigateTo({
+						url:"/pages/patient/test-questions"
+					})
+				})
 			},
 		}
 	}
