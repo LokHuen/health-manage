@@ -1,5 +1,12 @@
 {
 	"pages": [ 
+		
+		{
+			"path": "pages/patient/patient-basic-information",
+			"style": {
+				"navigationBarTitleText": "基础信息"
+			}
+		},
 		{
 			"path": "pages/patient/patient-case-manage",
 			"style": {
@@ -138,12 +145,7 @@
 				"navigationBarTitleText": "营养自测"
 			}
 		},
-		{
-			"path": "pages/patient/patient-basic-information",
-			"style": {
-				"navigationBarTitleText": "基础信息"
-			}
-		},
+	
 		{
 			"path": "pages/patient/patient-submit-sucess",
 			"style": {

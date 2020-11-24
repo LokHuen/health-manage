@@ -17,7 +17,13 @@
 </template>
 
 <script>
+	import http from '../../common/http.js'
 	export default {
+		onLoad() {
+			http.get(http.urls.user_base_info).then((res)=>{
+				console.log(res)
+			})
+		},
 		data() {
 			return {
 				listDatas: [{
