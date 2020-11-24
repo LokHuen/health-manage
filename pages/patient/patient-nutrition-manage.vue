@@ -2,20 +2,20 @@
 	<!-- 患者营养管理界面 -->
 	<view class="container">
 		<view class="info-box">
-			<image src="" mode="scaleToFill" class="avator"></image>
+			<image :src="data.portrait" mode="scaleToFill" class="avator"></image>
 			<view class="user-msg-box">
 				<view class="name">
-					张小明
+					{{data.patientName}}
 				</view>
 				<view class="msg">
-					男 56岁 乳腺癌
+					{{data.patientGender+' '+data.age+'岁 '+data.illness}}
 				</view>
 			</view>
 		</view>
 		<view class="line-space"></view>
 		<view class="content">
 			<view class="function-box">
-				<view class="function-item" v-for="(item,index) in list" :key="index">
+				<view class="function-item" v-for="(item,index) in list" :key="index" @click="clickFuction(index)">
 					<image :src="item[0]" mode="widthFix" class="function-item-img"></image>
 					<view class="function-item-title">{{item[1]}}</view>
 				</view>
@@ -26,32 +26,28 @@
 				<view class="health-list-item">
 					<view class="top-title">当前体重</view>
 					<view class="health-detail">
-						<text style="font-size: 23px;">55</text>KG
+						<text style="font-size: 23px;">{{data.weight}}</text>KG
 					</view>
 				</view>
 				<view class="health-list-item">
 					<view class="top-title">
-						<view class="">
-							标准体重
-						</view>
+						<view class="">标准体重</view>
 						<image src="../../static/icon/wenhaoIcon.png" mode="widthFix" class="askIcon" @click="showComputing"></image>
 					</view>
 					<view class="health-detail">
-						<text style="font-size: 23px;">60</text>KG
+						<text style="font-size: 23px;">{{data.standardWeight}}</text>KG
 					</view>
 				</view>
 
 				<view class="health-list-item">
 					<view class="top-title">
-						<view class="">
-							BMI
-						</view>
+						<view class="">BMI</view>
 						<image src="../../static/icon/wenhaoIcon.png" mode="widthFix" class="askIcon" @click="showBMITips"></image>
 					</view>
 					<view class="health-detail">
-						<text style="font-size: 23px;">20.2</text>
+						<text style="font-size: 23px;">{{data.bmi}}</text>
 					</view>
-					<view class="health-tips">
+					<view class="health-tips" v-show="data.normal==1">
 						属正常体重范围
 					</view>
 				</view>
@@ -65,19 +61,19 @@
 					<view class="leftinfo" >
 						<view class="flex infolist" >
 							<view class="inforound" ></view>
-							脂肪60g
+							{{'脂肪'+data.dailyFat+'g'}}
 						</view>
 						<view class="flex infolist" >
 							<view class="inforound bcolor2" ></view>
-							蛋白质90g
+							{{'蛋白质'+data.dailyProtein+'g'}}
 						</view>
 						<view class="flex infolist" >
 							<view class="inforound bcolor3" ></view>
-							碳水化合物225g
+							{{'碳水化合物'+data.dailyCarbonHydrate+'g'}}
 						</view>
 					</view>
 					<view class="rightinfo" >
-						<view @click="showEnergyTips" style="font-size:26rpx;"><text style="font-size:46rpx;">1800</text>kcal<image src="../../static/icon/wenhaoIcon.png" mode="widthFix" style="width:24rpx;"></image>
+						<view @click="showEnergyTips" style="font-size:26rpx;"><text style="font-size:46rpx;">{{data.dailyEnergy}}</text>kcal<image src="../../static/icon/wenhaoIcon.png" mode="widthFix" style="width:24rpx;"></image>
 						</view>
 						<view class="mintext" >建议每日总能量</view>
 					</view>
@@ -170,6 +166,7 @@
 </template>
 
 <script>
+	const app = getApp();
 	import LineChart from '@/components/stan-ucharts/LineChart.vue';
 	export default {
 		components: {
@@ -177,6 +174,7 @@
 		},
 		data() {
 			return {
+				data:{},
 				list: [
 					["/static/icon/baseInfoicon.png", "基础信息"],
 					["/static/icon/bingliMangmenticon.png", "病例管理"],
@@ -194,6 +192,25 @@
 			}
 		},
 		methods: {
+			clickFuction(index){
+				if(index==0){
+					//基础信息
+				  uni.navigateTo({
+				  	url:'patient-basic-information'
+				  });
+				}else if(index==1){
+					//病例管理
+					uni.navigateTo({
+						url:'patient-case-manage'
+					});
+				}else{
+					//测评记录
+					uni.navigateTo({
+						url:'evaluation-record'
+					});
+				}
+				
+			},
 			showDetailMessage() {
 				this.showDetail = !this.showDetail;
 			},
@@ -215,6 +232,13 @@
 			},
 			closeEnergyTips() {
 				this.$refs.popupEnergy.close();
+			},
+			getData(){
+				app.patientNutrition({}).then(res =>{
+					if(res.status==1){
+						this.data = res.data;
+					}
+				});
 			}
 
 		},
@@ -223,8 +247,9 @@
 				//折线图
 				this.$refs['lineData'].showCharts();
 			});
-
-
+		},
+		onLoad(){
+			this.getData();
 		}
 
 	}
@@ -247,7 +272,7 @@
 			}
 
 			.user-msg-box {
-				padding-top: 40rpx;
+				padding-top: 50rpx;
 				color: #333333;
 				margin-left: 31rpx;
 
