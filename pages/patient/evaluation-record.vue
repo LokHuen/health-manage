@@ -27,9 +27,11 @@
 </template>
 
 <script>
+	const app = getApp();
 	export default {
 		data() {
 			return {
+				pageNo:1,
 				listDatas:[
 					{
 							id:101,
@@ -53,9 +55,26 @@
 				]
 			}
 		},
+		onLoad(){
+			this.pageNo = 1;
+			this.getRecordData();
+		},
+		onPullDownRefresh() {
+			this.pageNo = 1;
+			this.getRecordData();
+		},
+		onReachBottom() {
+			this.pageNo ++;
+			this.getRecordData();
+		},
 		methods:{
 			onClickItem(item) {
 				item.showDetail = !item.showDetail;
+			},
+		    getRecordData(){
+				app.memberReplyRecordList({surveyId:1,pageNo:this.pageNo}).then(res =>{
+					
+				});
 			}
 		}
 	}

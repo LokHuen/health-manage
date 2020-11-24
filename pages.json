@@ -1,6 +1,13 @@
 {
 	"pages": [ 
 		{
+				"path": "pages/patient/evaluation-record",
+				"style": {
+					"navigationBarTitleText": "测评记录"
+				},
+				"enablePullDownRefresh": true
+		},
+		{
 			"path": "pages/patient/patient-basic-information",
 			"style": {
 				"navigationBarTitleText": "基础信息"
@@ -161,13 +168,8 @@
 				"navigationBarTitleText": "提交结果"
 			}
 			
-		},
-		{
-				"path": "pages/patient/evaluation-record",
-				"style": {
-					"navigationBarTitleText": "测评记录"
-				}
 		}
+		
 		
 	],
 	"globalStyle": {

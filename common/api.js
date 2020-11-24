@@ -27,6 +27,10 @@ var api = {
 	doctorBusinessCard:(data)=>{return rq("/wx/doctor/cardInfo",data,"GET");},
 	//病患的基础信息
 	patientBasicInfo:(data)=>{return rq("/wx/patient/basicInfo",data,"GET");},
+	//获取患者的所有测评记录,医生端也可复用此方法  surveyId固定传1
+	memberReplyRecordList:(data)=>{return rq("/wx/survey/question/getMemberReplyRecordPage",data,"GET");},
+	//患者营养主页
+	patientNutrition:(data)=>{return rq("/wx/patient/patientNutrition",data,"GET");},
 }
 
 export {api};

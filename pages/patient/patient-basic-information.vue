@@ -65,35 +65,7 @@
 		data() {
 			return {
 				data:{},
-				listDatas: [{
-					id: 101,
-					title: "患者姓名",
-					detail: "张小明",
-				}, {
-					id: 101,
-					title: "患者性别",
-					detail: "男",
-				}, {
-					id: 101,
-					title: "出生日期",
-					detail: "1949年1月10日",
-				}, {
-					id: 101,
-					title: "所患疾病",
-					detail: "乳腺癌",
-				}, {
-					id: 101,
-					title: "所在城市",
-					detail: "湖北省武汉市",
-				}, {
-					id: 101,
-					title: "身高",
-					detail: "165cm",
-				}, {
-					id: 101,
-					title: "体重",
-					detail: "55kg",
-				}]
+				
 			}
 		},
 		methods:{
