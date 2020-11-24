@@ -1,24 +1,31 @@
 {
 	"pages": [ 
 		{
-			"path": "pages/patient/patient-improve-msg",
+			"path": "pages/doctor/doctor-business-card",
 			"style": {
-				"navigationBarTitleText": "完善信息"
-			}
-		},
-		
-		{
-			"path": "pages/patient/patient-basic-information",
-			"style": {
-				"navigationBarTitleText": "基础信息"
+				"navigationBarTitleText": "名片码"
 			}
 		},
 		{
 			"path": "pages/patient/patient-case-manage",
 			"style": {
 				"navigationBarTitleText": "病例管理"
+			},
+			"enablePullDownRefresh": true
+		},
+		{
+			"path": "pages/patient/patient-improve-msg",
+			"style": {
+				"navigationBarTitleText": "完善信息"
 			}
 		},
+		{
+			"path": "pages/patient/patient-basic-information",
+			"style": {
+				"navigationBarTitleText": "基础信息"
+			}
+		},
+		
 		{
 			"path": "pages/doctor/doctor-improve-msg",
 			"style": {
@@ -37,12 +44,7 @@
 				"navigationBarTitleText": "详情"
 			}
 		},
-         {
-         	"path": "pages/doctor/doctor-business-card",
-         	"style": {
-         		"navigationBarTitleText": "名片码"
-         	}
-         },
+         
 		{
 			"path": "pages/doctor/transferred-bankcard",
 			"style": {

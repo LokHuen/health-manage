@@ -98,7 +98,7 @@
 			},
 			uploadImage(url, success, data) {
 				let formData = {
-					'tkbgjd-token': uni.getStorageSync("token"),
+					'uid': uni.getStorageSync("uid"),
 					...data
 				}
 				uni.chooseImage({

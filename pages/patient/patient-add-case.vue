@@ -12,7 +12,7 @@
 		  </view>
 		  <view class="upload-box" @click="chosePic">点击上传</view>
 		  <view class="button-box">
-		  	<button type="default" class="button" @click="submit">提交</button>
+		  	<button type="default" class="button" @click="uploadPic">提交</button>
 		  </view>
 	</view>
 	
@@ -23,7 +23,8 @@
 	export default {
 		data() {
 			return {
-				list: []
+				list: [],
+				pathologyUrl:''
 			}
 		},
 		methods: {
@@ -50,7 +51,7 @@
 				    }
 				});
 			},
-			submit(){
+			uploadPic(){
 				if(this.list.length==0){
 					app.tip('请选择照片');
 					return;
@@ -59,21 +60,37 @@
 				for (let i = 0; i < this.list.length; i++) {
 					let formData = {'uid':uni.getStorageSync("uid")}
 					uni.uploadFile({
-						url: '/api' + '/wx/patient/bl/saveBl',
+						url: '/api' + '/wx/patient/bl/uploadPicture',
 						filePath: this.list[i],
-						name: 'files',
+						name: 'file',
 						formData:formData,
 						success:(res)=>{
-						    uploadCount ++;
-							if(uploadCount == this.list.length){
-								app.tip('上传成功');
-								uni.navigateBack({
-									
-								});
+							console.log(res.data);
+							let data = JSON.parse(res.data);
+							if(data.status==1){
+								uploadCount ++;
+								this.pathologyUrl = this.pathologyUrl+data.data.pictureUrl+',';
+								console.log('uploadCount=='+uploadCount);
+								if(uploadCount == this.list.length){
+									//移除最后的逗号
+									this.pathologyUrl = this.pathologyUrl.substring(0, this.pathologyUrl.length - 1);
+									this.submit();
+									console.log('pathologyUrl==='+this.pathologyUrl);
+								}
 							}
+						    
 						},
 					});
 				}
+			},
+			submit(){
+				app.savePatientCase({pathologyUrl:this.pathologyUrl}).then(res =>{
+					if(res.status == 1){
+						app.tip('上传成功');
+						this.list = [];
+						this.pathologyUrl = '';
+					}
+				});
 			}
 		},
 		created() {

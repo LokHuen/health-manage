@@ -21,6 +21,10 @@ var api = {
 	saveDoctorInfo:(data)=>{return rq("/wx/doctor/saveRegister",data,"POST");},
 	//新增当前患者病例
 	savePatientCase:(data)=>{return rq("/wx/patient/bl/saveBl",data,"POST");},
+	//当前用户的病历
+	patientCaseList:(data)=>{return rq("/wx/patient/bl/blList",data,"GET");},
+	//获取医生名片
+	doctorBusinessCard:(data)=>{return rq("/wx/doctor/cardInfo",data,"GET");},
 }
 
 export {api};

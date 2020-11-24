@@ -1,19 +1,19 @@
 <template>
 	<!-- 医生名片界面 -->
 	<view class="container">
-		<view class="i-content-box">
+		<view class="i-content-box" @longtap="saveQRCode">
 			<view class="i-header">
 				<image class="i-avatar" src="../../static/img/avator.png" style="width: 106rpx; height: 106rpx;"></image>
 				<view class="i-text-box">
 					<view>
-						<text class="i-name">胡汉三</text>
-						<text class="i-post">青山院长</text>
+						<text class="i-name">{{data.doctorName}}</text>
+						<text class="i-post">{{data.technicalTitle}}</text>
 					</view>
-					<text class="i-subjecj">中山一院乳腺内科</text>
+					<text class="i-subjecj">{{data.hospital+data.department}}</text>
 				</view>
 			</view>
 			<view class="i-qr-code-box">
-				<image class="i-qr-code" style="width: 360rpx; height: 360rpx;"></image>
+				<image class="i-qr-code" style="width: 360rpx; height: 360rpx;" :src="data.qrCode"></image>
 				<text class="i-code_des">扫码加入医生的患者名单</text>
 			</view>
 		</view>
@@ -22,6 +22,50 @@
 </template>
 
 <script>
+	const app = getApp();
+	export default {
+
+		data() {
+			return {
+				data: {},
+
+			}
+		},
+		methods: {
+			saveQRCode() {
+				let that = this;
+				//console.log('保存二维码')
+				uni.downloadFile({ //获得二维码的临时地址
+					url: this.data.qrCode,
+					success: (res) => {
+						//console.log('获取url',res)
+						if (res.statusCode == 200) {
+							uni.saveImageToPhotosAlbum({
+								filePath: res.tempFilePath, //传入临时地址
+								success() {
+									app.tip('保存成功') //封装的提示
+								},
+								fail() {
+									app.tip('保存失败')
+								}
+							})
+						}
+					}
+				})
+			}
+
+		},
+		onLoad() {
+			app.doctorBusinessCard({uid:app.getCache('uid')}).then(res => {
+				console.log(res);
+				if (res.status == 1) {
+					this.data = res.data;
+				}
+			});
+		}
+
+
+	}
 </script>
 
 <style lang="scss" scoped>
@@ -81,20 +125,21 @@
 				margin-top: 64rpx;
 
 				.i-qr-code {
-					border: 1rpx solid #007AFF;
-
+				
 				}
 			}
 
 		}
+
 		.i-code_des {
 			margin-top: 12rpx;
 			font-size: 38rpx;
 			color: #333333;
 			margin-top: 12rpx;
-		
+
 		}
-		.i-sava-tip{
+
+		.i-sava-tip {
 			margin: 10rpx auto;
 			color: #999999;
 		}
