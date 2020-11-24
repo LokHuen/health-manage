@@ -11,16 +11,16 @@
 			// AppSecret:"05ba4e0d30666a44d2c5be39fabf759d",
 		},
 		onLaunch: function(option) {
-			
-			console.log('App Launch',option);
-			uni.baseImageUrl='https://bgjdapi-test.ttxyw.cn/upload/mini'
+
+			console.log('App Launch', option);
+			uni.baseImageUrl = 'https://bgjdapi-test.ttxyw.cn/upload/mini'
 			// //更新用户信息
 			// if(this.getCache("uid")) this.saveinfo();
 			const windowUrl = window.location.href;
 			const uid = this.getCache("uid") || option.query.uid;
-			console.log('uid=='+uid);
+			console.log('uid==' + uid);
 			if(!uid){
-				 window.location.href = this.globalData.baseUrl + '/wx/fwh/user/auth/index?returnUrl=' + encodeURIComponent(windowUrl);
+				window.location.href = this.globalData.baseUrl + '/wx/fwh/user/auth/index?returnUrl=' + encodeURIComponent(windowUrl);
 			}else{
 				this.setCache('uid',uid);
 			}
@@ -69,35 +69,38 @@
 			loaded() { //取消加载提示
 				uni.hideLoading();
 			},
-			saveinfo(info){
-				if(info){
+			saveinfo(info) {
+				if (info) {
 					this.saveuserinfo({
-						mobile:info.phone||"",
-						wxPortrait:info.avatarUrl||"",
-						wxNickname:info.nickName||"",
-						province:info.province||"",
-						city:info.city||"",
-						sex:info.gender||"",
-					}).then(res=>{})
-				}else{
+						mobile: info.phone || "",
+						wxPortrait: info.avatarUrl || "",
+						wxNickname: info.nickName || "",
+						province: info.province || "",
+						city: info.city || "",
+						sex: info.gender || "",
+					}).then(res => {})
+				} else {
 					uni.getUserInfo({
-					      provider: 'weixin',
-						  lang:"zh_CN",
-					      success: res=>{
+						provider: 'weixin',
+						lang: "zh_CN",
+						success: res => {
 							this.saveinfo(res.userInfo);
-					      }
+						}
 					});
 				}
 			},
-			replymessage(){ //调起订阅消息
+			replymessage() { //调起订阅消息
 				uni.requestSubscribeMessage({
-				  tmplIds: ['BVYdVBTURSCuk2i9oH6IDIjwlimlMdaCcQE37vnYVe8'], 
-				  success:(res)=>{},
-				  fail:(res)=>{},
+					tmplIds: ['BVYdVBTURSCuk2i9oH6IDIjwlimlMdaCcQE37vnYVe8'],
+					success: (res) => {},
+					fail: (res) => {},
 				})
 			},
 			uploadImage(url, success, data) {
-				let formData = {'tkbgjd-token':uni.getStorageSync("token"),...data}
+				let formData = {
+					'tkbgjd-token': uni.getStorageSync("token"),
+					...data
+				}
 				uni.chooseImage({
 					success: (res) => {
 						const paths = res.tempFilePaths;
@@ -106,8 +109,8 @@
 								url: this.globalData.baseUrl + url,
 								filePath: paths[i],
 								name: 'file',
-								formData:formData,
-								success:(res)=>{
+								formData: formData,
+								success: (res) => {
 									success(JSON.parse(res.data))
 								},
 							});
@@ -115,8 +118,11 @@
 					}
 				});
 			},
-			uploadImage2(url, success, data,maxSize) {
-				let formData = {'tkbgjd-token':uni.getStorageSync("token"),...data}
+			uploadImage2(url, success, data, maxSize) {
+				let formData = {
+					'tkbgjd-token': uni.getStorageSync("token"),
+					...data
+				}
 				uni.chooseImage({
 					success: (res) => {
 						const paths = res.tempFilePaths;
@@ -125,8 +131,8 @@
 								url: this.globalData.baseUrl + url,
 								filePath: paths[i],
 								name: 'file',
-								formData:formData,
-								success:(res)=>{
+								formData: formData,
+								success: (res) => {
 									success(JSON.parse(res.data))
 								},
 							});
@@ -138,16 +144,62 @@
 	};
 </script>
 
-<style>
+<style lang="scss">
+	.edit {
+		uni-checkbox .uni-checkbox-input {
+			height: 40rpx;
+			width: 40rpx;
+			border-radius: 4rpx;
+			margin-right: 0;
+		}
+
+		uni-checkbox .uni-checkbox-input.uni-checkbox-input-checked:before {
+			color: #FFFFFF;
+			content:"\2714";
+			top: 40%;
+			
+		}
+
+		uni-checkbox:not([disabled]) .uni-checkbox-input:hover {
+			border-color: #999999;
+		}
+
+		uni-checkbox .uni-checkbox-input.uni-checkbox-input-checked {
+			background-color: #52A29E;
+		}
+	}
+
 	html,
 	body,
 	page {
 		font-family: PingFang SC;font-size:32rpx;
 	}
-	image{height:auto;}
-	.flex{display: flex;align-items:center;flex-wrap:wrap;}
-	.flex.ct{justify-content: center;}
 
-	.prelative{position:relative;}
-	.pageredround{width: 12rpx;height: 12rpx;background: #E21313;border-radius: 50%;position: absolute;top:-6rpx;right:-6rpx;}
+	image {
+		height: auto;
+	}
+
+	.flex {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+	}
+
+	.flex.ct {
+		justify-content: center;
+	}
+
+	.prelative {
+		position: relative;
+	}
+
+	.pageredround {
+		width: 12rpx;
+		height: 12rpx;
+		background: #E21313;
+		border-radius: 50%;
+		position: absolute;
+		top: -6rpx;
+		right: -6rpx;
+	}
 </style>

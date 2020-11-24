@@ -14,15 +14,16 @@
 			</view>
 			<view class="uploadbox flex" @click="sendpicture(3)">
 				<image src="../../static/auth/3.png" mode="widthFix"></image>
+				<view class="textbox">
+					<view>照片必须清晰可见上半身及身份证人像面信息</view>
+				</view>
 			</view>
 			<view class="uploadbox flex" @click="sendpicture(4)">
 				<image src="../../static/auth/4.png" mode="widthFix"></image>
 			</view>
 			<view class="uploadbox flex" @click="sendpicture(5)">
 				<image src="../../static/auth/5.png" mode="widthFix"></image>
-				<view class="textbox">
-					<view>照片必须清晰可见上半身及身份证人像面信息</view>
-				</view>
+				
 			</view>
 			<view class="uploadbox flex" @click="sendpicture(6)">
 				<image src="../../static/auth/6.png" mode="widthFix"></image>
@@ -61,19 +62,19 @@
 					<uni-icons type="arrowleft" size="15" class="backicon" v-show="chooseindex!=1" @click="choosechange"></uni-icons>
 				</view>
 				<scroll-view class="choosebody" scroll-y="true">
-					<view v-show="chooseindex==1" class="itemlist flex" v-for="(item,index) in ranklist" :key="index" @click="choosenext(1,index)">
+					<view v-if="chooseindex==1" class="itemlist flex" v-for="(item,index) in ranklist" :key="index" @click="choosenext(1,index)">
 						<p>{{item.name}}</p>
 						<uni-icons type="arrowright" size="15" ></uni-icons>
 					</view>
-					<view v-show="chooseindex==2" class="itemlist flex" v-for="(item,index) in provlist" :key="index" @click="choosenext(2,index)">
+					<view v-if="chooseindex==2" class="itemlist flex" v-for="(item,index) in provlist" :key="index" @click="choosenext(2,index)">
 						<p>{{item.name}}</p>
 						<uni-icons type="arrowright" size="15" ></uni-icons>
 					</view>
-					<view v-show="chooseindex==3" class="itemlist flex" v-for="(item,index) in citylist" :key="index" @click="choosenext(3,index)">
+					<view v-if="chooseindex==3" class="itemlist flex" v-for="(item,index) in citylist" :key="index" @click="choosenext(3,index)">
 						<p>{{item.name}}</p>
 						<uni-icons type="arrowright" size="15" ></uni-icons>
 					</view>
-					<view v-show="chooseindex==4" class="itemlist flex" v-for="(item,index) in childlist" :key="index" @click="choosenext(4,index)">
+					<view v-if="chooseindex==4" class="itemlist flex" v-for="(item,index) in childlist" :key="index" @click="choosenext(4,index)">
 						<p>{{item.text}}</p>
 						<uni-icons type="arrowright" size="15" ></uni-icons>
 					</view>
@@ -131,7 +132,7 @@
 		methods: {
 			getinfo(){
 				app.loading("连接中");
-				api.saveAuthentication({id:this.options.id}).then(res => {
+				app.saveAuthentication({id:this.options.id}).then(res => {
 					this.form = res.data;
 				    app.loaded();
 				})
@@ -139,20 +140,25 @@
 			openframe(){
 				this.$refs.popup.open();
 				this.banklist();
-				this.findProvinces();
+				
 			},
-			banklist(){
-				api.banklist({}).then(res => {
+			banklist(){ //总行
+				app.banklist({}).then(res => {
 					this.ranklist = res.data;
 				})
 			},
-			findProvinces(){
-				api.findProvinces({}).then(res => {
+			subBranchList(headBankNo,bankProvinceNo,bankCityNo){ //分行
+				app.subBranchList({headBankNo,bankProvinceNo,bankCityNo}).then(res => {
+					this.childlist = res.data;
+				})
+			},
+			findProvinces(name){
+				app.findProvinces({name}).then(res => {
 					this.provlist = res.data;
 				})
 			},
-			findCities(){
-				api.findCities({}).then(res => {
+			findCities(name,pid){
+				app.findProvinces({name,pid}).then(res => {
 					this.citylist = res.data;
 				})
 			},
@@ -185,13 +191,17 @@
 			},
 			choosenext(type,index){
 				switch(type){
-					case 1:this.chooseindex=2;this.chooserank[0]=this.ranklist[index];break;
-					case 2:this.chooseindex=3;this.chooserank[1]=this.provlist[index].id;
-						this.findCities();
+					case 1:this.chooseindex=2;this.chooserank[0]=this.ranklist[index];
+						this.findProvinces(this.chooserank[0].name);
 						break;
-					case 3:this.chooseindex=4;this.chooserank[2]=this.citylist[index].id;break;
+					case 2:this.chooseindex=3;this.chooserank[1]=this.provlist[index];
+						this.findCities(this.chooserank[1].name,this.chooserank[1].id);
+						break;
+					case 3:this.chooseindex=4;this.chooserank[2]=this.citylist[index];
+						this.subBranchList(this.chooserank[0].code,this.chooserank[1].id,this.chooserank[2].id);
+						break;
 					case 4:
-						this.chooserank[3]=index;
+						this.chooserank[3]=this.childlist[index];
 						this.form.bank = this.chooserank[0].name;
 						this.$refs.popup.close();
 						this.chooseindex = 1;
@@ -205,7 +215,7 @@
 				let data = JSON.parse(JSON.stringify(this.form));
 				
 				app.loading("保存中");
-				api.saveAuthentication(data).then(res => {
+				app.saveAuthentication(data).then(res => {
 				    app.loaded();
 				})
 			},

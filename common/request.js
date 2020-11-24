@@ -1,14 +1,14 @@
-var baseUrl = "http://weixinapi-test.cvddr.com";
+// var baseUrl = "http://weixinapi-test.cvddr.com";
 
 function rq(url,data={},type){
 	return new Promise((resolve, reject) => {
 		uni.request({
-		    url: baseUrl + url,
+		    url: "/api" + url,
 		    data: data,
 			method:type||"GET",
 		    header: {
 				'content-type': 'application/x-www-form-urlencoded',
-		         'uid': uni.getStorageSync("uid")
+		         'uid': localStorage.getItem("uid"),
 				// 'tkbgjd-token':"ef56ZpDKDJ3qy/ttr+d4r16cTZd0ju+7Pz0eT/MtwDaIqSiojYJsYdyjGFLYy4/pJR4BSUmab7tIypyLTZtBYN/3obpPO4rLM6FyqNJEhp1LxjTgveFK/ls2Xr0/"
 				// 'tkbgjd-token':"634fw+Rth9zpdjXbKK9wEJcqlZZrzjvtudIxfIL6apurN02RT6Xn2mvhKBRqiD9cx0R2yWFv8njvE8w7FkGru5/LmmtHT0Vq+uWt"
 			},

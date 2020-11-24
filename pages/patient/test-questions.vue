@@ -1,6 +1,6 @@
 <template>
 	
-	<view>
+	<view class="edit">
 		<view class="health-title-content">
 			<view class="health-title">请根据自身健康情况如是天蝎以下数据，我们将根据您的数据分析出您的营养情况</view>
 		</view>
@@ -10,20 +10,21 @@
 				<view class="health-item">
 					<view class="health-item-title">{{item.title}}</view>
 					<input class="health-item-input" placeholder-style="color:#999999;font-size:30rpx" :placeholder="112" />
-					<!-- <view class="health-item-detail">{{item.detail}}</view>  {{item.placeholder}} -->
 				</view>
 			</view>
 			<view class="health-item">
 				<view class="health-item-title">5、最近2周内我的体重</view>
-				<view class="health-item-detail">
-					下降
-					<checkbox value="cb" checked="true" color="#FFCC33" style="transform:scale(0.7)" />
+				<view class="i-checked-item">
+					<text class="i-checked-label">下降</text>
+					<checkbox></checkbox>
 				</view>
-				<view class="health-item-detail">
-					无改变
+				<view class="i-checked-item">
+					<text class="i-checked-label">下降</text>
+					<checkbox></checkbox>
 				</view>
-				<view class="health-item-detail">
-					增加
+				<view class="i-checked-item">
+					<text class="i-checked-label">下降</text>
+					<checkbox></checkbox>
 				</view>
 			</view>
 			
@@ -73,6 +74,15 @@
 </script>
 
 <style lang="scss">
+	.edit{
+		uni-checkbox .uni-checkbox-input {
+		    border: 1px solid #26c39c;
+		    background-color: #21803c;
+		}
+		uni-checkbox .uni-checkbox-input.uni-checkbox-input-checked {
+		    color: #007aff!important;
+		}
+	}
 /* 	.navigationBar{
 		position: absolute;
 		height: 50px;
@@ -100,19 +110,25 @@
 				margin-top: 30rpx;
 				padding-left: 40rpx;
 				height: 76rpx;
-				border: 0.5rpx #E5E5E5 solid;
+				border: 1rpx #E5E5E5 solid;
+				border-radius: 4rpx;
 			}
-			.health-item-detail {
+			.i-checked-item {
 				height: 76rpx;
-				margin-top: 21rpx;
-				padding-left: 40rpx;
+				margin-top: 22rpx;
+				padding: 0 40rpx;
 				color: #666666;
+				justify-content: space-between;
 				font-size: 30rpx;
-				border: 0.5rpx #E5E5E5 solid;
+				border: 1rpx #E5E5E5 solid;
+				border-radius: 4rpx;
 				display: flex;
-				// justify-content: center;
 				align-items: center;
+				.uni-checkbox-input{
+					border: 1rpx solid #999999;
+				}
 			}
+			
 		}
 		
 		.health-update {

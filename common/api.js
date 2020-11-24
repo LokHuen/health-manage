@@ -9,14 +9,15 @@ var api = {
 	
 	//保存当前用户的身份认证
 	saveAuthentication:(data)=>{return rq("/wx/doctor/authentication/saveAuthentication",data,"POST");},
-	//所有省份列表
-	findProvinces:(data)=>{return rq("/wx/patient/findProvinces",data,"GET");},
-	//查询省份下城市
-	findCities:(data)=>{return rq("/wx/patient/findCities",data,"GET");},
+	//银行--省市地区列表
+	findProvinces:(data)=>{return rq("/wx/system/bank/region/list",data,"GET");},
 	//获取总行名称、编码
 	banklist:(data)=>{return rq("/wx/system/bank/list",data,"GET");},
 	//获取短信
 	getCode:(data)=>{return rq("/wx/doctor/loginSms",data,"POST");},
+	//获取分行 列表
+	subBranchList:(data)=>{return rq("/wx/system/bank/getSubBranchList",data,"GET");},
+
 }
 
 export {api};
