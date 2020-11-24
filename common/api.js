@@ -25,6 +25,8 @@ var api = {
 	patientCaseList:(data)=>{return rq("/wx/patient/bl/blList",data,"GET");},
 	//获取医生名片
 	doctorBusinessCard:(data)=>{return rq("/wx/doctor/cardInfo",data,"GET");},
+	//病患的基础信息
+	patientBasicInfo:(data)=>{return rq("/wx/patient/basicInfo",data,"GET");},
 }
 
 export {api};

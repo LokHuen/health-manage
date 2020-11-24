@@ -1,10 +1,50 @@
 <template>
 
 	<view>
-		<view class="health-content" v-for="(item,index) in listDatas">
+		<view class="health-content">
 			<view class="health-item">
-				<view class="health-item-title">{{item.title}}</view>
-				<view class="health-item-detail">{{item.detail}}</view>
+				<view class="health-item-title">患者姓名</view>
+				<view class="health-item-detail">{{data.patientName}}</view>
+			</view>
+		</view>
+		<view class="health-content">
+			<view class="health-item">
+				<view class="health-item-title">患者性别</view>
+				<view class="health-item-detail">{{data.patientGender}}</view>
+			</view>
+		</view>
+		
+		<view class="health-content">
+			<view class="health-item">
+				<view class="health-item-title">出生日期</view>
+				<view class="health-item-detail">{{data.birthday}}</view>
+			</view>
+		</view>
+		
+		<view class="health-content">
+			<view class="health-item">
+				<view class="health-item-title">所患疾病</view>
+				<view class="health-item-detail">{{data.illness}}</view>
+			</view>
+		</view>
+		
+		<view class="health-content">
+			<view class="health-item">
+				<view class="health-item-title">所在城市</view>
+				<view class="health-item-detail">{{data.region}}</view>
+			</view>
+		</view>
+		<view class="health-content">
+			<view class="health-item">
+				<view class="health-item-title">身高</view>
+				<view class="health-item-detail">{{data.height+'cm'}}</view>
+			</view>
+		</view>
+		
+		<view class="health-content">
+			<view class="health-item">
+				<view class="health-item-title">体重</view>
+				<view class="health-item-detail">{{data.weight+'kg'}}</view>
 			</view>
 		</view>
 
@@ -19,11 +59,12 @@
 <script>
 	import http from '../../common/http.js'
 	export default {
-		onLoad() {
-			
+		onShow() {
+			this.getInfo();
 		},
 		data() {
 			return {
+				data:{},
 				listDatas: [{
 					id: 101,
 					title: "患者姓名",
@@ -58,9 +99,15 @@
 		methods:{
 			updateInfo(){
 				console.log(1)
-				http.get("/wx/patient/basicInfo").then((res)=>{
-						console.log(res)
-				})
+				// http.get("/wx/patient/basicInfo").then((res)=>{
+				// 		console.log(res)
+				// })
+				
+			},
+			getInfo(){
+				app.patientBasicInfo({}).then(res =>{
+					
+				});
 			}
 		}
 	}

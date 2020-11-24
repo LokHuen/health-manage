@@ -1,6 +1,12 @@
 {
 	"pages": [ 
 		{
+			"path": "pages/patient/patient-basic-information",
+			"style": {
+				"navigationBarTitleText": "基础信息"
+			}
+		},
+		{
 			"path": "pages/doctor/doctor-business-card",
 			"style": {
 				"navigationBarTitleText": "名片码"
@@ -19,12 +25,7 @@
 				"navigationBarTitleText": "完善信息"
 			}
 		},
-		{
-			"path": "pages/patient/patient-basic-information",
-			"style": {
-				"navigationBarTitleText": "基础信息"
-			}
-		},
+		
 		
 		{
 			"path": "pages/doctor/doctor-improve-msg",

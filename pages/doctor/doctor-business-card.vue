@@ -3,7 +3,7 @@
 	<view class="container">
 		<view class="i-content-box" @longtap="saveQRCode">
 			<view class="i-header">
-				<image class="i-avatar" src="../../static/img/avator.png" style="width: 106rpx; height: 106rpx;"></image>
+				<image class="i-avatar" :src="data.portrait" style="width: 106rpx; height: 106rpx;"></image>
 				<view class="i-text-box">
 					<view>
 						<text class="i-name">{{data.doctorName}}</text>
