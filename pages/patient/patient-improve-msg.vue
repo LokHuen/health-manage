@@ -9,19 +9,19 @@
 		</view>
 		<view class="sex-box" @click="selectSex(0)">
 			<view class="sex-tips">* 患者性别</view>
-			<view class="sex-value">{{patientGender==0?'点击选择':patientGender==1?'男':'女'}}</view>
+			<view :class="patientGender==0?'sex-value':'has-value'">{{patientGender==0?'点击选择':patientGender==1?'男':'女'}}</view>
 		</view>
 		<view class="sex-box">
 			<view class="sex-tips">* 出生日期</view>
 			<picker mode="date" :value="birthday" :start="startDate" :end="endDate" @change="bindDateChange">
-				<view class="sex-value">{{birthday?birthday:'点击选择'}}</view>
+				<view :class="birthday?'has-value':'sex-value'">{{birthday?birthday:'点击选择'}}</view>
 			</picker>
 
 		</view>
 		<view class="sex-box">
 			<view class="sex-tips">* 所在城市</view>
 			<picker mode="multiSelector" :range="areaList" :range-key="'name'" @columnchange="columnChange" @cancel="areaCancel">
-				<view class="sex-value">{{city&&province?province+' '+city:'点击选择'}}</view>
+				<view :class="city&&province?'has-value':'sex-value'">{{city&&province?province+' '+city:'点击选择'}}</view>
 			</picker>
 		</view>
 		<view class="name-box">
@@ -42,17 +42,17 @@
 		<view class="pic-tip">上传出院小结（重要）、影像报告等内容，方便医生 评估病情</view>
 		<view class="pic-content-box">
 			<view class="ccimglist">
-				<view v-for="(item,index) in files" :key="index" :class="(index%3==0)?'img-box-first':'img-box'">
-					<image src="" mode="aspectFill" @click="previewImage(index)" class="imagelist"></image>
+				<view v-for="(item,index) in imgList" :key="index" :class="(index%3==0)?'img-box-first':'img-box'">
+					<image :src="item" mode="aspectFill" @click="previewImage(index)" class="imagelist"></image>
 					<image src="../../static/icon/icon_remove.png" mode="aspectFill" class="remove-icon" @click="remove(index)"></image>
 				</view>
 			</view>
 		</view>
-		<view class="upload-box" @click="upload">点击上传</view>
-		<view style="height: 200rpx;"></view>
+		<view class="upload-box" @click="choseImg">点击上传</view>
+		<view style="height: 400rpx;"></view>
 
 		<view class="button-box">
-			<button type="default" class="button">提交</button>
+			<button type="default" class="button" @click="submit">提交</button>
 		</view>
 
 		<uni-popup ref="sexPop" type="bottom">
@@ -66,6 +66,7 @@
 </template>
 
 <script>
+	const app = getApp();
 	import http from '../../common/http.js'
 	export default {
 
@@ -74,16 +75,16 @@
 				this.areaList[0] = res.data;
 				if (this.areaList[0] && this.areaList[0].length > 0) {
 					let obj = this.areaList[0][0];
-					this.province = obj.name
-					this.provinceId = obj.id
+					// this.province = obj.name
+					//this.provinceId = obj.id
 					http.get(http.urls.get_citys, {
-						id: this.provinceId
+						id: obj.id
 					}).then((res) => {
 						this.areaList[1] = res.data
 						if (this.areaList[1] && this.areaList[1].length > 0) {
 							let obj2 = this.areaList[1][0];
-							this.city = obj2.name
-							this.cityId = obj2.id
+							// this.city = obj2.name
+							// this.cityId = obj2.id
 						}
 						this.$forceUpdate();
 					})
@@ -110,11 +111,12 @@
 				illness: '',
 				height: '',
 				weight: '',
-				files: [],
 				areaList: [
 					[],
 					[]
 				],
+				imgList:[],
+				pathologyUrl:'',
 			}
 		},
 		methods: {
@@ -163,24 +165,96 @@
 				return `${year}-${month}-${day}`;
 			},
 			previewImage(index) {
-				console.log(index);
+				uni.previewImage({
+					urls:this.imgList,
+					current:index
+				})
 			},
 			remove(index) {
-				this.list.splice(index, 1);
+				this.imgList.splice(index, 1);
 			},
-			upload() {
-
+			choseImg() {
+                 if(this.imgList.length>8){
+                 	app.tip('最多选取9张图片');
+                 	return;
+                 }
+                 uni.chooseImage({
+                     count: 9-this.imgList.length, //默认9
+                     sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+                     // sourceType: ['album'], //从相册选择
+                     success: (res)=>{
+                 	    this.imgList = this.imgList.concat(res.tempFilePaths);
+                     }
+                 });
+			},
+			submit(){
+				if(!this.patientName|| 
+				    this.patientGender==0|| !this.birthday ||!this.cityId ||!this.provinceId ||!this.illness||
+					!this.weight ||!this.height){
+						app.tip('请输入完整信息');
+						return;
+					}
+				if(this.imgList.length>0){
+					this.uploadImg();
+				}else{
+					this.submitRequest();
+				}
+			},
+			uploadImg(){
+				let uploadCount = 0;
+				for (let i = 0; i < this.imgList.length; i++) {
+					let formData = {'uid':uni.getStorageSync("uid")}
+					uni.uploadFile({
+						url: '/api' + '/wx/patient/bl/uploadPicture',
+						filePath: this.imgList[i],
+						name: 'file',
+						formData:formData,
+						success:(res)=>{
+							console.log(res.data);
+							let data = JSON.parse(res.data);
+							if(data.status==1){
+								uploadCount ++;
+								this.pathologyUrl = this.pathologyUrl+data.data.pictureUrl+',';
+								console.log('uploadCount=='+uploadCount);
+								if(uploadCount == this.imgList.length){
+									//移除最后的逗号
+									this.pathologyUrl = this.pathologyUrl.substring(0, this.pathologyUrl.length - 1);
+									this.submitRequest();
+								}
+							}
+						    
+						},
+					});
+				}
+			},
+			submitRequest(){
+				app.savePatientInfo({
+					patientName:this.patientName,
+					patientGender:this.patientGender,
+					birthday:this.birthday,
+					cityId:this.cityId,
+					provinceId:this.provinceId,
+					illness:this.illness,
+					height:this.height,
+					weight:this.weight,
+					pathologyUrl:this.pathologyUrl
+				}).then(res =>{
+					if(res.status==1){
+						uni.navigateTo({
+							url:'patient-submit-sucess'
+						});
+					}
+				});
 			},
 			selectSex(type) {
 				if(type==0){
 					this.$refs.sexPop.open();
 				}else{
-					this.patientGender=type
+					this.patientGender=type;
+					this.$refs.sexPop.close();
 				}
 			},
-			selectCity() {
-				console.log('selectCity');
-			}
+			
 		},
 		created() {
 
@@ -319,11 +393,18 @@
 				height: 100rpx;
 				line-height: 100rpx;
 			}
-
 			.sex-value {
 				margin-left: 30rpx;
 				padding-right: 0;
 				color: #999999;
+				font-size: 15px;
+				height: 100rpx;
+				line-height: 100rpx;
+			}
+			.has-value {
+				margin-left: 30rpx;
+				padding-right: 0;
+				color: #333333;
 				font-size: 15px;
 				height: 100rpx;
 				line-height: 100rpx;

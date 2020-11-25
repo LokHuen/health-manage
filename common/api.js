@@ -35,6 +35,8 @@ var api = {
 	patientNutrition:(data)=>{return rq("/wx/patient/patientNutrition",data,"GET");},
 	//患者营养主页获取最近一次测评记录，医生端的患者详情页也可复用此方法
 	patientNearlyRecord:(data)=>{return rq("/wx/survey/question/getMemberReplyDetail",data,"GET");},
+	//完善病患信息
+	savePatientInfo:(data)=>{return rq("/wx/patient/savePatient",data,"POST");},
 }
 
 export {api};

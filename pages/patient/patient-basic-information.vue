@@ -57,7 +57,7 @@
 </template>
 
 <script>
-	import http from '../../common/http.js'
+	const app = getApp();
 	export default {
 		onShow() {
 			this.getInfo();
@@ -65,20 +65,20 @@
 		data() {
 			return {
 				data:{},
-				
 			}
 		},
 		methods:{
 			updateInfo(){
-				console.log(1)
-				// http.get("/wx/patient/basicInfo").then((res)=>{
-				// 		console.log(res)
-				// })
+				uni.navigateTo({
+					url:'patient-improve-msg'
+				})
 				
 			},
 			getInfo(){
 				app.patientBasicInfo({}).then(res =>{
-					
+					if(res.status==1){
+						this.data = res.data;
+					}
 				});
 			}
 		}

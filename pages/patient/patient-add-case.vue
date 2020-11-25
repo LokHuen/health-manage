@@ -5,7 +5,7 @@
 		  <view class="pic-content-box">
 		  	<view class="ccimglist">
 				<view v-for="(item,index) in list" :key="index" :class="(index%3==0)?'img-box-first':'img-box'">
-					<image  :src="item" mode="aspectFit" @click="previewImage(index)" class="imagelist"></image>
+					<image  :src="item" mode="aspectFill" @click="previewImage(index)" class="imagelist"></image>
 					<image src="../../static/icon/icon_remove.png" mode="aspectFill" class="remove-icon" @click="remove(index)"></image>
 				</view>
 		  	</view>
@@ -106,7 +106,7 @@
 		height: 175rpx;
 		margin-top: 12.5rpx;
 		margin-left: 12.5rpx;
-		background-color: #D2D2D2;
+		// background-color: #D2D2D2;
 	}
 	.remove-icon{
 		position: absolute;
