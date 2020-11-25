@@ -57,6 +57,8 @@ var api = {
 	divideRecord:(data)=>{return rq("/wx/doctor/getDivideRecord",data,"GET");},
 	//营养主页——病患列表
 	patientListInfo:(data)=>{return rq("/wx/doctor/patientInfo",data,"GET");},
+	//患者详情
+	patientDetailInfo:(data)=>{return rq("/wx/patient/doctorPatient",data,"GET");},
 }
 
 export {api};

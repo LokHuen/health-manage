@@ -31,6 +31,7 @@
 	export default {
 		data() {
 			return {
+				id:1,
 				pageNo:1,
 				listDatas:[
 					{
@@ -55,7 +56,8 @@
 				]
 			}
 		},
-		onLoad(){
+		onLoad(props){
+			this.id = props.id;
 			this.pageNo = 1;
 			this.getRecordData();
 		},
@@ -72,8 +74,10 @@
 				item.showDetail = !item.showDetail;
 			},
 		    getRecordData(){
-				app.memberReplyRecordList({surveyId:1,pageNo:this.pageNo}).then(res =>{
-					
+				app.memberReplyRecordList({surveyId:1,pageNo:this.pageNo,userId:this.id}).then(res =>{
+					if(res.status ==1){
+						
+					}
 				});
 			}
 		}
