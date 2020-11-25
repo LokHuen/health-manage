@@ -114,16 +114,17 @@
 					headBankNo:"",//开户银行总行编码
 				},
 				warn: {
-					legalName:"请填写户主姓名",
-					legalIdCard:"请填写身份证号码",
-					bank:"请选择开户行",
-					cardNo:"请填写银行卡账号",
 					idCardFront:"请上传身份证人像面",
 					idCardBack:"请上传身份证国徽面",
 					handIdCard:"请上传手持身份证照片",
 					bankCardFront:"请上传银行卡正面",
 					bankCardBack:"请上传银行卡背面",
 					handBankCard:"请上传手持银行卡照片",
+					legalName:"请填写户主姓名",
+					legalIdCard:"请填写身份证号码",
+					bank:"请选择开户行",
+					cardNo:"请填写银行卡账号",
+					
 				},
 				chooseindex:1, //1 银行 2 省 3 市 4分行
 				ranklist:[],
@@ -198,10 +199,7 @@
 							filePath: imglist,
 							name: 'file',
 							formData: {
-								module:"bank",
-							},
-							header: {
-								'content-type': 'multipart/form-data',
+								"module":"bank",
 								'uid': uni.getStorageSync("uid"),
 							},
 							success: (rq) => {
@@ -259,6 +257,9 @@
 				app.loading("保存中");
 				app.saveAuthentication(data).then(res => {
 				    app.loaded();
+					uni.reLaunch({
+						url:"/pages/authentication/result",
+					})
 				})
 			},
 		}
