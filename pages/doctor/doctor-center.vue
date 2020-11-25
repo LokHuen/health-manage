@@ -4,10 +4,10 @@
 			<image src="../../static/img/doctor_center.png" mode="widthFix" class="background-img"></image>
 			<view class="info-box">
 				<view class="title">个人中心</view>
-				<image src="../../static/img/avator.png" mode="widthFix" class="avator"></image>
-				<view class="name">张小明</view>
-				<view class="position">主任医师</view>
-				<view class="department">中山一院乳腺内科</view>
+				<image :src="data.portrait" mode="widthFix" class="avator"></image>
+				<view class="name">{{data.doctorName}}</view>
+				<view class="position">{{data.technicalTitle}}</view>
+				<view class="department">{{data.hospital+data.department}}</view>
 			</view>
 		</view>
 		<view class="item-list" v-for="(item,index) in list" :key="index" @click="clickItem(index)">
@@ -20,19 +20,42 @@
 </template>
 
 <script>
+	const app = getApp();
 	export default {
-		components: {
-
-		},
+	
 		data() {
 			return {
-				list: ["名片码","账户","身份认证"]
+				list: ["名片码","账户","身份认证"],
+				data:{}
 			}
+		},
+		onLoad(){
+			this.getData();
 		},
 		methods: {
 			clickItem(index){
-				
-			}
+				if(index==0){
+					uni.navigateTo({
+						url:'doctor-business-card'
+					});
+				}else if(index==1){
+					uni.navigateTo({
+						url:'doctor-account-list'
+					});
+				}else{
+					uni.navigateTo({
+						url:'../authentication/index'
+					});
+				}
+			},
+			getData(){
+				app.doctorBusinessCard({uid:app.getCache('uid')}).then(res => {
+					console.log(res);
+					if (res.status == 1) {
+						this.data = res.data;
+					}
+				});
+			},
 			
 		},
 

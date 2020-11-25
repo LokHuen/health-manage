@@ -32,6 +32,14 @@
 			}
 		},
 		methods: {
+			getData(){
+				app.doctorBusinessCard({uid:app.getCache('uid')}).then(res => {
+					console.log(res);
+					if (res.status == 1) {
+						this.data = res.data;
+					}
+				});
+			},
 			saveQRCode() {
 				let that = this;
 				//console.log('保存二维码')
@@ -56,12 +64,7 @@
 
 		},
 		onLoad() {
-			app.doctorBusinessCard({uid:app.getCache('uid')}).then(res => {
-				console.log(res);
-				if (res.status == 1) {
-					this.data = res.data;
-				}
-			});
+			this.getData();
 		}
 
 

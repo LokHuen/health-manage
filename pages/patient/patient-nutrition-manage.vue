@@ -115,7 +115,7 @@
 		<view class="button-box">
 			<button type="default" class="button">营养测评</button>
 		</view>
-		<view style="height: 100px;"></view>
+		<view style="height: 200px;"></view>
 		<uni-popup ref="popup" type="bottom">
 			<!-- 标准体重计算方法 -->
 			<view class="white-background">
@@ -233,14 +233,23 @@
 			closeEnergyTips() {
 				this.$refs.popupEnergy.close();
 			},
+			//用户信息
 			getData(){
 				app.patientNutrition({}).then(res =>{
 					if(res.status==1){
 						this.data = res.data;
 					}
 				});
+			},
+            //最近一次测评的
+			getNearlyRecord(){
+				app.patientNearlyRecord({surveyId:1}).then(res =>{
+					console.log(res);
+					if(res.status==1){
+						
+					}
+				});
 			}
-
 		},
 		created() {
 			this.$nextTick(() => {
@@ -250,6 +259,7 @@
 		},
 		onLoad(){
 			this.getData();
+			this.getNearlyRecord();
 		}
 
 	}
