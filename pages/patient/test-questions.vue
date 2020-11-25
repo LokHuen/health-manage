@@ -43,19 +43,19 @@
 			            </view>
 			            <view v-if="item.type===1">
 			                <block v-if="item.specialType===0">
-			                    <input v-model="item.answer" :placeholder="item.tips?item.tips:''" @blur="blur(item)" />
+			                    <input v-model="item.answer" :placeholder="item.tips?item.tips:'请填写'" @blur="blur(item)" />
 			                    <view v-if="item.warn" class="mustinput">{{item.warn}}</view>
 			                </block>
 			                <block v-else-if="item.specialType===1">
-			                    <input v-model="item.answer" :placeholder="item.tips?item.tips:''" @blur="checkMobile(item)" />
+			                    <input v-model="item.answer" :placeholder="item.tips?item.tips:'请填写'" @blur="checkMobile(item)" />
 			                    <view v-if="item.warn" class="mustinput">{{item.warn}}</view>
 			                </block>
 			                <block v-else-if="item.specialType===2">
-			                    <input v-model="item.answer" :placeholder="item.tips?item.tips:''" @blur="checkIDCard(item)" />
+			                    <input v-model="item.answer" :placeholder="item.tips?item.tips:'请填写'" @blur="checkIDCard(item)" />
 			                    <view v-if="item.warn" class="mustinput">{{item.warn}}</view>
 			                </block>
 			                <block v-else-if="item.specialType===3">
-			                    <input v-model="item.answer" :placeholder="item.tips?item.tips:''" @blur="checkEmail(item)" />
+			                    <input v-model="item.answer" :placeholder="item.tips?item.tips:'请填写'" @blur="checkEmail(item)" />
 			                    <view v-if="item.warn" class="mustinput">{{item.warn}}</view>
 			                </block>
 			                <block v-else-if="item.specialType===4">
@@ -69,7 +69,7 @@
 			                       <view v-if="item.warn" class="mustinput">{{item.warn}}</view>
 			                   </block>
 			                <block v-else>
-			                    <input  v-model="item.answer" :placeholder="item.tips?item.tips:''" @blur="blur(item)" />
+			                    <input  v-model="item.answer" :placeholder="item.tips?item.tips:'请填写'" @blur="blur(item)" />
 			                    <view v-if="item.warn" class="mustinput">{{item.warn}}</view>
 			                </block>
 			            </view>
@@ -192,6 +192,7 @@
 			    app.loading('加载中');
 			    app.getQuestionSecondList({...this.params}).then((res) => {
 			        this.questionList=res.data;
+					// this.questionList[0].type=2;
 			        this.params.recordId=0;  //获取问题后重置回答记录id
 			        app.loaded();
 			        document.body.scrollIntoView();
@@ -283,6 +284,13 @@
 			    this.seq=this.seq+this.questionList.length;
 			    this.num++;
 			    console.log("num is:" + this.num + "  seq is:---"+this.seq);
+				// let data = [];
+				// for (let key in this.questionList) {
+				// 	data[key] = JSON.stringify(this.questionList[key]);
+				// }
+				// for (var i = 0; i < this.questionList.length; i++) {
+				// 	data.push(this.questionList[i]);
+				// }
 			    app.replySecond(this.questionList).then(rs=>{
 			        if(rs.status==1){
 			            const{section,field,grade,nomore,toThird}=rs.data;
@@ -367,13 +375,19 @@
 
 <style lang="scss">
 	.edit{
-		padding-bottom:50rpx;
+		padding-bottom:50rpx;color: #272727;
 		uni-checkbox .uni-checkbox-input {
 		    border: 1px solid #26c39c;
 		    background-color: #21803c;
 		}
 		uni-checkbox .uni-checkbox-input.uni-checkbox-input-checked {
 		    color: #007aff!important;
+		}
+		uni-picker{
+			border: 1rpx solid #ddd;padding:15rpx 18rpx;border-radius:8rpx;font-size:30rpx;
+		}
+		uni-textarea{
+			border: 1rpx solid #ddd;padding:15rpx 18rpx;border-radius:8rpx;font-size:30rpx;width:100%;line-height:40rpx;height:150rpx;box-sizing:border-box;
 		}
 	}
 /* 	.navigationBar{

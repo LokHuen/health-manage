@@ -41,7 +41,11 @@
 			</view>
 			<view class="flex linebox">
 				<view class="lefttext">户主</view>
-				<input class="rightarea" v-model="form.accountName" maxlength="20" placeholder="请填写户主姓名" />
+				<input class="rightarea" v-model="form.legalName" maxlength="20" placeholder="请填写户主姓名" />
+			</view>
+			<view class="flex linebox">
+				<view class="lefttext">身份证</view>
+				<input class="rightarea" v-model="form.legalIdCard" maxlength="20" placeholder="请填写身份证号码" />
 			</view>
 			<view class="flex linebox" @click="openframe">
 				<view class="lefttext">开户行</view>
@@ -49,7 +53,7 @@
 			</view>
 			<view class="flex linebox">
 				<view class="lefttext">账号</view>
-				<input class="rightarea" type="number" v-model="form.accountCode" maxlength="30" placeholder="请填写银行卡账号" />
+				<input class="rightarea" type="number" v-model="form.cardNo" maxlength="30" placeholder="请填写银行卡账号" />
 			</view>
 
 			<view class="pagebottombt">
@@ -93,9 +97,10 @@
 				baseUrl: app.globalData.baseUrl,
 				imgUrl: app.globalData.imageUrl,
 				form: {
-					accountName:"",//银行账户
+					legalName:"",//银行账户
 					bank:"",
-					accountCode:"", //账号
+					legalIdCard:"",//身份证号
+					cardNo:"", //账号
 					id:"",
 					idCardFront:"", // 身份证正面图片url
 					idCardBack:"", // 身份证背面图片url
@@ -109,9 +114,10 @@
 					headBankNo:"",//开户银行总行编码
 				},
 				warn: {
-					accountName:"请填写户主姓名",
+					legalName:"请填写户主姓名",
+					legalIdCard:"请填写身份证号码",
 					bank:"请选择开户行",
-					accountCode:"请填写银行卡账号",
+					cardNo:"请填写银行卡账号",
 					idCardFront:"请上传身份证人像面",
 					idCardBack:"请上传身份证国徽面",
 					handIdCard:"请上传手持身份证照片",
@@ -188,10 +194,12 @@
 						app.loading("保存中");
 						var imglist = res.tempFilePaths[0];
 						uni.uploadFile({
-							url: '/api' + "/",
+							url: '/api' + "/wx/file/uploadPicture",
 							filePath: imglist,
 							name: 'file',
-							formData: {},
+							formData: {
+								module:"bank",
+							},
 							header: {
 								'content-type': 'multipart/form-data',
 								'uid': uni.getStorageSync("uid"),
@@ -200,12 +208,12 @@
 								console.log(rq)
 								let data = JSON.parse(rq.data);
 								switch(index){
-									case 1:this.form.idCardFront = data.data;break;
-									case 2:this.form.idCardBack = data.data;break;
-									case 3:this.form.handIdCard = data.data;break;
-									case 4:this.form.bankCardFront = data.data;break;
-									case 5:this.form.bankCardBack = data.data;break;
-									case 6:this.form.handBankCard = data.data;break;
+									case 1:this.form.idCardFront = data.data.pictureUrl;break;
+									case 2:this.form.idCardBack = data.data.pictureUrl;break;
+									case 3:this.form.handIdCard = data.data.pictureUrl;break;
+									case 4:this.form.bankCardFront = data.data.pictureUrl;break;
+									case 5:this.form.bankCardBack = data.data.pictureUrl;break;
+									case 6:this.form.handBankCard = data.data.pictureUrl;break;
 								}
 								
 							},
