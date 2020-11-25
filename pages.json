@@ -1,27 +1,42 @@
 {
 	"pages": [ 
 		{
+			"path": "pages/doctor/doctor-nutrition-manage",
+			"style": {
+				"navigationBarTitleText": "营养管理"
+			},
+			"enablePullDownRefresh": true
+		},
+		{
+			"path": "pages/patient/patient-nutrition-manage",
+			"style": {
+				"navigationBarTitleText": "营养管理"
+			}
+		},
+		{
 			"path": "pages/doctor/doctor-bill-detail",
 			"style": {
 				"navigationBarTitleText": "详情"
 			}
 		},
 		{
+			"path": "pages/doctor/doctor-center",
+			"style": {
+				"navigationBarTitleText": "个人中心"
+			}
+		},
+		
+		{
+			"path": "pages/patient/patient-add-case",
+			"style": {
+				"navigationBarTitleText": "新增病例"
+			}
+		},
+		
+		{
 			"path": "pages/doctor/doctor-account-list",
 			"style": {
 				"navigationBarTitleText": "账户"
-			}
-		},
-		{
-			"path": "pages/doctor/doctor-nutrition-manage",
-			"style": {
-				"navigationBarTitleText": "营养管理"
-			}
-		},
-		{
-			"path": "pages/patient/patient-nutrition-manage",
-			"style": {
-				"navigationBarTitleText": "营养管理"
 			}
 		},
 		
@@ -36,14 +51,7 @@
 			"style": {
 				"navigationBarTitleText": "完善信息"
 			}
-		},
-		{
-			"path": "pages/doctor/doctor-center",
-			"style": {
-				"navigationBarTitleText": "个人中心"
-			}
-		},
-		
+		},	
 		{
 				"path": "pages/patient/evaluation-record",
 				"style": {
@@ -51,7 +59,6 @@
 				},
 				"enablePullDownRefresh": true
 		},
-		
 		{
 			"path": "pages/doctor/doctor-business-card",
 			"style": {
@@ -79,8 +86,6 @@
 			},
 			"enablePullDownRefresh": true
 		},
-		
-         
 		{
 			"path": "pages/doctor/transferred-bankcard",
 			"style": {
@@ -150,12 +155,7 @@
 		// 	}
 		// },
 		
-		{
-			"path": "pages/patient/patient-add-case",
-			"style": {
-				"navigationBarTitleText": "新增病例"
-			}
-		},
+		
 		
 		{
 			"path": "pages/patient/evaluation-results",

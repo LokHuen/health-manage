@@ -4,25 +4,25 @@
 		<view class="top-box">
 			
 			<view class="info-box">
-				<image src="" mode="scaleToFill" class="avator"></image>
+				<image :src="doctorInfo.portrait" mode="scaleToFill" class="avator"></image>
 				<view class="user-msg-box">
 					<view class="name-box">
-						<view class="name">张小明</view>
-						<view class="position">主任医师</view>
+						<view class="name">{{doctorInfo.doctorName}}</view>
+						<view class="position">{{doctorInfo.technicalTitle}}</view>
 					</view>
-					<view class="msg">中山一院乳腺内科</view>
+					<view class="msg">{{doctorInfo.hospital+doctorInfo.department}}</view>
 				</view>
 			</view>
 			<view class="number-box">
 				<view class="count-box">
-					<view class="all-count">106</view>
+					<view class="all-count">{{doctorInfo.patientCount}}</view>
 					<view class="count-tip">总患者数</view>
 				</view>
 				
 				<view class="line-vertical"></view>
 				
 				<view class="count-box">
-					<view class="test-count">31</view>
+					<view class="test-count">{{doctorInfo.surveyCount}}</view>
 					<view class="count-tip">测评患者数</view>
 				</view>
 			</view>
@@ -32,7 +32,7 @@
 		<view class="line-space"></view>
 		<view class="screen-box">
 			<view class="all-patien-box" @click="patienScreen">
-				<view class="all-patien">全部患者</view>
+				<view class="all-patien">{{hasInfor==2?'全部患者':'资料已完善的患者'}}</view>
 				<image class="all-arrow" src="../../static/icon/right_arrow.png" mode="widthFix"></image>
 			</view>
 			<view class="all-patien-box" @click="timeScreen">
@@ -73,9 +73,9 @@
         <uni-popup ref="popupPatient" type="bottom">
         	<!-- 选择患者 -->
         	<view class="white-background-patient">
-				<view class="first-item">资料已完善的患者</view>
+				<view class="first-item" @click="selecgtInfo(1)">资料已完善的患者</view>
 				<view class="lines"></view>
-				<view class="second-item">全部患者</view>
+				<view class="second-item" @click="selecgtInfo(2)">全部患者</view>
 				<view class="liness"></view>
 				<view class="cancel" @click="closePatienScreen">取消</view>
 			</view>
@@ -84,9 +84,9 @@
 		<uni-popup ref="popupTime" type="bottom">
 			<!-- 选择时间 -->
 			<view class="white-background-patient">
-				<view class="first-item">按患者加入时间排序</view>
+				<view class="first-item" @click="selectOrderBy(2)">按患者加入时间排序</view>
 				<view class="lines"></view>
-				<view class="second-item">按测评时间排序</view>
+				<view class="second-item" @click="selectOrderBy(1)">按测评时间排序</view>
 				<view class="liness"></view>
 				<view class="cancel" @click="closeTimeScreen">取消</view>
 			</view>
@@ -99,33 +99,37 @@
 	export default {
 		data() {
 			return {
+				hasInfor:2,//是否完善资料（1：已经完善资料患者，2：全部患者）
+				orderBy:1,// 排序方式（测评时间排序 1，加入时间排序2）
+				pageNo:1,
 				doctorInfo:{},
 				listDatas:[
-					{
-							id:101,
-							title:"可疑或中度营养不良",
-							detail:"免疫治疗后",
-							time:"2020/12/1 12:23",
-							showRecord:true,
-							name:"张小名",
-							msg:'男 56岁 乳腺癌'
-						}, {
-							id:102,
-							title:"可疑或中度营养不良",
-							detail:"免疫治疗后",
-							time:"2020/12/2 12:23",
-							showRecord:false,
-							name:"小红花",
-							msg:'男 56岁 乳腺癌'
-						},{
-							id:103,
-							title:"可疑或中度营养不良",
-							detail:"免疫治疗后",
-							time:"2020/12/3 12:23",
-							showRecord:true,
-							name:"小哥哥",
-							msg:'男 56岁 乳腺癌'
-						}
+					
+					// {
+					// 		id:101,
+					// 		title:"可疑或中度营养不良",
+					// 		detail:"免疫治疗后",
+					// 		time:"2020/12/1 12:23",
+					// 		showRecord:true,
+					// 		name:"张小名",
+					// 		msg:'男 56岁 乳腺癌'
+					// 	}, {
+					// 		id:102,
+					// 		title:"可疑或中度营养不良",
+					// 		detail:"免疫治疗后",
+					// 		time:"2020/12/2 12:23",
+					// 		showRecord:false,
+					// 		name:"小红花",
+					// 		msg:'男 56岁 乳腺癌'
+					// 	},{
+					// 		id:103,
+					// 		title:"可疑或中度营养不良",
+					// 		detail:"免疫治疗后",
+					// 		time:"2020/12/3 12:23",
+					// 		showRecord:true,
+					// 		name:"小哥哥",
+					// 		msg:'男 56岁 乳腺癌'
+					// 	}
 				]
 				
 			}
@@ -143,18 +147,67 @@
 			closeTimeScreen(){
 				this.$refs.popupTime.close();
 			},
+			selecgtInfo(hasInfor){
+				//是否完善资料（1：已经完善资料患者，2：全部患者）
+				this.closePatienScreen();
+			    if(this.hasInfor != hasInfor){
+					this.hasInfor = hasInfor;
+					this.refreshData();
+				}
+			},
+			selectOrderBy(orderBy){
+				//排序方式（测评时间排序 1，加入时间排序2）
+				this.closeTimeScreen();
+				if(this.orderBy != orderBy){
+					this.orderBy = orderBy;
+					this.refreshData();
+				}
+			},
 		    getDoctorInfo(){
 				app.doctorInfo({}).then(res =>{
-					if(res ==1){
+					if(res.status ==1){
 						this.doctorInfo = res.data;
 					}
+				});
+			},
+			refreshData(){
+			    this.pageNo = 1;
+				this.getListData();
+			},
+			loadMoreData(){
+			    this.pageNo ++;	
+				this.getListData();
+			},
+			getListData(){
+				app.patientListInfo({
+					pageNo:this.pageNo,
+					hasInfor:this.hasInfor,
+					orderBy:this.orderBy
+				}).then(res =>{
+					if(res.status===1){
+						if(this.pageNo===1){
+							this.listDatas = res.data.list;
+						}else{
+							if(res.data.pageList.pageCount>this.pageNo){
+								this.listDatas = this.listDatas.concat(res.data.list);
+							}
+						}
+					}
+					uni.stopPullDownRefresh();
 				});
 			}
 		   
 		},
 		onLoad(){
 			this.getDoctorInfo();
-		}
+			this.refreshData();
+		},
+		onPullDownRefresh() {
+			this.refreshData();
+		},
+		onReachBottom() {
+			this.loadMoreData();
+		},
 		
 
 	}

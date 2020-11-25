@@ -47,8 +47,8 @@
 					<view class="health-detail">
 						<text style="font-size: 23px;">{{data.bmi}}</text>
 					</view>
-					<view class="health-tips" v-show="data.normal==1">
-						属正常体重范围
+					<view class="health-tips">
+						{{data.normal==1?'属正常体重范围':'超出正常体重范围'}}
 					</view>
 				</view>
 
@@ -101,11 +101,11 @@
 					<image class="health-list-item-avatar" src="../../static/icon/cry_icon.png"></image>
 				</view>
 				<view class="health-list-item-content">
-					<view class="health-list-item-title">可疑或者中度营养不良</view>
-					<view class="health-list-item-detail">免疫治疗后</view>
-					<view class="health-list-item-time">测评时间：2020/12/12</view>
+					<view class="health-list-item-title">{{latelyData.result}}</view>
+					<view class="health-list-item-detail">{{latelyData.phase}}</view>
+					<view class="health-list-item-time">{{'测评时间：'+latelyData.completeTime}}</view>
 					<view class="line" v-if="showDetail"></view>
-					<view class="advice-content" v-if="showDetail"> 建议： 由营养师、护师或医生进行患者或患者家庭教育，并可根据患者存在的症状和实验室检查的结果进行药物干预。</view>
+					<view class="advice-content" v-if="showDetail"> {{'建议：'+latelyData.content}}</view>
 				</view>
 				<image class="health-list-item-arrow" :src="showDetail?'../../static/icon/right_arrow_top.png':'../../static/icon/right_arrow.png'"
 				 mode="widthFix" @click="showDetailMessage"></image>
@@ -174,6 +174,7 @@
 		},
 		data() {
 			return {
+				latelyData:{},
 				data:{},
 				list: [
 					["/static/icon/baseInfoicon.png", "基础信息"],
@@ -251,7 +252,7 @@
 				app.patientNearlyRecord({surveyId:1}).then(res =>{
 					console.log(res);
 					if(res.status==1){
-						
+						this.latelyData = res.data;
 					}
 				});
 			}
@@ -438,8 +439,8 @@
 					.health-list-item-avatar {
 						margin-left: 20rpx;
 						margin-top: 40rpx;
-						width: 60rpx;
-						height: 60rpx;
+						width: 45rpx;
+						height: 45rpx;
 						border-radius: 50%;
 					}
 				}
