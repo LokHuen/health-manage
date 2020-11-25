@@ -3,7 +3,7 @@
 	<view class="container">
 		<view class="not-received-item">
 			<view class="money-box">
-				<view class="money">6800</view>
+				<view class="money">{{money}}</view>
 				<view class="yuan">元</view>
 			</view>
 			<view class="tips">待转账到银行卡</view>
@@ -11,32 +11,64 @@
 		</view>
 		<view class="line"> </view>
 		<view class="list-tips">收益待转账的订单</view>
-		<view class="list-item" v-for="(item,index) in list" :key="index">
-			<image src="../../static/img/avator.png" mode="widthFix" class="avtor"></image>
+		<view class="list-item" v-for="(item,index) in list" :key="index" @click="select(item)">
+			<image :src="item.portrait" mode="widthFix" class="avtor"></image>
 			<view class="info-box">
-				<view class="list-name">张小明</view>
-				<view class="list-detail">2022/12/1 12:09 购买益生菌益生菌益生菌火速回宿舍寒暑假</view>
+				<view class="list-name">{{item.name}}</view>
+				<view class="list-detail">{{item.createTime+' 购买'+item.commodity}}</view>
 			</view>
-			<view class="list-money">￥100</view>
+			<view class="list-money">{{'¥'+item.money}}</view>
 		</view>
 
 	</view>
 </template>
 
 <script>
+	const app = getApp();
 	export default {
-		components: {
-
-		},
 		data() {
 			return {
-				list: [1, 2, 3]
+				list: [],
+				pageNo:1,
+				money:''
 			}
 		},
 		methods: {
-
+			select(item){
+				uni.navigateTo({
+					url:'doctor-bill-detail?id='+item.id
+				});
+			},
+            getListData(){
+				app.doctorWaitDivide({pageNo:this.pageNo}).then(res =>{
+					if(res.status===1){
+						if(this.pageNo===1){
+							this.list = res.data.list;
+						}else{
+							if(res.data.pageList.pageCount>this.pageNo){
+								this.list = this.list.concat(res.data.list);
+							}
+						}
+					}
+					uni.stopPullDownRefresh();
+				});
+			}
 		},
-		created() {}
+		onShow(){
+			this.pageNo = 1;
+		    this.getListData();		
+		},
+		onPullDownRefresh() {
+			this.pageNo = 1;
+			this.getListData();
+		},
+		onReachBottom() {
+			this.pageNo ++;
+			this.getListData();
+		},
+		onLoad(props){
+			this.money = props.money;
+		}
 
 	}
 </script>

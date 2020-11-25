@@ -2,46 +2,70 @@
 	<!-- 医生账单详情 -->
 	<view class="container">
 		<view class="info">
-			<image src="../../static/img/avator.png" mode="widthFix" class="avtor"></image>
+			<image :src="data.portrait" mode="widthFix" class="avtor"></image>
 			<view class="info-box">
 				<view class="list-name-box">
-					<view class="name">李小明</view>
-					<view class="time">2022/12/1 12:09</view>
+					<view class="name">{{data.name}}</view>
+					<view class="time">{{data.createTime}}</view>
 				</view>
-				<view class="list-detail">购买益生菌益生菌益生菌火速回宿舍寒暑假</view>
+				<view class="list-detail">{{'购买'+data.commodity}}</view>
 			</view>
-			<view class="list-money">￥100</view>
+			<view class="list-money">{{'¥'+data.money}}</view>
 		</view>
 		<view class="line"></view>
 		<view class="list-item">
 			<view class="item-name">我的收益</view>
-			<view class="item-detail">100元</view>
+			<view class="item-detail">{{data.money+'元'}}</view>
 		</view>
 		
 		<view class="list-item">
 			<view class="item-name">转账时间</view>
-			<view class="item-detail">2020/12/12 12:21:23</view>
+			<view class="item-detail">{{data.transTime}}</view>
 		</view>
 		
 		<view class="list-item">
 			<view class="item-name">账户名称</view>
-			<view class="item-detail">张晓梅</view>
+			<view class="item-detail">{{data.accountName}}</view>
 		</view>
 		
 		<view class="list-item">
 			<view class="item-name">开户行</view>
-			<view class="item-detail">中国银行广州天河支行</view>
+			<view class="item-detail">{{data.bankName}}</view>
 		</view>
 		
 		<view class="list-item">
 			<view class="item-name">账号</view>
-			<view class="item-detail">6013821900098989999</view>
+			<view class="item-detail">{{data.bankNo}}</view>
 		</view>
 		
 	</view>
 </template>
 
 <script>
+	const app = getApp();
+	export default {
+		data() {
+			return {
+				id:1,
+				data:{}
+			}
+		},
+		methods: {
+			getDetail(){
+				app.divideRecord({id:this.id}).then(res =>{
+					if(res.status ==1){
+						this.data = res.data;
+					}
+				});
+			}
+			
+		},
+		onLoad(props){
+			this.id = props.id;
+			this.getDetail();
+		}
+
+	}
 </script>
 
 <style lang="scss">

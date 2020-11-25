@@ -1,11 +1,30 @@
 {
 	"pages": [ 
 		{
+			"path": "pages/doctor/doctor-bill-detail",
+			"style": {
+				"navigationBarTitleText": "详情"
+			}
+		},
+		{
 			"path": "pages/doctor/doctor-account-list",
 			"style": {
 				"navigationBarTitleText": "账户"
 			}
 		},
+		{
+			"path": "pages/doctor/doctor-nutrition-manage",
+			"style": {
+				"navigationBarTitleText": "营养管理"
+			}
+		},
+		{
+			"path": "pages/patient/patient-nutrition-manage",
+			"style": {
+				"navigationBarTitleText": "营养管理"
+			}
+		},
+		
 		{
 			"path": "pages/patient/patient-basic-information",
 			"style": {
@@ -24,12 +43,7 @@
 				"navigationBarTitleText": "个人中心"
 			}
 		},
-		{
-			"path": "pages/patient/patient-nutrition-manage",
-			"style": {
-				"navigationBarTitleText": "营养管理"
-			}
-		},
+		
 		{
 				"path": "pages/patient/evaluation-record",
 				"style": {
@@ -62,20 +76,17 @@
 			"path": "pages/doctor/already-transferred-bankcard",
 			"style": {
 				"navigationBarTitleText": "已转账到银行卡"
-			}
+			},
+			"enablePullDownRefresh": true
 		},
-		{
-			"path": "pages/doctor/doctor-bill-detail",
-			"style": {
-				"navigationBarTitleText": "详情"
-			}
-		},
+		
          
 		{
 			"path": "pages/doctor/transferred-bankcard",
 			"style": {
 				"navigationBarTitleText": "待转账到银行卡"
-			}
+			},
+			"enablePullDownRefresh": true
 		},
 		
 		{
@@ -130,12 +141,7 @@
 				"navigationBarTitleText": "病例"
 			}
 		},
-		{
-			"path": "pages/doctor/doctor-nutrition-manage",
-			"style": {
-				"navigationBarTitleText": "营养管理"
-			}
-		},
+		
 		
 		// {
 		// 	"path": "pages/patient/patient-improve-msg",

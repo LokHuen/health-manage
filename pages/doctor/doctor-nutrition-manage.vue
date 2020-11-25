@@ -95,13 +95,11 @@
 </template>
 
 <script>
-
+    const app = getApp();
 	export default {
-		components: {
-		
-		},
 		data() {
 			return {
+				doctorInfo:{},
 				listDatas:[
 					{
 							id:101,
@@ -144,9 +142,19 @@
 			},
 			closeTimeScreen(){
 				this.$refs.popupTime.close();
+			},
+		    getDoctorInfo(){
+				app.doctorInfo({}).then(res =>{
+					if(res ==1){
+						this.doctorInfo = res.data;
+					}
+				});
 			}
 		   
 		},
+		onLoad(){
+			this.getDoctorInfo();
+		}
 		
 
 	}

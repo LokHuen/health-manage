@@ -16,13 +16,28 @@
 		</view>
 		
 		<view class="button-box">
-			<button type="default" class="button">开始测评</button>
+			<button type="default" class="button" @click="test">开始测评</button>
 		</view>
 	</view>
 	
 </template>
 
 <script>
+	export default {
+		data() {
+			return {
+				
+			}
+		},
+		methods:{
+			test(){
+				uni.navigateTo({
+					url:'../testIndex'
+				});
+			}
+		}
+	}
+	
 </script>
 
 <style lang="scss">

@@ -3,16 +3,16 @@
 	<view>
 		<view class="health-title">
 			<view class="health-title-content">
-				<view class="health-title-amount">666666600元</view>
+				<view class="health-title-amount">{{money+'元'}}</view>
 				<view class="health-title-detail">已转账金额</view>
 			</view>	
 		</view>
 		<view class="health-list">
 			<view class="health-list-content">
 				<view class="health-list-title">转账记录</view>
-				<view class="health-item" v-for="(item,index) in listDatas">
-					<view class="item-amount">{{item.amount}}</view>
-					<view class="item-time">{{item.time}}&nbsp;&nbsp;&nbsp;&nbsp;{{item.from}}</view>
+				<view class="health-item" v-for="(item,index) in listDatas" @click="select(item)">
+					<view class="item-amount">{{item.money}}</view>
+					<view class="item-time">{{item.createTime}}&nbsp;&nbsp;&nbsp;&nbsp;{{'来自'+item.name+'的购物订单'}}</view>
 				</view>
 			</view>
 			
@@ -20,24 +20,55 @@
 	</view>
 </template>
 
+
+
 <script>
+	const app = getApp();
 	export default {
-	 	data() {
-	 		return {
-	 			listDatas:[{
-						id:101,
-						amount:"￥100",
-						time:"2022/12/1 12:09",
-						from:"来自李自强的购物订单"
-					},{
-						id:102,
-						amount:"￥200",
-						time:"2022/12/1 12:09",
-						from:"来自李自强的购物订单"
-					}
-				]
+		data() {
+			return {
+				listDatas:[],
+				pageNo:1,
+				money:''
 			}
+		},
+		methods: {
+			select(item){
+				uni.navigateTo({
+					url:'doctor-bill-detail?id='+item.id
+				});
+			},
+            getListData(){
+				app.doctorGetDivide({pageNo:this.pageNo}).then(res =>{
+					if(res.status===1){
+						if(this.pageNo===1){
+							this.listDatas = res.data.list;
+						}else{
+							if(res.data.pageList.pageCount>this.pageNo){
+								this.listDatas = this.listDatas.concat(res.data.list);
+							}
+						}
+					}
+					uni.stopPullDownRefresh();
+				});
+			}
+		},
+		onShow(){
+			this.pageNo = 1;
+		    this.getListData();		
+		},
+		onPullDownRefresh() {
+			this.pageNo = 1;
+			this.getListData();
+		},
+		onReachBottom() {
+			this.pageNo ++;
+			this.getListData();
+		},
+		onLoad(props){
+			this.money = props.money;
 		}
+
 	}
 </script>
 

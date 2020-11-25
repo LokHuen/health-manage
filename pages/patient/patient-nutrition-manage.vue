@@ -113,7 +113,7 @@
 		</view>
 
 		<view class="button-box">
-			<button type="default" class="button">营养测评</button>
+			<button type="default" class="button" @click="beginTest">营养测评</button>
 		</view>
 		<view style="height: 200px;"></view>
 		<uni-popup ref="popup" type="bottom">
@@ -192,6 +192,11 @@
 			}
 		},
 		methods: {
+			beginTest(){
+			 uni.navigateTo({
+			 	url:'nutritional-self-test'
+			 });
+			},
 			clickFuction(index){
 				if(index==0){
 					//基础信息

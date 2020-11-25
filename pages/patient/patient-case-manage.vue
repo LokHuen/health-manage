@@ -73,7 +73,6 @@
 						}
 						this.list[i].pathologyUrl = pathologyUrl;
 					}
-					console.log(this.list);
 					uni.stopPullDownRefresh();
 				})
 			}
