@@ -7,26 +7,26 @@
 				<view class="textinfo">平台审核通过后，您会收到手机短信通知。审核时长一般在1个工作日内完成。</view>
 			</view>
 			<view class="uploadbox flex" @click="sendpicture(1)">
-				<image src="../../static/auth/1.png" mode="widthFix"></image>
+				<image :src="form.idCardFront?(baseUrl+form.idCardFront):'../../static/auth/1.png'" mode="widthFix"></image>
 			</view>
 			<view class="uploadbox flex" @click="sendpicture(2)">
-				<image src="../../static/auth/2.png" mode="widthFix"></image>
+				<image :src="form.idCardBack?(baseUrl+form.idCardBack):'../../static/auth/2.png'" mode="widthFix"></image>
 			</view>
 			<view class="uploadbox flex" @click="sendpicture(3)">
-				<image src="../../static/auth/3.png" mode="widthFix"></image>
+				<image :src="form.handIdCard?(baseUrl+form.handIdCard):'../../static/auth/3.png'" mode="widthFix"></image>
 				<view class="textbox">
 					<view>照片必须清晰可见上半身及身份证人像面信息</view>
 				</view>
 			</view>
 			<view class="uploadbox flex" @click="sendpicture(4)">
-				<image src="../../static/auth/4.png" mode="widthFix"></image>
+				<image :src="form.bankCardFront?(baseUrl+form.bankCardFront):'../../static/auth/4.png'" mode="widthFix"></image>
 			</view>
 			<view class="uploadbox flex" @click="sendpicture(5)">
-				<image src="../../static/auth/5.png" mode="widthFix"></image>
+				<image :src="form.bankCardBack?(baseUrl+form.bankCardBack):'../../static/auth/5.png'" mode="widthFix"></image>
 				
 			</view>
 			<view class="uploadbox flex" @click="sendpicture(6)">
-				<image src="../../static/auth/6.png" mode="widthFix"></image>
+				<image :src="form.handBankCard?(baseUrl+form.handBankCard):'../../static/auth/6.png'" mode="widthFix"></image>
 				<view class="textbox">
 					<view>照片必须清晰可见上半身及银行卡卡号面信息</view>
 				</view>
@@ -93,26 +93,31 @@
 				baseUrl: app.globalData.baseUrl,
 				imgUrl: app.globalData.imageUrl,
 				form: {
-					accountName:"",
+					accountName:"",//银行账户
 					bank:"",
-					accountCode:"",
-					img1:"",
-					img2:"",
-					img3:"",
-					img4:"",
-					img5:"",
-					img6:"",
+					accountCode:"", //账号
+					id:"",
+					idCardFront:"", // 身份证正面图片url
+					idCardBack:"", // 身份证背面图片url
+					bankCardFront:"",// 银行卡正面图片url
+					bankCardBack:"", // 银行卡背面图片url
+					handIdCard:"", //手持身份证正面图片url
+					handBankCard:"", // 手持银行卡背面图片url
+					bankCity:"",//银行卡城市id
+					bankProvince:"",//银行卡开户省id
+					bankCode:"",//支行编码
+					headBankNo:"",//开户银行总行编码
 				},
 				warn: {
 					accountName:"请填写户主姓名",
 					bank:"请选择开户行",
 					accountCode:"请填写银行卡账号",
-					img1:"请上传身份证人像面",
-					img2:"请上传身份证国徽面",
-					img3:"请上传手持身份证照片",
-					img4:"请上传银行卡正面",
-					img5:"请上传银行卡背面",
-					img6:"请上传手持银行卡照片",
+					idCardFront:"请上传身份证人像面",
+					idCardBack:"请上传身份证国徽面",
+					handIdCard:"请上传手持身份证照片",
+					bankCardFront:"请上传银行卡正面",
+					bankCardBack:"请上传银行卡背面",
+					handBankCard:"请上传手持银行卡照片",
 				},
 				chooseindex:1, //1 银行 2 省 3 市 4分行
 				ranklist:[],
@@ -133,7 +138,7 @@
 		methods: {
 			getinfo(){
 				app.loading("连接中");
-				app.saveAuthentication({id:this.options.id}).then(res => {
+				app.authentication({id:this.options.id}).then(res => {
 					this.form = res.data;
 				    app.loaded();
 				})
@@ -183,7 +188,7 @@
 						app.loading("保存中");
 						var imglist = res.tempFilePaths[0];
 						uni.uploadFile({
-							url: this.baseUrl + "/",
+							url: '/api' + "/",
 							filePath: imglist,
 							name: 'file',
 							formData: {},
@@ -192,6 +197,16 @@
 								'uid': uni.getStorageSync("uid"),
 							},
 							success: (rq) => {
+								console.log(rq)
+								let data = JSON.parse(rq.data);
+								switch(index){
+									case 1:this.form.idCardFront = data.data;break;
+									case 2:this.form.idCardBack = data.data;break;
+									case 3:this.form.handIdCard = data.data;break;
+									case 4:this.form.bankCardFront = data.data;break;
+									case 5:this.form.bankCardBack = data.data;break;
+									case 6:this.form.handBankCard = data.data;break;
+								}
 								
 							},
 							complete:re=>{app.loaded();}
@@ -215,6 +230,10 @@
 					case 4:
 						this.chooserank[3]=this.childlist[index];
 						this.form.bank = this.chooserank[0].name;
+						this.form.headBankNo = this.chooserank[0].code;
+						this.form.bankCity = this.chooserank[2].id;
+						this.form.bankProvince = this.chooserank[1].id;
+						this.form.bankCode = this.chooserank[3].id;
 						this.$refs.popup.close();
 						this.chooseindex = 1;
 						break;

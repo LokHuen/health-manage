@@ -7,8 +7,16 @@ var api = {
 	 // //保存报告寄出信息
 	 // savePost:(data)=>{return rq("/wx/interpret/mri/savePost",data,"POST");},
 	
+	// 自测
+	getQuestionSecondList:(data)=>{return rq("/wx/survey/question/secondList",data,"GET");},
+	replySecond:(data)=>{return rq("/wx/survey/question/replySecond",data,"POST");},
+	getPreQuestionPage:(data)=>{return rq("/wx/survey/question/prePage",data,"GET");},
+	questiongetScore:(data)=>{return rq("/wx/survey/question/getScore",data,"GET");},//测试完成页，获取分数和结果
+	//自测
+	//最新认证信息
+	authentication:(data)=>{return rq("/wx/doctor/authentication/get",data,"GET");},
 	//保存当前用户的身份认证
-	saveAuthentication:(data)=>{return rq("/wx/doctor/authentication/saveAuthentication",data,"POST");},
+	saveAuthentication:(data)=>{return rq("/wx/doctor/authentication/save",data,"POST");},
 	//银行--省市地区列表
 	findProvinces:(data)=>{return rq("/wx/system/bank/region/list",data,"GET");},
 	//获取总行名称、编码
