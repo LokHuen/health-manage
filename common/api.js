@@ -37,6 +37,9 @@ var api = {
 	patientNearlyRecord:(data)=>{return rq("/wx/survey/question/getMemberReplyDetail",data,"GET");},
 	//完善病患信息
 	savePatientInfo:(data)=>{return rq("/wx/patient/savePatient",data,"POST");},
+	//账户首页的金额
+	doctorAccountInfo:(data)=>{return rq("/wx/doctor/accountInfo",data,"POST");},
+	
 }
 
 export {api};
