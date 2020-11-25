@@ -7,15 +7,10 @@ function rq(url,data={},type,ctype){
 		    data: data,
 			method:type||"GET",
 		    header: {
-<<<<<<< HEAD
 				'content-type': 'application/x-www-form-urlencoded',
-		          'uid': localStorage.getItem("uid"),
-				 //'uid':7,
-=======
-				'content-type': ctype||'application/x-www-form-urlencoded',
-		        'uid': localStorage.getItem("uid"),
-				 // 'uid':7,
->>>>>>> 9e24c056e2980e6573b4861f6bf9e008cbdd8ac7
+		          //'uid': localStorage.getItem("uid"),
+				 'uid':11,
+
 				// 'tkbgjd-token':"ef56ZpDKDJ3qy/ttr+d4r16cTZd0ju+7Pz0eT/MtwDaIqSiojYJsYdyjGFLYy4/pJR4BSUmab7tIypyLTZtBYN/3obpPO4rLM6FyqNJEhp1LxjTgveFK/ls2Xr0/"
 				// 'tkbgjd-token':"634fw+Rth9zpdjXbKK9wEJcqlZZrzjvtudIxfIL6apurN02RT6Xn2mvhKBRqiD9cx0R2yWFv8njvE8w7FkGru5/LmmtHT0Vq+uWt"
 			},

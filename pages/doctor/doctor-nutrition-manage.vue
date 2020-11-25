@@ -36,7 +36,7 @@
 				<image class="all-arrow" src="../../static/icon/right_arrow.png" mode="widthFix"></image>
 			</view>
 			<view class="all-patien-box" @click="timeScreen">
-				<view class="all-patien">按测评时间排序</view>
+				<view class="all-patien">{{orderBy==1?'按测评时间排序':'按患者加入时间排序'}}</view>
 				<image class="all-arrow" src="../../static/icon/right_arrow.png" mode="widthFix"></image>
 			</view>
         </view>
@@ -44,29 +44,29 @@
 		<view class="listContent" v-for="(item,index) in listDatas" :key="index">
 			<view style="height: 30rpx; background-color: #FFFFFF;" v-if="index!=0"></view>
 			<view class="msg-box">
-				<image class="avator-box" src="" mode="widthFix"></image>
+				<image class="avator-box" :src="item.portrait" mode="widthFix"></image>
 				<view class="msg-info-box">
-					<view class="msg-info-name">{{item.name}}</view>
-					<view class="msg-info-detail">{{item.msg}}</view>
+					<view class="msg-info-name">{{item.patientName}}</view>
+					<view class="msg-info-detail">{{item.patientGender==1?'男':'女'+' '+item.age+'岁'+item.illness}}</view>
 				</view>
 			</view>
 			<view class="line"></view>
 			
 			<!-- 健康信息 -->
-			<view class="health-list-item" v-if="item.showRecord">	
+			<view class="health-list-item" v-if="item.result">	
 				<view class="health-list-item-avatar-content">
-					<image class="health-list-item-avatar" src="../../static/icon/cry_icon.png"></image>
+					<image class="health-list-item-avatar" :src="item.portrait"></image>
 				</view>
 				<view class="health-list-item-content">
-					<view class="health-list-item-title">可疑或者中度营养不良</view>
-					<view class="health-list-item-detail">免疫治疗后</view>
-					<view class="health-list-item-time">测评时间：2020/12/12</view>
+					<view class="health-list-item-title">{{item.result}}</view>
+					<view class="health-list-item-detail">{{item.phase}}</view>
+					<view class="health-list-item-time">{{'测评时间：'+item.completeTime}}</view>
 					
 				</view>
 		        
 			</view>
 			
-			<view class="no-record-tips" v-if="!item.showRecord">暂无测评记录</view>
+			<view class="no-record-tips" v-if="!item.result">暂无测评记录</view>
 		</view>
 		<view style="height: 100px;" ></view>
 		
@@ -103,34 +103,7 @@
 				orderBy:1,// 排序方式（测评时间排序 1，加入时间排序2）
 				pageNo:1,
 				doctorInfo:{},
-				listDatas:[
-					
-					// {
-					// 		id:101,
-					// 		title:"可疑或中度营养不良",
-					// 		detail:"免疫治疗后",
-					// 		time:"2020/12/1 12:23",
-					// 		showRecord:true,
-					// 		name:"张小名",
-					// 		msg:'男 56岁 乳腺癌'
-					// 	}, {
-					// 		id:102,
-					// 		title:"可疑或中度营养不良",
-					// 		detail:"免疫治疗后",
-					// 		time:"2020/12/2 12:23",
-					// 		showRecord:false,
-					// 		name:"小红花",
-					// 		msg:'男 56岁 乳腺癌'
-					// 	},{
-					// 		id:103,
-					// 		title:"可疑或中度营养不良",
-					// 		detail:"免疫治疗后",
-					// 		time:"2020/12/3 12:23",
-					// 		showRecord:true,
-					// 		name:"小哥哥",
-					// 		msg:'男 56岁 乳腺癌'
-					// 	}
-				]
+				listDatas:[]
 				
 			}
 		},

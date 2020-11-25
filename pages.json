@@ -8,6 +8,13 @@
 			"enablePullDownRefresh": true
 		},
 		{
+			"path": "pages/doctor/doctor-center",
+			"style": {
+				"navigationBarTitleText": "个人中心"
+			}
+		},
+		
+		{
 			"path": "pages/patient/patient-nutrition-manage",
 			"style": {
 				"navigationBarTitleText": "营养管理"
@@ -19,12 +26,7 @@
 				"navigationBarTitleText": "详情"
 			}
 		},
-		{
-			"path": "pages/doctor/doctor-center",
-			"style": {
-				"navigationBarTitleText": "个人中心"
-			}
-		},
+		
 		
 		{
 			"path": "pages/patient/patient-add-case",

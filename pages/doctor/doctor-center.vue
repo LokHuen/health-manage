@@ -43,9 +43,10 @@
 						url:'doctor-account-list'
 					});
 				}else{
-					uni.navigateTo({
-						url:'../authentication/index'
-					});
+					// uni.navigateTo({
+					// 	url:'../authentication/index'
+					// });
+					this.judgeDoctorAuthenticationStatus();
 				}
 			},
 			getData(){
@@ -56,6 +57,26 @@
 					}
 				});
 			},
+			judgeDoctorAuthenticationStatus(){
+				app.authentication({id:app.getCache('uid')}).then(res =>{
+					 if(res.status == 1){
+						 let url = "/";
+						 if(res.data.status==-1){
+							 //认证失败
+							 
+						 }else if(res.data.status==0){
+							 //未认证
+						 }else if(res.data.status==1){
+							 //认证中
+						 }else if(res.data.status==2){
+							 //已认证
+						 }
+						 uni.navigateTo({
+						 	url
+						 })
+					 }
+				});
+			}
 			
 		},
 
