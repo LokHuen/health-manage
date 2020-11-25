@@ -241,7 +241,6 @@
 			    console.log(item.optionId)
 			    let optionIds="";
 			    let arr=this.checkedOptions;
-				let optionList = item.
 			    for(let item of optionList){
 			        for(var i=0;i<arr.length;i++){
 			            if(item.id==arr[i]){
