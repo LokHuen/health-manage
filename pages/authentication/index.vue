@@ -136,7 +136,7 @@
 		},
 		onLoad(options) {
 			this.options = options;
-			if(options.id) this.getinfo();
+			this.getinfo();
 			
 		},
 		onShow() {
@@ -145,7 +145,7 @@
 		methods: {
 			getinfo(){
 				app.loading("连接中");
-				app.authentication({id:this.options.id}).then(res => {
+				app.authentication({id:app.getCache('uid')}).then(res => {
 					this.form = res.data;
 				    app.loaded();
 				})

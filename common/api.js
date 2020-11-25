@@ -13,7 +13,7 @@ var api = {
 	getPreQuestionPage:(data)=>{return rq("/wx/survey/question/prePage",data,"GET");},
 	questiongetScore:(data)=>{return rq("/wx/survey/question/getScore",data,"GET");},//测试完成页，获取分数和结果
 	//自测
-	//最新认证信息
+	//获取认证详情
 	authentication:(data)=>{return rq("/wx/doctor/authentication/get",data,"GET");},
 	//保存当前用户的身份认证
 	saveAuthentication:(data)=>{return rq("/wx/doctor/authentication/save",data,"POST");},
