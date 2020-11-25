@@ -5,23 +5,28 @@
 		<view class="line-space"></view>
 		<view class="name-box">
 			<view class="name-tips">* 患者姓名</view>
-			<input class="name-input" type="text" value="" placeholder="请填写患者的真实名字" v-model="name" />
+			<input class="name-input" type="text" value="" placeholder="请填写患者的真实名字" v-model="patientName" />
 		</view>
-		<view class="sex-box" @click="selectSex">
+		<view class="sex-box" @click="selectSex(0)">
 			<view class="sex-tips">* 患者性别</view>
-			<view class="sex-value">点击选择</view>
+			<view class="sex-value">{{patientGender==0?'点击选择':patientGender==1?'男':'女'}}</view>
 		</view>
-		<view class="sex-box" @click="selectDate">
+		<view class="sex-box">
 			<view class="sex-tips">* 出生日期</view>
-			<view class="sex-value">点击选择</view>
+			<picker mode="date" :value="birthday" :start="startDate" :end="endDate" @change="bindDateChange">
+				<view class="sex-value">{{birthday?birthday:'点击选择'}}</view>
+			</picker>
+
 		</view>
-		<view class="sex-box" @click="selectCity">
+		<view class="sex-box">
 			<view class="sex-tips">* 所在城市</view>
-			<view class="sex-value">点击选择</view>
+			<picker mode="multiSelector" :range="areaList" :range-key="'name'" @columnchange="columnChange" @cancel="areaCancel">
+				<view class="sex-value">{{city&&province?province+' '+city:'点击选择'}}</view>
+			</picker>
 		</view>
 		<view class="name-box">
 			<view class="name-tips">* 所患疾病</view>
-			<input class="name-input" type="text" value="" placeholder="请填写疾病名称" v-model="ill" />
+			<input class="name-input" type="text" value="" placeholder="请填写疾病名称" v-model="illness" />
 		</view>
 		<view class="name-box">
 			<view class="name-tips">* 当前身高</view>
@@ -50,63 +55,113 @@
 			<button type="default" class="button">提交</button>
 		</view>
 
-		<picker-view v-if="isPicker" :indicator-style="indicatorStyle" :value="value" @change="bindChange">
-			<picker-view-column>
-				<view class="item" v-for="(item,index) in years" :key="index">{{item}}年</view>
-			</picker-view-column>
-			<picker-view-column>
-				<view class="item" v-for="(item,index) in months" :key="index">{{item}}月</view>
-			</picker-view-column>
-			<picker-view-column>
-				<view class="item" v-for="(item,index) in days" :key="index">{{item}}日</view>
-			</picker-view-column>
-		</picker-view>
+		<uni-popup ref="sexPop" type="bottom">
+			<view class="i-sex-content">
+				<text class="i-sex-title">性别选择</text>
+				<text :class="patientGender==1?'i-sex-item line active':'i-sex-item line'" @click="selectSex(1)">男</text>
+				<text :class="patientGender==2?'i-sex-item active':'i-sex-item'" @click="selectSex(2)">女</text>
+			</view>
+		</uni-popup>
 	</view>
 </template>
 
 <script>
+	import http from '../../common/http.js'
 	export default {
-		components: {
 
+		onLoad() {
+			http.get(http.urls.get_all_province).then((res) => {
+				this.areaList[0] = res.data;
+				if (this.areaList[0] && this.areaList[0].length > 0) {
+					let obj = this.areaList[0][0];
+					this.province = obj.name
+					this.provinceId = obj.id
+					http.get(http.urls.get_citys, {
+						id: this.provinceId
+					}).then((res) => {
+						this.areaList[1] = res.data
+						if (this.areaList[1] && this.areaList[1].length > 0) {
+							let obj2 = this.areaList[1][0];
+							this.city = obj2.name
+							this.cityId = obj2.id
+						}
+						this.$forceUpdate();
+					})
+				}
+			})
+		},
+		computed: {
+			startDate() {
+				return this.getDate('start');
+			},
+			endDate() {
+				return this.getDate('end');
+			}
 		},
 		data() {
-			const date = new Date()
-			const years = []
-			const year = date.getFullYear()
-			const months = []
-			const month = date.getMonth() + 1
-			const days = []
-			const day = date.getDate()
-			for (let i = 1990; i <= date.getFullYear(); i++) {
-				years.push(i)
-			}
-			for (let i = 1; i <= 12; i++) {
-				months.push(i)
-			}
-			for (let i = 1; i <= 31; i++) {
-				days.push(i)
-			}
 			return {
 				patientName: '',
-				patientGender: 1,
+				patientGender: 0,
 				birthday: '',
 				cityId: '',
+				city: '',
 				provinceId: '',
+				province: '',
 				illness: '',
 				height: '',
 				weight: '',
 				files: [],
-
-
-				isPicker: false,
-				value: [9999, month - 1, day - 1],
-				indicatorStyle: `height: ${Math.round(uni.getSystemInfoSync().screenWidth/(750/100))}px;`,
-				months: [],
-				month: [],
-				days: [],
+				areaList: [
+					[],
+					[]
+				],
 			}
 		},
 		methods: {
+			areaCancel() {
+				console.log(this.areaList)
+			},
+			columnChange(e) {
+				let column = e.detail.column
+				let value = e.detail.value
+				let obj = this.areaList[column][value]
+				if (column == 0) {
+					this.province = obj.name
+					this.provinceId = obj.id
+					http.get(http.urls.get_citys, {
+						id: this.provinceId
+					}).then((res) => {
+						this.areaList[1] = res.data
+						if (this.areaList[1] && this.areaList[1].length > 0) {
+							let obj2 = this.areaList[1][0];
+							this.city = obj2.name
+							this.cityId = obj2.id
+						}
+						this.$forceUpdate();
+					})
+				} else if (column == 1) {
+					this.city = obj.name
+					this.cityId = obj.id
+				}
+			},
+			bindDateChange(e) {
+				this.birthday = e.target.value
+			},
+			getDate(type) {
+				const date = new Date();
+				let year = date.getFullYear();
+				let month = date.getMonth() + 1;
+				let day = date.getDate();
+
+				if (type === 'start') {
+					year = year - 60;
+				} else if (type === 'end') {
+					year = year + 2;
+				}
+				month = month > 9 ? month : '0' + month;;
+				day = day > 9 ? day : '0' + day;
+				return `${year}-${month}-${day}`;
+			},
 			previewImage(index) {
 				console.log(index);
 			},
@@ -116,18 +171,12 @@
 			upload() {
 
 			},
-			selectSex() {
-				console.log('selectSex');
-			},
-			selectDate() {
-				this.isPicker = !this.isPicker
-				console.log(this.isPicker)
-			},
-			bindChange(e) {
-				const val = e.detail.value
-				this.year = this.years[val[0]]
-				this.month = this.months[val[1]]
-				this.day = this.days[val[2]]
+			selectSex(type) {
+				if(type==0){
+					this.$refs.sexPop.open();
+				}else{
+					this.patientGender=type
+				}
 			},
 			selectCity() {
 				console.log('selectCity');
@@ -141,6 +190,59 @@
 </script>
 
 <style lang="scss">
+	.i-sex-content {
+		display: flex;
+		flex-direction: column;
+		background-color: #FFFFFF;
+		align-items: center;
+		padding-top: 30rpx;
+		border-radius: 20rpx 20rpx 0rpx 0rpx;
+
+		.i-sex-title {
+			width: 100%;
+			color: #272727;
+			font-size: 32rpx;
+			font-weight: bold;
+			text-align: center;
+			padding-bottom: 20rpx;
+			// border-bottom: 1rpx solid #DDDDDD;
+		}
+
+		.i-sex-item {
+			width: 100%;
+			color: #272727;
+			font-size: 32rpx;
+			padding: 20rpx;
+			text-align: center;
+		}
+
+		.line {
+			// border-bottom: 1rpx solid #DDDDDD;
+		}
+
+		.active {
+			background-color: #F7F7F7;
+		}
+	}
+
+	.i-picker-container {
+		background-color: #FFFFFF;
+
+		.uni-padding-wrap {
+			display: flex;
+			justify-content: space-between;
+			padding: 15rpx 30rpx;
+			border-bottom: 1rpx solid #cfcfcf;
+			color: #52A29E;
+			font-size: 32rpx;
+		}
+
+		.i-picker-content {
+			height: 450rpx;
+			text-align: center;
+		}
+	}
+
 	.imagelist {
 		width: 175rpx;
 		height: 175rpx;
