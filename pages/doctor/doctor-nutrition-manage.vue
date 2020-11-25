@@ -41,7 +41,7 @@
 			</view>
         </view>
 		
-		<view class="listContent" v-for="(item,index) in listDatas" :key="index">
+		<view class="listContent" v-for="(item,index) in listDatas" :key="index" @click="select(item)">
 			<view style="height: 30rpx; background-color: #FFFFFF;" v-if="index!=0"></view>
 			<view class="msg-box">
 				<image class="avator-box" :src="item.portrait" mode="widthFix"></image>
@@ -108,6 +108,11 @@
 			}
 		},
 		methods: {
+			select(item){
+				uni.navigateTo({
+					url:'patient-detail?id='+item.id
+				});
+			},
 			patienScreen(){
 				this.$refs.popupPatient.open();
 			},

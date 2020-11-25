@@ -1,78 +1,112 @@
 <template>
 	<view class="container">
 		<view class="info-box">
-			<image src="" mode="scaleToFill" class="avator"></image>
+			<image :src="data.portrait" mode="scaleToFill" class="avator"></image>
 			<view class="user-msg-box">
-				<view class="name">张小明</view>
-				<view class="msg">男 56岁 乳腺癌</view>
+				<view class="name">{{data.patientName}}</view>
+				<view class="msg">{{data.patientGender+' '+data.age+' '+data.illness}}</view>
 			</view>
-			<view class="join-time">2020/12/1 加入</view>
+			<view class="join-time">{{data.bindTime+'加入'}}</view>
 		</view>
 		<view class="line-space"></view>
 		<view class="case-tips">病例</view>
-		<view class="pic-content-box" v-if="hasCase">
-			<view class="pic-time">2022/12/12 21:09 添加</view>
+		<view class="pic-content-box" v-if="data.pathologyUrl">
+			<view class="pic-time">{{data.blTime+' 添加'}}</view>
 			<view class="ccimglist">
-				<image v-for="(item,index) in list" :key="index" src="" mode="aspectFill" @click="previewImage(index)" :class="(index%3==0)?'imagelistfirst':'imagelist'"></image>
+				<image v-for="(item,index) in this.data.pathologyUrl" :key="index" :src="item" mode="aspectFill" @click="previewImage(index)" :class="(index%3==0)?'imagelistfirst':'imagelist'"></image>
 			</view>
 		</view>
-		<view class="more-case" v-if="hasCase">
+		<view class="more-case" v-if="data.pathologyUrl">
 			更多病例
 			<image src="../../static/icon/more_icon.png" mode="widthFix" class="more-icon"></image>
 		</view>
 		
-		<view class="no-case" v-if="!hasCase">暂无病例</view>
+		<view class="no-case" v-if="!data.pathologyUrl">暂无病例</view>
 		
 		<view class="case-tips">营养评估</view>
-		<view class="listContent" v-if="hasNutrition">
+		<view class="listContent" v-if="recordData">
 			<view class="health-list-item">	
 				<view class="health-list-item-avatar-content">
 					<image class="health-list-item-avatar" src="../../static/icon/cry_icon.png"></image>
 				</view>
 				<view class="health-list-item-content">
-					<view class="health-list-item-title">可疑或者中度营养不良</view>
-					<view class="health-list-item-detail">免疫治疗后</view>
-					<view class="health-list-item-time">测评时间：2020/12/12</view>
+					<view class="health-list-item-title">{{recordData.result}}</view>
+					<view class="health-list-item-detail">{{recordData.phase}}</view>
+					<view class="health-list-item-time">{{'测评时间：'+recordData.completeTime}}</view>
 					<view class="line" v-if="showDetail"></view>
-					<view class="advice-content" v-if="showDetail"> 建议： 由营养师、护师或医生进行患者或患者家庭教育，并可根据患者存在的症状和实验室检查的结果进行药物干预。</view>
+					<view class="advice-content" v-if="showDetail"> {{'建议： '+recordData.content}}</view>
 				</view>
 		        <image class="health-list-item-arrow" :src="showDetail?'../../static/icon/right_arrow_top.png':'../../static/icon/right_arrow.png'" mode="widthFix" @click="showDetailMessage"></image>
 			</view>
 		</view>
-		<view class="more-case" v-if="hasNutrition">
+		<view class="more-case" v-if="recordData" @click="moreRecord">
 			更多记录
 			<image src="../../static/icon/more_icon.png" mode="widthFix" class="more-icon"></image>
 		</view>
 		
-		<view class="no-nutrition" v-if="!hasNutrition">暂无评估</view>
+		<view class="no-nutrition" v-if="!recordData">暂无评估</view>
 		<view style="height: 100rpx;"></view>
 	</view>
 </template>
 
 <script>
+	const app = getApp();
 	export default {
-		components: {
-
-		},
 		data() {
 			return {
 				hasCase:true,
 				hasNutrition:false,
 				list: [1, 2, 3, 4, 5,6,7,8],
 				showDetail:false,
+				id:1,
+				data:{},
+				recordData:{}
 			}
 		},
 		methods: {
+			moreRecord(){
+				uni.navigateTo({
+					url:'../patient/evaluation-record?id='+this.id
+				})
+			},
 			previewImage(index) {
-				console.log(index);
+				uni.previewImage({
+					urls:this.data.pathologyUrl,
+					current:index
+				});
 			},
 			showDetailMessage(){
 				this.showDetail = !this.showDetail;
 			},
+			//头部信息f
+			getDetailInfo(){
+				app.patientDetailInfo({id:this.id}).then(res =>{
+					if(res.status == 1){
+					  this.data = res.data;	
+					  let pathologyUrl = [];
+					  let imgItems = this.data.pathologyUrl.split(',');
+					  for(var j=0;j<imgItems.length;j++){
+					  	pathologyUrl.push(app.globalData.baseUrl+imgItems[j]);
+					  }
+					  this.data.pathologyUrl = pathologyUrl;
+					}
+				});
+			},
+			//最近一次的记录
+			getNearRecord(){
+				app.patientNearlyRecord({surveyId:1,userId:this.id}).then(res =>{
+					if (res.status == 1){
+						this.recordData = res.data;
+					}
+				});
+			}
+			
 		
 		},
-		created() {
-
+		onLoad(props){
+			this.id = props.id;
+			this.getDetailInfo();
+			this.getNearRecord();
 		}
 
 	}
