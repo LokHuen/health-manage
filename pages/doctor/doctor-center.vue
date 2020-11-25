@@ -63,7 +63,7 @@
 						 let url = "/";
 						 if(res.data.status==-1){
 							 //认证失败
-							 
+							 url = "";
 						 }else if(res.data.status==0){
 							 //未认证
 						 }else if(res.data.status==1){
