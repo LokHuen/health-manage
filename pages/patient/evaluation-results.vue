@@ -6,13 +6,13 @@
 					<image class="health-list-item-avatar" src="../../static/icon/cry_icon.png"></image>
 				</view>
 				<view class="health-list-item-content">
-					<view class="health-list-item-title">可疑或中度营养不良</view>
+					<view class="health-list-item-title">{{info.result}}</view>
 					<view class="health-list-item-detail">
-						免疫治疗后
+						{{info.phase}}
 					</view>
-					<view class="health-list-item-time">测评时间：2022/12/1 12:09</view>
+					<view class="health-list-item-time">测评时间：{{info.completeTime}}</view>
 					<view class="line" v-if="showDetail"></view>
-					<view class="advice-content" v-if="showDetail"> 建议： 由营养师、护师或医生进行患者或患者家庭教育，并可根据患者存在的症状和实验室检查的结果进行药物干预。</view>
+					<rich-text v-show="showDetail" :nodes="info.content" class="advice-content"></rich-text>
 				</view>
                 <image class="health-list-item-arrow" :src="showDetail?'../../static/icon/right_arrow_top.png':'../../static/icon/right_arrow.png'" mode="widthFix" @click="onClickItem"></image>
 			</view>
@@ -25,13 +25,25 @@
 </template>
 
 <script>
+	let app = getApp();
 	export default {
 		data() {
 			return {
-				showDetail:true
+				id:1,
+				showDetail:true,
+				info:{},
 			}
 		},
+		onLoad(options){
+			this.id = options.id||1;
+			this.getinfo();
+		},
 		methods:{
+			getinfo(){
+				app.questiongetScore({surveyId:this.id}).then(res=>{
+					this.info = res.data;
+				})
+			},
 			onClickItem() {
 				this.showDetail = !this.showDetail;
 			}
@@ -100,15 +112,13 @@
 				.line{
 					background-color: #CCCCCC;
 					margin-top: 15rpx;
+					margin-bottom: 15rpx;
 					height: 2rpx;
 					margin-right: 20rpx;
 				}
+				img{max-width: 100%;}
 				.advice-content{
-					font-size: 11px;
-					color: #666666;
-					margin-top: 20rpx;
-                    padding-bottom: 10rpx;
-					margin-right: 10rpx;
+                    padding: 10rpx 0;
 				}
 			}
 			.health-list-item-arrow {

@@ -95,10 +95,7 @@
 			                </radio-group>
 			            </view>
 			            <view v-else-if="item.type===4">
-			                <!-- <select v-model="item.optionId" :placeholder="item.tips?item.tips:''">
-			                    <option v-for="(question,index) in item.optionList" :key="index" :label="question.title" :value="question.id"></option>
-			                </select> -->
-							<picker @change="bindPickerChange($event,item)" :value="item.value||0" :range-key="title" :range="item.optionList">
+							<picker @change="bindPickerChange($event,item)" :value="item.value||0" :range="item.alltitle">
 							    {{item.answer?item.answer:(item.tips?item.tips:"请选择")}}
 							</picker>
 			            </view>
@@ -106,7 +103,7 @@
 			                <checkbox-group v-model="checkedOptions" @change="handleChange($event,item)">
 			                    <view v-for="(question,index1) in item.optionList" :key="index1">
 			
-			                        <view>    <checkbox :value="index1+''"  :key="question.id" >{{question.serialNumber}}.{{question.title}}</checkbox>
+			                        <view>    <checkbox :value="index1+''" :data-index="index1" :key="question.id" >{{question.serialNumber}}.{{question.title}}</checkbox>
 			                        </view>
 			                        <view v-if="(question.isInput == 1&&question.show) || question.replyContent">
 			                            <input v-model="question.replyContent" :placeholder="question.isMust?('若选'+question.serialNumber+'此项必填'):'请填写'" @blur="getReply(question,item)"/>
@@ -192,9 +189,18 @@
 			    app.loading('加载中');
 			    app.getQuestionSecondList({...this.params}).then((res) => {
 			        this.questionList=res.data;
-					// this.questionList[0].type=2;
+					for (var i = 0; i < this.questionList.length; i++) {
+						let type4 = [];
+						if(this.questionList[i].type==4){
+							for (var j = 0; j < this.questionList[i].optionList.length; j++) {
+								type4.push(this.questionList[i].optionList[j].title);
+							}
+							this.$set(this.questionList[i],"alltitle",type4);
+						}
+					}
 			        this.params.recordId=0;  //获取问题后重置回答记录id
 			        app.loaded();
+					this.checkedOptions = [];
 			        document.body.scrollIntoView();
 			    })
 			},
@@ -238,20 +244,21 @@
 				item.answer = item.optionList[e.detail.value].title;
 				item.optionId = item.optionList[e.detail.value].id;
 			},
-			handleChange(e,optionList,item,question){
-			    console.log(item.optionId)
+			handleChange(e,item){
 			    let optionIds="";
-			    let arr=this.checkedOptions;
-			    for(let item of optionList){
-			        for(var i=0;i<arr.length;i++){
-			            if(item.id==arr[i]){
-			                optionIds=optionIds+arr[i]+",";
-			            }
-			        }
+			    let arr=e.detail.value;
+				let optionList = item.optionList;
+				let diff = getArrDifference(this.checkedOptions,e.detail.value);
+				// console.log(diff,this.checkedOptions,e.detail.value)
+				let question = optionList[diff[0]];
+			    for(var i=0;i<arr.length;i++){
+			        optionIds=optionIds+optionList[arr[i]].id+",";
 			    }
 			    item.optionId=optionIds;
+				this.checkedOptions = [...e.detail.value];
 			    if(question.isInput&&!question.show) {this.$set(question,"show",1);return;}
 			    if(question.isInput&&question.show) this.$set(question,"show",0);
+				
 			},
 			submitNext(){
 			    console.log(this.questionList);
@@ -302,17 +309,9 @@
 			                this.getQuestions();  //取下一页的题
 			
 			            }else{
-			                if(toThird==1){
-			                    this.$router.push({
-			                        path:'/question_list_3?id='+this.params.surveyId+"&isapp="+this.isapp
-			                    })
-			
-			                }else{
-			                    this.$router.push({
-			                        path:'/question_result?id='+this.params.surveyId+"&isapp="+this.isapp
-			                    })
-			
-			                }
+			                this.$router.push({
+			                    path:'/pages/patient/evaluation-results?id='+this.params.surveyId
+			                })
 			            }
 			        }else{
 			            app.tip(rs.msg)
@@ -359,7 +358,6 @@
 			    window.pageYOffset = btn.offsetTop-50;
 			},
 			radiochoose(e,item){
-				console.log(e)
 				let question = item.optionList[e.detail.value];
 				item.optionId = question.id;
 			    if(question.isInput) this.$set(question,"show",1);
@@ -370,7 +368,11 @@
 			},
 		}
 	}
-	
+	function getArrDifference(arr1, arr2) {
+	   return arr1.concat(arr2).filter(function(v, i, arr) {
+	      return arr.indexOf(v) === arr.lastIndexOf(v);
+	   });
+	}
 </script>
 
 <style lang="scss">
@@ -384,7 +386,7 @@
 		    color: #007aff!important;
 		}
 		uni-picker{
-			border: 1rpx solid #ddd;padding:15rpx 18rpx;border-radius:8rpx;font-size:30rpx;
+			border: 1rpx solid #ddd;padding:15rpx 18rpx;border-radius:8rpx;font-size:30rpx;line-height: 1.5;
 		}
 		uni-textarea{
 			border: 1rpx solid #ddd;padding:15rpx 18rpx;border-radius:8rpx;font-size:30rpx;width:100%;line-height:40rpx;height:150rpx;box-sizing:border-box;
@@ -470,8 +472,8 @@
 	    color: #FFFFFF;
 	    text-align: center;
 	}
-	.submitbt.pre{background: #fff;color:#000000;width:45%;margin-right:10%;}
-	.submitbt.other{width:45%;}
+	.submitbt.pre{background: #fff;color:#000000;width:40%;margin-right:10%;line-height: 76rpx;}
+	.submitbt.other{width:40%;line-height: 76rpx;}
 	uni-input{border: 1rpx solid #ddd;padding:15rpx 18rpx;border-radius:8rpx;font-size:30rpx;color: #272727;}
 	.health-content uni-radio-group{
 	    display: block;
@@ -479,12 +481,12 @@
 			display:block;line-height: 76rpx;background: #FFFFFF;border-radius: 8rpx;border: 1rpx solid #ddd;margin-bottom:26rpx;text-align: left;color: #272727;
 			
 		}
-	    uni-input{margin-bottom:0.3rem;}
+	    uni-input{margin-bottom:20rpx;}
 	}
 	uni-checkbox-group{
 	    display: block;
 		uni-checkbox{display:block;line-height: 76rpx;background: #FFFFFF;border-radius: 8rpx;border: 1rpx solid #ddd;margin-bottom:26rpx;text-align: left;color: #272727;}
-	    uni-input{margin-bottom:0.3rem;}
+	    uni-input{margin-bottom:20rpx;}
 	}
 	
 </style>

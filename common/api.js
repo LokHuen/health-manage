@@ -9,7 +9,7 @@ var api = {
 	
 	// 自测
 	getQuestionSecondList:(data)=>{return rq("/wx/survey/question/secondList",data,"GET");},
-	replySecond:(data)=>{return rq("/wx/survey/question/replySecond",JSON.stringify(data),"POST",'application/x-www-form-urlencoded');},
+	replySecond:(data)=>{return rq("/wx/survey/question/replySecond",JSON.stringify(data),"POST");},
 	getPreQuestionPage:(data)=>{return rq("/wx/survey/question/prePage",data,"GET");},
 	questiongetScore:(data)=>{return rq("/wx/survey/question/getScore",data,"GET");},//测试完成页，获取分数和结果
 	//自测

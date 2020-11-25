@@ -29,9 +29,11 @@
 	export default {
 		data() {
 			return {
+				id:1,
 				baseUrl:app.globalData.baseUrl,
 				imgUrl:app.globalData.imageUrl,
 				chooselist:[
+					{name:'确诊情况',list:["未确诊","已确诊"]},
 					{name:'手术治疗',list:["手术前","手术后"]},
 					{name:'放疗治疗',list:["放疗前","放疗中","放疗后"]},
 					{name:'化疗治疗',list:["化疗前","化疗中","化疗后"]},
@@ -52,6 +54,7 @@
 			}
 		},
 		onLoad(options){
+			this.id = options.id||1;
 			this.$nextTick(()=>{
 				this.$refs.popup.open();
 			})
@@ -66,10 +69,10 @@
 			},
 			submitchoose(){
 				if(!this.chooseclass) {app.tip("请选择其中一个选项");return;}
-				app.getReplyRecord({surveyId:1,phase:this.chooseclass+":"+this.chooseitem}).then(res=>{
+				app.getReplyRecord({surveyId:this.id,phase:this.chooseclass+" "+this.chooseitem}).then(res=>{
 					app.tip("保存成功");
 					uni.navigateTo({
-						url:"/pages/patient/test-questions"
+						url:"/pages/patient/test-questions?id="+this.id
 					})
 				})
 			},
