@@ -146,17 +146,22 @@
 
 <style lang="scss">
 	.edit {
+		.uni-radio-wrapper{width:100%;display: block;padding:0 30rpx;box-sizing:border-box;}
+		.uni-radio-input{float:right;margin:16rpx 0 0 0;width: 40rpx;height:40rpx;}
+		.uni-radio-input-checked{background-color:#52A29E!important;border-color:#52A29E!important;}
+		
+		.uni-checkbox-wrapper{width:100%;display: block;padding:0 30rpx;box-sizing:border-box;}
 		uni-checkbox .uni-checkbox-input {
-			height: 40rpx;
-			width: 40rpx;
+			height: 40rpx;float:right;margin:18rpx 0 0 0;
+			width: 40rpx;box-sizing:border-box;
 			border-radius: 4rpx;
 			margin-right: 0;
 		}
 
 		uni-checkbox .uni-checkbox-input.uni-checkbox-input-checked:before {
 			color: #FFFFFF;
-			content:"\2714";
-			top: 40%;
+			// content:"\2714";
+			// top: 35%;
 			
 		}
 
@@ -165,7 +170,7 @@
 		}
 
 		uni-checkbox .uni-checkbox-input.uni-checkbox-input-checked {
-			background-color: #52A29E;
+			background-color: #52A29E;border-color:#52A29E;
 		}
 	}
 
