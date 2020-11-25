@@ -2,8 +2,8 @@
 	<view class="contentbox">
 		<view class="bigtitle">已认证</view>
 		<view class="flex">
-			<image src="../../static/mine/code.png" mode="aspectFill" class="imglist" @click="preview()"></image>
-			<image src="../../static/mine/code.png" mode="aspectFill" class="imglist" @click="preview()"></image>
+			<image :src="baseUrl+info.idCardFront" mode="aspectFill" class="imglist" @click="preview(baseUrl+info.idCardFront)"></image>
+			<image :src="baseUrl+info.bankCardFront" mode="aspectFill" class="imglist" @click="preview(baseUrl+info.bankCardFront)"></image>
 		</view>
 		<view class="changecss" @click="toindex">修改身份信息</view>
 		<view>备注：身份信息修改成功前，你的收益会继续入账修改前的账户。</view>
@@ -17,20 +17,27 @@
 			return {
 				baseUrl:app.globalData.baseUrl,
 				imgUrl:app.globalData.imageUrl,
-				
+				info:{},
 			}
 		},
 		onLoad(options){
-			
+			this.getinfo();
 		},
 		onShow(){
 			
 		},
 		methods: {
+			getinfo(){
+				app.loading("连接中");
+				app.authentication({id:app.getCache('uid')}).then(res => {
+					this.info = res.data;
+				    app.loaded();
+				})
+			},
 			preview(url){
 				uni.previewImage({
-					current:[],
-					urls:[]
+					current:url,
+					urls:[this.baseUrl+this.info.idCardFront,this.baseUrl+this.info.bankCardFront]
 				})
 			},
 			toindex(){
