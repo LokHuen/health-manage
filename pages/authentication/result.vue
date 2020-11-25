@@ -27,7 +27,7 @@
 		methods: {
 			tomine(){
 				uni.reLaunch({
-					url:"/pages/mine/mine"
+					url:"/pages/doctor/doctor-center"
 				})
 			},
 		}
