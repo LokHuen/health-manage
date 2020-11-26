@@ -43,9 +43,7 @@
 						url:'doctor-account-list'
 					});
 				}else{
-					// uni.navigateTo({
-					// 	url:'../authentication/index'
-					// });
+
 					this.judgeDoctorAuthenticationStatus();
 				}
 			},

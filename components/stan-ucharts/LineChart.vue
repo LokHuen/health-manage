@@ -144,8 +144,7 @@ export default {
 					position: 'left', //Y轴位置，可选值左侧left右侧right(未起效果)
 					format: val => {
 						let defaultSetting = { type: 'number', fixed: 0, name: '' };
-						//let { type, fixed, name } = this.yAxisAs && this.yAxisAs.formatter ? Object.assign(defaultSetting, this.yAxisAs.formatter) : defaultSetting;
-						let { type, fixed, name } = defaultSetting;
+						let { type, fixed, name } = this.yAxisAs && this.yAxisAs.formatter ? Object.assign(defaultSetting, this.yAxisAs.formatter) : defaultSetting;
 						if (type == 'number') {
 							return val.toFixed(fixed) + name;
 						} else if (type == 'percent') {

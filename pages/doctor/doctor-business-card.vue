@@ -1,19 +1,19 @@
 <template>
 	<!-- 医生名片界面 -->
 	<view class="container">
-		<view class="i-content-box" @longtap="saveQRCode">
+		<view class="i-content-box">
 			<view class="i-header">
-				<image class="i-avatar" :src="data.portrait" style="width: 106rpx; height: 106rpx;"></image>
+				<image class="i-avatar" :src="infoData.portrait" style="width: 106rpx; height: 106rpx;"></image>
 				<view class="i-text-box">
 					<view>
-						<text class="i-name">{{data.doctorName}}</text>
-						<text class="i-post">{{data.technicalTitle}}</text>
+						<text class="i-name">{{infoData.doctorName}}</text>
+						<text class="i-post">{{infoData.technicalTitle}}</text>
 					</view>
-					<text class="i-subjecj">{{data.hospital+data.department}}</text>
+					<text class="i-subjecj">{{infoData.hospital+infoData.department}}</text>
 				</view>
 			</view>
 			<view class="i-qr-code-box">
-				<image class="i-qr-code" style="width: 360rpx; height: 360rpx;" :src="data.qrCode"></image>
+				<image class="i-qr-code" style="width: 360rpx; height: 360rpx;" :src="infoData.qrCode" @longtap="saveQRCode"></image>
 				<text class="i-code_des">扫码加入医生的患者名单</text>
 			</view>
 		</view>
@@ -27,7 +27,7 @@
 
 		data() {
 			return {
-				data: {},
+				infoData: {},
 
 			}
 		},
@@ -36,7 +36,7 @@
 				app.doctorBusinessCard({uid:app.getCache('uid')}).then(res => {
 					console.log(res);
 					if (res.status == 1) {
-						this.data = res.data;
+						this.infoData = res.data;
 					}
 				});
 			},
@@ -44,7 +44,7 @@
 				let that = this;
 				//console.log('保存二维码')
 				uni.downloadFile({ //获得二维码的临时地址
-					url: this.data.qrCode,
+					url: this.infoData.qrCode,
 					success: (res) => {
 						//console.log('获取url',res)
 						if (res.statusCode == 200) {

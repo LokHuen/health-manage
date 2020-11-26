@@ -260,6 +260,8 @@
 			getLineChartData(){
 				app.memberReplyRecordList({surveyId:1,pageNo:1,pageSize:3}).then(res =>{
 					if(res.status ==1){
+						this.lineData.categories = [];
+						this.lineData.series[0].data = [];
 						if(res.data.length >0 ){
 							for (var i = res.data.length-1; i >= 0; i--) {
 								 // this.lineData.categories.push(res.data[i].completeTime);

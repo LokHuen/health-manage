@@ -1,6 +1,12 @@
 {
 	"pages": [ 
 		{
+			"path": "pages/doctor/doctor-business-card",
+			"style": {
+				"navigationBarTitleText": "名片码"
+			}
+		},
+		{
 			"path": "pages/patient/patient-nutrition-manage",
 			"style": {
 				"navigationBarTitleText": "营养管理"
@@ -79,12 +85,7 @@
 				},
 				"enablePullDownRefresh": true
 		},
-		{
-			"path": "pages/doctor/doctor-business-card",
-			"style": {
-				"navigationBarTitleText": "名片码"
-			}
-		},
+		
 		{
 			"path": "pages/patient/patient-case-manage",
 			"style": {
