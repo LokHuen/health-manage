@@ -53,29 +53,30 @@
 				</view>
 
 			</view>
-			<view class="notice-box" >
-				<view class="notice-info" >
-					经典均衡饮食<view class="notice-text" >恶性肿瘤患者膳食营养处方专家共识推荐</view>
+			<view class="notice-box">
+				<view class="notice-info">
+					经典均衡饮食<view class="notice-text">恶性肿瘤患者膳食营养处方专家共识推荐</view>
 				</view>
 				<view class="flex">
-					<view class="leftinfo" >
-						<view class="flex infolist" >
-							<view class="inforound" ></view>
+					<view class="leftinfo">
+						<view class="flex infolist">
+							<view class="inforound"></view>
 							{{'脂肪'+infoData.dailyFat+'g'}}
 						</view>
-						<view class="flex infolist" >
-							<view class="inforound bcolor2" ></view>
+						<view class="flex infolist">
+							<view class="inforound bcolor2"></view>
 							{{'蛋白质'+infoData.dailyProtein+'g'}}
 						</view>
-						<view class="flex infolist" >
-							<view class="inforound bcolor3" ></view>
+						<view class="flex infolist">
+							<view class="inforound bcolor3"></view>
 							{{'碳水化合物'+infoData.dailyCarbonHydrate+'g'}}
 						</view>
 					</view>
-					<view class="rightinfo" >
-						<view @click="showEnergyTips" style="font-size:26rpx;"><text style="font-size:46rpx;">{{infoData.dailyEnergy}}</text>kcal<image src="../../static/icon/wenhaoIcon.png" mode="widthFix" style="width:24rpx;"></image>
+					<view class="rightinfo">
+						<view @click="showEnergyTips" style="font-size:26rpx;"><text style="font-size:46rpx;">{{infoData.dailyEnergy}}</text>kcal<image
+							 src="../../static/icon/wenhaoIcon.png" mode="widthFix" style="width:24rpx;"></image>
 						</view>
-						<view class="mintext" >建议每日总能量</view>
+						<view class="mintext">建议每日总能量</view>
 					</view>
 				</view>
 			</view>
@@ -174,8 +175,8 @@
 		},
 		data() {
 			return {
-				latelyData:{},
-				infoData:{},
+				latelyData: {},
+				infoData: {},
 				list: [
 					["/static/icon/baseInfoicon.png", "基础信息"],
 					["/static/icon/bingliMangmenticon.png", "病例管理"],
@@ -184,39 +185,41 @@
 				lineData: {
 					//数字的图--折线图数据
 					categories: [],
-					series: [{
-						name: '',
-						data: []
-					}, ],
+					series:[
+						{
+							data: [],
+							name: 'haha'
+						}
+					]
 				},
 				showDetail: false,
-				hasLoadLindData:0,
+				hasLoadLindData: 0,
 			}
 		},
 		methods: {
-			beginTest(){
-			 uni.navigateTo({
-			 	url:'nutritional-self-test'
-			 });
+			beginTest() {
+				uni.navigateTo({
+					url: 'nutritional-self-test'
+				});
 			},
-			clickFuction(index){
-				if(index==0){
+			clickFuction(index) {
+				if (index == 0) {
 					//基础信息
-				  uni.navigateTo({
-				  	url:'patient-basic-information'
-				  });
-				}else if(index==1){
+					uni.navigateTo({
+						url: 'patient-basic-information'
+					});
+				} else if (index == 1) {
 					//病例管理
 					uni.navigateTo({
-						url:'patient-case-manage'
+						url: 'patient-case-manage'
 					});
-				}else{
+				} else {
 					//测评记录
 					uni.navigateTo({
-						url:'evaluation-record'
+						url: 'evaluation-record'
 					});
 				}
-				
+
 			},
 			showDetailMessage() {
 				this.showDetail = !this.showDetail;
@@ -241,50 +244,56 @@
 				this.$refs.popupEnergy.close();
 			},
 			//用户信息数据
-			getData(){
-				app.patientNutrition({}).then(res =>{
-					if(res.status==1){
+			getData() {
+				app.patientNutrition({}).then(res => {
+					if (res.status == 1) {
 						this.infoData = res.data;
 					}
 				});
 			},
-            //最近一次测评的数据
-			getNearlyRecord(){
-				app.patientNearlyRecord({surveyId:1}).then(res =>{
-					if(res.status==1){
+			//最近一次测评的数据
+			getNearlyRecord() {
+				app.patientNearlyRecord({
+					surveyId: 1
+				}).then(res => {
+					if (res.status == 1) {
 						this.latelyData = res.data;
 					}
 				});
 			},
 			//拿曲线图的数据
-			getLineChartData(){
-				app.memberReplyRecordList({surveyId:1,pageNo:1,pageSize:3}).then(res =>{
-					if(res.status ==1){
+			getLineChartData() {
+				app.memberReplyRecordList({
+					surveyId: 1,
+					pageNo: 1,
+					pageSize: 3
+				}).then(res => {
+					console.log(res)
+					if (res.status == 1) {
 						this.lineData.categories = [];
-						this.lineData.series[0].data = [];
-						if(res.data.length >0 ){
-							for (var i = res.data.length-1; i >= 0; i--) {
-								 // this.lineData.categories.push(res.data[i].completeTime);
-								 var time = res.data[i].completeTime.split('/');
-								 var date = time[2].split(' ');
-								 this.lineData.categories.push(time[1]+'月'+date[0]+'日');
-								 this.lineData.series[0].data.push(res.data[i].total);
-							}
+						this.lineData.series[0].data=[1];
+						if (res.data && res.data.length > 0) {
+							res.data.forEach((item, index) => {
+								var time = item.completeTime.split('/');
+								var date = time[2].split(' ');
+								this.lineData.categories.push(time[1] + '月' + date[0] + '日');
+								// this.lineData.series[0].data.push(item.total)
+							})
+							console.log(this.lineData.series[0].data)
 							this.hasLoadLindData = 1;
 							this.$refs['lineData'].showCharts();
 						}
-						
 					}
-					
+
 				});
 			}
 		},
-		onShow(){
+		onShow() {
 			this.getData();
 			this.getNearlyRecord();
 			this.getLineChartData();
 		},
-		
+
 
 	}
 </script>
@@ -650,26 +659,53 @@
 			}
 		}
 	}
-	.notice-box{
-		padding:30rpx 40rpx 28rpx;
-		.notice-info{
-			font-size:26rpx;padding-bottom:20rpx;
-			.notice-text{font-size:24rpx;color:#999;padding-top:10rpx;}
+
+	.notice-box {
+		padding: 30rpx 40rpx 28rpx;
+
+		.notice-info {
+			font-size: 26rpx;
+			padding-bottom: 20rpx;
+
+			.notice-text {
+				font-size: 24rpx;
+				color: #999;
+				padding-top: 10rpx;
+			}
 		}
-		.leftinfo{
-			flex:1;font-size:24rpx;
-			.infolist{
-				padding-bottom:10rpx;
-				.inforound{
-					width:16rpx;height:16rpx;border-radius:50%;background:#F6BC6A;margin-right:12rpx;
-					&.bcolor2{background: #52A29E;}
-					&.bcolor3{background: #FA94C0;}
+
+		.leftinfo {
+			flex: 1;
+			font-size: 24rpx;
+
+			.infolist {
+				padding-bottom: 10rpx;
+
+				.inforound {
+					width: 16rpx;
+					height: 16rpx;
+					border-radius: 50%;
+					background: #F6BC6A;
+					margin-right: 12rpx;
+
+					&.bcolor2 {
+						background: #52A29E;
+					}
+
+					&.bcolor3 {
+						background: #FA94C0;
+					}
 				}
 			}
 		}
-		.rightinfo{
-			padding-right:20rpx;
-			.mintext{font-size:24rpx;color:#999;}
+
+		.rightinfo {
+			padding-right: 20rpx;
+
+			.mintext {
+				font-size: 24rpx;
+				color: #999;
+			}
 		}
 	}
 </style>

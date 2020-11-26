@@ -1,17 +1,18 @@
 {
-	"pages": [ 
-		{
-			"path": "pages/doctor/doctor-business-card",
-			"style": {
-				"navigationBarTitleText": "名片码"
-			}
-		},
+	"pages": [
 		{
 			"path": "pages/patient/patient-nutrition-manage",
 			"style": {
 				"navigationBarTitleText": "营养管理"
 			}
 		},
+		{
+			"path": "pages/doctor/doctor-business-card",
+			"style": {
+				"navigationBarTitleText": "名片码"
+			}
+		},
+		
 		{
 			"path": "pages/doctor/doctor-nutrition-manage",
 			"style": {
