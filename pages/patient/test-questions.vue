@@ -185,10 +185,14 @@
 			onClickItem(e) {
 				this.current = e.currentIndex;
 			},
-			getQuestions(){
+			getQuestions(next){
 			    app.loading('加载中');
 			    app.getQuestionSecondList({...this.params}).then((res) => {
 					app.loaded();
+					if(next){
+						this.beginArray[this.num] = this.seq;
+						this.seq=this.seq+this.questionList.length;
+					}
 					this.questionList = [];
 					setTimeout(rq=>{
 						this.questionList=res.data;
@@ -204,6 +208,10 @@
 						this.params.recordId=0;  //获取问题后重置回答记录id
 						this.checkedOptions = [];
 						document.body.scrollIntoView();
+						if(next){
+							this.num++;
+							console.log("num is:" + this.num + "  seq is:---"+this.seq);
+						}
 					},100);
 			        
 			    })
@@ -291,17 +299,7 @@
 			            }
 			        }
 			    }
-			    this.beginArray[this.num] = this.seq;
-			    this.seq=this.seq+this.questionList.length;
-			    this.num++;
-			    console.log("num is:" + this.num + "  seq is:---"+this.seq);
-				// let data = [];
-				// for (let key in this.questionList) {
-				// 	data[key] = JSON.stringify(this.questionList[key]);
-				// }
-				// for (var i = 0; i < this.questionList.length; i++) {
-				// 	data.push(this.questionList[i]);
-				// }
+			    
 			    app.replySecond(this.questionList).then(rs=>{
 			        if(rs.status==1){
 			            const{section,field,grade,nomore,toThird}=rs.data;
@@ -310,7 +308,7 @@
 			                this.params.section=section;
 			                this.params.field=field;
 			                this.params.grade=grade;
-			                this.getQuestions();  //取下一页的题
+			                this.getQuestions("next");  //取下一页的题
 			
 			            }else{
 			                this.$router.push({
@@ -482,14 +480,14 @@
 	.health-content uni-radio-group{
 	    display: block;
 		uni-radio{
-			display:block;line-height: 76rpx;background: #FFFFFF;border-radius: 8rpx;border: 1rpx solid #ddd;margin-bottom:26rpx;text-align: left;color: #272727;
+			display:block;line-height: 1.3;background: #FFFFFF;border-radius: 8rpx;border: 1rpx solid #ddd;margin-bottom:26rpx;text-align: left;color: #272727;padding:25rpx 0;
 			
 		}
 	    uni-input{margin-bottom:20rpx;}
 	}
 	uni-checkbox-group{
 	    display: block;
-		uni-checkbox{display:block;line-height: 76rpx;background: #FFFFFF;border-radius: 8rpx;border: 1rpx solid #ddd;margin-bottom:26rpx;text-align: left;color: #272727;}
+		uni-checkbox{display:block;line-height: 1.3;background: #FFFFFF;border-radius: 8rpx;border: 1rpx solid #ddd;margin-bottom:26rpx;text-align: left;color: #272727;padding:25rpx 0;}
 	    uni-input{margin-bottom:20rpx;}
 	}
 	

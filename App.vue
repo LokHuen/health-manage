@@ -147,12 +147,12 @@
 <style lang="scss">
 	.edit {
 		.uni-radio-wrapper{width:100%;display: block;padding:0 30rpx;box-sizing:border-box;}
-		.uni-radio-input{float:right;margin:16rpx 0 0 0;width: 40rpx;height:40rpx;}
+		.uni-radio-input{float:right;margin:-6rpx 0 0 0;width: 40rpx;height:40rpx;}
 		.uni-radio-input-checked{background-color:#52A29E!important;border-color:#52A29E!important;}
 		
 		.uni-checkbox-wrapper{width:100%;display: block;padding:0 30rpx;box-sizing:border-box;}
 		uni-checkbox .uni-checkbox-input {
-			height: 40rpx;float:right;margin:18rpx 0 0 0;
+			height: 40rpx;float:right;margin:-2rpx 0 0 0;
 			width: 40rpx;box-sizing:border-box;
 			border-radius: 4rpx;
 			margin-right: 0;
