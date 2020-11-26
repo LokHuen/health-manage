@@ -40,7 +40,9 @@
 		},
 		methods:{
 			getinfo(){
+				app.loading("加载中")
 				app.questiongetScore({surveyId:this.id}).then(res=>{
+					app.loaded();
 					this.info = res.data;
 				})
 			},
