@@ -19,7 +19,7 @@
 		</view>
 		
 		<view class="button-box">
-			<button type="default" class="button">完成</button>
+			<button type="default" class="button" @click="tootherpage">完成</button>
 		</view>
 	</view>
 </template>
@@ -48,6 +48,12 @@
 			},
 			onClickItem() {
 				this.showDetail = !this.showDetail;
+			},
+			tootherpage(){
+				uni.reLaunch({
+					url:app.topageurl?app.topageurl:"/pages/testIndex",
+				})
+				if(app.topageurl) app.topageurl = "";
 			}
 		}
 	}
@@ -120,7 +126,7 @@
 				}
 				img{max-width: 100%;}
 				.advice-content{
-                    padding: 10rpx 0;
+                    padding: 10rpx 0;color: #666666;
 				}
 			}
 			.health-list-item-arrow {

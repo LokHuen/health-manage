@@ -65,7 +65,9 @@
 			                    <view v-if="item.warn" class="mustinput">{{item.warn}}</view>
 			                </block>
 			                   <block v-else-if="item.specialType===5">
-			                       <input  v-model="item.answer" :placeholder="item.tips?item.tips:''" @blur="blur(item)" />
+								   <picker @click="openareachoose(item)" disabled="true">
+									   {{item.answer?item.answer:(item.tips?item.tips:"请选择")}}
+								   </picker>
 			                       <view v-if="item.warn" class="mustinput">{{item.warn}}</view>
 			                   </block>
 			                <block v-else>
@@ -123,15 +125,17 @@
 			</view>
 		</view>
 		
-		
+		<n-address ref="addr" @up-data="upData" ></n-address>
 	</view>
 	
 </template>
 
  
 <script>
+	import nAddress from "../../components/n-address/n-address.vue"
 	let app = getApp();
 	export default {
+		components:{nAddress},
 		data() {
 			return {
 				listDatas:[{
@@ -174,6 +178,7 @@
 				seq:1,  //每页的题目起始数
 				num:0,   //页码
 				beginArray: [],   //题目起始数组
+				openareadata:undefined,
 			}
 		},
 		onLoad(options){
@@ -368,6 +373,15 @@
 			        if(list[i].isInput&&list[i].show&&list[i].id!=question.id) list[i].show = 0;
 			    }
 			},
+			//省市区
+			openareachoose(item){
+				this.openareadata = item;
+				this.$refs['addr'].popUp();
+			},
+			upData (e) {
+			    console.log(e)
+				this.openareadata.answer = e.regionArr.join(" ");
+			}
 		}
 	}
 	function getArrDifference(arr1, arr2) {
