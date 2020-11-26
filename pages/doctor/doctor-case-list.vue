@@ -1,10 +1,10 @@
 <template>
 	<!-- 医生营养管理病例界面 -->
 	<view class="container">
-		<view class="pic-content-box" v-for="(item,indexItem) in itemList" :key="indexItem">
+		<view class="pic-content-box" v-for="(item,index) in list" :key="index">
 			<view class="pic-time">2022/12/12 21:09 添加</view>
 			<view class="ccimglist">
-				<image v-for="(item,index) in list" :key="index" src="" mode="aspectFill" @click="previewImage(index)" :class="(index%3==0)?'imagelistfirst':'imagelist'"></image>
+				<image v-for="(img,imgIndex) in item.pathologyUrl" :key="imgIndex" :src="img" mode="aspectFill" @click="previewImage(item,imgIndex)" :class="(imgIndex%3==0)?'imagelistfirst':'imagelist'"></image>
 			</view>
 		</view>
 		<view style="height: 100rpx;"></view>
@@ -13,29 +13,63 @@
 </template>
 
 <script>
+	const app = getApp();
 	export default {
-		components: {
-
-		},
 		data() {
 			return {
-				list: [1, 2, 3, 4, 5,6,7,8],
-				itemList:[1,2,3]
+				list: [],
+				pageNo: 1,
 			}
 		},
 		methods: {
-			previewImage(index) {
-				console.log(index);
+			previewImage(item,imgIndex) {
+				uni.previewImage({
+					urls:item.pathologyUrl,
+					current:imgIndex
+				})
 			},
 			addCase(){
-				
+				uni.navigateTo({
+					url:'patient-add-case'
+				});
+			},
+			getListData(){
+				app.patientCaseList({pageNo:this.pageNo}).then(res =>{
+					console.log(res);
+					if(res.status===1){
+						if(this.pageNo===1){
+							this.list = res.data.list;
+						}else{
+							if(res.data.pageList.pageCount>this.pageNo){
+								this.list = this.list.concat(res.data.list);
+							}
+						}
+					}
+					
+					for (var i = 0; i < this.list.length; i++) {
+						let pathologyUrl = [];
+						let imgItems = this.list[i].pathologyUrl.split(',');
+						for(var j=0;j<imgItems.length;j++){
+							pathologyUrl.push(app.globalData.baseUrl+imgItems[j]);
+						}
+						this.list[i].pathologyUrl = pathologyUrl;
+					}
+					uni.stopPullDownRefresh();
+				})
 			}
 		},
-		created() {
-
-
-
-		}
+		onShow(){
+			this.pageNo = 1;
+		    this.getListData();		
+		},
+		onPullDownRefresh() {
+			this.pageNo = 1;
+			this.getListData();
+		},
+		onReachBottom() {
+			this.pageNo ++;
+			this.getListData();
+		},
 
 	}
 </script>

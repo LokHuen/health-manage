@@ -8,6 +8,14 @@
 			"enablePullDownRefresh": true
 		},
 		{
+			"path": "pages/doctor/doctor-case-list",
+			"style": {
+				"navigationBarTitleText": "病例"
+			},
+			"enablePullDownRefresh": true
+		},
+		
+		{
 			"path": "pages/patient/patient-nutrition-manage",
 			"style": {
 				"navigationBarTitleText": "营养管理"
@@ -135,21 +143,13 @@
 			}
 		},
 		
-		
-		
-		
 		{
 			"path": "pages/doctor/patient-detail",
 			"style": {
 				"navigationBarTitleText": "患者详情"
 			}
 		},
-		{
-			"path": "pages/doctor/doctor-case-list",
-			"style": {
-				"navigationBarTitleText": "病例"
-			}
-		},
+		
 		
 		
 		// {

@@ -4,7 +4,7 @@
 			<image :src="data.portrait" mode="scaleToFill" class="avator"></image>
 			<view class="user-msg-box">
 				<view class="name">{{data.patientName}}</view>
-				<view class="msg">{{data.patientGender+' '+data.age+' '+data.illness}}</view>
+				<view class="msg">{{data.patientGender+' '+data.age+'岁 '+data.illness}}</view>
 			</view>
 			<view class="join-time">{{data.bindTime+'加入'}}</view>
 		</view>
@@ -24,7 +24,7 @@
 		<view class="no-case" v-if="!data.pathologyUrl">暂无病例</view>
 		
 		<view class="case-tips">营养评估</view>
-		<view class="listContent" v-if="recordData">
+		<view class="listContent" v-if="recordData.id">
 			<view class="health-list-item">	
 				<view class="health-list-item-avatar-content">
 					<image class="health-list-item-avatar" src="../../static/icon/cry_icon.png"></image>
@@ -39,12 +39,12 @@
 		        <image class="health-list-item-arrow" :src="showDetail?'../../static/icon/right_arrow_top.png':'../../static/icon/right_arrow.png'" mode="widthFix" @click="showDetailMessage"></image>
 			</view>
 		</view>
-		<view class="more-case" v-if="recordData" @click="moreRecord">
+		<view class="more-case" v-if="recordData.id" @click="moreRecord">
 			更多记录
 			<image src="../../static/icon/more_icon.png" mode="widthFix" class="more-icon"></image>
 		</view>
 		
-		<view class="no-nutrition" v-if="!recordData">暂无评估</view>
+		<view class="no-nutrition" v-if="!recordData.id">暂无评估</view>
 		<view style="height: 100rpx;"></view>
 	</view>
 </template>
@@ -83,12 +83,15 @@
 				app.patientDetailInfo({id:this.id}).then(res =>{
 					if(res.status == 1){
 					  this.data = res.data;	
-					  let pathologyUrl = [];
-					  let imgItems = this.data.pathologyUrl.split(',');
-					  for(var j=0;j<imgItems.length;j++){
-					  	pathologyUrl.push(app.globalData.baseUrl+imgItems[j]);
+					  if(this.data.pathologyUrl){
+						let pathologyUrl = [];
+						let imgItems = this.data.pathologyUrl.split(',');
+						for(var j=0;j<imgItems.length;j++){
+							pathologyUrl.push(app.globalData.baseUrl+imgItems[j]);
+						}
+						this.data.pathologyUrl = pathologyUrl;  
 					  }
-					  this.data.pathologyUrl = pathologyUrl;
+					  
 					}
 				});
 			},

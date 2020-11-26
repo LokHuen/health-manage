@@ -12,13 +12,11 @@
 					<image class="health-list-item-avatar" src="../../static/icon/cry_icon.png"></image>
 				</view>
 				<view class="health-list-item-content">
-					<view class="health-list-item-title">{{item.title}}</view>
-					<view class="health-list-item-detail">
-						{{item.detail}} 
-					</view>
-					<view class="health-list-item-time">测评时间：{{item.time}}</view>
+					<view class="health-list-item-title">{{item.result}}</view>
+					<view class="health-list-item-detail">{{item.phase}} </view>
+					<view class="health-list-item-time">测评时间：{{item.completeTime}}</view>
 					<view class="line" v-if="item.showDetail"></view>
-					<view class="advice-content" v-if="item.showDetail"> 建议： 由营养师、护师或医生进行患者或患者家庭教育，并可根据患者存在的症状和实验室检查的结果进行药物干预。</view>
+					<view class="advice-content" v-if="item.showDetail">{{'建议：'+item.content}}</view>
 				</view>
                 <image class="health-list-item-arrow" :src="item.showDetail?'../../static/icon/right_arrow_top.png':'../../static/icon/right_arrow.png'" mode="widthFix" @click="onClickItem(item)"></image>
 			</view>
@@ -33,27 +31,7 @@
 			return {
 				id:1,
 				pageNo:1,
-				listDatas:[
-					{
-							id:101,
-							title:"可疑或中度营养不良",
-							detail:"免疫治疗后",
-							time:"2020/12/1 12:23",
-							showDetail:true
-						}, {
-							id:102,
-							title:"可疑或中度营养不良",
-							detail:"免疫治疗后",
-							time:"2020/12/2 12:23",
-							showDetail:false
-						},{
-							id:103,
-							title:"可疑或中度营养不良",
-							detail:"免疫治疗后",
-							time:"2020/12/3 12:23",
-							showDetail:true
-						}
-				]
+				listDatas:[]
 			}
 		},
 		onLoad(props){
@@ -75,9 +53,19 @@
 			},
 		    getRecordData(){
 				app.memberReplyRecordList({surveyId:1,pageNo:this.pageNo,userId:this.id}).then(res =>{
-					if(res.status ==1){
-						
+					if(res.status===1){
+						if(this.pageNo==1){
+							this.listDatas = res.data.list;
+						}else{
+							if(res.data.pageList.pageCount>this.pageNo){
+								this.listDatas = this.listDatas.concat(res.data.list);
+							}
+						}
 					}
+					for (var i = 0; i < this.listDatas.length; i++) {
+						this.listDatas[i].showDetail = false;
+					}
+					uni.stopPullDownRefresh();
 				});
 			}
 		}
@@ -109,8 +97,8 @@
 				.health-list-item-avatar {
 					margin-left: 20rpx;
 					margin-top: 40rpx;
-					width: 60rpx;
-					height: 60rpx;
+					width: 45rpx;
+					height: 45rpx;
 					border-radius: 50%;
 				}
 			}
