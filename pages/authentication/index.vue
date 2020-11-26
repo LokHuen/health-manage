@@ -111,7 +111,7 @@
 					bankCity:"",//银行卡城市id
 					bankProvince:"",//银行卡开户省id
 					bankCode:"",//支行编码
-					headBankNo:"",//开户银行总行编码
+					headBankCode:"",//开户银行总行编码
 				},
 				warn: {
 					idCardFront:"请上传身份证人像面",
@@ -146,6 +146,12 @@
 			getinfo(){
 				app.loading("连接中");
 				app.authentication({id:app.getCache('uid')}).then(res => {
+					if(res.data.idCardFront) res.data.idCardFront = res.data.idCardFront.split(",")[0]; // 身份证正面图片url
+					if(res.data.idCardBack) res.data.idCardBack = res.data.idCardBack.split(",")[0];
+					if(res.data.bankCardFront) res.data.bankCardFront = res.data.bankCardFront.split(",")[0];
+					if(res.data.bankCardBack) res.data.bankCardBack = res.data.bankCardBack.split(",")[0];
+					if(res.data.handIdCard) res.data.handIdCard = res.data.handIdCard.split(",")[0];
+					if(res.data.handBankCard) res.data.handBankCard = res.data.handBankCard.split(",")[0];
 					this.form = res.data;
 				    app.loaded();
 				})
@@ -236,7 +242,7 @@
 					case 4:
 						this.chooserank[3]=this.childlist[index];
 						this.form.bank = this.chooserank[0].name;
-						this.form.headBankNo = this.chooserank[0].code;
+						this.form.headBankCode = this.chooserank[0].code;
 						this.form.bankCity = this.chooserank[2].id;
 						this.form.bankProvince = this.chooserank[1].id;
 						this.form.bankCode = this.chooserank[3].id;
