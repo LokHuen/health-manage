@@ -187,22 +187,25 @@
 			},
 			getQuestions(){
 			    app.loading('加载中');
-				this.questionList = [];
 			    app.getQuestionSecondList({...this.params}).then((res) => {
-			        this.questionList=res.data;
-					for (var i = 0; i < this.questionList.length; i++) {
-						let type4 = [];
-						if(this.questionList[i].type==4){
-							for (var j = 0; j < this.questionList[i].optionList.length; j++) {
-								type4.push(this.questionList[i].optionList[j].title);
+					app.loaded();
+					this.questionList = [];
+					setTimeout(rq=>{
+						this.questionList=res.data;
+						for (var i = 0; i < this.questionList.length; i++) {
+							let type4 = [];
+							if(this.questionList[i].type==4){
+								for (var j = 0; j < this.questionList[i].optionList.length; j++) {
+									type4.push(this.questionList[i].optionList[j].title);
+								}
+								this.$set(this.questionList[i],"alltitle",type4);
 							}
-							this.$set(this.questionList[i],"alltitle",type4);
 						}
-					}
-			        this.params.recordId=0;  //获取问题后重置回答记录id
-			        app.loaded();
-					this.checkedOptions = [];
-			        document.body.scrollIntoView();
+						this.params.recordId=0;  //获取问题后重置回答记录id
+						this.checkedOptions = [];
+						document.body.scrollIntoView();
+					},100);
+			        
 			    })
 			},
 			blur(item){

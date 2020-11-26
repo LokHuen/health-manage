@@ -56,7 +56,7 @@
 		onLoad(options){
 			this.id = options.id||1;
 			this.$nextTick(()=>{
-				this.$refs.popup.open();
+				if(!app.getCache("zhiyin")) {this.$refs.popup.open();app.setCache("zhiyin",1);}
 			})
 		},
 		onShow(){
