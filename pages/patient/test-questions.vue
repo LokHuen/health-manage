@@ -187,6 +187,7 @@
 			},
 			getQuestions(){
 			    app.loading('加载中');
+				this.questionList = [];
 			    app.getQuestionSecondList({...this.params}).then((res) => {
 			        this.questionList=res.data;
 					for (var i = 0; i < this.questionList.length; i++) {

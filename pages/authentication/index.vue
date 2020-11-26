@@ -272,8 +272,8 @@
 			.backicon{padding-left:28rpx;position:absolute;left: 0;}
 		}
 		.choosebody{height:610rpx;overflow-y: auto;
-			.itemlist{line-height:96rpx;border-bottom: 1rpx solid #eee;margin:0 30rpx;padding:0 6rpx;
-				p{flex:1}
+			.itemlist{line-height:1.3;border-bottom: 1rpx solid #eee;margin:0 30rpx;padding:30rpx 6rpx;
+				p{flex:1;}
 			}
 		}
 	}
