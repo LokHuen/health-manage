@@ -2,7 +2,7 @@
 	<!-- 医生营养管理病例界面 -->
 	<view class="container">
 		<view class="pic-content-box" v-for="(item,index) in list" :key="index">
-			<view class="pic-time">2022/12/12 21:09 添加</view>
+			<view class="pic-time">{{item.createTime+' 添加'}}</view>
 			<view class="ccimglist">
 				<image v-for="(img,imgIndex) in item.pathologyUrl" :key="imgIndex" :src="img" mode="aspectFill" @click="previewImage(item,imgIndex)" :class="(imgIndex%3==0)?'imagelistfirst':'imagelist'"></image>
 			</view>
@@ -19,6 +19,7 @@
 			return {
 				list: [],
 				pageNo: 1,
+				patientId:1,
 			}
 		},
 		methods: {
@@ -34,7 +35,7 @@
 				});
 			},
 			getListData(){
-				app.patientCaseList({pageNo:this.pageNo}).then(res =>{
+				app.doctorBlList({pageNo:this.pageNo,patientId:this.patientId}).then(res =>{
 					console.log(res);
 					if(res.status===1){
 						if(this.pageNo===1){
@@ -58,10 +59,6 @@
 				})
 			}
 		},
-		onShow(){
-			this.pageNo = 1;
-		    this.getListData();		
-		},
 		onPullDownRefresh() {
 			this.pageNo = 1;
 			this.getListData();
@@ -70,6 +67,10 @@
 			this.pageNo ++;
 			this.getListData();
 		},
+		onLoad(props){
+			this.patientId = props.patientId;
+			this.getListData();		
+		}
 
 	}
 </script>

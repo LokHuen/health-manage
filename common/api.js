@@ -59,6 +59,8 @@ var api = {
 	patientListInfo:(data)=>{return rq("/wx/doctor/patientInfo",data,"GET");},
 	//患者详情
 	patientDetailInfo:(data)=>{return rq("/wx/patient/doctorPatient",data,"GET");},
+	//医生端--患者详情--病例列表
+	doctorBlList:(data)=>{return rq("/wx/doctor/blList",data,"GET");},
 }
 
 export {api};

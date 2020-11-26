@@ -1,27 +1,27 @@
 <template>
 	<view class="container">
 		<view class="info-box">
-			<image :src="data.portrait" mode="scaleToFill" class="avator"></image>
+			<image :src="infoData.portrait" mode="scaleToFill" class="avator"></image>
 			<view class="user-msg-box">
-				<view class="name">{{data.patientName}}</view>
-				<view class="msg">{{data.patientGender+' '+data.age+'岁 '+data.illness}}</view>
+				<view class="name">{{infoData.patientName}}</view>
+				<view class="msg">{{infoData.patientGender+' '+infoData.age+'岁 '+infoData.illness}}</view>
 			</view>
-			<view class="join-time">{{data.bindTime+'加入'}}</view>
+			<view class="join-time">{{infoData.bindTime+'加入'}}</view>
 		</view>
 		<view class="line-space"></view>
 		<view class="case-tips">病例</view>
-		<view class="pic-content-box" v-if="data.pathologyUrl">
-			<view class="pic-time">{{data.blTime+' 添加'}}</view>
+		<view class="pic-content-box" v-if="infoData.pathologyUrl">
+			<view class="pic-time">{{infoData.blTime+' 添加'}}</view>
 			<view class="ccimglist">
-				<image v-for="(item,index) in this.data.pathologyUrl" :key="index" :src="item" mode="aspectFill" @click="previewImage(index)" :class="(index%3==0)?'imagelistfirst':'imagelist'"></image>
+				<image v-for="(item,index) in this.infoData.pathologyUrl" :key="index" :src="item" mode="aspectFill" @click="previewImage(index)" :class="(index%3==0)?'imagelistfirst':'imagelist'"></image>
 			</view>
 		</view>
-		<view class="more-case" v-if="data.pathologyUrl">
+		<view class="more-case" v-if="infoData.pathologyUrl" @click="moreCase">
 			更多病例
 			<image src="../../static/icon/more_icon.png" mode="widthFix" class="more-icon"></image>
 		</view>
 		
-		<view class="no-case" v-if="!data.pathologyUrl">暂无病例</view>
+		<view class="no-case" v-if="!infoData.pathologyUrl">暂无病例</view>
 		
 		<view class="case-tips">营养评估</view>
 		<view class="listContent" v-if="recordData.id">
@@ -59,11 +59,16 @@
 				list: [1, 2, 3, 4, 5,6,7,8],
 				showDetail:false,
 				id:1,
-				data:{},
+				infoData:{},
 				recordData:{}
 			}
 		},
 		methods: {
+			moreCase(){
+				uni.navigateTo({
+					url:'doctor-case-list?patientId='+this.id
+				})
+			},
 			moreRecord(){
 				uni.navigateTo({
 					url:'../patient/evaluation-record?id='+this.id
@@ -71,7 +76,7 @@
 			},
 			previewImage(index) {
 				uni.previewImage({
-					urls:this.data.pathologyUrl,
+					urls:this.infoData.pathologyUrl,
 					current:index
 				});
 			},
@@ -82,14 +87,14 @@
 			getDetailInfo(){
 				app.patientDetailInfo({id:this.id}).then(res =>{
 					if(res.status == 1){
-					  this.data = res.data;	
-					  if(this.data.pathologyUrl){
+					  this.infoData = res.data;	
+					  if(this.infoData.pathologyUrl){
 						let pathologyUrl = [];
-						let imgItems = this.data.pathologyUrl.split(',');
+						let imgItems = this.infoData.pathologyUrl.split(',');
 						for(var j=0;j<imgItems.length;j++){
 							pathologyUrl.push(app.globalData.baseUrl+imgItems[j]);
 						}
-						this.data.pathologyUrl = pathologyUrl;  
+						this.infoData.pathologyUrl = pathologyUrl;  
 					  }
 					  
 					}

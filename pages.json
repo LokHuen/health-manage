@@ -8,6 +8,20 @@
 			"enablePullDownRefresh": true
 		},
 		{
+			"path": "pages/patient/patient-nutrition-manage",
+			"style": {
+				"navigationBarTitleText": "营养管理"
+			}
+		},
+		{
+			"path": "pages/testIndex",
+			"style": {
+				"navigationBarTitleText": "营养自测"
+			}
+		},
+		
+		
+		{
 			"path": "pages/doctor/doctor-case-list",
 			"style": {
 				"navigationBarTitleText": "病例"
@@ -15,12 +29,7 @@
 			"enablePullDownRefresh": true
 		},
 		
-		{
-			"path": "pages/patient/patient-nutrition-manage",
-			"style": {
-				"navigationBarTitleText": "营养管理"
-			}
-		},
+		
 		
 		{
 			"path": "pages/doctor/doctor-center",
@@ -130,12 +139,7 @@
 				"navigationBarTitleText": "身份认证"
 			}
 		},
-		{
-			"path": "pages/testIndex",
-			"style": {
-				"navigationBarTitleText": "营养自测"
-			}
-		},
+		
 		{
 			"path": "pages/patient/test-questions",
 			"style": {
