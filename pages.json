@@ -1,9 +1,9 @@
 {
 	"pages": [ 
 		{
-			"path": "pages/testIndex",
+			"path": "pages/patient/patient-nutrition-manage",
 			"style": {
-				"navigationBarTitleText": "营养自测"
+				"navigationBarTitleText": "营养管理"
 			}
 		},
 		{
@@ -13,13 +13,14 @@
 			},
 			"enablePullDownRefresh": true
 		},
+		
 		{
-			"path": "pages/patient/patient-nutrition-manage",
+			"path": "pages/testIndex",
 			"style": {
-				"navigationBarTitleText": "营养管理"
+				"navigationBarTitleText": "营养自测"
 			}
 		},
-		
+	
 		{
 			"path": "pages/doctor/doctor-case-list",
 			"style": {
@@ -44,7 +45,6 @@
 				"navigationBarTitleText": "详情"
 			}
 		},
-		
 		
 		{
 			"path": "pages/patient/patient-add-case",

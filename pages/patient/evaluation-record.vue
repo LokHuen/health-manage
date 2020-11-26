@@ -21,6 +21,7 @@
                 <image class="health-list-item-arrow" :src="item.showDetail?'../../static/icon/right_arrow_top.png':'../../static/icon/right_arrow.png'" mode="widthFix" @click="onClickItem(item)"></image>
 			</view>
 		</view>
+		<view style="height: 100px;"></view>
 	</view>
 </template>
 
@@ -50,15 +51,16 @@
 		methods:{
 			onClickItem(item) {
 				item.showDetail = !item.showDetail;
+				this.$forceUpdate();
 			},
 		    getRecordData(){
 				app.memberReplyRecordList({surveyId:1,pageNo:this.pageNo,userId:this.id}).then(res =>{
 					if(res.status===1){
 						if(this.pageNo==1){
-							this.listDatas = res.data.list;
+							this.listDatas = res.data;
 						}else{
 							if(res.data.pageList.pageCount>this.pageNo){
-								this.listDatas = this.listDatas.concat(res.data.list);
+								this.listDatas = this.listDatas.concat(res.data);
 							}
 						}
 					}

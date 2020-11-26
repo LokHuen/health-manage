@@ -74,7 +74,9 @@ export default {
 		}
 	},
 	data() {
-		return {};
+		return {
+			
+		};
 	},
 	computed: {
 		cWidth() {
@@ -97,7 +99,7 @@ export default {
 				rotateLock: true, //	锁定横屏模式，如果在支付宝和百度小程序中使用横屏模式，请赋值true，否则每次都会旋转90度。跨端使用通过uni-app的条件编译来赋值
 				enableScroll: false, //是否开启图表可拖拽滚动 默认false 支持line, area, column, candle图表类型(需配合绑定@touchstart, @touchmove, @touchend方法)
 				enableMarkLine: false, //是否显示辅助线 默认false 支持line, area, column, candle, mix图表类型
-				animation: true, //是否动画展示
+				animation: false, //是否动画展示
 				dataLabel: true, //是否在图表中显示数据标签内容值
 				dataPointShape: true,
 				duration: 1000, //动画展示时长单位毫秒
@@ -110,6 +112,7 @@ export default {
 				//数据列表配置项 dataAS
 				categories: this.dataAs[this.labelKey], //数据类别(饼图、圆环图不需要)
 				series: this.dataAs[this.valueKey], //数据列表
+	
 
 				//坐标轴配置项 axisAs
 				xAxis: {
@@ -141,7 +144,8 @@ export default {
 					position: 'left', //Y轴位置，可选值左侧left右侧right(未起效果)
 					format: val => {
 						let defaultSetting = { type: 'number', fixed: 0, name: '' };
-						let { type, fixed, name } = this.yAxisAs && this.yAxisAs.formatter ? Object.assign(defaultSetting, this.yAxisAs.formatter) : defaultSetting;
+						//let { type, fixed, name } = this.yAxisAs && this.yAxisAs.formatter ? Object.assign(defaultSetting, this.yAxisAs.formatter) : defaultSetting;
+						let { type, fixed, name } = defaultSetting;
 						if (type == 'number') {
 							return val.toFixed(fixed) + name;
 						} else if (type == 'percent') {

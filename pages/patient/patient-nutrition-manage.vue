@@ -2,13 +2,13 @@
 	<!-- 患者营养管理界面 -->
 	<view class="container">
 		<view class="info-box">
-			<image :src="data.portrait" mode="scaleToFill" class="avator"></image>
+			<image :src="infoData.portrait" mode="scaleToFill" class="avator"></image>
 			<view class="user-msg-box">
 				<view class="name">
-					{{data.patientName}}
+					{{infoData.patientName}}
 				</view>
 				<view class="msg">
-					{{data.patientGender+' '+data.age+'岁 '+data.illness}}
+					{{infoData.patientGender+' '+infoData.age+'岁 '+infoData.illness}}
 				</view>
 			</view>
 		</view>
@@ -26,7 +26,7 @@
 				<view class="health-list-item">
 					<view class="top-title">当前体重</view>
 					<view class="health-detail">
-						<text style="font-size: 23px;">{{data.weight}}</text>KG
+						<text style="font-size: 23px;">{{infoData.weight}}</text>KG
 					</view>
 				</view>
 				<view class="health-list-item">
@@ -35,7 +35,7 @@
 						<image src="../../static/icon/wenhaoIcon.png" mode="widthFix" class="askIcon" @click="showComputing"></image>
 					</view>
 					<view class="health-detail">
-						<text style="font-size: 23px;">{{data.standardWeight}}</text>KG
+						<text style="font-size: 23px;">{{infoData.standardWeight}}</text>KG
 					</view>
 				</view>
 
@@ -45,10 +45,10 @@
 						<image src="../../static/icon/wenhaoIcon.png" mode="widthFix" class="askIcon" @click="showBMITips"></image>
 					</view>
 					<view class="health-detail">
-						<text style="font-size: 23px;">{{data.bmi}}</text>
+						<text style="font-size: 23px;">{{infoData.bmi}}</text>
 					</view>
 					<view class="health-tips">
-						{{data.normal==1?'属正常体重范围':'超出正常体重范围'}}
+						{{infoData.normal==1?'属正常体重范围':'超出正常体重范围'}}
 					</view>
 				</view>
 
@@ -61,19 +61,19 @@
 					<view class="leftinfo" >
 						<view class="flex infolist" >
 							<view class="inforound" ></view>
-							{{'脂肪'+data.dailyFat+'g'}}
+							{{'脂肪'+infoData.dailyFat+'g'}}
 						</view>
 						<view class="flex infolist" >
 							<view class="inforound bcolor2" ></view>
-							{{'蛋白质'+data.dailyProtein+'g'}}
+							{{'蛋白质'+infoData.dailyProtein+'g'}}
 						</view>
 						<view class="flex infolist" >
 							<view class="inforound bcolor3" ></view>
-							{{'碳水化合物'+data.dailyCarbonHydrate+'g'}}
+							{{'碳水化合物'+infoData.dailyCarbonHydrate+'g'}}
 						</view>
 					</view>
 					<view class="rightinfo" >
-						<view @click="showEnergyTips" style="font-size:26rpx;"><text style="font-size:46rpx;">{{data.dailyEnergy}}</text>kcal<image src="../../static/icon/wenhaoIcon.png" mode="widthFix" style="width:24rpx;"></image>
+						<view @click="showEnergyTips" style="font-size:26rpx;"><text style="font-size:46rpx;">{{infoData.dailyEnergy}}</text>kcal<image src="../../static/icon/wenhaoIcon.png" mode="widthFix" style="width:24rpx;"></image>
 						</view>
 						<view class="mintext" >建议每日总能量</view>
 					</view>
@@ -81,7 +81,7 @@
 			</view>
 		</view>
 
-		<view class="record-chart-box">
+		<view class="record-chart-box" v-if="(hasLoadLindData==0)||(lineData.categories.length>0 &&hasLoadLindData ==1)">
 			<view class="record-chart-title">营养自测评分记录图</view>
 			<view class="record-chart-subtitle">分值越小，营养状况约好</view>
 
@@ -92,10 +92,10 @@
 
 		</view>
 
-		<view class="last-one">最近一次评价</view>
+		<view class="last-one" v-if="latelyData">最近一次评价</view>
 
 
-		<view class="listContent">
+		<view class="listContent" v-if="latelyData">
 			<view class="health-list-item">
 				<view class="health-list-item-avatar-content">
 					<image class="health-list-item-avatar" src="../../static/icon/cry_icon.png"></image>
@@ -175,7 +175,7 @@
 		data() {
 			return {
 				latelyData:{},
-				data:{},
+				infoData:{},
 				list: [
 					["/static/icon/baseInfoicon.png", "基础信息"],
 					["/static/icon/bingliMangmenticon.png", "病例管理"],
@@ -183,13 +183,14 @@
 				],
 				lineData: {
 					//数字的图--折线图数据
-					categories: ['12月12日', '12月18日', '12月24日'],
+					categories: [],
 					series: [{
 						name: '',
-						data: [3, 6, 2]
+						data: []
 					}, ],
 				},
 				showDetail: false,
+				hasLoadLindData:0,
 			}
 		},
 		methods: {
@@ -239,34 +240,49 @@
 			closeEnergyTips() {
 				this.$refs.popupEnergy.close();
 			},
-			//用户信息
+			//用户信息数据
 			getData(){
 				app.patientNutrition({}).then(res =>{
 					if(res.status==1){
-						this.data = res.data;
+						this.infoData = res.data;
 					}
 				});
 			},
-            //最近一次测评的
+            //最近一次测评的数据
 			getNearlyRecord(){
 				app.patientNearlyRecord({surveyId:1}).then(res =>{
-					console.log(res);
 					if(res.status==1){
 						this.latelyData = res.data;
 					}
 				});
+			},
+			//拿曲线图的数据
+			getLineChartData(){
+				app.memberReplyRecordList({surveyId:1,pageNo:1,pageSize:3}).then(res =>{
+					if(res.status ==1){
+						if(res.data.length >0 ){
+							for (var i = res.data.length-1; i >= 0; i--) {
+								 // this.lineData.categories.push(res.data[i].completeTime);
+								 var time = res.data[i].completeTime.split('/');
+								 var date = time[2].split(' ');
+								 this.lineData.categories.push(time[1]+'月'+date[0]+'日');
+								 this.lineData.series[0].data.push(res.data[i].total);
+							}
+							this.hasLoadLindData = 1;
+							this.$refs['lineData'].showCharts();
+						}
+						
+					}
+					
+				});
 			}
 		},
-		created() {
-			this.$nextTick(() => {
-				//折线图
-				this.$refs['lineData'].showCharts();
-			});
-		},
-		onLoad(){
+		onShow(){
 			this.getData();
 			this.getNearlyRecord();
-		}
+			this.getLineChartData();
+		},
+		
 
 	}
 </script>

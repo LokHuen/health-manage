@@ -84,8 +84,8 @@
 				.health-list-item-avatar {
 					margin-left: 20rpx;
 					margin-top: 40rpx;
-					width: 60rpx;
-					height: 60rpx;
+					width: 45rpx;
+					height: 45rpx;
 					border-radius: 50%;
 				}
 			}
