@@ -14,17 +14,27 @@
 	export default {
 		data() {
 			return {
-				
+				type:1,//1跳回患者基本信息页面 2跳回患者营养界面
 			}
 		},
 		methods: {
 			complete(){
-				uni.redirectTo({
-					url:'./patient-basic-information'
-				});
+				if(this.type==1){
+					uni.redirectTo({
+						url:'./patient-basic-information'
+					});
+				}else{
+					uni.redirectTo({
+						url:'patient-nutrition-manage'
+					});
+				}
+				
 			}
 		
 		},
+		onLoad(props){
+			this.type = props.type ||1;
+		}
 		
 
 	}

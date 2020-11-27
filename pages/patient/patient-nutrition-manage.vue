@@ -245,7 +245,9 @@
 				this.$refs.popupEnergy.close();
 			},
 			judgeUserAuth(){
+				alert("uid:"+app.getCache("uid"));
 				app.judgeUserAuth({}).then(res =>{
+					alert(JSON.stringify(res));
 					if(res.status ==1){
 						app.setCache('userType',res.data.userType);
 						if(res.data.userType == 2){
@@ -258,7 +260,7 @@
 								this.getUserData();
 							}else{
 								uni.redirectTo({
-									url:'patient-improve-msg'
+									url:'patient-improve-msg?type=2'
 								});
 							}
 							
@@ -318,7 +320,7 @@
 			}
 		},
 		onShow() {
-			
+			 this.judgeUserAuth();
 			 if(app.getCache('userType')==2){
 				 //如果是医生，就跳过去医生的营养管理页面
 				 uni.redirectTo({

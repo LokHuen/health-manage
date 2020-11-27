@@ -49,11 +49,13 @@
 			</view>
 		</view>
 		<view class="upload-box" @click="choseImg">点击上传</view>
-		<view style="height: 400rpx;"></view>
+		
 
 		<view class="button-box">
 			<button type="default" class="button" @click="submit">提交</button>
 		</view>
+		
+		<view style="height: 100rpx;"></view>
 
 		<uni-popup ref="sexPop" type="bottom">
 			<view class="i-sex-content">
@@ -71,7 +73,7 @@
 	export default {
 
 		onLoad(props) {
-			this.type = props.type;
+			this.type = props.type ||1;
 			http.get(http.urls.get_all_province).then((res) => {
 				this.areaList[0] = res.data;
 				if (this.areaList[0] && this.areaList[0].length > 0) {
@@ -118,7 +120,7 @@
 				],
 				imgList:[],
 				pathologyUrl:'',
-				type:1,//1表示点击更新信息进来，2表示用户未填写信息系统自动跳进来的
+				type:1,
 			}
 		},
 		methods: {
@@ -465,8 +467,7 @@
 		}
 
 		.button-box {
-			position: fixed;
-			bottom: 0;
+			margin-top: 100px;
 			height: 140rpx;
 			width: 100%;
 

@@ -8,7 +8,7 @@ function rq(url, data = {}, type, ctype) {
 			method:type||"GET",
 		    header: {
 				'content-type': 'application/x-www-form-urlencoded',
-				//'uid':17
+				//'uid':20
 		         'uid': localStorage.getItem("uid"),
 
 				// 'tkbgjdtoken':"ef56ZpDKDJ3qy/ttr+d4r16cTZd0ju+7Pz0eT/MtwDaIqSiojYJsYdyjGFLYy4/pJR4BSUmab7tIypyLTZtBYN/3obpPO4rLM6FyqNJEhp1LxjTgveFK/ls2Xr0/"
