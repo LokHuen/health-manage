@@ -49,8 +49,6 @@
 				"navigationBarTitleText": "营养自测"
 			}
 		},
-
-		
 		{
 			"path": "pages/doctor/doctor-center",
 			"style": {
