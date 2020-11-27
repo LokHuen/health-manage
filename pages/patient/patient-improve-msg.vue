@@ -13,15 +13,15 @@
 		</view>
 		<view class="sex-box">
 			<view class="sex-tips">* 出生日期</view>
-			<picker mode="date" :value="birthday" :start="startDate" :end="endDate" @change="bindDateChange">
+			<picker mode="date" :value="birthday" :start="startDate" :end="endDate" @change="bindDateChange" style="flex: 1;">
 				<view :class="birthday?'has-value':'sex-value'">{{birthday?birthday:'点击选择'}}</view>
 			</picker>
 
 		</view>
 		<view class="sex-box">
 			<view class="sex-tips">* 所在城市</view>
-			<picker mode="multiSelector" :range="areaList" :range-key="'name'" @columnchange="columnChange"
-			 @cancel="hideArea(1)" @change="hideArea(0)">
+			<picker mode="multiSelector" :range="areaList" :range-key="'name'" @columnchange="columnChange" @cancel="hideArea(1)"
+			 @change="hideArea(0)" style="flex: 1;">
 				<view :class="(city&&province&&hasArea)||infoData.region?'has-value':'sex-value'">{{(city&&province&&hasArea)?(province+' '+city):(infoData?infoData.region:'点击选择')}}</view>
 			</picker>
 		</view>
@@ -50,12 +50,12 @@
 			</view>
 		</view>
 		<view class="upload-box" @click="choseImg" v-if="!infoData">点击上传</view>
-		
+
 
 		<view class="button-box">
 			<button type="default" class="button" @click="submit">提交</button>
 		</view>
-		
+
 		<view style="height: 100rpx;"></view>
 
 		<uni-popup ref="sexPop" type="bottom">
@@ -74,7 +74,7 @@
 	export default {
 
 		onLoad(props) {
-			this.type = props.type ||1;
+			this.type = props.type || 1;
 			http.get(http.urls.get_all_province).then((res) => {
 				this.areaList[0] = res.data;
 				if (this.areaList[0] && this.areaList[0].length > 0) {
@@ -150,9 +150,8 @@
 				});
 			},
 			hideArea(cancel) {
-				if (cancel) {
-				} else {
-					this.hasArea=true
+				if (cancel) {} else {
+					this.hasArea = true
 				}
 			},
 			columnChange(e) {
@@ -431,8 +430,10 @@
 				padding-right: 0;
 				color: #999999;
 				font-size: 15px;
+				flex: 1;
 				height: 100rpx;
 				line-height: 100rpx;
+				// border: 1rpx solid #007AFF;
 			}
 
 			.has-value {
@@ -442,6 +443,7 @@
 				font-size: 15px;
 				height: 100rpx;
 				line-height: 100rpx;
+				// border: 1rpx solid #4CD964;
 			}
 		}
 

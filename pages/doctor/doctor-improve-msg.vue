@@ -155,7 +155,9 @@
 				color: #333333;
 				font-size: 15px;
 				height: 100rpx;
+				flex: 1;
 				line-height: 100rpx;
+				// border:1rpx solid #007AFF
 			}
 			.code-button{
 				position: absolute;
