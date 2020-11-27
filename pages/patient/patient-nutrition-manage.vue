@@ -5,10 +5,10 @@
 			<image :src="infoData.portrait" mode="scaleToFill" class="avator"></image>
 			<view class="user-msg-box">
 				<view class="name">
-					{{infoData.patientName}}
+					{{infoData.patientName||"游客"}}
 				</view>
 				<view class="msg">
-					{{infoData.patientGender+' '+infoData.age+'岁 '+infoData.illness}}
+					{{(infoData.patientGender||"")+' '+(infoData.age||0)+'岁 '+(infoData.illness||"")}}
 				</view>
 			</view>
 		</view>
@@ -96,7 +96,7 @@
 		<view class="last-one" v-if="latelyData">最近一次评价</view>
 
 
-		<view class="listContent" v-if="latelyData">
+		<view class="listContent" v-if="latelyData.result">
 			<view class="health-list-item">
 				<view class="health-list-item-avatar-content">
 					<image class="health-list-item-avatar" src="../../static/icon/cry_icon.png"></image>
@@ -106,7 +106,7 @@
 					<view class="health-list-item-detail">{{latelyData.phase}}</view>
 					<view class="health-list-item-time">{{'测评时间：'+latelyData.completeTime}}</view>
 					<view class="line" v-if="showDetail"></view>
-					<view class="advice-content" v-if="showDetail"> {{'建议：'+latelyData.content}}</view>
+					<rich-text :nodes="latelyData.content" class="advice-content" v-if="showDetail"></rich-text>
 				</view>
 				<image class="health-list-item-arrow" :src="showDetail?'../../static/icon/right_arrow_top.png':'../../static/icon/right_arrow.png'"
 				 mode="widthFix" @click="showDetailMessage"></image>
