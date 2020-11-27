@@ -93,7 +93,7 @@
 
 		</view>
 
-		<view class="last-one" v-if="latelyData">最近一次评价</view>
+		<view class="last-one" v-if="latelyData.result">最近一次评价</view>
 
 		<view class="listContent" v-if="latelyData.result">
 			<view class="health-list-item">
@@ -242,9 +242,7 @@
 				this.$refs.popupEnergy.close();
 			},
 			judgeUserAuth(){
-				alert("uid:"+app.getCache("uid"));
 				app.judgeUserAuth({}).then(res =>{
-					alert(JSON.stringify(res));
 					if(res.status ==1){
 						app.setCache('userType',res.data.userType);
 						if(res.data.userType == 2){
@@ -318,18 +316,15 @@
 								this.lineData.categories.push(time[1] + '月' + date[0] + '日');
 								this.lineData.series[0].data.push(item.total)
 							})
-							console.log(tempArray)
-
-							this.hasLoadLindData = 1;
 							this.$refs['lineData'].showCharts();
 						}
+						this.hasLoadLindData = 1;
 					}
 
 				});
 			}
 		},
 		onShow() {
-			 this.judgeUserAuth();
 			 if(app.getCache('userType')==2){
 				 //如果是医生，就跳过去医生的营养管理页面
 				 uni.redirectTo({
