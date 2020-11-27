@@ -68,6 +68,7 @@
 					}
 					for (var i = 0; i < this.listDatas.length; i++) {
 						this.listDatas[i].showDetail = false;
+						if(this.listDatas[i].content) this.listDatas[i].content=this.listDatas[i].content.replace(/\<span/gi, '<span class="richtext"');
 					}
 					uni.stopPullDownRefresh();
 				});
@@ -135,7 +136,7 @@
 					margin-right: 20rpx;
 				}
 				.advice-content{
-					font-size: 11px;
+					font-size: 24rpx!important;
 					color: #666666;
 					margin-top: 20rpx;
                     padding-bottom: 10rpx;
