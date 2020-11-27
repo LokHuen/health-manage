@@ -146,6 +146,7 @@
 			getinfo(){
 				app.loading("连接中");
 				app.authentication({id:app.getCache('uid')}).then(res => {
+					res.data = res.data||this.form;
 					if(res.data.idCardFront) res.data.idCardFront = res.data.idCardFront.split(",")[0]; // 身份证正面图片url
 					if(res.data.idCardBack) res.data.idCardBack = res.data.idCardBack.split(",")[0];
 					if(res.data.bankCardFront) res.data.bankCardFront = res.data.bankCardFront.split(",")[0];
@@ -209,8 +210,8 @@
 								'uid': uni.getStorageSync("uid"),
 							},
 							success: (rq) => {
-								console.log(rq)
 								let data = JSON.parse(rq.data);
+								console.log(data)
 								switch(index){
 									case 1:this.form.idCardFront = data.data.pictureUrl;break;
 									case 2:this.form.idCardBack = data.data.pictureUrl;break;
@@ -219,7 +220,6 @@
 									case 5:this.form.bankCardBack = data.data.pictureUrl;break;
 									case 6:this.form.handBankCard = data.data.pictureUrl;break;
 								}
-								
 							},
 							complete:re=>{app.loaded();}
 						})
