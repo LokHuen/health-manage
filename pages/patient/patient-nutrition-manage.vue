@@ -286,6 +286,7 @@
 				}).then(res => {
 					if (res.status == 1) {
 						this.latelyData = res.data;
+						if(this.latelyData.content) this.latelyData.content=this.latelyData.content.replace(/\<span/gi, '<span class="richtext"');
 					}
 				});
 			},
@@ -539,7 +540,7 @@
 					}
 
 					.advice-content {
-						font-size: 11px;
+						font-size: 22rpx!important;
 						color: #666666;
 						margin-top: 20rpx;
 						padding-bottom: 10rpx;

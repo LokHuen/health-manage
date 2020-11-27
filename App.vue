@@ -207,4 +207,8 @@
 		top: -6rpx;
 		right: -6rpx;
 	}
+	.richtext{
+		font-size: 30rpx!important;
+		color: #666666;
+	}
 </style>
