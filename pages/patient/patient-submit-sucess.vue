@@ -19,8 +19,8 @@
 		},
 		methods: {
 			complete(){
-				uni.navigateBack({
-					
+				uni.redirectTo({
+					url:'./patient-basic-information'
 				});
 			}
 		

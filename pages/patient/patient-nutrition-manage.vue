@@ -244,6 +244,33 @@
 			closeEnergyTips() {
 				this.$refs.popupEnergy.close();
 			},
+			judgeUserAuth(){
+				app.judgeUserAuth({}).then(res =>{
+					if(res.status ==1){
+						app.setCache('userType',res.data.userType);
+						if(res.data.userType == 2){
+							//如果是医生，就跳过去医生的营养管理页面
+							uni.redirectTo({
+								url:'../doctor/doctor-nutrition-manage'
+							});
+						}else{
+							if(res.data.perfect==true){
+								this.getUserData();
+							}else{
+								uni.redirectTo({
+									url:'patient-improve-msg'
+								});
+							}
+							
+						}
+					}
+				});
+			},
+			getUserData(){
+				this.getData();
+				this.getNearlyRecord();
+				this.getLineChartData();
+			},
 			//用户信息数据
 			getData() {
 				app.patientNutrition({}).then(res => {
@@ -290,9 +317,16 @@
 			}
 		},
 		onShow() {
-			this.getData();
-			this.getNearlyRecord();
-			this.getLineChartData();
+			
+			 if(app.getCache('userType')==2){
+				 //如果是医生，就跳过去医生的营养管理页面
+				 uni.redirectTo({
+				 	url:'../doctor/doctor-nutrition-manage'
+				 });
+			 }else{
+				 this.judgeUserAuth();
+			 }
+			 
 		},
 
 

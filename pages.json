@@ -1,11 +1,31 @@
 {
 	"pages": [
 		{
+			"path": "pages/doctor/doctor-improve-msg",
+			"style": {
+				"navigationBarTitleText": "完善信息"
+			}
+		},
+		{
+			"path": "pages/patient/patient-basic-information",
+			"style": {
+				"navigationBarTitleText": "基础信息"
+			}
+		},
+		{
 			"path": "pages/patient/patient-nutrition-manage",
 			"style": {
 				"navigationBarTitleText": "营养管理"
 			}
 		},
+		{
+			"path": "pages/doctor/doctor-case-list",
+			"style": {
+				"navigationBarTitleText": "病例"
+			},
+			"enablePullDownRefresh": true
+		},
+		
 		{
 			"path": "pages/doctor/doctor-business-card",
 			"style": {
@@ -28,13 +48,7 @@
 			}
 		},
 	
-		{
-			"path": "pages/doctor/doctor-case-list",
-			"style": {
-				"navigationBarTitleText": "病例"
-			},
-			"enablePullDownRefresh": true
-		},
+		
 		
 		
 		
@@ -67,12 +81,7 @@
 			}
 		},
 		
-		{
-			"path": "pages/patient/patient-basic-information",
-			"style": {
-				"navigationBarTitleText": "基础信息"
-			}
-		},
+		
 		{
 			"path": "pages/patient/patient-improve-msg",
 			"style": {
@@ -95,12 +104,7 @@
 			"enablePullDownRefresh": true
 		},
 		
-		{
-			"path": "pages/doctor/doctor-improve-msg",
-			"style": {
-				"navigationBarTitleText": "完善信息"
-			}
-		},
+		
 		{
 			"path": "pages/doctor/already-transferred-bankcard",
 			"style": {

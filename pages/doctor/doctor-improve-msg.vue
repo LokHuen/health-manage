@@ -1,5 +1,5 @@
 <template>
-	<!-- 患者完善界面 -->
+	<!-- 医生端信息完善界面 -->
 	<view class="container">
 		<view class="title">完善医生资料，开通患者管理功能。</view>
 		<view class="line-space"></view>
@@ -84,7 +84,7 @@
 					   bindSale:this.bindSale}).then(res =>{
 					   if(res.status==1){
 						   uni.navigateTo({
-						   	url:'../patient/patient-submit-sucess'
+						   	url:'doctor-submit-result'
 						   });
 					   }
 				   });

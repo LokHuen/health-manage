@@ -37,14 +37,14 @@
 		<view class="health-content">
 			<view class="health-item">
 				<view class="health-item-title">身高</view>
-				<view class="health-item-detail">{{data.height+'cm'}}</view>
+				<view class="health-item-detail">{{(data.height?data.height:'')+'cm'}}</view>
 			</view>
 		</view>
 		
 		<view class="health-content">
 			<view class="health-item">
 				<view class="health-item-title">体重</view>
-				<view class="health-item-detail">{{data.weight+'kg'}}</view>
+				<view class="health-item-detail">{{(data.weight?data.weight:'')+'kg'}}</view>
 			</view>
 		</view>
 
@@ -60,7 +60,15 @@
 	const app = getApp();
 	export default {
 		onShow() {
-			this.getInfo();
+			if(app.getCache('userType')==2){
+				//如果是医生，就跳过去医生的个人中心页面
+				uni.redirectTo({
+					url:'../doctor/doctor-center'
+				});
+			}else{
+				this.judgeUserAuth();
+			}
+			
 		},
 		data() {
 			return {
@@ -80,7 +88,30 @@
 						this.data = res.data;
 					}
 				});
-			}
+			},
+			judgeUserAuth(){
+				app.judgeUserAuth({}).then(res =>{
+					if(res.status ==1){
+						app.setCache('userType',res.data.userType);
+						if(res.data.userType == 2){
+							//如果是医生，就跳过去医生的个人中心页面
+							uni.redirectTo({
+								url:'../doctor/doctor-center'
+							});
+						}else{
+							if(res.data.perfect==true){
+								this.getInfo();
+							}else{
+								uni.redirectTo({
+									url:'patient-improve-msg'
+								});
+							}
+							
+						}
+					}
+				});
+			},
+			
 		}
 	}
 </script>

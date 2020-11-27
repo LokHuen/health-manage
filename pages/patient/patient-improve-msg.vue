@@ -70,7 +70,8 @@
 	import http from '../../common/http.js'
 	export default {
 
-		onLoad() {
+		onLoad(props) {
+			this.type = props.type;
 			http.get(http.urls.get_all_province).then((res) => {
 				this.areaList[0] = res.data;
 				if (this.areaList[0] && this.areaList[0].length > 0) {
@@ -117,6 +118,7 @@
 				],
 				imgList:[],
 				pathologyUrl:'',
+				type:1,//1表示点击更新信息进来，2表示用户未填写信息系统自动跳进来的
 			}
 		},
 		methods: {
@@ -241,8 +243,9 @@
 				}).then(res =>{
 					if(res.status==1){
 						uni.navigateTo({
-							url:'patient-submit-sucess'
+							url:'patient-submit-sucess?type='+this.type
 						});
+						
 					}
 				});
 			},
@@ -256,9 +259,6 @@
 			},
 			
 		},
-		created() {
-
-		}
 
 	}
 </script>

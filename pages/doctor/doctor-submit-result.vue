@@ -4,10 +4,10 @@
 			<view class="health-result-title">提交成功，是否现在进行身份认证操作？</view>
 			<view class="health-result-detail">身份认证成功后，归属给你的订单，用户确认收货后，收益会实时到账银行卡，建议立即提交认证信息。</view>
 			<view class="health-result-confim">
-				<button class="health-result-confim-button" @click="">立即认证</button>
+				<button class="health-result-confim-button" @click="authenticate">立即认证</button>
 			</view>
 			<view class="health-result-cancel">
-				<button class="health-result-cancel-button" @click="">暂不认证</button>
+				<button class="health-result-cancel-button" @click="notAuthenticate">暂不认证</button>
 			</view>
 		</view>
 	</view>
@@ -22,9 +22,17 @@
 			}
 		},
 		methods:{
-			onClickItem(e) {
-				this.current = e.currentIndex;
+			authenticate(){
+				uni.navigateTo({
+					url:'../authentication/index'
+				});
+			},
+			notAuthenticate(){
+				uni.redirectTo({
+					url:'doctor-center'
+				});
 			}
+			
 		}
 	}
 	
@@ -51,6 +59,7 @@
 		width: 100%;
 		text-align: center;
 		.health-result-confim-button {
+			line-height: 90rpx;
 			height: 90rpx;
 			margin-left: 110rpx;
 			margin-right: 110rpx;

@@ -61,6 +61,8 @@ var api = {
 	patientDetailInfo:(data)=>{return rq("/wx/patient/doctorPatient",data,"GET");},
 	//医生端--患者详情--病例列表
 	doctorBlList:(data)=>{return rq("/wx/doctor/blList",data,"GET");},
+	//判断用户身份，医生还是患者
+	judgeUserAuth:(data)=>{return rq("/wx/user/userAuth",data,"GET");},
 }
 
 export {api};
