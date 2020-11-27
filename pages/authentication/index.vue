@@ -21,16 +21,16 @@
 			<view class="uploadbox flex" @click="sendpicture(4)">
 				<image :src="form.bankCardFront?(baseUrl+form.bankCardFront):'../../static/auth/4.png'" mode="widthFix"></image>
 			</view>
-			<view class="uploadbox flex" @click="sendpicture(5)">
+			<!-- <view class="uploadbox flex" @click="sendpicture(5)">
 				<image :src="form.bankCardBack?(baseUrl+form.bankCardBack):'../../static/auth/5.png'" mode="widthFix"></image>
 				
-			</view>
-			<view class="uploadbox flex" @click="sendpicture(6)">
+			</view> -->
+			<!-- <view class="uploadbox flex" @click="sendpicture(6)">
 				<image :src="form.handBankCard?(baseUrl+form.handBankCard):'../../static/auth/6.png'" mode="widthFix"></image>
 				<view class="textbox">
 					<view>照片必须清晰可见上半身及银行卡卡号面信息</view>
 				</view>
-			</view>
+			</view> -->
 		</view>
 		<view class="pageline"></view>
 		<view class="contentbox">
@@ -118,8 +118,8 @@
 					idCardBack:"请上传身份证国徽面",
 					handIdCard:"请上传手持身份证照片",
 					bankCardFront:"请上传银行卡正面",
-					bankCardBack:"请上传银行卡背面",
-					handBankCard:"请上传手持银行卡照片",
+					// bankCardBack:"请上传银行卡背面",
+					// handBankCard:"请上传手持银行卡照片",
 					legalName:"请填写户主姓名",
 					legalIdCard:"请填写身份证号码",
 					bank:"请选择开户行",
