@@ -272,13 +272,13 @@
 					console.log(res)
 					if (res.status == 1) {
 						this.lineData.categories = [];
-						this.lineData.series[0].data=[1];
+						this.lineData.series[0].data=[];
 						if (res.data && res.data.length > 0) {
 							res.data.forEach((item, index) => {
 								var time = item.completeTime.split('/');
 								var date = time[2].split(' ');
 								this.lineData.categories.push(time[1] + '月' + date[0] + '日');
-								// this.lineData.series[0].data.push(item.total)
+							    this.lineData.series[0].data.push(item.total)
 							})
 							console.log(this.lineData.series[0].data)
 							this.hasLoadLindData = 1;
