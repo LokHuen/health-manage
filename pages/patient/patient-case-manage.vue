@@ -69,9 +69,12 @@
 						let pathologyUrl = [];
 						let imgItems = this.list[i].pathologyUrl.split(',');
 						for(var j=0;j<imgItems.length;j++){
-							pathologyUrl.push(app.globalData.baseUrl+imgItems[j]);
+							if(imgItems[j].indexOf(app.globalData.baseUrl) ==-1){
+								pathologyUrl.push(app.globalData.baseUrl+imgItems[j]);
+							}
 						}
 						this.list[i].pathologyUrl = pathologyUrl;
+						console.log(this.list);
 					}
 					uni.stopPullDownRefresh();
 				})

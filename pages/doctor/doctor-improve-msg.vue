@@ -29,7 +29,7 @@
 		</view>
 		<view class="name-box">
 			<view class="name-tips">* 验证码</view>
-			<input class="name-input" type="text" value="" placeholder="请填写手机收到的验证码" v-model="code"/>
+			<input class="name-input" type="text" value="" placeholder="请填写手机验证码" v-model="code"/>
 			<button type="default" class="code-button" @click="getCode">{{codetext}}</button>
 		</view>
 		
@@ -62,8 +62,20 @@
 		},
 		onLoad(props) {
 			this.bindSale = props.bindSale||1;
+			this.loadUserAuth();
 		},
 		methods: {
+			loadUserAuth(){
+				app.judgeUserAuth({}).then(res =>{
+					if(res.status == 1){
+						if(res.data.perfect1 == true){
+							uni.redirectTo({
+								url:'doctor-center'
+							});
+						}
+					}
+				});
+			},
 			submit(){
 				if(!this.name || 
 				   !this.position || 
@@ -155,7 +167,9 @@
 				color: #333333;
 				font-size: 15px;
 				height: 100rpx;
+				flex: 1;
 				line-height: 100rpx;
+				// border:1rpx solid #007AFF
 			}
 			.code-button{
 				position: absolute;

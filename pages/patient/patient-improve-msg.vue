@@ -1,28 +1,28 @@
 <template>
 	<!-- 患者完善界面 -->
 	<view class="container">
-		<view class="title">完善患者资料，医生才能及时掌握您的营养状况和给予康复指导。</view>
+		<view class="title">完善资料，医生才能及时掌握您的营养状况和给予康复指导。</view>
 		<view class="line-space"></view>
 		<view class="name-box">
-			<view class="name-tips">* 患者姓名</view>
+			<view class="name-tips">* 姓名</view>
 			<input class="name-input" type="text" value="" placeholder="请填写患者的真实名字" v-model="patientName" />
 		</view>
 		<view class="sex-box" @click="selectSex(0)">
-			<view class="sex-tips">* 患者性别</view>
+			<view class="sex-tips">* 性别</view>
 			<view :class="patientGender==0?'sex-value':'has-value'">{{patientGender==0?'点击选择':patientGender==1?'男':'女'}}</view>
 		</view>
 		<view class="sex-box">
 			<view class="sex-tips">* 出生日期</view>
-			<picker mode="date" :value="birthday" :start="startDate" :end="endDate" @change="bindDateChange">
+			<picker mode="date" :value="birthday" :start="startDate" :end="endDate" @change="bindDateChange" style="flex: 1;">
 				<view :class="birthday?'has-value':'sex-value'">{{birthday?birthday:'点击选择'}}</view>
 			</picker>
 
 		</view>
 		<view class="sex-box">
 			<view class="sex-tips">* 所在城市</view>
-			<picker mode="multiSelector" :range="areaList" :range-key="'name'" @columnchange="columnChange"
-			 @cancel="hideArea(1)" @change="hideArea(0)">
-				<view :class="city&&province&&hasArea?'has-value':'sex-value'">{{city&&province&&hasArea?province+' '+city:'点击选择'}}</view>
+			<picker mode="multiSelector" :range="areaList" :range-key="'name'" @columnchange="columnChange" @cancel="hideArea(1)"
+			 @change="hideArea(0)" style="flex: 1;">
+				<view :class="(city&&province&&hasArea)||infoData.region?'has-value':'sex-value'">{{(city&&province&&hasArea)?(province+' '+city):(infoData?infoData.region:'点击选择')}}</view>
 			</picker>
 		</view>
 		<view class="name-box">
@@ -39,9 +39,9 @@
 			<input class="name-input" type="text" value="" placeholder="请填写体重" v-model="weight" />
 			<view class="right-tip">kg</view>
 		</view>
-		<view class="pic-title">病历照片</view>
-		<view class="pic-tip">上传出院小结（重要）、影像报告等内容，方便医生 评估病情</view>
-		<view class="pic-content-box">
+		<view class="pic-title" v-if="!infoData">病历照片</view>
+		<view class="pic-tip" v-if="!infoData">上传出院小结（重要）、影像报告等内容，方便医生 评估病情</view>
+		<view class="pic-content-box" v-if="!infoData">
 			<view class="ccimglist">
 				<view v-for="(item,index) in imgList" :key="index" :class="(index%3==0)?'img-box-first':'img-box'">
 					<image :src="item" mode="aspectFill" @click="previewImage(index)" class="imagelist"></image>
@@ -49,13 +49,13 @@
 				</view>
 			</view>
 		</view>
-		<view class="upload-box" @click="choseImg">点击上传</view>
-		
+		<view class="upload-box" @click="choseImg" v-if="!infoData">点击上传</view>
+
 
 		<view class="button-box">
 			<button type="default" class="button" @click="submit">提交</button>
 		</view>
-		
+
 		<view style="height: 100rpx;"></view>
 
 		<uni-popup ref="sexPop" type="bottom">
@@ -74,7 +74,7 @@
 	export default {
 
 		onLoad(props) {
-			this.type = props.type ||1;
+			this.type = props.type || 1;
 			http.get(http.urls.get_all_province).then((res) => {
 				this.areaList[0] = res.data;
 				if (this.areaList[0] && this.areaList[0].length > 0) {
@@ -121,15 +121,37 @@
 				],
 				imgList: [],
 				pathologyUrl: '',
+				
 				type: 1, //1表示点击更新信息进来，2表示用户未填写信息系统自动跳进来的
 				hasArea: false,
+				infoData:{}
 			}
 		},
+		onShow(){
+			this.getInfo();
+		},
 		methods: {
+			getInfo(){
+				app.patientBasicInfo({}).then(res =>{
+					if(res.status==1){
+						this.infoData = res.data;
+						this.patientName = this.infoData.patientName;
+						this.patientGender = this.infoData.patientGender == '男'?1:2;
+						this.cityId = this.infoData.cityId;
+						this.provinceId = this.infoData.provinceId;
+						this.illness = this.infoData.illness;
+						this.height = this.infoData.height;
+						this.weight = this.infoData.weight;
+						var year = this.infoData.birthday.split('年')[0];
+						var month = this.infoData.birthday.split('年')[1].split('月')[0];
+						var day =  this.infoData.birthday.split('年')[1].split('月')[1].split('日')[0];
+						this.birthday = year+'-'+month+'-'+day;
+					}
+				});
+			},
 			hideArea(cancel) {
-				if (cancel) {
-				} else {
-					this.hasArea=true
+				if (cancel) {} else {
+					this.hasArea = true
 				}
 			},
 			columnChange(e) {
@@ -408,8 +430,10 @@
 				padding-right: 0;
 				color: #999999;
 				font-size: 15px;
+				flex: 1;
 				height: 100rpx;
 				line-height: 100rpx;
+				// border: 1rpx solid #007AFF;
 			}
 
 			.has-value {
@@ -419,6 +443,7 @@
 				font-size: 15px;
 				height: 100rpx;
 				line-height: 100rpx;
+				// border: 1rpx solid #4CD964;
 			}
 		}
 
