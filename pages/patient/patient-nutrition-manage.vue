@@ -183,6 +183,7 @@
 				],
 				lineData: {
 					//数字的图--折线图数据
+					
 					categories: [],
 					series: [{
 						name: '',

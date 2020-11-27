@@ -154,6 +154,7 @@ export default {
 							return val.toFixed(0);
 						}
 					}
+				
 					// title:'Y轴标题',//Y轴标题
 					// titleFontSize:basic.fontSize titleFontColor==>#666666 fontColor==>666666 Y轴数据点颜色 fontSizeY轴数据标签字体大小 等详见http://doc.ucharts.cn/1172128
 				},
