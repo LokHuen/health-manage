@@ -20,8 +20,9 @@
 		</view>
 		<view class="sex-box">
 			<view class="sex-tips">* 所在城市</view>
-			<picker mode="multiSelector" :range="areaList" :range-key="'name'" @columnchange="columnChange" @cancel="areaCancel">
-				<view :class="city&&province?'has-value':'sex-value'">{{city&&province?province+' '+city:'点击选择'}}</view>
+			<picker mode="multiSelector" :range="areaList" :range-key="'name'" @columnchange="columnChange"
+			 @cancel="hideArea(1)" @change="hideArea(0)">
+				<view :class="city&&province&&hasArea?'has-value':'sex-value'">{{city&&province&&hasArea?province+' '+city:'点击选择'}}</view>
 			</picker>
 		</view>
 		<view class="name-box">
@@ -118,14 +119,18 @@
 					[],
 					[]
 				],
-				imgList:[],
-				pathologyUrl:'',
-				type:1,
+				imgList: [],
+				pathologyUrl: '',
+				type: 1, //1表示点击更新信息进来，2表示用户未填写信息系统自动跳进来的
+				hasArea: false,
 			}
 		},
 		methods: {
-			areaCancel() {
-				console.log(this.areaList)
+			hideArea(cancel) {
+				if (cancel) {
+				} else {
+					this.hasArea=true
+				}
 			},
 			columnChange(e) {
 				let column = e.detail.column
@@ -170,96 +175,98 @@
 			},
 			previewImage(index) {
 				uni.previewImage({
-					urls:this.imgList,
-					current:index
+					urls: this.imgList,
+					current: index
 				})
 			},
 			remove(index) {
 				this.imgList.splice(index, 1);
 			},
 			choseImg() {
-                 if(this.imgList.length>8){
-                 	app.tip('最多选取9张图片');
-                 	return;
-                 }
-                 uni.chooseImage({
-                     count: 9-this.imgList.length, //默认9
-                     sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-                     // sourceType: ['album'], //从相册选择
-                     success: (res)=>{
-                 	    this.imgList = this.imgList.concat(res.tempFilePaths);
-                     }
-                 });
-			},
-			submit(){
-				if(!this.patientName|| 
-				    this.patientGender==0|| !this.birthday ||!this.cityId ||!this.provinceId ||!this.illness||
-					!this.weight ||!this.height){
-						app.tip('请输入完整信息');
-						return;
+				if (this.imgList.length > 8) {
+					app.tip('最多选取9张图片');
+					return;
+				}
+				uni.chooseImage({
+					count: 9 - this.imgList.length, //默认9
+					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+					// sourceType: ['album'], //从相册选择
+					success: (res) => {
+						this.imgList = this.imgList.concat(res.tempFilePaths);
 					}
-				if(this.imgList.length>0){
+				});
+			},
+			submit() {
+				if (!this.patientName ||
+					this.patientGender == 0 || !this.birthday || !this.cityId || !this.provinceId || !this.illness ||
+					!this.weight || !this.height) {
+					app.tip('请输入完整信息');
+					return;
+				}
+				if (this.imgList.length > 0) {
 					this.uploadImg();
-				}else{
+				} else {
 					this.submitRequest();
 				}
 			},
-			uploadImg(){
+			uploadImg() {
 				let uploadCount = 0;
 				for (let i = 0; i < this.imgList.length; i++) {
-					let formData = {'uid':uni.getStorageSync("uid")}
+					let formData = {
+						'uid': uni.getStorageSync("uid")
+					}
 					uni.uploadFile({
 						url: '/api' + '/wx/patient/bl/uploadPicture',
 						filePath: this.imgList[i],
 						name: 'file',
-						formData:formData,
-						success:(res)=>{
+						formData: formData,
+						success: (res) => {
 							console.log(res.data);
 							let data = JSON.parse(res.data);
-							if(data.status==1){
-								uploadCount ++;
-								this.pathologyUrl = this.pathologyUrl+data.data.pictureUrl+',';
-								console.log('uploadCount=='+uploadCount);
-								if(uploadCount == this.imgList.length){
+							if (data.status == 1) {
+								uploadCount++;
+								this.pathologyUrl = this.pathologyUrl + data.data.pictureUrl + ',';
+								console.log('uploadCount==' + uploadCount);
+								if (uploadCount == this.imgList.length) {
 									//移除最后的逗号
 									this.pathologyUrl = this.pathologyUrl.substring(0, this.pathologyUrl.length - 1);
 									this.submitRequest();
 								}
 							}
-						    
+
 						},
 					});
 				}
 			},
-			submitRequest(){
+			submitRequest() {
 				app.savePatientInfo({
-					patientName:this.patientName,
-					patientGender:this.patientGender,
-					birthday:this.birthday,
-					cityId:this.cityId,
-					provinceId:this.provinceId,
-					illness:this.illness,
-					height:this.height,
-					weight:this.weight,
-					pathologyUrl:this.pathologyUrl
-				}).then(res =>{
-					if(res.status==1){
+					patientName: this.patientName,
+					patientGender: this.patientGender,
+					birthday: this.birthday,
+					cityId: this.cityId,
+					provinceId: this.provinceId,
+					illness: this.illness,
+					height: this.height,
+					weight: this.weight,
+					pathologyUrl: this.pathologyUrl
+				}).then(res => {
+					if (res.status == 1) {
 						uni.navigateTo({
-							url:'patient-submit-sucess?type='+this.type
+							url: 'patient-submit-sucess?type=' + this.type
 						});
-						
+
 					}
 				});
 			},
 			selectSex(type) {
-				if(type==0){
+				if (type == 0) {
 					this.$refs.sexPop.open();
-				}else{
-					this.patientGender=type;
+				} else {
+					this.patientGender = type;
 					this.$refs.sexPop.close();
 				}
 			},
-			
+
 		},
 
 	}
@@ -395,6 +402,7 @@
 				height: 100rpx;
 				line-height: 100rpx;
 			}
+
 			.sex-value {
 				margin-left: 30rpx;
 				padding-right: 0;
@@ -403,6 +411,7 @@
 				height: 100rpx;
 				line-height: 100rpx;
 			}
+
 			.has-value {
 				margin-left: 30rpx;
 				padding-right: 0;
