@@ -3,13 +3,13 @@
 	<view>
 		<view class="health-content">
 			<view class="health-item">
-				<view class="health-item-title">患者姓名</view>
+				<view class="health-item-title">姓名</view>
 				<view class="health-item-detail">{{infoData.patientName}}</view>
 			</view>
 		</view>
 		<view class="health-content">
 			<view class="health-item">
-				<view class="health-item-title">患者性别</view>
+				<view class="health-item-title">性别</view>
 				<view class="health-item-detail">{{infoData.patientGender}}</view>
 			</view>
 		</view>
@@ -73,12 +73,16 @@
 		data() {
 			return {
 				infoData:{},
+				type:1
 			}
+		},
+		onLoad(props){
+			this.type = props.type ||1;
 		},
 		methods:{
 			updateInfo(){
 				uni.navigateTo({
-					url:'patient-improve-msg'
+					url:'patient-improve-msg?type='+this.type
 				})
 				
 			},

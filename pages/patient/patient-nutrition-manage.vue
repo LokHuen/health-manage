@@ -204,7 +204,7 @@
 				if (index == 0) {
 					//基础信息
 					uni.navigateTo({
-						url: 'patient-basic-information'
+						url: 'patient-basic-information?type='+2
 					});
 				} else if (index == 1) {
 					//病例管理

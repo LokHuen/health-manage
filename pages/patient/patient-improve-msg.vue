@@ -1,14 +1,14 @@
 <template>
 	<!-- 患者完善界面 -->
 	<view class="container">
-		<view class="title">完善患者资料，医生才能及时掌握您的营养状况和给予康复指导。</view>
+		<view class="title">完善资料，医生才能及时掌握您的营养状况和给予康复指导。</view>
 		<view class="line-space"></view>
 		<view class="name-box">
-			<view class="name-tips">* 患者姓名</view>
+			<view class="name-tips">* 姓名</view>
 			<input class="name-input" type="text" value="" placeholder="请填写患者的真实名字" v-model="patientName" />
 		</view>
 		<view class="sex-box" @click="selectSex(0)">
-			<view class="sex-tips">* 患者性别</view>
+			<view class="sex-tips">* 性别</view>
 			<view :class="patientGender==0?'sex-value':'has-value'">{{patientGender==0?'点击选择':patientGender==1?'男':'女'}}</view>
 		</view>
 		<view class="sex-box">
