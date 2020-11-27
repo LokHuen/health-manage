@@ -168,9 +168,9 @@
 					this.ranklist = res.data;
 				})
 			},
-			subBranchList(headBankNo,bankProvinceNo,bankCityNo){ //分行
+			subBranchList(headBankCode,bankProvinceNo,bankCityNo){ //分行
 				app.loading();
-				app.subBranchList({headBankNo,bankProvinceNo,bankCityNo}).then(res => {
+				app.subBranchList({headBankCode,bankProvinceNo,bankCityNo}).then(res => {
 					app.loaded();
 					let list = [];
 					for (let key in res.data) {
