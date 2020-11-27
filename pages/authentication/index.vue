@@ -49,7 +49,7 @@
 			</view>
 			<view class="flex linebox">
 				<view class="lefttext" style="width:280rpx;">身份证住址所在地</view>
-				<view class="rightarea" @click="openframe(5)">{{this.form.merProvince?(this.form.merProvinceValue+" "+this.form.merCityValue):"请选择身份证所在地"}}</view>
+				<view class="rightarea" @click="openframe(5)">{{this.form.merProvince?(this.form.merProvinceValue+" "+this.form.merCityValue+" "+this.form.merDistrictValue):"请选择"}}</view>
 			</view>
 			<view class="flex linebox" @click="openframe()">
 				<view class="lefttext">开户行</view>
@@ -66,7 +66,7 @@
 		</view>
 		<uni-popup ref="popup" type="bottom" @change="changeframe">
 			<view class="choosebox">
-				<view class="headtitle">{{chooseindex==1?"银行名称":(chooseindex==2?"开户行所在省":(chooseindex==3?"开户行所在市":(chooseindex==4?"开户行名称":(chooseindex==5?"身份证所在省":"身份证所在市"))))}}
+				<view class="headtitle">{{chooseindex==1?"银行名称":(chooseindex==2?"开户行所在省":(chooseindex==3?"开户行所在市":(chooseindex==4?"开户行名称":(chooseindex==5?"身份证所在省":(chooseindex==6?"身份证所在市":"身份证所在区")))))}}
 					<uni-icons type="arrowleft" size="15" class="backicon" v-show="chooseindex!=1" @click="choosechange"></uni-icons>
 				</view>
 				<scroll-view class="choosebody" scroll-y="true">
@@ -91,6 +91,10 @@
 						<uni-icons type="arrowright" size="15"></uni-icons>
 					</view>
 					<view v-if="chooseindex==6" class="itemlist flex" v-for="(item,index) in citylist" :key="index" @click="choosenext(6,index)">
+						<p>{{item.name}}</p>
+						<uni-icons type="arrowright" size="15"></uni-icons>
+					</view>
+					<view v-if="chooseindex==7" class="itemlist flex" v-for="(item,index) in arealist" :key="index" @click="choosenext(7,index)">
 						<p>{{item.name}}</p>
 						<uni-icons type="arrowright" size="15"></uni-icons>
 					</view>
@@ -128,6 +132,8 @@
 					merCity:"",
 					merProvinceValue:"", //身份证省
 					merCityValue:"",
+					merDistrict:"",
+					merDistrictValue:"",
 				},
 				warn: {
 					idCardFront: "请上传身份证人像面",
@@ -142,11 +148,13 @@
 					cardNo: "请填写银行卡账号",
 					merProvince:"请选择身份证所在省",
 					merCity:"请选择身份证所在市",
+					merDistrict:"请选择身份证所在区",
 				},
 				chooseindex: 1, //1 银行 2 省 3 市 4分行
 				ranklist: [],
 				provlist: [],
 				citylist: [],
+				arealist: [],
 				childlist: [],
 				chooserank: ["", "", "", ""]
 			}
@@ -225,6 +233,15 @@
 				}).then(res => {
 					app.loaded();
 					this.citylist = res.data;
+				})
+			},
+			findArea(pid) {
+				app.loading();
+				app.findProvinces({
+					pid
+				}).then(res => {
+					app.loaded();
+					this.arealist = res.data;
 				})
 			},
 			sendpicture(index) {
@@ -339,6 +356,12 @@
 					case 6:
 						this.form.merCity = this.citylist[index].id;
 						this.form.merCityValue = this.citylist[index].name;
+						this.findArea(this.citylist[index].id);
+						this.chooseindex = 7;
+						break;
+					case 7:
+						this.form.merDistrict = this.arealist[index].id;
+						this.form.merDistrictValue = this.arealist[index].name;
 						this.$refs.popup.close();
 						this.chooseindex = 1;
 						break;
