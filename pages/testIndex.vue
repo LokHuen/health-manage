@@ -37,8 +37,8 @@
 					{name:'手术治疗',list:["手术前","手术后"]},
 					{name:'放疗治疗',list:["放疗前","放疗中","放疗后"]},
 					{name:'化疗治疗',list:["化疗前","化疗中","化疗后"]},
-					{name:'靶向治疗',list:["治疗前","治疗中","治疗后"]},
-					{name:'免疫治疗',list:["治疗前","治疗中","治疗后"]},
+					{name:'靶向治疗',list:["靶向前","靶向中","靶向后"]},
+					{name:'免疫治疗',list:["免疫前","免疫中","免疫后"]},
 					{name:'康复治疗',list:["康复期"]},
 				],
 				chooseitem:"",
@@ -69,7 +69,7 @@
 			},
 			submitchoose(){
 				if(!this.chooseclass) {app.tip("请选择其中一个选项");return;}
-				app.getReplyRecord({surveyId:this.id,phase:this.chooseclass+" "+this.chooseitem}).then(res=>{
+				app.getReplyRecord({surveyId:this.id,phase:this.chooseitem}).then(res=>{
 					app.tip("保存成功");
 					uni.navigateTo({
 						url:"/pages/patient/test-questions?id="+this.id
