@@ -292,11 +292,12 @@
 						canvas.width = canvasWidth / 2
 						canvas.height = canvasHeight / 2
 						ctx.drawImage(img, 0, 0, canvasWidth / 2, canvasHeight / 2);
-						canvas.toBlob(function(fileSrc) {
-							let imgSrc = window.URL.createObjectURL(fileSrc)
-							console.log('压缩后', imgSrc)
-							cal(res.path);
-						})
+						cal(canvas.toDataURL("image/jpeg"));
+						// canvas.toBlob(function(fileSrc) {
+						// 	let imgSrc = window.URL.createObjectURL(fileSrc)
+						// 	console.log('压缩后', imgSrc)
+						// 	cal(res.path);
+						// })
 					}
 				})
 			},
