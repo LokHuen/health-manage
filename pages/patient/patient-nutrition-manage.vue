@@ -304,18 +304,19 @@
 							res.data.forEach((item, index) => {
 								var time = item.completeTime.split('/');
 								var date = time[2].split(' ');
-								tempArray.push(item.total)
-								tempArray.sort()
-								if (tempArray.length > 0) {
-									let splitNumber = tempArray[tempArray.length - 1] - tempArray[0]
-									if (splitNumber < 5) {
-										this.splitNumber = splitNumber
-										console.log(this.splitNumber)
-									}
-								}
+								// tempArray.push(item.total)
+								// tempArray.sort()
+								// if (tempArray.length > 0) {
+								// 	let splitNumber = tempArray[tempArray.length - 1] - tempArray[0]
+								// 	if (splitNumber < 5) {
+								// 		this.splitNumber = splitNumber
+								// 		console.log(this.splitNumber)
+								// 	}
+								// }
 								this.lineData.categories.push(time[1] + '月' + date[0] + '日');
 								this.lineData.series[0].data.push(item.total)
 							})
+							console.log(this.lineData);
 							this.$refs['lineData'].showCharts();
 						}
 						this.hasLoadLindData = 1;

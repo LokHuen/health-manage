@@ -4,47 +4,47 @@
 		<view class="health-content">
 			<view class="health-item">
 				<view class="health-item-title">患者姓名</view>
-				<view class="health-item-detail">{{data.patientName}}</view>
+				<view class="health-item-detail">{{infoData.patientName}}</view>
 			</view>
 		</view>
 		<view class="health-content">
 			<view class="health-item">
 				<view class="health-item-title">患者性别</view>
-				<view class="health-item-detail">{{data.patientGender}}</view>
+				<view class="health-item-detail">{{infoData.patientGender}}</view>
 			</view>
 		</view>
 		
 		<view class="health-content">
 			<view class="health-item">
 				<view class="health-item-title">出生日期</view>
-				<view class="health-item-detail">{{data.birthday}}</view>
+				<view class="health-item-detail">{{infoData.birthday}}</view>
 			</view>
 		</view>
 		
 		<view class="health-content">
 			<view class="health-item">
 				<view class="health-item-title">所患疾病</view>
-				<view class="health-item-detail">{{data.illness}}</view>
+				<view class="health-item-detail">{{infoData.illness}}</view>
 			</view>
 		</view>
 		
 		<view class="health-content">
 			<view class="health-item">
 				<view class="health-item-title">所在城市</view>
-				<view class="health-item-detail">{{data.region}}</view>
+				<view class="health-item-detail">{{infoData.region}}</view>
 			</view>
 		</view>
 		<view class="health-content">
 			<view class="health-item">
 				<view class="health-item-title">身高</view>
-				<view class="health-item-detail">{{(data.height?data.height:'')+'cm'}}</view>
+				<view class="health-item-detail">{{(infoData.height?infoData.height:'')+'cm'}}</view>
 			</view>
 		</view>
 		
 		<view class="health-content">
 			<view class="health-item">
 				<view class="health-item-title">体重</view>
-				<view class="health-item-detail">{{(data.weight?data.weight:'')+'kg'}}</view>
+				<view class="health-item-detail">{{(infoData.weight?infoData.weight:'')+'kg'}}</view>
 			</view>
 		</view>
 
@@ -72,7 +72,7 @@
 		},
 		data() {
 			return {
-				data:{},
+				infoData:{},
 			}
 		},
 		methods:{
@@ -85,7 +85,7 @@
 			getInfo(){
 				app.patientBasicInfo({}).then(res =>{
 					if(res.status==1){
-						this.data = res.data;
+						this.infoData = res.data;
 					}
 				});
 			},

@@ -22,7 +22,7 @@
 			<view class="sex-tips">* 所在城市</view>
 			<picker mode="multiSelector" :range="areaList" :range-key="'name'" @columnchange="columnChange"
 			 @cancel="hideArea(1)" @change="hideArea(0)">
-				<view :class="city&&province&&hasArea?'has-value':'sex-value'">{{city&&province&&hasArea?province+' '+city:'点击选择'}}</view>
+				<view :class="(city&&province&&hasArea)||infoData.region?'has-value':'sex-value'">{{(city&&province&&hasArea)?(province+' '+city):(infoData?infoData.region:'点击选择')}}</view>
 			</picker>
 		</view>
 		<view class="name-box">
@@ -39,9 +39,9 @@
 			<input class="name-input" type="text" value="" placeholder="请填写体重" v-model="weight" />
 			<view class="right-tip">kg</view>
 		</view>
-		<view class="pic-title">病历照片</view>
-		<view class="pic-tip">上传出院小结（重要）、影像报告等内容，方便医生 评估病情</view>
-		<view class="pic-content-box">
+		<view class="pic-title" v-if="!infoData">病历照片</view>
+		<view class="pic-tip" v-if="!infoData">上传出院小结（重要）、影像报告等内容，方便医生 评估病情</view>
+		<view class="pic-content-box" v-if="!infoData">
 			<view class="ccimglist">
 				<view v-for="(item,index) in imgList" :key="index" :class="(index%3==0)?'img-box-first':'img-box'">
 					<image :src="item" mode="aspectFill" @click="previewImage(index)" class="imagelist"></image>
@@ -49,7 +49,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="upload-box" @click="choseImg">点击上传</view>
+		<view class="upload-box" @click="choseImg" v-if="!infoData">点击上传</view>
 		
 
 		<view class="button-box">
@@ -121,11 +121,34 @@
 				],
 				imgList: [],
 				pathologyUrl: '',
+				
 				type: 1, //1表示点击更新信息进来，2表示用户未填写信息系统自动跳进来的
 				hasArea: false,
+				infoData:{}
 			}
 		},
+		onShow(){
+			this.getInfo();
+		},
 		methods: {
+			getInfo(){
+				app.patientBasicInfo({}).then(res =>{
+					if(res.status==1){
+						this.infoData = res.data;
+						this.patientName = this.infoData.patientName;
+						this.patientGender = this.infoData.patientGender == '男'?1:2;
+						this.cityId = this.infoData.cityId;
+						this.provinceId = this.infoData.provinceId;
+						this.illness = this.infoData.illness;
+						this.height = this.infoData.height;
+						this.weight = this.infoData.weight;
+						var year = this.infoData.birthday.split('年')[0];
+						var month = this.infoData.birthday.split('年')[1].split('月')[0];
+						var day =  this.infoData.birthday.split('年')[1].split('月')[1].split('日')[0];
+						this.birthday = year+'-'+month+'-'+day;
+					}
+				});
+			},
 			hideArea(cancel) {
 				if (cancel) {
 				} else {
