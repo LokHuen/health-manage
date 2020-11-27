@@ -88,13 +88,12 @@
 
 			<!-- 折线Line纯数字-->
 			<view class="line-chart-box">
-				<line-chart class="line-chart" ref="lineData" canvasId="index_line_2" :dataAs="lineData" />
+				<line-chart class="line-chart" ref="lineData" canvasId="index_line_2" :dataAs="lineData" :splitNumber="splitNumber" />
 			</view>
 
 		</view>
 
 		<view class="last-one" v-if="latelyData">最近一次评价</view>
-
 
 		<view class="listContent" v-if="latelyData.result">
 			<view class="health-list-item">
@@ -184,17 +183,15 @@
 				],
 				lineData: {
 					//数字的图--折线图数据
-					
 					categories: [],
-					series:[
-						{
-							data: [],
-							name: 'haha'
-						}
-					]
+					series: [{
+						data: [],
+						name: 'haha'
+					}]
 				},
 				showDetail: false,
 				hasLoadLindData: 0,
+				splitNumber: 5
 			}
 		},
 		methods: {
@@ -302,15 +299,27 @@
 					console.log(res)
 					if (res.status == 1) {
 						this.lineData.categories = [];
-						this.lineData.series[0].data=[];
+						this.lineData.series[0].data = [];
+						let tempArray = []
 						if (res.data && res.data.length > 0) {
+							res.data.reverse()
 							res.data.forEach((item, index) => {
 								var time = item.completeTime.split('/');
 								var date = time[2].split(' ');
+								tempArray.push(item.total)
+								tempArray.sort()
+								if (tempArray.length > 0) {
+									let splitNumber = tempArray[tempArray.length - 1] - tempArray[0]
+									if (splitNumber < 5) {
+										this.splitNumber = splitNumber
+										console.log(this.splitNumber)
+									}
+								}
 								this.lineData.categories.push(time[1] + '月' + date[0] + '日');
-							    this.lineData.series[0].data.push(item.total)
+								this.lineData.series[0].data.push(item.total)
 							})
-							console.log(this.lineData.series[0].data)
+							console.log(tempArray)
+
 							this.hasLoadLindData = 1;
 							this.$refs['lineData'].showCharts();
 						}

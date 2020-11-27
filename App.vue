@@ -17,7 +17,7 @@
 			// //更新用户信息
 			// if(this.getCache("uid")) this.saveinfo();
 			const windowUrl = window.location.href;
-			const uid = this.getCache("uid") || option.query.uid;
+			const uid = option.query.uid || this.getCache("uid");
 			console.log('uid==' + uid);
 			if(!uid){
 				 window.location.href = this.globalData.baseUrl + '/wx/fwh/user/auth/index?returnUrl=' + encodeURIComponent(windowUrl);

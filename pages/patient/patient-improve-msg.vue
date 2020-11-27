@@ -78,16 +78,16 @@
 				this.areaList[0] = res.data;
 				if (this.areaList[0] && this.areaList[0].length > 0) {
 					let obj = this.areaList[0][0];
-					// this.province = obj.name
-					//this.provinceId = obj.id
+					this.province = obj.name
+					this.provinceId = obj.id
 					http.get(http.urls.get_citys, {
 						id: obj.id
 					}).then((res) => {
 						this.areaList[1] = res.data
 						if (this.areaList[1] && this.areaList[1].length > 0) {
 							let obj2 = this.areaList[1][0];
-							// this.city = obj2.name
-							// this.cityId = obj2.id
+							this.city = obj2.name
+							this.cityId = obj2.id
 						}
 						this.$forceUpdate();
 					})
