@@ -16,7 +16,7 @@
 					<view class="health-list-item-detail">{{item.phase}} </view>
 					<view class="health-list-item-time">测评时间：{{item.completeTime}}</view>
 					<view class="line" v-if="item.showDetail"></view>
-					<view class="advice-content" v-if="item.showDetail">{{'建议：'+item.content}}</view>
+					<rich-text :nodes="item.content" class="advice-content" v-if="item.showDetail"></rich-text>
 				</view>
                 <image class="health-list-item-arrow" :src="item.showDetail?'../../static/icon/right_arrow_top.png':'../../static/icon/right_arrow.png'" mode="widthFix" @click="onClickItem(item)"></image>
 			</view>
@@ -54,7 +54,9 @@
 				this.$forceUpdate();
 			},
 		    getRecordData(){
+				app.loading();
 				app.memberReplyRecordList({surveyId:1,pageNo:this.pageNo,userId:this.id}).then(res =>{
+					app.loaded();
 					if(res.status===1){
 						if(this.pageNo==1){
 							this.listDatas = res.data;
