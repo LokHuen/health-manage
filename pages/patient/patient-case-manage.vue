@@ -11,6 +11,7 @@
 				<image v-for="(imgItem,imgIndex) in item.pathologyUrl" :key="imgIndex" :src=imgItem mode="aspectFill" @click="previewImage(item,imgIndex)" :class="(imgIndex%3==0)?'imagelistfirst':'imagelist'"></image>
 			</view>
 		</view>
+		<view class="no-data-tips" v-if="!list.length == 0">暂无数据</view>
 		<view style="height: 100rpx;"></view>
 
 	</view>
@@ -154,6 +155,12 @@
 			}
 
 
+		}
+		.no-data-tips{
+			margin-top: 100rpx;
+			text-align: center;
+			font-size: 30rpx;
+			color: #666666;
 		}
 
 	}
