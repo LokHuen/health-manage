@@ -1,6 +1,7 @@
 <template>
 	<!-- 患者营养管理界面 -->
 	<view class="container">
+		<view style="position: fixed;top:0;left:0;bottom:0;right:0;z-index:999;background:#fff;" v-show="!infoData.patientName"></view>
 		<view class="info-box">
 			<image :src="infoData.portrait" mode="scaleToFill" class="avator"></image>
 			<view class="user-msg-box">
@@ -247,9 +248,8 @@
 			},
 			judgeUserAuth(){
 				app.judgeUserAuth({}).then(res =>{
-					alert(JSON.stringify(res));
+
 					if(res.status ==1){
-						
 						if(res.data.userType == 2){
 							//如果是医生，就跳过去医生的营养管理页面
 							uni.redirectTo({
@@ -326,14 +326,6 @@
 			}
 		},
 		onShow() {
-			 // if(app.getCache('userType')==2){
-				//  //如果是医生，就跳过去医生的营养管理页面
-				//  uni.redirectTo({
-				//  	url:'../doctor/doctor-nutrition-manage'
-				//  });
-			 // }else{
-				//  this.judgeUserAuth();
-			 // }
 			 
 			  this.judgeUserAuth();
 			 
