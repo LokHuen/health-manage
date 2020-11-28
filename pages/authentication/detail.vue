@@ -6,7 +6,7 @@
 			<image :src="baseUrl+info.bankCardFront" mode="aspectFill" class="imglist" @click="preview(baseUrl+info.bankCardFront)"></image>
 		</view>
 		<view class="changecss" @click="toindex">修改身份信息</view>
-		<view>备注：身份信息修改成功前，你的收益会继续入账修改前的账户。</view>
+		<!-- <view>备注：身份信息修改成功前，你的收益会继续入账修改前的账户。</view> -->
 	</view>
 </template>
 
