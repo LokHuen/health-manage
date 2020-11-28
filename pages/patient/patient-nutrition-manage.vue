@@ -190,7 +190,7 @@
 					categories: [],
 					series: [{
 						data: [],
-						name: 'haha'
+						name: ''
 					}]
 				},
 				showDetail: false,
@@ -309,9 +309,10 @@
 						if (res.data && res.data.length > 0) {
 							res.data.reverse()
 							res.data.forEach((item, index) => {
-								var time = item.completeTime.split('/');
-								var date = time[2].split(' ');
-								this.lineData.categories.push(time[1] + '月' + date[0] + '日');
+								// var time = item.completeTime.split('/');
+								// var date = time[2].split(' ');
+								// this.lineData.categories.push(time[1] + '月' + date[0] + '日');
+								this.lineData.categories.push(item.phase);
 								this.lineData.series[0].data.push(item.total)
 							})
 							console.log(this.lineData);
