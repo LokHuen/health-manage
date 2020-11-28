@@ -194,7 +194,8 @@
 				},
 				showDetail: false,
 				hasLoadLindData: 0,
-				splitNumber: 5
+				splitNumber: 5,
+				loadCount:0
 			}
 		},
 		methods: {
@@ -246,8 +247,9 @@
 			},
 			judgeUserAuth(){
 				app.judgeUserAuth({}).then(res =>{
+					alert(JSON.stringify(res));
 					if(res.status ==1){
-						// app.setCache('userType',res.data.userType);
+						
 						if(res.data.userType == 2){
 							//如果是医生，就跳过去医生的营养管理页面
 							uni.redirectTo({
@@ -267,6 +269,7 @@
 				});
 			},
 			getUserData(){
+				this.loadCount = 0;
 				this.getData();
 				this.getNearlyRecord();
 				this.getLineChartData();
@@ -277,6 +280,7 @@
 					if (res.status == 1) {
 						this.infoData = res.data;
 					}
+					this.loadCount++;
 				});
 			},
 			//最近一次测评的数据
@@ -288,6 +292,7 @@
 						this.latelyData = res.data;
 						if(this.latelyData.content) this.latelyData.content=this.latelyData.content.replace(/\<span/gi, '<span class="richtext"');
 					}
+					this.loadCount++;
 				});
 			},
 			//拿曲线图的数据
@@ -297,7 +302,7 @@
 					pageNo: 1,
 					pageSize: 3
 				}).then(res => {
-					console.log(res)
+					
 					if (res.status == 1) {
 						this.lineData.categories = [];
 						this.lineData.series[0].data = [];
@@ -307,15 +312,6 @@
 							res.data.forEach((item, index) => {
 								var time = item.completeTime.split('/');
 								var date = time[2].split(' ');
-								// tempArray.push(item.total)
-								// tempArray.sort()
-								// if (tempArray.length > 0) {
-								// 	let splitNumber = tempArray[tempArray.length - 1] - tempArray[0]
-								// 	if (splitNumber < 5) {
-								// 		this.splitNumber = splitNumber
-								// 		console.log(this.splitNumber)
-								// 	}
-								// }
 								this.lineData.categories.push(time[1] + '月' + date[0] + '日');
 								this.lineData.series[0].data.push(item.total)
 							})
@@ -324,6 +320,7 @@
 						}
 						this.hasLoadLindData = 1;
 					}
+					this.loadCount++;
 
 				});
 			}
