@@ -510,6 +510,7 @@
 
 			.button {
 				height: 90rpx;
+				line-height: 90rpx;
 				width: 81%;
 				background-color: #52A29E !important;
 				border-radius: 45rpx;
