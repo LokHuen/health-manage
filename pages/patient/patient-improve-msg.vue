@@ -39,9 +39,9 @@
 			<input class="name-input" type="text" value="" placeholder="请填写体重" v-model="weight" />
 			<view class="right-tip">kg</view>
 		</view>
-		<view class="pic-title" v-if="!infoData">病历照片</view>
-		<view class="pic-tip" v-if="!infoData">上传出院小结（重要）、影像报告等内容，方便医生 评估病情</view>
-		<view class="pic-content-box" v-if="!infoData">
+		<view class="pic-title" v-if="!infoData.patientName">病历照片</view>
+		<view class="pic-tip" v-if="!infoData.patientName">上传出院小结（重要）、影像报告等内容，方便医生 评估病情</view>
+		<view class="pic-content-box" v-if="!infoData.patientName">
 			<view class="ccimglist">
 				<view v-for="(item,index) in imgList" :key="index" :class="(index%3==0)?'img-box-first':'img-box'">
 					<image :src="item" mode="aspectFill" @click="previewImage(index)" class="imagelist"></image>
@@ -49,7 +49,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="upload-box" @click="choseImg" v-if="!infoData">点击上传</view>
+		<view class="upload-box" @click="choseImg" v-if="!infoData.patientName">点击上传</view>
 
 
 		<view class="button-box">

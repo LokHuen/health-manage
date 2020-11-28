@@ -179,12 +179,21 @@
 					}
 					uni.stopPullDownRefresh();
 				});
+			},
+			judgeUserAuth(){
+				app.judgeUserAuth({}).then(res =>{
+					if(res.status ==1){
+						app.setCache('userType',res.data.userType);
+						
+					}
+				});
 			}
 		   
 		},
 		onLoad(){
 			this.getDoctorInfo();
 			this.refreshData();
+			
 		},
 		onPullDownRefresh() {
 			this.refreshData();

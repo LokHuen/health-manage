@@ -9,7 +9,7 @@
 			<view class="content-box">
 				<view class="title">PG-SGA营养状况评量表</view>
 				<view class="desc">
-					患者主观整体评估(patient-generated subjective global assessment，PG-SGA)是在主观整体评估(sub-jective global assessment，SGA)的基础上发展起来的。最先由美国Ottery于1994年提出，是专门为肿瘤患者设计的营养状况评估方法。临床研究提示，PG-SGA是一种有效的肿瘤患者特异性营养状况评估工具，因而得到美国营养师协会(American Dietetic Association，ADA)等单位的广泛推广与应用。
+					患者主观整体评估（PG-SGA）是临床上专门为肿瘤患者设计的营养状况评估方法，该评估方法得到美国营养师协会（ADA）等国际营养机构和中国抗癌协会肿瘤营养专业委员会（CSNO）大力推荐，是目前肿瘤患者营养评测的首选工具。
 				</view>
 			</view>
 			
