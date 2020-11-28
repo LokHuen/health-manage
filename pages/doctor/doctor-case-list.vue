@@ -36,25 +36,39 @@
 			},
 			getListData(){
 				app.doctorBlList({pageNo:this.pageNo,patientId:this.patientId}).then(res =>{
-					console.log(res);
 					if(res.status===1){
 						if(this.pageNo===1){
+							for (var i = 0; i < res.data.list.length; i++) {
+								let pathologyUrl = [];
+								if(res.data.list[i].pathologyUrl){
+									let imgItems = res.data.list[i].pathologyUrl.split(',');
+									for(var j=0;j<imgItems.length;j++){
+										pathologyUrl.push(app.globalData.baseUrl+imgItems[j]);
+									}
+									
+								}
+								res.data.list[i].pathologyUrl = pathologyUrl;
+							}
 							this.list = res.data.list;
+							
 						}else{
-							if(res.data.pageList.pageCount>this.pageNo){
+							if(res.data.pageCount>=this.pageNo){
+								for (var i = 0; i < res.data.list.length; i++) {
+									let pathologyUrl = [];
+									if(res.data.list[i].pathologyUrl){
+										let imgItems = res.data.list[i].pathologyUrl.split(',');
+										for(var j=0;j<imgItems.length;j++){
+											pathologyUrl.push(app.globalData.baseUrl+imgItems[j]);
+										}
+					
+									}
+									res.data.list[i].pathologyUrl = pathologyUrl;
+								}
 								this.list = this.list.concat(res.data.list);
 							}
 						}
 					}
-					
-					for (var i = 0; i < this.list.length; i++) {
-						let pathologyUrl = [];
-						let imgItems = this.list[i].pathologyUrl.split(',');
-						for(var j=0;j<imgItems.length;j++){
-							pathologyUrl.push(app.globalData.baseUrl+imgItems[j]);
-						}
-						this.list[i].pathologyUrl = pathologyUrl;
-					}
+					console.log(this.list);
 					uni.stopPullDownRefresh();
 				})
 			}
