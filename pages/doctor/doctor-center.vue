@@ -3,7 +3,7 @@
 		<view class="message-box">
 			<image src="../../static/img/doctor_center.png" mode="widthFix" class="background-img"></image>
 			<view class="info-box">
-				<view class="title">个人中心</view>
+				<view class="title"> </view>
 				<image :src="data.portrait" mode="widthFix" class="avator"></image>
 				<view class="name">{{data.doctorName}}</view>
 				<view class="position">{{data.technicalTitle}}</view>
@@ -48,6 +48,7 @@
 				}
 			},
 			getData(){
+				//
 				app.doctorBusinessCard({uid:app.getCache('uid')}).then(res => {
 					console.log(res);
 					if (res.status == 1) {

@@ -33,6 +33,7 @@
 		},
 		methods: {
 			getData(){
+				//
 				app.doctorBusinessCard({uid:app.getCache('uid')}).then(res => {
 					console.log(res);
 					if (res.status == 1) {
@@ -128,7 +129,7 @@
 				margin-top: 64rpx;
 
 				.i-qr-code {
-				
+				   
 				}
 			}
 
@@ -136,7 +137,7 @@
 
 		.i-code_des {
 			margin-top: 12rpx;
-			font-size: 38rpx;
+			font-size: 30rpx;
 			color: #333333;
 			margin-top: 12rpx;
 

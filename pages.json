@@ -1,11 +1,26 @@
 {
 	"pages": [
 		{
+			"path": "pages/doctor/doctor-nutrition-manage",
+			"style": {
+				"navigationBarTitleText": "营养管理"
+			},
+			"enablePullDownRefresh": true
+		},
+		{
 			"path": "pages/patient/patient-nutrition-manage",
 			"style": {
 				"navigationBarTitleText": "营养管理"
 			}
 		},
+		
+		{
+			"path": "pages/doctor/doctor-center",
+			"style": {
+				"navigationBarTitleText": "个人中心"
+			}
+		},
+		
 		{
 			"path": "pages/patient/patient-basic-information",
 			"style": {
@@ -37,13 +52,7 @@
 			}
 		},
 		
-		{
-			"path": "pages/doctor/doctor-nutrition-manage",
-			"style": {
-				"navigationBarTitleText": "营养管理"
-			},
-			"enablePullDownRefresh": true
-		},
+		
 		
 		{
 			"path": "pages/testIndex",
@@ -51,12 +60,7 @@
 				"navigationBarTitleText": "营养自测"
 			}
 		},
-		{
-			"path": "pages/doctor/doctor-center",
-			"style": {
-				"navigationBarTitleText": "个人中心"
-			}
-		},
+		
 		
 		
 		{

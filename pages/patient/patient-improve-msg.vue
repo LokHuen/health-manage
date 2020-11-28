@@ -5,7 +5,7 @@
 		<view class="line-space"></view>
 		<view class="name-box">
 			<view class="name-tips">* 姓名</view>
-			<input class="name-input" type="text" value="" placeholder="请填写患者的真实名字" v-model="patientName" />
+			<input class="name-input" type="text" value="" placeholder="请填写真实名字" v-model="patientName" />
 		</view>
 		<view class="sex-box" @click="selectSex(0)">
 			<view class="sex-tips">* 性别</view>
@@ -22,7 +22,7 @@
 			<view class="sex-tips">* 所在城市</view>
 			<picker mode="multiSelector" :range="areaList" :range-key="'name'" @columnchange="columnChange" @cancel="hideArea(1)"
 			 @change="hideArea(0)" style="flex: 1;">
-				<view :class="(city&&province&&hasArea)||infoData.region?'has-value':'sex-value'">{{(city&&province&&hasArea)?(province+' '+city):(infoData?infoData.region:'点击选择')}}</view>
+				<view :class="(city&&province&&hasArea)||infoData.region?'has-value':'sex-value'">{{(city&&province&&hasArea)?(province+' '+city):(infoData.region?infoData.region:'点击选择')}}</view>
 			</picker>
 		</view>
 		<view class="name-box">
@@ -134,18 +134,21 @@
 			getInfo(){
 				app.patientBasicInfo({}).then(res =>{
 					if(res.status==1){
-						this.infoData = res.data;
-						this.patientName = this.infoData.patientName;
-						this.patientGender = this.infoData.patientGender == '男'?1:2;
-						this.cityId = this.infoData.cityId;
-						this.provinceId = this.infoData.provinceId;
-						this.illness = this.infoData.illness;
-						this.height = this.infoData.height;
-						this.weight = this.infoData.weight;
-						var year = this.infoData.birthday.split('年')[0];
-						var month = this.infoData.birthday.split('年')[1].split('月')[0];
-						var day =  this.infoData.birthday.split('年')[1].split('月')[1].split('日')[0];
-						this.birthday = year+'-'+month+'-'+day;
+						if(res.data.patientName && res.data.cityId && res.data.provinceId){
+							this.infoData = res.data;
+							this.patientName = this.infoData.patientName;
+							this.patientGender = this.infoData.patientGender == '男'?1:2;
+							this.cityId = this.infoData.cityId;
+							this.provinceId = this.infoData.provinceId;
+							this.illness = this.infoData.illness;
+							this.height = this.infoData.height;
+							this.weight = this.infoData.weight;
+							var year = this.infoData.birthday.split('年')[0];
+							var month = this.infoData.birthday.split('年')[1].split('月')[0];
+							var day =  this.infoData.birthday.split('年')[1].split('月')[1].split('日')[0];
+							this.birthday = year+'-'+month+'-'+day;
+						}
+						
 					}
 				});
 			},

@@ -47,7 +47,7 @@
 				<image class="avator-box" :src="item.portrait" mode="widthFix"></image>
 				<view class="msg-info-box">
 					<view class="msg-info-name">{{item.patientName}}</view>
-					<view class="msg-info-detail">{{(item.patientGender==1?'男':'女')+' '+item.age+'岁'+item.illness}}</view>
+					<view class="msg-info-detail">{{(item.patientGender==1?'男':'女')+' '+(item.age==0?'':(item.age+'岁 '))+item.illness}}</view>
 				</view>
 			</view>
 			<view class="line"></view>
