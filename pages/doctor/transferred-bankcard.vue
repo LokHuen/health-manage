@@ -19,6 +19,7 @@
 			</view>
 			<view class="list-money">{{'¥'+item.money}}</view>
 		</view>
+		<view class="no-data-tips" v-if="list.length == 0">暂无数据</view>
 
 	</view>
 </template>
@@ -118,6 +119,12 @@
 			font-size: 14px;
 			margin-top: 30rpx;
 			margin-left: 50rpx;
+		}
+		.no-data-tips{
+			margin-top: 100rpx;
+			text-align: center;
+			font-size: 30rpx;
+			color: #666666;
 		}
 
 		.list-item {

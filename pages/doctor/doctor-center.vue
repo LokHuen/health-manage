@@ -43,7 +43,6 @@
 						url:'doctor-account-list'
 					});
 				}else{
-
 					this.judgeDoctorAuthenticationStatus();
 				}
 			},

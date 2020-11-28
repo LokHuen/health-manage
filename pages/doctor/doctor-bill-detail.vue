@@ -106,6 +106,11 @@
 				}
 		
 			}
+			.list-money{
+				position: absolute;
+			    top: 30rpx;
+				right: 0rpx;
+			}
 		
 		}
 		.line {

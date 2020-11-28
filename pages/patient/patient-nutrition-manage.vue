@@ -244,7 +244,7 @@
 			judgeUserAuth(){
 				app.judgeUserAuth({}).then(res =>{
 					if(res.status ==1){
-						app.setCache('userType',res.data.userType);
+						// app.setCache('userType',res.data.userType);
 						if(res.data.userType == 2){
 							//如果是医生，就跳过去医生的营养管理页面
 							uni.redirectTo({
@@ -326,14 +326,16 @@
 			}
 		},
 		onShow() {
-			 if(app.getCache('userType')==2){
-				 //如果是医生，就跳过去医生的营养管理页面
-				 uni.redirectTo({
-				 	url:'../doctor/doctor-nutrition-manage'
-				 });
-			 }else{
-				 this.judgeUserAuth();
-			 }
+			 // if(app.getCache('userType')==2){
+				//  //如果是医生，就跳过去医生的营养管理页面
+				//  uni.redirectTo({
+				//  	url:'../doctor/doctor-nutrition-manage'
+				//  });
+			 // }else{
+				//  this.judgeUserAuth();
+			 // }
+			 
+			  this.judgeUserAuth();
 			 
 		},
 

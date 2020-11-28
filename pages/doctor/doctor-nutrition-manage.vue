@@ -51,6 +51,7 @@
 					<view class="msg-info-detail">{{(item.patientGender==1?'男':'女')+' '+(item.age==0?'':(item.age+'岁 '))+item.illness}}</view>
 				</view>
 			</view>
+
 			<view class="line"></view>
 			
 			<!-- 健康信息 -->
@@ -69,6 +70,7 @@
 			
 			<view class="no-record-tips" v-if="!item.result">暂无测评记录</view>
 		</view>
+		<view class="no-data-tips">暂无数据</view>
 		<view style="height: 100px;" ></view>
 		
         <uni-popup ref="popupPatient" type="bottom">
@@ -180,14 +182,7 @@
 					uni.stopPullDownRefresh();
 				});
 			},
-			judgeUserAuth(){
-				app.judgeUserAuth({}).then(res =>{
-					if(res.status ==1){
-						app.setCache('userType',res.data.userType);
-						
-					}
-				});
-			}
+
 		   
 		},
 		onLoad(){
@@ -405,6 +400,12 @@
 				
 				}
 			}
+		}
+		.no-data-tips{
+			margin-top: 100rpx;
+			text-align: center;
+			font-size: 30rpx;
+			color: #666666;
 		}
 	
 		.white-background-patient{

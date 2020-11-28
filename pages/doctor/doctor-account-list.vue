@@ -3,7 +3,7 @@
 	<view class="container">
 		<view class="not-received-item" @click="select(0)">
 			<view class="money-box">
-				<view class="money">{{data.waitIncome}}</view>
+				<view class="money">{{data.waitIncome?data.waitIncome:'0'}}</view>
 				<view class="yuan">元</view>
 			</view>
 			<view class="tips">待转账到银行卡</view>
@@ -13,7 +13,7 @@
 		
 		<view class="received-item" @click="select(1)">
 			<view class="received-money-box">
-				<view class="received-money">{{data.realIncome}}</view>
+				<view class="received-money">{{data.realIncome?data.realIncome :'0'}}</view>
 				<view class="received-yuan">元</view>
 			</view>
 			
@@ -61,7 +61,6 @@
 <style lang="scss">
 	.container{
 		.not-received-item{
-			height: 230rpx;
 			margin-left: 60rpx;
 			.money-box{
 				color: #333333;
@@ -86,6 +85,8 @@
 				color: #999999;
 				font-size: 13px;
 				margin-top: 10rpx;
+				padding-bottom: 35rpx;
+				margin-right: 40rpx;
 			}
 		}
 		.line{
@@ -94,7 +95,7 @@
 		}
 		
 		.received-item{
-			height: 180rpx;
+			
 			margin-left: 60rpx;
 			.received-money-box{
 				color: #333333;
@@ -114,6 +115,7 @@
 				font-size: 13px;
 				color: #999999;
 				margin-top: 13rpx;
+				padding-bottom: 35rpx;
 			}
 		}
 	}
