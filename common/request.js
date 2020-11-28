@@ -18,6 +18,7 @@ function rq(url, data = {}, type, ctype) {
 					reject('未登录')
 				}
 				if (res.data.status !== 1) {
+					if(res.data.msg)
 					uni.showToast({
 						title: res.data.msg,
 						duration: 1500,
