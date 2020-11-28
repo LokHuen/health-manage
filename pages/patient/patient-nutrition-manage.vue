@@ -248,7 +248,6 @@
 			},
 			judgeUserAuth(){
 				app.judgeUserAuth({}).then(res =>{
-
 					if(res.status ==1){
 						if(res.data.userType == 2){
 							//如果是医生，就跳过去医生的营养管理页面
@@ -566,6 +565,7 @@
 
 			.button {
 				height: 90rpx;
+				line-height: 90rpx;
 				width: 81%;
 				background-color: #52A29E !important;
 				border-radius: 45rpx;
