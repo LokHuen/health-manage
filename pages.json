@@ -19,8 +19,7 @@
 			},
 			"enablePullDownRefresh": true
 		},
-		
-		
+			
 		
 		{
 			"path": "pages/patient/patient-basic-information",

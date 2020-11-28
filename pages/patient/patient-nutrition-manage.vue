@@ -7,8 +7,8 @@
 				<view class="name">
 					{{infoData.patientName||"游客"}}
 				</view>
-				<view class="msg">
-					{{(infoData.patientGender||"")+' '+(infoData.age||0)+'岁 '+(infoData.illness||"")}}
+				<view class="msg">{{(infoData.patientGender||"")+' '+((infoData.age || infoData.age!=0)?(infoData.age+'岁 '):'')+(infoData.illness||"")}}
+				
 				</view>
 			</view>
 		</view>
