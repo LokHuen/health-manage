@@ -7,7 +7,7 @@
 				<view class="yuan">元</view>
 			</view>
 			<view class="tips">待转账到银行卡</view>
-			<view class="detail">患者付款购买益爱宁的第二天，收益会自动转入您的银行卡</view>
+			<view class="detail">收益会在第二天转入您的银行卡</view>
 		</view>
 		<view class="line"> </view>
 		

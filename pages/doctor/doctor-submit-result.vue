@@ -2,7 +2,7 @@
 	<view>
 		<view class="health-content">
 			<view class="health-result-title">提交成功，是否现在进行身份认证操作？</view>
-			<view class="health-result-detail">身份认证成功后，患者付款购买益爱宁的第二天，收益会自动转入您的银行卡，建议立即提交认证信息。</view>
+			<view class="health-result-detail">身份认证成功后，收益会在第二天转入您的银行卡，建议立即提交认证信息。</view>
 			<view class="health-result-confim">
 				<button class="health-result-confim-button" @click="authenticate">立即认证</button>
 			</view>
