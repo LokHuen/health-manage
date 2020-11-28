@@ -325,7 +325,9 @@
 			}
 		},
 		onShow() {
-			  this.judgeUserAuth();
+			  if(app.getCache('uid')){
+				  this.judgeUserAuth();
+			  } 
 		},
 
 
