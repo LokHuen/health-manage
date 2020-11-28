@@ -105,7 +105,10 @@
 					<view class="health-list-item-detail">{{latelyData.phase}}</view>
 					<view class="health-list-item-time">{{'测评时间：'+latelyData.completeTime}}</view>
 					<view class="line" v-if="showDetail"></view>
-					<rich-text :nodes="latelyData.content" class="advice-content" v-if="showDetail"></rich-text>
+					<view class="advice-content">
+						<rich-text :nodes="latelyData.content" v-if="showDetail"></rich-text>
+					</view>
+					
 				</view>
 				<image class="health-list-item-arrow" :src="showDetail?'../../static/icon/right_arrow_top.png':'../../static/icon/right_arrow.png'"
 				 mode="widthFix" @click="showDetailMessage"></image>
@@ -551,8 +554,7 @@
 					.advice-content {
 						font-size: 22rpx!important;
 						color: #666666;
-						margin-top: 20rpx;
-						padding-bottom: 10rpx;
+						padding:20rpx 20rpx 0 0;
 					}
 				}
 

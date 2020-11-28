@@ -16,7 +16,10 @@
 					<view class="health-list-item-detail">{{item.phase}} </view>
 					<view class="health-list-item-time">测评时间：{{item.completeTime}}</view>
 					<view class="line" v-if="item.showDetail"></view>
-					<rich-text :nodes="item.content" class="advice-content" v-if="item.showDetail"></rich-text>
+					<view class="advice-content">
+						<rich-text :nodes="item.content"  v-if="item.showDetail"></rich-text>
+					</view>
+					
 				</view>
                 <image class="health-list-item-arrow" :src="item.showDetail?'../../static/icon/right_arrow_top.png':'../../static/icon/right_arrow.png'" mode="widthFix" @click="onClickItem(item)"></image>
 			</view>
@@ -138,8 +141,7 @@
 				.advice-content{
 					font-size: 24rpx!important;
 					color: #666666;
-					margin-top: 20rpx;
-                    padding-bottom: 10rpx;
+					padding-right: 10px;
 				}
 			}
 			.health-list-item-arrow {

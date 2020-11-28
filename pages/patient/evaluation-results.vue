@@ -12,7 +12,10 @@
 					</view>
 					<view class="health-list-item-time">测评时间：{{info.completeTime}}</view>
 					<view class="line" v-if="showDetail"></view>
-					<rich-text v-show="showDetail" :nodes="info.content" class="advice-content"></rich-text>
+					<view class="advice-content">
+						<rich-text v-show="showDetail" :nodes="info.content" ></rich-text>
+					</view>
+					
 				</view>
                 <image class="health-list-item-arrow" :src="showDetail?'../../static/icon/right_arrow_top.png':'../../static/icon/right_arrow.png'" mode="widthFix" @click="onClickItem"></image>
 			</view>
@@ -44,6 +47,7 @@
 				app.questiongetScore({surveyId:this.id}).then(res=>{
 					app.loaded();
 					this.info = res.data;
+					if(this.info.content) this.info.content=this.info.content.replace(/\<span/gi, '<span class="richtext"');
 				})
 			},
 			onClickItem() {
@@ -51,7 +55,7 @@
 			},
 			tootherpage(){
 				uni.reLaunch({
-					url:app.topageurl?app.topageurl:"/pages/testIndex",
+					url:app.topageurl?app.topageurl:"/pages/patient/nutritional-self-test",
 				})
 				if(app.topageurl) app.topageurl = "";
 			}
@@ -126,7 +130,7 @@
 				}
 				img{max-width: 100%;}
 				.advice-content{
-                    padding: 10rpx 0;color: #666666;
+                    padding-right: 10px;color: #666666;
 				}
 			}
 			.health-list-item-arrow {

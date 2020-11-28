@@ -22,6 +22,7 @@ function rq(url, data = {}, type, ctype) {
 					window.location.href = baseUrl + '/wx/fwh/user/auth/index?returnUrl=' + encodeURIComponent(windowUrl);
 				}
 				if (res.data.status !== 1) {
+					if(res.data.msg)
 					uni.showToast({
 						title: res.data.msg,
 						duration: 1500,

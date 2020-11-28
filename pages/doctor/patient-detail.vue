@@ -34,7 +34,10 @@
 					<view class="health-list-item-detail">{{recordData.phase}}</view>
 					<view class="health-list-item-time">{{'测评时间：'+recordData.completeTime}}</view>
 					<view class="line" v-if="showDetail"></view>
-					<view class="advice-content" v-if="showDetail"> {{'建议： '+recordData.content}}</view>
+<!-- 					<view class="advice-content" v-if="showDetail"> {{'建议： '+recordData.content}}</view> -->
+					<view class="advice-content">
+						<rich-text v-show="showDetail" :nodes="recordData.content" ></rich-text>
+					</view>
 				</view>
 		        <image class="health-list-item-arrow" :src="showDetail?'../../static/icon/right_arrow_top.png':'../../static/icon/right_arrow.png'" mode="widthFix" @click="showDetailMessage"></image>
 			</view>
@@ -105,6 +108,7 @@
 				app.patientNearlyRecord({surveyId:1,userId:this.id}).then(res =>{
 					if (res.status == 1){
 						this.recordData = res.data;
+						if(this.recordData.content) this.recordData.content=this.recordData.content.replace(/\<span/gi, '<span class="richtext"');
 					}
 				});
 			}
@@ -265,8 +269,7 @@
 					.advice-content{
 						font-size: 11px;
 						color: #666666;
-						margin-top: 20rpx;
-		                padding-bottom: 10rpx;
+		                padding: 20rpx 20rpx 0 0;
 					}
 				}
 				.health-list-item-arrow {
