@@ -325,9 +325,7 @@
 			}
 		},
 		onShow() {
-			 
 			  this.judgeUserAuth();
-			 
 		},
 
 

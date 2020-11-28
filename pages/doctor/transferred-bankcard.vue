@@ -36,9 +36,9 @@
 		},
 		methods: {
 			select(item){
-				uni.navigateTo({
-					url:'doctor-bill-detail?id='+item.id
-				});
+				// uni.navigateTo({
+				// 	url:'doctor-bill-detail?id='+item.id
+				// });
 			},
             getListData(){
 				app.doctorWaitDivide({pageNo:this.pageNo}).then(res =>{
