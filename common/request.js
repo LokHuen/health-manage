@@ -15,10 +15,9 @@ function rq(url, data = {}, type, ctype) {
 			},
 			success: (res) => {
 				if (res.data.status === -100) {
-					let windowUrl,minurl;
+					let windowUrl;
 					windowUrl = window.location.href;
-					minurl = window.location.href.split("?")[1];
-					if(minurl&&minurl.indexOf("uid")!=-1) windowUrl = window.location.href.split("uid")[0];
+
 					window.location.href = baseUrl + '/wx/fwh/user/auth/index?returnUrl=' + encodeURIComponent(windowUrl);
 				}
 				if (res.data.status !== 1) {
