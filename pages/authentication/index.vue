@@ -66,8 +66,8 @@
 		</view>
 		<uni-popup ref="popup" type="bottom" @change="changeframe">
 			<view class="choosebox">
-				<view class="headtitle">{{chooseindex==1?"银行名称":(chooseindex==2?"开户行所在省":(chooseindex==3?"开户行所在市":(chooseindex==4?"开户行名称":(chooseindex==5?"身份证所在省":(chooseindex==6?"身份证所在市":"身份证所在区")))))}}
-					<uni-icons type="arrowleft" size="15" class="backicon" v-show="chooseindex!=1" @click="choosechange"></uni-icons>
+				<view class="headtitle">{{chooseindex==1?"银行名称":(chooseindex==2?"开户行所在省":(chooseindex==3?"开户行所在市":(chooseindex==4?"开户行名称":(chooseindex==5?"身份证住址所在省":(chooseindex==6?"身份证住址所在市":"身份证住址所在区")))))}}
+					<uni-icons type="arrowleft" size="15" class="backicon" v-show="chooseindex!=1&&chooseindex!=5" @click="choosechange"></uni-icons>
 				</view>
 				<scroll-view class="choosebody" scroll-y="true">
 					<view v-if="chooseindex==1" class="itemlist flex" v-for="(item,index) in ranklist" :key="index" @click="choosenext(1,index)">
