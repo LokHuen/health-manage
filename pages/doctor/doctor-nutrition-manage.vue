@@ -26,6 +26,7 @@
 					<view class="count-tip">测评患者数</view>
 				</view>
 			</view>
+			<view class="join-box" @click="joinTest">PG-SGA营养状况评量表></view>
 			
 		</view>
 		
@@ -108,6 +109,11 @@
 			}
 		},
 		methods: {
+			joinTest(){
+				uni.navigateTo({
+					url:'../patient/nutritional-self-test'
+				});
+			},
 			select(item){
 				uni.navigateTo({
 					url:'patient-detail?id='+item.id
@@ -230,7 +236,6 @@
 				margin-top: 30rpx;
 				margin-left: 50rpx;
 				margin-right: 50rpx;
-				margin-bottom: 40rpx;
 				height: 176rpx;
                 box-shadow: 0px 0px 27px 0px rgba(0, 0, 0, 0.08);
 				display: flex;
@@ -260,6 +265,15 @@
 					height: 100rpx;
 					background-color: #E5E5E5;
 				}
+			}
+			
+			.join-box{
+				  margin-top: 30rpx;
+				  text-align: center;
+				  color: #666666;
+                  font-size: 13px;
+				   margin-bottom: 30rpx;
+				  
 			}
 			
 		}
