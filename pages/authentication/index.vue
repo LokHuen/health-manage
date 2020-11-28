@@ -3,8 +3,8 @@
 		<view class="contentbox">
 			<view class="introbox">
 				<view class="bigtitle">请完善身份信息</view>
-				<view class="textinfo">提现前，您需要提交个人身份信息，并通过平台审核。</view>
-				<view class="textinfo">平台审核通过后，您会收到手机短信通知。审核时长一般在1个工作日内完成。</view>
+				<view class="textinfo">身份认证成功后，患者付款购买益爱宁的第二天，</view>
+				<view class="textinfo">收益会自动转入您的银行卡。认证资料一般会在一个工作日内完成。</view>
 			</view>
 			<view class="uploadbox flex" @click="sendpicture(1)">
 				<image :src="form.idCardFront?(baseUrl+form.idCardFront):'../../static/auth/1.png'" mode="widthFix"></image>

@@ -14,12 +14,17 @@
 
 			console.log('App Launch', option);
 			uni.baseImageUrl = 'https://bgjdapi-test.ttxyw.cn/upload/mini'
-			// //更新用户信息
-			// if(this.getCache("uid")) this.saveinfo();
-			const windowUrl = window.location.href;
+			
+			let timeStamp = new Date()
+			let windowUrl = window.location.href;
+			
+			// if(windowUrl.indexOf("?")==-1) windowUrl = windowUrl + '?timeStamp=' + timeStamp.getTime();
+			// else windowUrl = windowUrl + '&timeStamp=' + timeStamp.getTime();
+			
 			let optionuid = option.query.uid;
 			if(optionuid&&(optionuid instanceof Array)) option.query.uid = optionuid[optionuid.length-1]; //多次登录，uid会变成数组
-			const uid = option.query.uid || this.getCache("uid");
+			const uid = option.query.uid;
+			 // || this.getCache("uid");
 			console.log('uid==' + uid);
 			if(!uid){
 				 window.location.href = this.globalData.baseUrl + '/wx/fwh/user/auth/index?returnUrl=' + encodeURIComponent(windowUrl);

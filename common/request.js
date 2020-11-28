@@ -15,6 +15,7 @@ function rq(url, data = {}, type, ctype) {
 			},
 			success: (res) => {
 				if (res.data.status === -100) {
+					localStorage.removeItem("uid");
 					let windowUrl;
 					windowUrl = window.location.href;
 
