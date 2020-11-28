@@ -17,6 +17,8 @@
 			// //更新用户信息
 			// if(this.getCache("uid")) this.saveinfo();
 			const windowUrl = window.location.href;
+			let optionuid = option.query.uid;
+			if(optionuid&&(optionuid instanceof Array)) option.query.uid = optionuid[optionuid.length-1]; //多次登录，uid会变成数组
 			const uid = option.query.uid || this.getCache("uid");
 			console.log('uid==' + uid);
 			if(!uid){
