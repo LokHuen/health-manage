@@ -25,8 +25,12 @@
 		methods: {
 			loginagain(){
 				localStorage.removeItem("uid");
-				const windowUrl = window.location.href;
-				window.location.href = baseUrl + '/wx/fwh/user/auth/index?returnUrl=' + encodeURIComponent(windowUrl);
+				let windowUrl,minurl;
+				windowUrl = window.location.href;
+				minurl = window.location.href.split("?")[1];
+				if(minurl&&minurl.indexOf("uid")!=-1) windowUrl = window.location.href.split("uid")[0];
+				console.log(windowUrl)
+				window.location.href = this.baseUrl + '/wx/fwh/user/auth/index?returnUrl=' + encodeURIComponent(windowUrl);
 			}
 		}
 	}
