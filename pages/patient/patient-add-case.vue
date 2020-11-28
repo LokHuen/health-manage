@@ -89,6 +89,9 @@
 						app.tip('上传成功');
 						this.list = [];
 						this.pathologyUrl = '';
+						uni.navigateBack({
+							
+						});
 					}
 				});
 			}
