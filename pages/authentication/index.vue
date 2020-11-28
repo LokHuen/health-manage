@@ -3,8 +3,8 @@
 		<view class="contentbox">
 			<view class="introbox">
 				<view class="bigtitle">请完善身份信息</view>
-				<view class="textinfo">身份认证成功后，患者付款购买益爱宁的第二天，</view>
-				<view class="textinfo">收益会自动转入您的银行卡。认证资料一般会在一个工作日内完成。</view>
+				<view class="textinfo">身份认证成功后，收益会在第二天转入您的银行卡。</view>
+				<view class="textinfo">认证资料一般会在一个工作日内完成。</view>
 			</view>
 			<view class="uploadbox flex" @click="sendpicture(1)">
 				<image :src="form.idCardFront?(baseUrl+form.idCardFront):'../../static/auth/1.png'" mode="widthFix"></image>
