@@ -14,7 +14,7 @@ function rq(url, data = {}, type, ctype) {
 				// 'tkbgjd-token':"634fw+Rth9zpdjXbKK9wEJcqlZZrzjvtudIxfIL6apurN02RT6Xn2mvhKBRqiD9cx0R2yWFv8njvE8w7FkGru5/LmmtHT0Vq+uWt"
 			},
 			success: (res) => {
-				if (res.data.status === -100) {
+				if (res.data.status === -110) {
 					localStorage.removeItem("uid");
 					let windowUrl;
 					windowUrl = window.location.href;
