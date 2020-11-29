@@ -117,7 +117,7 @@
 		</view>
 
 		<view class="button-box">
-			<button type="default" class="button" @click="beginTest">营养测评</button>
+			<button type="default" class="button" @click="beginTest">PG-SGA 营养测评</button>
 		</view>
 		<view style="height: 200px;"></view>
 		<uni-popup ref="popup" type="bottom">
