@@ -110,7 +110,7 @@
 				padding-bottom: 40rpx;
                 width: 100%;
 				.health-list-item-title {
-					font-size: 30rpx;
+					font-size: 30rpx;font-weight:600;
 					color: #52A29E;
 				}
 				

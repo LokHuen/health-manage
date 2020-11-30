@@ -278,6 +278,11 @@
 			                    }
 			            }
 			        }
+					if(list[i].description) list[i].description="";
+					for (let j = 0; j < list[i].optionList.length; j++) {
+						if(list[i].optionList[j].description) list[i].optionList[j].description="";
+					}
+					
 			    }
 			    
 			    app.replySecond(this.questionList).then(rs=>{
