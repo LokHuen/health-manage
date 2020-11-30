@@ -1,6 +1,11 @@
 <template>
 	
 	<view>
+		<view class="tips">
+			<image src="../../static/icon/remind_icon.png" mode="widthFix" class="remind"></image> 
+			<view class="remind-tips">根据肿瘤患者膳食营养处方专家共识说明， 建议您每周进行一次营养测评。</view>
+		</view>
+		
 		<view class="nodata-tips-box" v-if="listDatas.length==0">
 			<image src="../../static/icon/icon_nodata.png" mode="aspectFit" class="nodata-img"></image>
 			<view class="tip-title">暂无数据</view>
@@ -88,6 +93,24 @@
 
 
 <style lang="scss">	
+    .tips{
+		margin-left: 50rpx;
+		margin-right: 50rpx;
+		display: flex;
+		padding-top: 35rpx;
+		.remind{
+			width: 35rpx;
+			height: 35rpx;
+			margin-top: 10rpx;
+		}
+		.remind-tips{
+			margin-left: 10rpx;
+			color: #333333;
+			font-size: 15px;
+			line-height: 50rpx;
+		}
+		
+	}
     .nodata-tips-box{
 		margin-top: 80rpx;
 		text-align: center;
