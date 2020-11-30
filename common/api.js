@@ -69,6 +69,10 @@ var api = {
 	patientBlListx:(data)=>{return rq("/wx/patient/bl/blListx",data,"GET");},
 	//医生请求患者基础信息
 	basicInfox:(data)=>{return rq("/wx/patient/basicInfox",data,"GET");},
+	//保存病患医嘱
+	saveAdvice:(data)=>{return rq("/wx/patient/advice/save",data,"POST");},
+	//病患医嘱分页列表
+	adviceListRequest:(data)=>{return rq("/wx/patient/advice/findPage",data,"GET");},
 }
 
 export {api};

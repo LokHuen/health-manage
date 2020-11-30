@@ -165,7 +165,33 @@
 				<view class="white-background-energy-close" @click="closeEnergyTips">关闭</view>
 			</view>
 		</uni-popup>
-
+        <uni-popup ref="popupMedicalAdvice" type="bottom"> 
+		<view class="white-bg-MA" v-if="!writeRecord">
+			<view class="MA-title" v-if="recordList.length>0">{{recordList.length+'条记录'}}</view>
+			<view :class="(index==recordList.length-1)?'MA-record-list1':'MA-record-list'" v-for="(item,index) in recordList" :key ="index" v-if="recordList.length>0">
+				<view class="record-content">{{item.advice}}</view>
+				<view class="record-time-box">
+					<view class="record-time">{{item.createTime}}</view>
+					<view class="record-motify" @click="motifyAdvice(item)">修改</view>
+				</view>
+			</view>
+			<view class="MA-title" v-if="recordList.length==0">暂无记录</view>
+			<view class="MA-space" v-if="recordList.length==0"></view>
+			<view class="MA-line"></view>
+			<view class="MA-send" @click="sendAdvice">发送医嘱</view>
+			<view class="MA-close" @click="closeRecord">关闭</view>
+		</view>
+		<view class="white-bg-MA-write" v-if="writeRecord">
+			<view class="MA-write-top">
+				<image src="../../static/icon/turnback_icon.png" mode="widthFix" class="turnback" @click="turnbcak"></image>
+				<image src="../../static/icon_close.png" mode="widthFix" class="close-write" @click="closeRecord"></image>
+			</view>
+			<textarea placeholder="请填写医嘱内容" class="textarea" v-model="advice" />
+			<view class="MA-write-sure" @click="writeAdvice">确定</view>
+			<view class="MA-write-tips">发送后，患者会即时收到医嘱内容</view>
+		</view>
+		     
+		</uni-popup>
 	</view>
 </template>
 
@@ -197,15 +223,55 @@
 				hasLoadLindData: 0,
 				splitNumber: 5,
 				uid: 1,
+				recordList:[1,2,3],
+				writeRecord:false,
+				advice:'',
+				adviceId:1,
 			}
 		},
 		onLoad(props){
 			this.uid = props.uid;
 		},
 		methods: {
-
+			motifyAdvice(item){
+				this.advice = item.advice;
+				this.adviceId = item.id;
+				this.writeRecord = !this.writeRecord;
+			},
+			writeAdvice(){
+				if(!this.advice){
+					app.tip('请填写建议');
+					return;
+				}
+				app.saveAdvice({id:this.adviceId,advice:this.advice,patientId:this.uid,creatorId:app.getCache('uid')}).then(res =>{
+					if(res.status ==1){
+						app.tip('填写完成');
+						this.writeRecord = !this.writeRecord;
+						this.advice = '';
+						this.beginTest();
+					}
+				});
+			},
+			turnbcak(){
+				this.writeRecord = !this.writeRecord;
+				this.advice = '';
+			},
+			sendAdvice(){
+				this.adviceId = '';
+				this.writeRecord = !this.writeRecord;
+			},
 			beginTest() {
-
+				app.adviceListRequest({patientId:this.uid}).then(res=>{
+				    if(res.status == 1){
+						this.recordList = res.data;
+						this.$refs.popupMedicalAdvice.open();
+					}
+					
+				});
+			},
+		    closeRecord(){
+				this.$refs.popupMedicalAdvice.close();
+				this.writeRecord = false;
 			},
 			clickFuction(index) {
 				if (index == 0) {
@@ -674,6 +740,119 @@
 				line-height: 100rpx;
 				font-size: 15px;
 				color: #666666;
+			}
+		}
+		.white-bg-MA{
+			background-color: #FFFFFF;
+			border-radius: 10px 10px 0px 0px;
+		    .MA-title{
+				padding-top: 30rpx;
+				text-align: center;
+				color: #666666;
+				font-size: 13px;
+			}
+			.MA-space{
+				height: 300rpx;
+			}
+			.MA-record-list{
+				margin-top: 30rpx;
+				margin-left: 61rpx;
+				margin-right: 61rpx;
+				padding-bottom: 15rpx;
+				border-bottom: 2rpx solid #E5E5E5;
+				
+			}
+			.MA-record-list1{
+				margin-top: 30rpx;
+				margin-left: 61rpx;
+				margin-right: 61rpx;
+				padding-bottom: 15rpx;			
+			}
+			
+			.record-content{
+				color: #333333;
+				font-size: 14px;
+			}
+			.record-time-box{
+				display: flex;
+				margin-top: 15rpx;
+				.record-time{
+					font-size: 14px;
+					color: #999999;
+				}
+				.record-motify{
+					font-size: 14px;
+					color: #666666;
+					margin-left: 25rpx;
+				}
+			}
+			
+			.MA-line{
+				margin-top: 30rpx;
+				background-color: #F6F6F6;
+				height: 20rpx;
+			}
+			.MA-send{
+				text-align: center;
+				height: 104rpx;
+				line-height: 104rpx;
+				color: #52A29E;
+				font-size: 15px;
+				border-bottom: 2rpx solid #E5E5E5;
+			}
+			.MA-close{
+				text-align: center;
+				height: 102rpx;
+				line-height: 102rpx;
+				color:#666666;
+				font-size: 15px;
+			}
+		}
+	    .white-bg-MA-write{
+			background-color: #FFFFFF;
+			.MA-write-top{
+				height: 104rpx;
+				position: relative;
+				.turnback{
+					position: absolute;
+					left: 60rpx;
+					top: 36rpx;
+					width: 16.5rpx;
+					height: 28.5rpx;
+				}
+				.close-write{
+					position: absolute;
+					right: 60rpx;
+					top: 36rpx;
+					width: 22.6rpx;
+					height: 22.6rpx;
+				}
+			}
+			.textarea{
+				height: 300rpx;
+				margin-left: 60rpx;
+				width: 630rpx;
+				border: 1rpx solid #DCDCDC ;
+				font-size: 15px;
+			}
+			.MA-write-sure{
+				margin-top: 50rpx;
+				height: 90rpx;
+				line-height: 90rpx;
+				border-radius: 45rpx;
+				color: #FFFFFF;
+				background-color: #52A29E;
+				margin-left: 60rpx;
+				margin-right: 60rpx;
+				font-size: 17px;
+				text-align: center;
+			}
+			.MA-write-tips{
+				margin-top: 15rpx;
+				color: #999999;
+				font-size: 13px;
+				text-align: center;
+				padding-bottom: 40rpx;
 			}
 		}
 	}
