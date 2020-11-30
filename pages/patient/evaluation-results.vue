@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="listContent">
-			<view class="health-list-item">	
+			<view class="health-list-item" @click="toanswerlist(info.id)">	
 				<view class="health-list-item-avatar-content">
 					<image class="health-list-item-avatar" src="../../static/icon/cry_icon.png"></image>
 				</view>
@@ -17,7 +17,7 @@
 					</view>
 					
 				</view>
-                <image class="health-list-item-arrow" :src="showDetail?'../../static/icon/right_arrow_top.png':'../../static/icon/right_arrow.png'" mode="widthFix" @click="onClickItem"></image>
+                <image class="health-list-item-arrow" :src="showDetail?'../../static/icon/right_arrow_top.png':'../../static/icon/right_arrow.png'" mode="widthFix" @click.stop="onClickItem"></image>
 			</view>
 		</view>
 		
@@ -58,7 +58,12 @@
 					url:app.topageurl?app.topageurl:"/pages/patient/nutritional-self-test",
 				})
 				if(app.topageurl) app.topageurl = "";
-			}
+			},
+			toanswerlist(id){
+				uni.navigateTo({
+					url:"/pages/patient/answer?id="+id
+				})
+			},
 		}
 	}
 	
@@ -105,7 +110,7 @@
 				padding-bottom: 40rpx;
                 width: 100%;
 				.health-list-item-title {
-					font-size: 30rpx;
+					font-size: 30rpx;font-weight:600;
 					color: #52A29E;
 				}
 				

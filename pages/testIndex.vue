@@ -1,11 +1,11 @@
 <template>
 	<view class="testbox">
-		<view class="flex">治疗阶段，请选择一个<image src="../static/icon/wenhaoIcon.png" class="question" mode="widthFix" @click="$refs.popup.open()"></image></view>
+		<view class="flex">请选择治疗阶段<image src="../static/icon/wenhaoIcon.png" class="question" mode="widthFix" @click="$refs.popup.open()"></image></view>
 		<view class="mintext">系统会帮您记录好每一个时间节点的营养状况，助您掌控营养变化趋势。</view>
 		<view class="flex chooselist" v-for="(item,index) in chooselist" :key="index">
 			<view class="title">{{item.name}}</view>
 			<view class="flex" style="flex:1;justify-content:flex-end;">
-				<view v-for="(item1,index1) in item.list" :key="index1" :class="'itemlist '+((chooseitem==item1&&chooseclass==item.name)?'on':'')" @click="chooseindex(index,index1)">{{item1}}</view>
+				<view v-for="(item1,index1) in item.list" :key="index1" :class="'itemlist '+(chooseitem[index].choose==item1?'on':'')" @click="chooseindex(index,index1)">{{item1}}</view>
 			</view>
 		</view>
 		<view class="pagebottombt" @click="submitchoose">确定</view>
@@ -41,7 +41,15 @@
 					{name:'免疫治疗',list:["免疫前","免疫中","免疫后"]},
 					{name:'康复治疗',list:["康复期"]},
 				],
-				chooseitem:"",
+				chooseitem:[
+					{choose:""},
+					{choose:""},
+					{choose:""},
+					{choose:""},
+					{choose:""},
+					{choose:""},
+					{choose:""},
+				],
 				chooseclass:"",
 				frameinfo:[
 					{name:'前',text:"代表您将要进行的下一个治疗阶段，例:您准备进行化疗，选择化疗前。"},
@@ -65,11 +73,18 @@
 		methods: {
 			chooseindex(index,index1){
 				this.chooseclass = this.chooselist[index].name;
-				this.chooseitem = this.chooselist[index].list[index1];
+				this.chooseitem[index].choose = this.chooselist[index].list[index1];
 			},
 			submitchoose(){
 				if(!this.chooseclass) {app.tip("请选择其中一个选项");return;}
-				app.getReplyRecord({surveyId:this.id,phase:this.chooseitem}).then(res=>{
+				let longtext = "";
+				for (var i = 0; i < this.chooseitem.length; i++) {
+					if(this.chooseitem[i].choose){
+						if(longtext) longtext += "," + this.chooseitem[i].choose;
+						else longtext = this.chooseitem[i].choose;
+					}
+				}
+				app.getReplyRecord({surveyId:this.id,phase:longtext}).then(res=>{
 					app.tip("保存成功");
 					uni.navigateTo({
 						url:"/pages/patient/test-questions?id="+this.id

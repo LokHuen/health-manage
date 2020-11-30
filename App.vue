@@ -21,6 +21,16 @@
 			// if(windowUrl.indexOf("?")==-1) windowUrl = windowUrl + '?timeStamp=' + timeStamp.getTime();
 			// else windowUrl = windowUrl + '&timeStamp=' + timeStamp.getTime();
 			
+			let nowtime = new Date().getTime();
+			let pretime = this.getCache("time") || nowtime;
+			
+			if((nowtime - pretime) > 172800000) {
+				localStorage.removeItem("uid");
+				this.setCache("time",nowtime);
+			}else if(nowtime == pretime){
+				this.setCache("time",nowtime);
+			}
+			
 			let optionuid = option.query.uid;
 			if(optionuid&&(optionuid instanceof Array)) option.query.uid = optionuid[optionuid.length-1]; //多次登录，uid会变成数组
 			const uid = option.query.uid || this.getCache("uid");
@@ -214,7 +224,14 @@
 		right: -6rpx;
 	}
 	.richtext{
-		font-size: 30rpx!important;
+		font-size: 26rpx!important;
 		color: #666666;
+	}
+	.commonframebox{
+		height:500rpx;overflow-y:auto;background:#fff;border-radius:20rpx 20rpx 0 0;padding:30rpx 24rpx 30rpx;
+	}
+	.richtextarea{
+		font-size: 32rpx;
+		img{max-width:100%;height:auto;}
 	}
 </style>

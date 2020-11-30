@@ -25,7 +25,7 @@
 		
 		<view class="case-tips">营养评估</view>
 		<view class="listContent" v-if="recordData.id">
-			<view class="health-list-item">	
+			<view class="health-list-item" @click="toanswerlist(recordData.id)">	
 				<view class="health-list-item-avatar-content">
 					<image class="health-list-item-avatar" src="../../static/icon/cry_icon.png"></image>
 				</view>
@@ -39,7 +39,7 @@
 						<rich-text v-show="showDetail" :nodes="recordData.content" ></rich-text>
 					</view>
 				</view>
-		        <image class="health-list-item-arrow" :src="showDetail?'../../static/icon/right_arrow_top.png':'../../static/icon/right_arrow.png'" mode="widthFix" @click="showDetailMessage"></image>
+		        <image class="health-list-item-arrow" :src="showDetail?'../../static/icon/right_arrow_top.png':'../../static/icon/right_arrow.png'" mode="widthFix" @click.stop="showDetailMessage"></image>
 			</view>
 		</view>
 		<view class="more-case" v-if="recordData.id" @click="moreRecord">
@@ -60,7 +60,7 @@
 				hasCase:true,
 				hasNutrition:false,
 				list: [1, 2, 3, 4, 5,6,7,8],
-				showDetail:false,
+				showDetail:true,
 				id:1,
 				infoData:{},
 				recordData:{}
@@ -111,7 +111,12 @@
 						if(this.recordData.content) this.recordData.content=this.recordData.content.replace(/\<span/gi, '<span class="richtext"');
 					}
 				});
-			}
+			},
+			toanswerlist(id){
+				uni.navigateTo({
+					url:"/pages/patient/answer?id="+id
+				})
+			},
 			
 		
 		},
