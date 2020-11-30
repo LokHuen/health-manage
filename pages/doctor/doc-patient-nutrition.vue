@@ -168,19 +168,23 @@
         <uni-popup ref="popupMedicalAdvice" type="bottom" @change="medicalAdviceChange"> 
 		<view class="white-bg-MA" v-if="!writeRecord">
 			<view class="MA-title" v-if="recordList.length>0">{{recordList.length+'条记录'}}</view>
-			<view :class="(index==recordList.length-1)?'MA-record-list1':'MA-record-list'" v-for="(item,index) in recordList" :key ="index" v-if="recordList.length>0">
-				<view class="record-content">{{item.advice}}</view>
-				<view class="record-time-box">
-					<view class="record-time">{{item.createTime}}</view>
-					<view class="record-motify" @click="motifyAdvice(item)">修改</view>
+			<scroll-view scroll-y="true" style="max-height:500rpx;">
+				<view :class="(index==recordList.length-1)?'MA-record-list1':'MA-record-list'" v-for="(item,index) in recordList" :key ="index" v-if="recordList.length>0">
+					<view class="record-content">{{item.advice}}</view>
+					<view class="record-time-box">
+						<view class="record-time">{{item.createTime}}</view>
+						<view class="record-motify" @click="motifyAdvice(item)">修改</view>
+					</view>
 				</view>
-			</view>
+			</scroll-view>
+			
 			<view class="MA-title" v-if="recordList.length==0">暂无记录</view>
 			<view class="MA-space" v-if="recordList.length==0"></view>
 			<view class="MA-line"></view>
 			<view class="MA-send" @click="sendAdvice">发送医嘱</view>
 			<view class="MA-close" @click="closeRecord">关闭</view>
 		</view>
+		
 		<view class="white-bg-MA-write" v-if="writeRecord">
 			<view class="MA-write-top">
 				<image src="../../static/icon/turnback_icon.png" mode="widthFix" class="turnback" @click="turnbcak"></image>
@@ -852,6 +856,8 @@
 				width: 630rpx;
 				border: 1rpx solid #DCDCDC ;
 				font-size: 15px;
+				padding: 10px;
+				box-sizing: border-box;
 			}
 			.MA-write-sure{
 				margin-top: 50rpx;
