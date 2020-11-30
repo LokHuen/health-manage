@@ -117,7 +117,7 @@
 		</view>
 
 		<view class="button-box">
-			<button type="default" class="button" @click="beginTest">营养测评</button>
+			<button type="default" class="button" @click="beginTest">PG-SGA 营养测评</button>
 		</view>
 		<view style="height: 200px;"></view>
 		<uni-popup ref="popup" type="bottom">
@@ -309,11 +309,12 @@
 						if (res.data && res.data.length > 0) {
 							res.data.reverse()
 							res.data.forEach((item, index) => {
-								// var time = item.completeTime.split('/');
-								// var date = time[2].split(' ');
-								// this.lineData.categories.push(time[1] + '月' + date[0] + '日');
-								this.lineData.categories.push(item.phase);
+								var time = item.completeTime.split('/');
+								var date = time[2].split(' ');
+								this.lineData.categories.push(time[1] + '月' + date[0] + '日');
+								//this.lineData.categories.push(item.phase);
 								this.lineData.series[0].data.push(item.total)
+								this.lineData.series[0].name=item.phase
 							})
 							console.log(this.lineData);
 							this.$refs['lineData'].showCharts();
