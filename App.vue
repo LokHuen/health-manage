@@ -23,7 +23,7 @@
 			
 			let optionuid = option.query.uid;
 			if(optionuid&&(optionuid instanceof Array)) option.query.uid = optionuid[optionuid.length-1]; //多次登录，uid会变成数组
-			const uid = option.query.uid; //|| this.getCache("uid");
+			const uid = option.query.uid || this.getCache("uid");
 			console.log('uid==' + uid);
 			if(!uid){
 				 window.location.href = this.globalData.baseUrl + '/wx/fwh/user/auth/index?returnUrl=' + encodeURIComponent(windowUrl);
