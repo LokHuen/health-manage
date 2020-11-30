@@ -31,7 +31,7 @@
 		methods: {
 			getData(){
 				//{uid:app.getCache('uid')}
-				app.doctorBusinessCard({uid:43}).then(res => {
+				app.doctorBusinessCard({uid:app.getCache('uid')}).then(res => {
 					console.log(res);
 					if (res.status == 1) {
 						this.infoData = res.data;
@@ -75,11 +75,10 @@
 		.i-content-box {
 			height: 920rpx;
 			width: 648rpx;
-			margin-left: 51rpx;
-			margin-top: 50rpx;
+			margin: 50rpx auto 0;
 			position: relative;
 			.content-bg{
-				margin: 0;
+				margin: 0;width:100%;
 			}
 			.content-info{
 				position: absolute;
@@ -135,7 +134,7 @@
 		}	
 
 		.i-sava-tip {
-			margin: 10rpx auto;
+			margin: 50rpx auto 10rpx;
 			color: #999999;
 			text-align: center;
 		}
