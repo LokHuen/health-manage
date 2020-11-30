@@ -117,8 +117,10 @@
 				});
 			},
 			select(item){
+				console.log('uid=='+item.id);
 				uni.navigateTo({
-					url:'patient-detail?id='+item.id
+					//url:'patient-detail?uid='+item.id
+					url:'doc-patient-nutrition?uid='+item.id
 				});
 			},
 			patienScreen(){

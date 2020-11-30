@@ -1,19 +1,34 @@
 {
 	"pages": [
 		{
-			"path": "pages/doctor/doc-patient-nutrition",
-			"style": {
-				"navigationBarTitleText": "营养管理"
-			},
-			"enablePullDownRefresh": true
-		},
-		{
 			"path": "pages/doctor/doctor-nutrition-manage",
 			"style": {
 				"navigationBarTitleText": "营养管理"
 			},
 			"enablePullDownRefresh": true
 		},
+		{
+			"path": "pages/doctor/doc-patient-basic-information",
+			"style": {
+				"navigationBarTitleText": "基础信息"
+			}
+		},
+		{
+			"path": "pages/doctor/doc-patient-case-manage",
+			"style": {
+				"navigationBarTitleText": "病例管理"
+			},
+			"enablePullDownRefresh": true
+		},
+		
+		{
+			"path": "pages/doctor/doc-patient-nutrition",
+			"style": {
+				"navigationBarTitleText": "营养管理"
+			},
+			"enablePullDownRefresh": true
+		},
+		
 		{
 			"path": "pages/doctor/doctor-center",
 			"style": {

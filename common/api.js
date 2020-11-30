@@ -63,6 +63,12 @@ var api = {
 	doctorBlList:(data)=>{return rq("/wx/doctor/blList",data,"GET");},
 	//判断用户身份，医生还是患者
 	judgeUserAuth:(data)=>{return rq("/wx/user/userAuth",data,"GET");},
+	//根据患者id查询TA的营养主页
+	doctorPatientx:(data)=>{return rq("/wx/patient/doctorPatientx",data,"GET");},
+	//根据病患id查询的病历
+	patientBlListx:(data)=>{return rq("/wx/patient/bl/blListx",data,"GET");},
+	//医生请求患者基础信息
+	basicInfox:(data)=>{return rq("/wx/patient/basicInfox",data,"GET");},
 }
 
 export {api};

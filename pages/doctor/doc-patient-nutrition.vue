@@ -211,17 +211,17 @@
 				if (index == 0) {
 					//基础信息
 					uni.navigateTo({
-						url: 'patient-basic-information?type=' + 2
+						url: 'doc-patient-basic-information?id='+this.uid 
 					});
 				} else if (index == 1) {
 					//病例管理
 					uni.navigateTo({
-						url: 'patient-case-manage'
+						url: 'doc-patient-case-manage?patientId='+this.uid
 					});
 				} else {
 					//测评记录
 					uni.navigateTo({
-						url: 'evaluation-record'
+						url: '../patient/evaluation-record?id='+this.uid
 					});
 				}
 
@@ -248,36 +248,15 @@
 			closeEnergyTips() {
 				this.$refs.popupEnergy.close();
 			},
-			judgeUserAuth() {
-				app.judgeUserAuth({}).then(res => {
-					if (res.status == 1) {
-						if (res.data.userType == 2) {
-							//如果是医生，就跳过去医生的营养管理页面
-							uni.redirectTo({
-								url: '../doctor/doctor-nutrition-manage'
-							});
-						} else {
-							if (res.data.perfect == true) {
-								this.getUserData();
-							} else {
-								uni.redirectTo({
-									url: 'patient-improve-msg?type=2'
-								});
-							}
-
-						}
-					}
-				});
-			},
+			
 			getUserData() {
-				this.loadCount = 0;
 				this.getData();
 				this.getNearlyRecord();
 				this.getLineChartData();
 			},
 			//用户信息数据
 			getData() {
-				app.patientNutrition({}).then(res => {
+				app.doctorPatientx({id:this.uid}).then(res => {
 					if (res.status == 1) {
 						this.infoData = res.data;
 					}
@@ -287,7 +266,8 @@
 			//最近一次测评的数据
 			getNearlyRecord() {
 				app.patientNearlyRecord({
-					surveyId: 1
+					surveyId: 1,
+					userId:this.uid
 				}).then(res => {
 					if (res.status == 1) {
 						this.latelyData = res.data;
@@ -302,9 +282,9 @@
 				app.memberReplyRecordList({
 					surveyId: 1,
 					pageNo: 1,
-					pageSize: 3
+					pageSize: 3,
+					userId:this.uid
 				}).then(res => {
-
 					if (res.status == 1) {
 						this.lineData.categories = [];
 						this.lineData.series[0].data = [];
@@ -329,9 +309,7 @@
 			}
 		},
 		onShow() {
-			if (app.getCache('uid')) {
-				this.judgeUserAuth();
-			}
+			this.getUserData();
 		},
 
 
