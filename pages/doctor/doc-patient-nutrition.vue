@@ -165,7 +165,7 @@
 				<view class="white-background-energy-close" @click="closeEnergyTips">关闭</view>
 			</view>
 		</uni-popup>
-        <uni-popup ref="popupMedicalAdvice" type="bottom"> 
+        <uni-popup ref="popupMedicalAdvice" type="bottom" @change="medicalAdviceChange"> 
 		<view class="white-bg-MA" v-if="!writeRecord">
 			<view class="MA-title" v-if="recordList.length>0">{{recordList.length+'条记录'}}</view>
 			<view :class="(index==recordList.length-1)?'MA-record-list1':'MA-record-list'" v-for="(item,index) in recordList" :key ="index" v-if="recordList.length>0">
@@ -233,6 +233,12 @@
 			this.uid = props.uid;
 		},
 		methods: {
+			medicalAdviceChange(e){
+				if(e.show == false){
+					this.writeRecord = false;
+					this.advice = '';
+				}
+			},
 			motifyAdvice(item){
 				this.advice = item.advice;
 				this.adviceId = item.id;
@@ -272,6 +278,8 @@
 		    closeRecord(){
 				this.$refs.popupMedicalAdvice.close();
 				this.writeRecord = false;
+				this.advice = '';
+				
 			},
 			clickFuction(index) {
 				if (index == 0) {
