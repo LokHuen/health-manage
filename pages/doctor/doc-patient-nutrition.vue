@@ -9,7 +9,7 @@
 					{{infoData.patientName||"游客"}}
 				</view>
 				<view class="msg">{{(infoData.patientGender||"")+' '+((infoData.age || infoData.age!=0)?(infoData.age+'岁 '):'')+(infoData.illness||"")}}
-				
+
 				</view>
 			</view>
 		</view>
@@ -109,7 +109,7 @@
 					<view class="advice-content">
 						<rich-text :nodes="latelyData.content" v-if="showDetail"></rich-text>
 					</view>
-					
+
 				</view>
 				<image class="health-list-item-arrow" :src="showDetail?'../../static/icon/right_arrow_top.png':'../../static/icon/right_arrow.png'"
 				 mode="widthFix" @click="showDetailMessage"></image>
@@ -117,7 +117,7 @@
 		</view>
 
 		<view class="button-box">
-			<button type="default" class="button" @click="beginTest">PG-SGA 营养测评</button>
+			<button type="default" class="button" @click="beginTest">医 嘱</button>
 		</view>
 		<view style="height: 200px;"></view>
 		<uni-popup ref="popup" type="bottom">
@@ -196,19 +196,22 @@
 				showDetail: false,
 				hasLoadLindData: 0,
 				splitNumber: 5,
+				uid: 1,
 			}
 		},
+		onLoad(props){
+			this.uid = props.uid;
+		},
 		methods: {
+
 			beginTest() {
-				uni.navigateTo({
-					url: 'nutritional-self-test'
-				});
+
 			},
 			clickFuction(index) {
 				if (index == 0) {
 					//基础信息
 					uni.navigateTo({
-						url: 'patient-basic-information?type='+2
+						url: 'patient-basic-information?type=' + 2
 					});
 				} else if (index == 1) {
 					//病例管理
@@ -245,28 +248,28 @@
 			closeEnergyTips() {
 				this.$refs.popupEnergy.close();
 			},
-			judgeUserAuth(){
-				app.judgeUserAuth({}).then(res =>{
-					if(res.status ==1){
-						if(res.data.userType == 2){
+			judgeUserAuth() {
+				app.judgeUserAuth({}).then(res => {
+					if (res.status == 1) {
+						if (res.data.userType == 2) {
 							//如果是医生，就跳过去医生的营养管理页面
 							uni.redirectTo({
-								url:'../doctor/doctor-nutrition-manage'
+								url: '../doctor/doctor-nutrition-manage'
 							});
-						}else{
-							if(res.data.perfect==true){
+						} else {
+							if (res.data.perfect == true) {
 								this.getUserData();
-							}else{
+							} else {
 								uni.redirectTo({
-									url:'patient-improve-msg?type=2'
+									url: 'patient-improve-msg?type=2'
 								});
 							}
-							
+
 						}
 					}
 				});
 			},
-			getUserData(){
+			getUserData() {
 				this.loadCount = 0;
 				this.getData();
 				this.getNearlyRecord();
@@ -288,9 +291,10 @@
 				}).then(res => {
 					if (res.status == 1) {
 						this.latelyData = res.data;
-						if(this.latelyData.content) this.latelyData.content=this.latelyData.content.replace(/\<span/gi, '<span class="richtext"');
+						if (this.latelyData.content) this.latelyData.content = this.latelyData.content.replace(/\<span/gi,
+							'<span class="richtext"');
 					}
-				
+
 				});
 			},
 			//拿曲线图的数据
@@ -300,7 +304,7 @@
 					pageNo: 1,
 					pageSize: 3
 				}).then(res => {
-					
+
 					if (res.status == 1) {
 						this.lineData.categories = [];
 						this.lineData.series[0].data = [];
@@ -313,7 +317,7 @@
 								this.lineData.categories.push(time[1] + '月' + date[0] + '日');
 								//this.lineData.categories.push(item.phase);
 								this.lineData.series[0].data.push(item.total)
-								this.lineData.series[0].name=item.phase
+								this.lineData.series[0].name = item.phase
 							})
 							console.log(this.lineData);
 							this.$refs['lineData'].showCharts();
@@ -325,9 +329,9 @@
 			}
 		},
 		onShow() {
-			  if(app.getCache('uid')){
-				  this.judgeUserAuth();
-			  } 
+			if (app.getCache('uid')) {
+				this.judgeUserAuth();
+			}
 		},
 
 
@@ -540,9 +544,9 @@
 					}
 
 					.advice-content {
-						font-size: 22rpx!important;
+						font-size: 22rpx !important;
 						color: #666666;
-						padding:20rpx 20rpx 0 0;
+						padding: 20rpx 20rpx 0 0;
 					}
 				}
 

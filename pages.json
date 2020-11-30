@@ -1,6 +1,13 @@
 {
 	"pages": [
 		{
+			"path": "pages/doctor/doc-patient-nutrition",
+			"style": {
+				"navigationBarTitleText": "营养管理"
+			},
+			"enablePullDownRefresh": true
+		},
+		{
 			"path": "pages/doctor/doctor-nutrition-manage",
 			"style": {
 				"navigationBarTitleText": "营养管理"

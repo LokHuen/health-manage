@@ -2,22 +2,19 @@
 	<!-- 医生名片界面 -->
 	<view class="container">
 		<view class="i-content-box">
-			<view class="i-header">
-				<image class="i-avatar" :src="infoData.portrait" style="width: 106rpx; height: 106rpx;"></image>
-				<view class="i-text-box">
-					<view>
-						<text class="i-name">{{infoData.doctorName}}</text>
-						<text class="i-post">{{infoData.technicalTitle}}</text>
-					</view>
-					<text class="i-subjecj">{{infoData.hospital+infoData.department}}</text>
-				</view>
+			<image src="../../static/img/doctor_bg.png" mode="widthFix" class="content-bg"></image>
+			<view class="content-info">
+				<image :src="infoData.portrait" mode="widthFix" class="avator"></image>
+				<view class="name">{{infoData.doctorName}}</view>
+				<text class="technicalTitle">{{infoData.technicalTitle}}</text>
+				<view class="department">{{infoData.hospital+infoData.department}} </view>
 			</view>
-			<view class="i-qr-code-box">
-				<image class="i-qr-code" style="width: 360rpx; height: 360rpx;" :src="infoData.qrCode" @longtap="saveQRCode"></image>
-				<text class="i-code_des">扫码加入医生的患者名单</text>
+			<view class="qrCode-box">
+				<image :src="infoData.qrCode" mode="widthFix" class="qrcode"></image>
+				<view class="qrCode-tips">患者院外营养管理平台</view>
 			</view>
 		</view>
-		<text class="i-sava-tip">长按上方图片，可以保存到手机相册</text>
+		<view class="i-sava-tip">长按上方图片，可以保存到手机相册</view>
 	</view>
 </template>
 
@@ -33,8 +30,8 @@
 		},
 		methods: {
 			getData(){
-				//
-				app.doctorBusinessCard({uid:app.getCache('uid')}).then(res => {
+				//{uid:app.getCache('uid')}
+				app.doctorBusinessCard({uid:43}).then(res => {
 					console.log(res);
 					if (res.status == 1) {
 						this.infoData = res.data;
@@ -74,78 +71,73 @@
 
 <style lang="scss" scoped>
 	.container {
-		display: flex;
-		padding: 5rpx;
-		flex-direction: column;
 
 		.i-content-box {
-			display: flex;
-			flex-direction: column;
-			height: 790rpx;
-			background-image: url(../../static/img/bg_qr_code.png);
-			background-size: 100% 100%;
-
-			.i-header {
-				display: flex;
-				width: 100%;
-				height: 190rpx;
-				padding: 30rpx 0 0 60rpx;
-				align-items: center;
-				background-size: 100% 100%;
-
-				.i-avatar {
-					border-radius: 53rpx;
-					margin-right: 22rpx;
-				}
-
-				.i-text-box {
-					display: flex;
-					flex-direction: column;
-
-					.i-name {
-						font-size: 40rpx;
-						color: #333333;
-					}
-
-					.i-post {
-						font-size: 28rpx;
-						color: #333333;
-						margin-left: 22rpx;
-					}
-
-					.i-subjecj {
-						font-size: 28rpx;
-						color: #333333;
-						margin-top: 5rpx;
-					}
-				}
-
+			height: 920rpx;
+			width: 648rpx;
+			margin-left: 51rpx;
+			margin-top: 50rpx;
+			position: relative;
+			.content-bg{
+				margin: 0;
 			}
-
-			.i-qr-code-box {
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				margin-top: 64rpx;
-
-				.i-qr-code {
-				   
+			.content-info{
+				position: absolute;
+				top: 0;
+				right: 0;
+				left: 0;
+				height: 460rpx;
+				text-align: center;
+				.avator{
+					margin-top: 82rpx;
+					width: 132rpx;
+					height: 132rpx;
+					border-radius: 50%;
+				}
+				.name{
+					font-size: 19px;
+					color: #333333;
+					margin-top: 5rpx;
+				}
+				.technicalTitle{
+					margin-top: 10rpx;
+					background-color: #55A29E;
+					font-size: 13px;
+					color: #FFFFFF;
+					height: 42rpx;
+					border-radius: 10.5px;
+					padding: 0 15px;
+				}
+				.department{
+					margin-top: 10rpx;
+					color: #666666;
+					font-size: 13px;
 				}
 			}
-
-		}
-
-		.i-code_des {
-			margin-top: 12rpx;
-			font-size: 30rpx;
-			color: #333333;
-			margin-top: 12rpx;
-
-		}
+			.qrCode-box{
+				position: absolute;
+				bottom: 0;
+				right: 0;
+				left: 0;
+				height: 490rpx;
+				text-align: center;
+				.qrcode{
+				   width: 263rpx;
+				   height: 263rpx;
+				   margin-top: 50rpx;
+				}
+				.qrCode-tips{
+					font-size: 12px;
+					color: #55A29E;
+					margin-top: 0rpx;
+				}
+			}
+		}	
 
 		.i-sava-tip {
 			margin: 10rpx auto;
 			color: #999999;
+			text-align: center;
 		}
 
 	}
