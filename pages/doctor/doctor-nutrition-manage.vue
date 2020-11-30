@@ -70,7 +70,7 @@
 			
 			<view class="no-record-tips" v-if="!item.result">暂无测评记录</view>
 		</view>
-		<view class="no-data-tips">暂无数据</view>
+		<view class="no-data-tips" v-if="listDatas.length==0">暂无数据</view>
 		<view style="height: 100px;" ></view>
 		
         <uni-popup ref="popupPatient" type="bottom">
