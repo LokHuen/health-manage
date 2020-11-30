@@ -488,9 +488,9 @@
 		uni-checkbox{display:block;line-height: 1.3;background: #FFFFFF;border-radius: 8rpx;border: 1rpx solid #ddd;margin-bottom:26rpx;text-align: left;color: #272727;padding:25rpx 0;}
 	    uni-input{margin-bottom:20rpx;}
 	}
-	.questionimg{width:30rpx;padding-left:10rpx;
-		&.ptitle{}
-		&.other{position:absolute;z-index:3;left: -2rpx;top: 28rpx;}
+	.questionimg{width:30rpx;
+		&.ptitle{margin-left:15rpx;}
+		&.other{position:absolute;z-index:3;left: 10rpx;top: 28rpx;}
 	}
 
 </style>
