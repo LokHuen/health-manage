@@ -223,7 +223,7 @@
 				hasLoadLindData: 0,
 				splitNumber: 5,
 				uid: 1,
-				recordList:[1,2,3],
+				recordList:[],
 				writeRecord:false,
 				advice:'',
 				adviceId:1,
