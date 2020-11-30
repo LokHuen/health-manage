@@ -1,9 +1,6 @@
 <template>
 
 	<view class="edit">
-		<view class="health-title-content">
-			<view class="health-title">请根据自身健康情况如实填写以下数据，我们将根据您的数据分析出您的营养情况</view>
-		</view>
 		<view style="background-color: #F6F6F6;height: 20rpx;"></view>
 		<view class="health-content">
 
@@ -11,30 +8,30 @@
 				<view v-for="(item,index) in questionList" class="detailed_item" :key="index" :id="'questionid'+index">
 					<view>
 						<view class="qustion">
-							<text v-if="item.isMust" style="color:red;">*</text>
+							<!-- <text v-if="item.isMust" style="color:red;">*</text> -->
 							{{index+seq}}. {{item.title}}
 							<!-- <text v-if="item.description">（{{item.description}}）</text> -->
-							<image v-if="item.description" src="../../static/icon/wenhaoIcon.png" class="questionimg ptitle" mode="widthFix" @click="openinfoframe(item.description)"></image>
+							<!-- <image src="../../static/icon/wenhaoIcon.png" class="questionimg ptitle" mode="widthFix" @click="openinfoframe(item)"></image> -->
 						</view>
 						<view v-if="item.type===1">
 							<block v-if="item.specialType===0">
-								<input v-model="item.answer" :placeholder="item.tips?item.tips:'请填写'" @blur="blur(item)" />
+								<input disabled v-model="item.answer" placeholder="未填写" @blur="blur(item)" />
 								<view v-if="item.warn" class="mustinput">{{item.warn}}</view>
 							</block>
 							<block v-else-if="item.specialType===1">
-								<input v-model="item.answer" :placeholder="item.tips?item.tips:'请填写'" @blur="checkMobile(item)" />
+								<input disabled v-model="item.answer" placeholder="未填写" @blur="checkMobile(item)" />
 								<view v-if="item.warn" class="mustinput">{{item.warn}}</view>
 							</block>
 							<block v-else-if="item.specialType===2">
-								<input v-model="item.answer" :placeholder="item.tips?item.tips:'请填写'" @blur="checkIDCard(item)" />
+								<input disabled v-model="item.answer" placeholder="未填写" @blur="checkIDCard(item)" />
 								<view v-if="item.warn" class="mustinput">{{item.warn}}</view>
 							</block>
 							<block v-else-if="item.specialType===3">
-								<input v-model="item.answer" :placeholder="item.tips?item.tips:'请填写'" @blur="checkEmail(item)" />
+								<input disabled v-model="item.answer" placeholder="未填写" @blur="checkEmail(item)" />
 								<view v-if="item.warn" class="mustinput">{{item.warn}}</view>
 							</block>
 							<block v-else-if="item.specialType===4">
-								<picker mode="date" :value="item.answer" @change="bindDateChange($event,item)">
+								<picker disabled mode="date" :value="item.answer" @change="bindDateChange($event,item)">
 									{{item.answer?item.answer:(item.tips?item.tips:"选择日期")}}
 								</picker>
 								<view v-if="item.warn" class="mustinput">{{item.warn}}</view>
@@ -46,33 +43,33 @@
 								<view v-if="item.warn" class="mustinput">{{item.warn}}</view>
 							</block>
 							<block v-else>
-								<input v-model="item.answer" :placeholder="item.tips?item.tips:'请填写'" @blur="blur(item)" />
+								<input disabled v-model="item.answer" placeholder="未填写" @blur="blur(item)" />
 								<view v-if="item.warn" class="mustinput">{{item.warn}}</view>
 							</block>
 						</view>
 						<view v-else-if="item.type===2">
-							<textarea v-model="item.answer" maxlength="500" :placeholder="item.tips?item.tips:''" @blur="blur(item)" />
+							<textarea disabled v-model="item.answer" maxlength="500" :placeholder="item.tips?item.tips:''" @blur="blur(item)" />
 							<view v-if="item.warn" class="mustinput">{{item.warn}}</view>
 			            </view>
 			            <view v-else-if="item.type===3">
 			                <radio-group v-model="item.optionId" @change="radiochoose($event,item)">
 			                    <view v-for="(question,index1) in item.optionList">
 									<view class="prelative">  
-										<image v-if="question.description" src="../../static/icon/wenhaoIcon.png" class="questionimg other" mode="widthFix" @click="openinfoframe(question.description)"></image>
-										<radio :value="index1+''" :checked="item.optionId==question.id" :key="index1" :style="question.description?'padding-left: 6px;':''">
+										<!-- <image src="../../static/icon/wenhaoIcon.png" class="questionimg other" mode="widthFix" @click="openinfoframe(item)"></image> -->
+										<radio disabled :value="index1+''" :checked="item.optionId==question.id" :key="index1" >
 											<view >{{question.serialNumber}}.{{question.title}}</view>
 										</radio>
 										
 			                        </view>
 			                        <view v-if="(question.isInput==1&&question.show) || question.replyContent">
-			                            <input v-model="question.replyContent" :placeholder="question.isMust?('若选'+question.serialNumber+'此项必填'):'请填写'" @blur="getReply(question,item)"/>
+			                            <input disabled v-model="question.replyContent" :placeholder="question.isMust?('若选'+question.serialNumber+'此项必填'):'未填写'" @blur="getReply(question,item)"/>
 			                            <view v-if="question.warn" class="mustinput other">{{question.warn}}</view>
 			                        </view>
 			                    </view>
 			                </radio-group>
 			            </view>
 			            <view v-else-if="item.type===4">
-							<picker @change="bindPickerChange($event,item)" :value="item.value||0" :range="item.alltitle">
+							<picker disabled @change="bindPickerChange($event,item)" :value="item.value||0" :range="item.alltitle">
 							    {{item.answer?item.answer:(item.tips?item.tips:"请选择")}}
 							</picker>
 			            </view>
@@ -81,11 +78,11 @@
 			                    <view v-for="(question,index1) in item.optionList" :key="index1">
 			
 			                        <view class="prelative">
-			                        	<image v-if="question.description" src="../../static/icon/wenhaoIcon.png" class="questionimg other" mode="widthFix" @click="openinfoframe(question.description)"></image>
-											<checkbox :value="index1+''" :data-index="index1" :key="question.id" :checked="question.checked" :style="question.description?'padding-left: 6px;':''">{{question.serialNumber}}.{{question.title}}</checkbox>
+			                        	<!-- <image src="../../static/icon/wenhaoIcon.png" class="questionimg other" mode="widthFix" @click="openinfoframe(item)"></image> -->
+											<checkbox disabled :value="index1+''" :data-index="index1" :key="question.id" :checked="question.checked" >{{question.serialNumber}}.{{question.title}}</checkbox>
 			                        </view>
 			                        <view v-if="(question.isInput == 1&&question.show) || question.replyContent">
-			                            <input v-model="question.replyContent" :placeholder="question.isMust?('若选'+question.serialNumber+'此项必填'):'请填写'" @blur="getReply(question,item)"/>
+			                            <input disabled v-model="question.replyContent" :placeholder="question.isMust?('若选'+question.serialNumber+'此项必填'):'未填写'" @blur="getReply(question,item)"/>
 			                            <view v-if="question.warn" class="mustinput other">{{question.warn}}</view>
 			                        </view>
 			                    </view>
@@ -96,13 +93,9 @@
 			
 			    </view>
 			</view>
-			<view class="btbox flex ct">
-			    <view class="submitbt pre" @click="goBack()" v-if="!(params.section==1 && params.field==1 && params.grade==1)">上一页</view>
-			    <view :class="!(params.section==1 && params.field==1 && params.grade==1)?'submitbt other':'submitbt'" @click="submitNext()">确定</view>
-			</view>
+			
 		</view>
 		
-		<n-address ref="addr" @up-data="upData" ></n-address>
 		<uni-popup ref="popup" type="bottom">
 			<view class="commonframebox" >
 				<view v-html="infodetail" class="richtextarea"></view>
@@ -125,9 +118,6 @@
 				params: {
 				    surveyId:1,
 				    category:2,
-				    section:1,
-				    field:1,
-				    grade:1,
 				    recordId: 0,
 				},
 				nomore: 0,
@@ -144,12 +134,12 @@
 				num:0,   //页码
 				beginArray: [],   //题目起始数组
 				openareadata:undefined,
-				infodetail:"", //问题描述
+				infodetail:"<p>哈哈</p>", //问题描述
 			}
 		},
 		onLoad(options){
 			let id = options.id||1;
-			this.params.surveyId = id;
+			this.params.recordId = id;
 			this.getQuestions();
 		},
 		methods:{
@@ -358,7 +348,7 @@
 				this.openareadata.answer = e.regionArr.join(" ");
 			},
 			openinfoframe(item){
-				this.infodetail = item;
+				// this.infodetail = item;
 				this.$refs.popup.open();
 			},
 		}
@@ -485,7 +475,7 @@
 	}
 	.questionimg{width:30rpx;
 		&.ptitle{padding-left:10rpx;}
-		&.other{position:absolute;z-index:3;left: -2rpx;top: 28rpx;padding: 0 0 10rpx 10rpx;}
+		&.other{position:absolute;z-index:3;left: 8rpx;top: 28rpx;}
 	}
 
 </style>

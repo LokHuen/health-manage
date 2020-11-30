@@ -7,7 +7,7 @@
 		</view>
         
 		<view class="listContent" v-for="(item, index) in listDatas" :key="index" v-if="listDatas.length!=0">
-			<view class="health-list-item">	
+			<view class="health-list-item" @click="toanswerlist(item.id)">
 				<view class="health-list-item-avatar-content">
 					<image class="health-list-item-avatar" src="../../static/icon/cry_icon.png"></image>
 				</view>
@@ -21,7 +21,7 @@
 					</view>
 					
 				</view>
-                <image class="health-list-item-arrow" :src="item.showDetail?'../../static/icon/right_arrow_top.png':'../../static/icon/right_arrow.png'" mode="widthFix" @click="onClickItem(item)"></image>
+                <image class="health-list-item-arrow" :src="item.showDetail?'../../static/icon/right_arrow_top.png':'../../static/icon/right_arrow.png'" mode="widthFix" @click.stop="onClickItem(item)"></image>
 			</view>
 		</view>
 		<view style="height: 100px;"></view>
@@ -70,12 +70,17 @@
 						}
 					}
 					for (var i = 0; i < this.listDatas.length; i++) {
-						this.listDatas[i].showDetail = false;
+						this.listDatas[i].showDetail = true;
 						if(this.listDatas[i].content) this.listDatas[i].content=this.listDatas[i].content.replace(/\<span/gi, '<span class="richtext"');
 					}
 					uni.stopPullDownRefresh();
 				});
-			}
+			},
+			toanswerlist(id){
+				uni.navigateTo({
+					url:"/pages/patient/answer?id="+id
+				})
+			},
 		}
 	}
 	
@@ -117,7 +122,7 @@
                 width: 100%;
 				.health-list-item-title {
 					font-size: 30rpx;
-					color: #52A29E;
+					color: #52A29E;font-weight:600;
 				}
 				
 				.health-list-item-detail {
@@ -130,18 +135,17 @@
 					color: #666666;
 					font-size: 26rpx;
 					margin-top: 30rpx;
-					padding-bottom: 10rpx;
+					padding-bottom: 15rpx;
 				}
 				.line{
 					background-color: #CCCCCC;
-					margin-top: 15rpx;
 					height: 2rpx;
 					margin-right: 20rpx;
 				}
 				.advice-content{
 					font-size: 24rpx!important;
 					color: #666666;
-					padding-right: 10px;
+					padding: 20rpx 20rpx 0 0;
 				}
 			}
 			.health-list-item-arrow {

@@ -84,6 +84,12 @@
 				"navigationBarTitleText": "营养自测"
 			}
 		},
+		{
+			"path": "pages/patient/answer",
+			"style": {
+				"navigationBarTitleText": "营养自测"
+			}
+		},
 		
 		
 		

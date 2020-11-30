@@ -97,7 +97,7 @@
 		<view class="last-one" v-if="latelyData.result">最近一次评价</view>
 
 		<view class="listContent" v-if="latelyData.result">
-			<view class="health-list-item">
+			<view class="health-list-item" @click="toanswerlist(latelyData.id)">
 				<view class="health-list-item-avatar-content">
 					<image class="health-list-item-avatar" src="../../static/icon/cry_icon.png"></image>
 				</view>
@@ -112,7 +112,7 @@
 
 				</view>
 				<image class="health-list-item-arrow" :src="showDetail?'../../static/icon/right_arrow_top.png':'../../static/icon/right_arrow.png'"
-				 mode="widthFix" @click="showDetailMessage"></image>
+				 mode="widthFix" @click.stop="showDetailMessage"></image>
 			</view>
 		</view>
 
@@ -193,7 +193,7 @@
 						name: ''
 					}]
 				},
-				showDetail: false,
+				showDetail: true,
 				hasLoadLindData: 0,
 				splitNumber: 5,
 				uid: 1,
@@ -306,7 +306,12 @@
 					}
 
 				});
-			}
+			},
+			toanswerlist(id){
+				uni.navigateTo({
+					url:"/pages/patient/answer?id="+id
+				})
+			},
 		},
 		onShow() {
 			this.getUserData();
