@@ -1,10 +1,6 @@
 <template>
 	
 	<view>
-		<view class="tips">
-			<image src="../../static/icon/remind_icon.png" mode="widthFix" class="remind"></image> 
-			<view class="remind-tips">根据肿瘤患者膳食营养处方专家共识说明， 建议您每周进行一次营养测评。</view>
-		</view>
 		
 		<view class="nodata-tips-box" v-if="listDatas.length==0">
 			<image src="../../static/icon/icon_nodata.png" mode="aspectFit" class="nodata-img"></image>

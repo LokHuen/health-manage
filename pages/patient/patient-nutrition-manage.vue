@@ -112,7 +112,7 @@
 					
 				</view>
 				<image class="health-list-item-arrow" :src="showDetail?'../../static/icon/right_arrow_top.png':'../../static/icon/right_arrow.png'"
-				 mode="widthFix" @click.stop="showDetailMessage"></image>
+				 mode="widthFix" @click.stop="showDetailMessage" v-show="false"></image>
 			</view>
 		</view>
 
@@ -533,7 +533,7 @@
 					.health-list-item-time {
 						color: #666666;
 						font-size: 26rpx;
-						margin-top: 30rpx;
+						margin-top: 20rpx;
 						padding-bottom: 10rpx;
 					}
 

@@ -22,7 +22,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="health-msg-box">
+		<view class="health-msg-box" v-if="infoData.weight || infoData.standardWeight">
 			<view class="health-list-box">
 				<view class="health-list-item">
 					<view class="top-title">当前体重</view>
@@ -112,7 +112,7 @@
 
 				</view>
 				<image class="health-list-item-arrow" :src="showDetail?'../../static/icon/right_arrow_top.png':'../../static/icon/right_arrow.png'"
-				 mode="widthFix" @click.stop="showDetailMessage"></image>
+				 mode="widthFix" @click.stop="showDetailMessage" v-show="false"></image>
 			</view>
 		</view>
 
@@ -251,7 +251,7 @@
 				}
 				app.saveAdvice({id:this.adviceId,advice:this.advice,patientId:this.uid,creatorId:app.getCache('uid')}).then(res =>{
 					if(res.status ==1){
-						app.tip('填写完成');
+						app.tip('发送成功');
 						this.writeRecord = !this.writeRecord;
 						this.advice = '';
 						this.beginTest();
@@ -283,6 +283,10 @@
 			},
 			clickFuction(index) {
 				if (index == 0) {
+					if(!this.infoData.weight){
+						app.tip('患者暂未完善信息');
+						return;
+					}
 					//基础信息
 					uni.navigateTo({
 						url: 'doc-patient-basic-information?id='+this.uid 
@@ -295,7 +299,8 @@
 				} else {
 					//测评记录
 					uni.navigateTo({
-						url: '../patient/evaluation-record?id='+this.uid
+						//url: '../patient/evaluation-record?id='+this.uid
+						url:'doc-evaluation-record?id='+this.uid
 					});
 				}
 
@@ -589,7 +594,7 @@
 					.health-list-item-time {
 						color: #666666;
 						font-size: 26rpx;
-						margin-top: 30rpx;
+						margin-top: 20rpx;
 						padding-bottom: 10rpx;
 					}
 
