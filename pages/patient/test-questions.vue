@@ -489,8 +489,8 @@
 	    uni-input{margin-bottom:20rpx;}
 	}
 	.questionimg{width:30rpx;
-		&.ptitle{padding-left:10rpx;}
-		&.other{position:absolute;z-index:3;left: -2rpx;top: 28rpx;padding: 0 0 10rpx 10rpx;}
+		&.ptitle{margin-left:15rpx;}
+		&.other{position:absolute;z-index:3;left: 10rpx;top: 28rpx;}
 	}
 
 </style>

@@ -73,17 +73,20 @@
 		methods: {
 			chooseindex(index,index1){
 				this.chooseclass = this.chooselist[index].name;
-				this.chooseitem[index].choose = this.chooselist[index].list[index1];
+				if(this.chooseitem[index].choose == this.chooselist[index].list[index1]){
+					this.chooseitem[index].choose = "";this.chooseclass = "";
+				}else this.chooseitem[index].choose = this.chooselist[index].list[index1];
 			},
 			submitchoose(){
-				if(!this.chooseclass) {app.tip("请选择其中一个选项");return;}
 				let longtext = "";
 				for (var i = 0; i < this.chooseitem.length; i++) {
 					if(this.chooseitem[i].choose){
+						this.chooseclass = this.chooselist[i].name;
 						if(longtext) longtext += "," + this.chooseitem[i].choose;
 						else longtext = this.chooseitem[i].choose;
 					}
 				}
+				if(!this.chooseclass) {app.tip("请选择其中一个选项");return;}
 				app.getReplyRecord({surveyId:this.id,phase:longtext}).then(res=>{
 					app.tip("保存成功");
 					uni.navigateTo({
