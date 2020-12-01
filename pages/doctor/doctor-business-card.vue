@@ -25,13 +25,13 @@
 		data() {
 			return {
 				infoData: {},
-                uid:''
+                id:''
 			}
 		},
 		methods: {
 			getData(){
 				//{uid:app.getCache('uid')}
-				app.doctorBusinessCard({uid:43}).then(res => {
+				app.doctorBusinessCard({uid:this.id}).then(res => {
 					console.log(res);
 					if (res.status == 1) {
 						this.infoData = res.data;
@@ -62,7 +62,7 @@
 
 		},
 		onLoad(props) {
-			this.uid = props.uid;
+			this.id = props.id;
 			this.getData();
 		}
 
