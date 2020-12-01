@@ -1,7 +1,7 @@
 <template>
 	<!-- 医生名片界面 -->
 	<view class="container">
-		<view class="i-content-box">
+		<view class="i-content-box" @longpress="saveQRCode">
 			<image src="../../static/img/doctor_bg.png" mode="widthFix" class="content-bg"></image>
 			<view class="content-info">
 				<image :src="infoData.portrait" mode="widthFix" class="avator"></image>
@@ -25,13 +25,13 @@
 		data() {
 			return {
 				infoData: {},
-
+                uid:''
 			}
 		},
 		methods: {
 			getData(){
 				//{uid:app.getCache('uid')}
-				app.doctorBusinessCard({uid:app.getCache('uid')}).then(res => {
+				app.doctorBusinessCard({uid:43}).then(res => {
 					console.log(res);
 					if (res.status == 1) {
 						this.infoData = res.data;
@@ -61,7 +61,8 @@
 			}
 
 		},
-		onLoad() {
+		onLoad(props) {
+			this.uid = props.uid;
 			this.getData();
 		}
 

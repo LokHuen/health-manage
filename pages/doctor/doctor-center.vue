@@ -36,7 +36,7 @@
 			clickItem(index){
 				if(index==0){
 					uni.navigateTo({
-						url:'doctor-business-card'
+						url:'doctor-business-card?uid='+app.getCache('uid')
 					});
 				}else if(index==1){
 					uni.navigateTo({
