@@ -104,9 +104,9 @@
 		
 		<n-address ref="addr" @up-data="upData" ></n-address>
 		<uni-popup ref="popup" type="bottom">
-			<view class="commonframebox" >
+			<scroll-view class="commonframebox" scroll-y="true">
 				<view v-html="infodetail" class="richtextarea"></view>
-			</view>
+			</scroll-view>
 		</uni-popup>
 	</view>
 	
@@ -253,7 +253,6 @@
 				
 			},
 			submitNext(){
-			    console.log(this.questionList);
 			    let list = this.questionList;
 			    for(let i=0,l=list.length;i<l;i++){
 			        if(list[i].isMust==1){
@@ -278,13 +277,15 @@
 			                    }
 			            }
 			        }
+					
+			    }
+				for(let i=0,l=list.length;i<l;i++){
 					if(list[i].description) list[i].description="";
 					for (let j = 0; j < list[i].optionList.length; j++) {
 						if(list[i].optionList[j].description) list[i].optionList[j].description="";
 					}
-					
-			    }
-			    
+				}
+			    console.log(this.questionList);
 			    app.replySecond(this.questionList).then(rs=>{
 			        if(rs.status==1){
 			            const{section,field,grade,nomore,toThird}=rs.data;

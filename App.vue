@@ -228,7 +228,7 @@
 		color: #666666;
 	}
 	.commonframebox{
-		height:500rpx;overflow-y:auto;background:#fff;border-radius:20rpx 20rpx 0 0;padding:30rpx 24rpx 30rpx;
+		height:55vh;overflow-y:auto;background:#fff;border-radius:20rpx 20rpx 0 0;padding:30rpx 24rpx 30rpx;box-sizing: border-box;
 	}
 	.richtextarea{
 		font-size: 32rpx;

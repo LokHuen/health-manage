@@ -1,7 +1,7 @@
 <template>
-	<view class="">
+	<view class="" style="text-align:center;padding-top:40vh;" @click="loginagain">
 		uid:{{id}}
-	<view @click="loginagain">重新登录</view>
+	<view >点击重新登录</view>
 	</view>
 </template>
 
