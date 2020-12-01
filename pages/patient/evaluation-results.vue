@@ -55,7 +55,7 @@
 			},
 			tootherpage(){
 				uni.reLaunch({
-					url:app.topageurl?app.topageurl:"/pages/patient/nutritional-self-test",
+					url:app.topageurl?app.topageurl:"/pages/patient/patient-nutrition-manage",
 				})
 				if(app.topageurl) app.topageurl = "";
 			},

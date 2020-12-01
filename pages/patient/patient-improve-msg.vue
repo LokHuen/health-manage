@@ -190,7 +190,7 @@
 				let day = date.getDate();
 
 				if (type === 'start') {
-					year = year - 60;
+					year = year - 100;
 				} else if (type === 'end') {
 					year = year + 2;
 				}
