@@ -171,9 +171,10 @@
 		},
 		methods: {
 			disagree(){
-			    uni.redirectTo({
-			    	url:'patient-nutrition-manage'
-			    });
+			    // uni.redirectTo({
+			    // 	url:'patient-nutrition-manage'
+			    // });
+				app.tip('很抱歉，暂时无法为您提供服务，请关闭页面');
 			},
 			agree(){
 				this.$refs.tipPopup.close();
@@ -200,7 +201,6 @@
 						}else{
 							this.showTipPopup();
 						}
-this.showTipPopup();
 					}
 				});
 			},
