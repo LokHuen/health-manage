@@ -12,6 +12,8 @@
 			<view class="qrCode-box">
 				<image :src="infoData.qrCode" mode="widthFix" class="qrcode"></image>
 				<view class="qrCode-tips">患者院外营养管理平台</view>
+				<view class="line"></view>
+				<view class="qrCode-subtips">中国健康促进基金会·肿瘤精准个体化防治公益项目·肿瘤营养教育专题</view>
 			</view>
 		</view>
 		<view class="i-sava-tip">长按上方二维码，可以保存到手机相册</view>
@@ -176,13 +178,27 @@
 				.qrcode {
 					width: 263rpx;
 					height: 263rpx;
-					margin-top: 50rpx;
+					margin-top: 40rpx;
 				}
 
 				.qrCode-tips {
 					font-size: 12px;
 					color: #55A29E;
 					margin-top: 0rpx;
+				}
+				.line{
+				background-color:#D2D2D2;
+				height: 0.9rpx;
+				margin-left: 100rpx;
+				margin-right: 100rpx;
+				margin-top: 10rpx;
+				}
+				.qrCode-subtips{
+					margin-top: 10rpx;
+					font-size: 10px;
+					color: #666666;
+					margin-left: 100rpx;
+					margin-right: 100rpx;
 				}
 			}
 		}

@@ -49,6 +49,10 @@
 			maskClick: {
 				type: Boolean,
 				default: true
+			},
+			cc: {
+				type: String,
+				default: ''
 			}
 		},
 		provide() {
@@ -73,6 +77,10 @@
 			 */
 			maskClick(val) {
 				this.mkclick = val
+			},
+			cc(val){
+				console.log('cccc'+val);
+				this.mkclick = false
 			}
 		},
 		data() {
@@ -95,7 +103,7 @@
 					'right': 0,
 				},
 				maskShow: true,
-				mkclick: true,
+				mkclick: false,
 				popupstyle: 'top'
 			}
 		},

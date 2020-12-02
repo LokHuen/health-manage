@@ -12,6 +12,9 @@
 					</view>
 					<view class="msg">{{doctorInfo.hospital+doctorInfo.department}}</view>
 				</view>
+				
+				<image src="../../static/icon/tishi.png" mode="widthFix" class="tips" @click="showTips"></image>
+				
 			</view>
 			<view class="number-box">
 				<view class="count-box">
@@ -94,6 +97,17 @@
 				<view class="cancel" @click="closeTimeScreen">取消</view>
 			</view>
 		</uni-popup>
+		
+		<uni-popup ref="popupTips" type="center">
+			<view class="tips-bg">
+				<view style="height: 68rpx;"></view>
+				<view class="tips-title">温馨提示</view>
+				<view class="tips-sub">患者信息已经得到授权，您可以使用和建议。</view>
+				<view class="tips-close" @click="closeTips">关闭</view>
+				<view style="height: 60rpx;"></view>
+			</view>
+			
+		</uni-popup>
 	</view>
 </template>
 
@@ -106,11 +120,27 @@
 				orderBy:1,// 排序方式（测评时间排序 1，加入时间排序2）
 				pageNo:1,
 				doctorInfo:{},
-				listDatas:[]
+				listDatas:[],
 				
 			}
 		},
 		methods: {
+			judgeFirst(){
+				//判断是不是首次进入这个页面，如果是的话，就弹出提示
+				let frist = app.getCache('frist');
+				if(!frist){
+					this.showTips();
+					frist = 1;
+					app.setCache('frist',frist);
+				}
+			},
+			closeTips(){
+				this.$refs.popupTips.close();
+			},
+			showTips(){
+				this.$refs.popupTips.open();
+
+			},
 			joinTest(){
 				uni.navigateTo({
 					url:'../patient/nutritional-self-test'
@@ -187,10 +217,15 @@
 
 		   
 		},
+		onShow(){
+			this.$nextTick(()=>{
+				this.judgeFirst();
+			})
+			
+		},
 		onLoad(){
 			this.getDoctorInfo();
 			this.refreshData();
-			
 		},
 		onPullDownRefresh() {
 			this.refreshData();
@@ -208,6 +243,7 @@
 		.top-box{
 			.info-box{
 				display: flex;
+				position: relative;
 				.avator{
 					margin-top: 40rpx;
 					background-color: #909399;
@@ -236,6 +272,14 @@
 						margin-top: 10rpx;
 						font-size: 14px;
 					}
+				}
+				.tips{
+					position: absolute;
+					right: 60rpx;
+					top: 60rpx;
+					width: 40rpx;
+					height: 40rpx;
+					
 				}
 			}
 			.number-box{
@@ -437,6 +481,37 @@
 			.cancel{
 				height: 100rpx;
 				line-height: 100rpx;
+			}
+		}
+		
+		.tips-bg{
+			background-color: #FFFFFF;
+			border-radius: 5px;
+			width: 600rpx;
+			.tips-title{
+				text-align: center;
+				font-size: 17px;
+				color: #52A29E;
+			}
+			.tips-sub{
+				margin-top: 40rpx;
+				text-align: left;
+				font-size: 16px;
+				color: #333333;
+				margin-left: 70rpx;
+				margin-right: 70rpx;
+			}
+			.tips-close{
+				margin-top: 100rpx;
+				text-align: center;
+				font-size: 17px;
+				color: #FFFFFF;
+				background-color: #52A29E;
+				height: 90rpx;
+				line-height: 90rpx;
+				margin-left: 70rpx;
+				margin-right: 70rpx;
+				border-radius: 45rpx;
 			}
 		}
 

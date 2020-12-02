@@ -65,6 +65,45 @@
 				<text :class="patientGender==2?'i-sex-item active':'i-sex-item'" @click="selectSex(2)">女</text>
 			</view>
 		</uni-popup>
+		
+		<uni-popup type="bottom" ref="tipPopup" cc="00000000000000">
+				<view class="popup-content">
+					<scroll-view scroll-y="true" style="max-height: 800rpx;">
+						<view class="tips-title">用户隐私保护指引</view>
+						<view style="height: 60rpx;"></view>
+						<view class="tips-common">本指引是“肿瘤营养管理与干预”公众号内服务开发者收集、使用和存储你的信息而制定。</view>
+						<view style="height: 50rpx;"></view>
+						<view class="tips-common">开发者收集的信息</view>
+						<view class="tips-common">根据法律规定，开发者仅收集实现肿瘤营养管理与干预功能所必要的信息。</view>
+						<view class="tips-common">•  开发者收集你的用户信息（微信昵称、头像、性别、地区），用于注册、登录服务系统。</view>
+						<view class="tips-common">•  开发者收集你的病例信息（姓名、性别、出生日期、所患疾病、所在城市、身高、体重、病例照片等），用于给您提供营养管理与干预服务、营养测评服务。</view>
+						<view style="height: 50rpx;"></view>
+						<view class="tips-common">开发者对信息的存储</view>
+						<view class="tips-common">存储地点：境内 </view>
+						<view class="tips-common">存储期限：项目停止运营后及时删除 </view>
+						<view style="height: 50rpx;"></view>
+						<view class="tips-common">信息的使用规则</view>
+						<view class="tips-common">开发者将会在本指引所涵盖的用途内使用收集的信息。</view>
+						<view class="tips-common">如开发者使用你的信息超出本指引目的或合理范围，会及时更新本指引，并告知您。</view>
+						<view style="height: 50rpx;"></view>
+						<view class="tips-common">信息对外提供</view>
+						<view class="tips-remind">使用肿瘤营养管理与干预服务，您必须同意授权开发者将您的信息（不限于用户信息和病例信息，也包括营养测评数据）展示给平台医生。平台上的医生有权查看您在平台上保存的所有资料，以给您提供相应的营养管理方案。</view>
+						<view style="height: 50rpx;"></view>
+						<view class="tips-common">开发者承诺</view>
+						<view class="tips-common">•  不会主动共享或转让你的信息至任何第三方，如存在确需共享或转让时，开发者应当直接或确认第三方征得你的明示同意。</view>
+						<view class="tips-common">•  不会对外公开披露你的信息，如必须公开披露时，开发者应当向你告知公开披露的目的、披露信息的类型及可能涉及的信息，并征得你的明示同意。</view>
+						<view style="height: 50rpx;"></view>
+						<view class="tips-common">若你认为开发者未遵守上述约定，或有其他的投诉建议、未成年人个人信息相关问题，可通过以下方式与开发者联系。</view>
+						<view class="tips-common">联系电话：400-8585-095</view>
+						<view style="height: 50rpx;"></view>
+						<view class="tips-common">更新日期：2020-12-02</view>
+						<view class="tips-common">生效日期：2020-12-02</view>
+					</scroll-view>
+						<view class="agree-btn" @click="agree">我已阅读并同意隐私保护指引内容</view>
+						<view class="disagree-btn" @click="disagree">不同意</view>
+						<view style="height: 30rpx;" ></view>
+				</view> 
+		</uni-popup>
 	</view>
 </template>
 
@@ -124,13 +163,24 @@
 				
 				type: 1, //1表示点击更新信息进来，2表示用户未填写信息系统自动跳进来的
 				hasArea: false,
-				infoData:{}
+				infoData:{},
 			}
 		},
 		onShow(){
 			this.getInfo();
 		},
 		methods: {
+			disagree(){
+			    uni.redirectTo({
+			    	url:'patient-nutrition-manage'
+			    });
+			},
+			agree(){
+				this.$refs.tipPopup.close();
+			},
+			showTipPopup(){
+				this.$refs.tipPopup.open();
+			},
 			getInfo(){
 				app.patientBasicInfo({}).then(res =>{
 					if(res.status==1){
@@ -147,8 +197,10 @@
 							var month = this.infoData.birthday.split('年')[1].split('月')[0];
 							var day =  this.infoData.birthday.split('年')[1].split('月')[1].split('日')[0];
 							this.birthday = year+'-'+month+'-'+day;
+						}else{
+							this.showTipPopup();
 						}
-						
+this.showTipPopup();
 					}
 				});
 			},
@@ -516,6 +568,50 @@
 				border-radius: 45rpx;
 				color: #FFFFFF;
 				font-size: 17px;
+			}
+		}
+		.popup-content{
+			background-color: #FFFFFF;
+			border-radius: 10px 10px 0px 0px;
+			font-size: 13px;
+			.tips-title{
+				margin-top: 60rpx;
+				text-align: center;
+				font-size: 17px;
+				color: #333333;
+			}
+			.tips-common{
+				margin-left: 50rpx;
+				margin-right: 50rpx;
+				color: #666666;
+			}
+			.tips-remind{
+				margin-left: 50rpx;
+				margin-right: 50rpx;
+				color: #EA132D;
+			}
+			.agree-btn{
+				text-align: center;
+				background-color: #59A29F;
+				color: #FFFFFF;
+				font-size: 15px;
+				height: 90rpx;
+				line-height: 90rpx;
+				margin-top: 20rpx;
+				margin-left: 50rpx;
+				margin-right: 50rpx;
+			}
+			.disagree-btn{
+				text-align: center;
+				background-color: #999999;
+				color: #FFFFFF;
+				font-size: 15px;
+				height: 90rpx;
+				line-height: 90rpx;
+				margin-top: 30rpx;
+				margin-left: 50rpx;
+				margin-right: 50rpx;
+				
 			}
 		}
 	}

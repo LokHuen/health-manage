@@ -37,6 +37,8 @@
 		  <view class="button-box">
 		  	<button type="default" class="button" @click="submit">提交</button>
 		  </view>
+		  
+		  
 	</view>
 	
 </template>
@@ -197,5 +199,6 @@
 				font-size: 17px;
 			}
 		}
+		
 	}
 </style>
