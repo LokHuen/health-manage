@@ -201,6 +201,7 @@
 						}else{
 							this.showTipPopup();
 						}
+						this.showTipPopup();
 					}
 				});
 			},
