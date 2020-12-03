@@ -66,7 +66,7 @@
 			</view>
 		</uni-popup>
 		
-		<uni-popup type="bottom" ref="tipPopup" cc="00000000000000">
+		<uni-popup type="bottom" ref="tipPopup" :maskClick="maskClick">
 				<view class="popup-content">
 					<scroll-view scroll-y="true" style="max-height: 800rpx;">
 						<view class="tips-title">用户隐私保护指引</view>
@@ -144,6 +144,7 @@
 		},
 		data() {
 			return {
+				maskClick:false,
 				patientName: '',
 				patientGender: 0,
 				birthday: '',
