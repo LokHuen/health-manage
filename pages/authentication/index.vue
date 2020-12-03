@@ -49,7 +49,7 @@
 			</view>
 			<view class="flex linebox">
 				<view class="lefttext" style="width:280rpx;">身份证住址所在地</view>
-				<view class="rightarea" @click="openframe(5)">{{this.form.merProvince?(this.form.merProvinceValue+" "+this.form.merCityValue+" "+this.form.merDistrictValue):"请选择"}}</view>
+				<view class="rightarea" @click="openframe(5)">{{form.merProvince?(form.merProvinceValue+" "+form.merCityValue+" "+form.merDistrictValue):"请选择"}}</view>
 			</view>
 			<view class="flex linebox" @click="openframe()">
 				<view class="lefttext">开户行</view>
