@@ -12,9 +12,10 @@
 					<view>
 						<view class="qustion">
 							<text v-if="item.isMust" style="color:red;">*</text>
-							{{index+seq}}. {{item.title}}
+							<view style="flex:1;">{{index+seq}}. {{item.title}}
 							<!-- <text v-if="item.description">（{{item.description}}）</text> -->
 							<image v-if="item.description" src="../../static/icon/wenhaoIcon.png" class="questionimg ptitle" mode="widthFix" @click="openinfoframe(item.description)"></image>
+							</view>
 						</view>
 						<view v-if="item.type===1">
 							<block v-if="item.specialType===0">
@@ -462,7 +463,7 @@
 	.mustinput{font-size: 26rpx;color: #e75656;padding-left:10rpx;}
 	.mustinput.other{margin:-0.2rem 0 0.2rem;}
 	.detailed_item{padding-bottom:0.67rem;}
-	.qustion{font-size: 30rpx;padding-bottom:16rpx;display: flex;align-items: center;flex-wrap: wrap;}
+	.qustion{font-size: 30rpx;padding-bottom:16rpx;display: flex;align-items: flex-start;flex-wrap: wrap;}
 	.btbox{margin-top:1.0rem;}
 	.submitbt{
 	    line-height: 88rpx;
@@ -490,7 +491,7 @@
 	    uni-input{margin-bottom:20rpx;}
 	}
 	.questionimg{width:30rpx;
-		&.ptitle{margin-left:15rpx;}
+		&.ptitle{margin-left:10rpx;top: 6rpx;}
 		&.other{position:absolute;z-index:3;left: 10rpx;top: 28rpx;}
 	}
 
