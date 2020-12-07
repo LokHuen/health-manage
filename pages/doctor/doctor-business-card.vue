@@ -98,9 +98,13 @@
 				canvas.style.width = w + "px";
 				canvas.style.height = h + "px";
 				var context = canvas.getContext("2d"); //然后将画布缩放，将图像放大两倍画到画布上 
-				// context.scale(2, 2);
+				context.scale(2, 2);
 				html2canvas(qselect, {
-					// canvas: canvas,
+					canvas: canvas,
+					scale: 1,
+					width: w,
+					height: h,
+					dpi: window.devicePixelRatio * 4,
 					allowTaint: false,
 					taintTest: false,
 					useCORS: true,
