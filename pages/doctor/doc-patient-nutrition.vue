@@ -99,7 +99,7 @@
 		<view class="listContent" v-if="latelyData.result">
 			<view class="health-list-item" @click="toanswerlist(latelyData.id)">
 				<view class="health-list-item-avatar-content">
-					<image class="health-list-item-avatar" src="../../static/icon/cry_icon.png"></image>
+					<image class="health-list-item-avatar" :src="latelyData.result=='营养良好'?'../../static/icon/smile.png':'../../static/icon/cry_icon.png'"></image>
 				</view>
 				<view class="health-list-item-content">
 					<view class="health-list-item-title">{{latelyData.result}}</view>

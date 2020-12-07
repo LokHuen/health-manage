@@ -60,7 +60,7 @@
 			<!-- 健康信息 -->
 			<view class="health-list-item" v-if="item.result">	
 				<view class="health-list-item-avatar-content">
-					<image class="health-list-item-avatar" src="../../static/icon/cry_icon.png"></image>
+					<image class="health-list-item-avatar" :src="item.result=='营养良好'?'../../static/icon/smile.png':'../../static/icon/cry_icon.png'"></image>
 				</view>
 				<view class="health-list-item-content">
 					<view class="health-list-item-title">{{item.result}}</view>
