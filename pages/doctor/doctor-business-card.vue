@@ -1,12 +1,12 @@
 <template>
 	<!-- 医生名片界面 -->
 	<view class="container">
-		<view class="i-content-box" @longpress="saveQRCode" id="doctorcode"  click="saveimg">
+		<view class="i-content-box" @click="saveimg" id="doctorcode"  click="saveQRCode">
 			<image src="../../static/img/doctor_bg.png" mode="widthFix" class="content-bg"></image>
 			<view class="content-info">
 				<image :src="infoData.portrait" mode="widthFix" class="avator"></image>
 				<view class="name">{{infoData.doctorName}}</view>
-				<view class="technicalTitle">{{infoData.technicalTitle}}</view>
+				<view class="technicalTitle" :style="create?'':''"><text>{{infoData.technicalTitle}}</text></view>
 				<view class="department">{{infoData.hospital+infoData.department}} </view>
 			</view>
 			<view class="qrCode-box">
@@ -16,13 +16,21 @@
 				<view class="qrCode-subtips">中国健康促进基金会·肿瘤精准个体化防治公益项目·肿瘤营养教育专题</view>
 			</view>
 		</view>
-		<view class="i-sava-tip">长按上方二维码，可以保存到手机相册</view>
-		<!-- <image :src="imgUrl" mode="widthFix"></image> -->
+		<view class="i-sava-tip">点击上方二维码，生成分享图</view>
+		
+		<uni-popup ref="imgbox" type="bottom" >
+			<scroll-view scroll-y="true" style="background:#fff;padding: 20rpx;border-radius:20rpx 20rpx 0 0;max-height:80vh;box-sizing:border-box;">
+				<view style="line-height:3;text-align:center;">长按下面图片，保存到手机</view>
+				<view style="padding:0 30rpx 30px;">
+					<image :src="imgUrl" mode="widthFix" style="width:100%;"></image>
+				</view>
+			</scroll-view>
+		</uni-popup>
 	</view>
 </template>
 
 <script>
-	// import html2canvas from "html2canvas"
+	import html2canvas from "plugins/html2canvas"
 	const app = getApp();
 	export default {
 
@@ -30,7 +38,8 @@
 			return {
 				infoData: {},
 				id: '',
-				imgUrl:""
+				imgUrl:"",
+				create:false,
 			}
 		},
 		methods: {
@@ -43,12 +52,16 @@
 					console.log(res);
 					if (res.status == 1) {
 						this.infoData = res.data;
-						// this.downImage(this.infoData.portrait, res => {
-						// 	this.infoData.portrait = res;
-						// })
-						// this.downImage(this.infoData.qrCode, res => {
-						// 	this.infoData.qrCode = res;
-						// })
+						this.downImage(this.infoData.portrait, res => {
+							this.infoData.portrait = res;
+						})
+						if(this.infoData.qrCode.indexOf(app.globalData.baseUrl)!=-1){
+							this.infoData.qrCode = this.infoData.qrCode.replace(app.globalData.baseUrl,"/api");
+						}
+						this.downImage(this.infoData.qrCode, res => {
+							this.infoData.qrCode = res;
+							
+						})
 					}
 				});
 			},
@@ -74,6 +87,8 @@
 				})
 			},
 			saveimg() {
+				this.create = true;
+				app.loading("生成中");
 				let qselect = document.querySelector("#doctorcode");
 				var w = qselect.offsetWidth;
 				var h = qselect.offsetHeight; //要将 canvas 的宽高设置成容器宽高的 2 倍
@@ -85,7 +100,7 @@
 				var context = canvas.getContext("2d"); //然后将画布缩放，将图像放大两倍画到画布上 
 				// context.scale(2, 2);
 				html2canvas(qselect, {
-					canvas: canvas,
+					// canvas: canvas,
 					allowTaint: false,
 					taintTest: false,
 					useCORS: true,
@@ -94,7 +109,9 @@
 				}).then(canvas => {
 					let dataURL = canvas.toDataURL("image/png");
 					this.imgUrl = dataURL;
-					
+					this.create = false;
+					app.loaded();
+					this.$refs.imgbox.open();
 				});
 			},
 			downImage(url, callback) {
@@ -154,14 +171,17 @@
 					margin-top: 10rpx;
 					background-color: #55A29E;
 					font-size: 13px;
-					color: #FFFFFF;display: inline-block;
-					line-height: 1.5;
+					color: #FFFFFF;
+					display: inline-block;
 					border-radius: 10.5px;
-					padding: 0 15px;
+					padding: 2px 15px 4px;line-height: 1;
+					>text{
+						display: inline-block;
+					}
 				}
 
 				.department {
-					margin-top: 10rpx;
+					padding-top: 10rpx;
 					color: #666666;
 					font-size: 13px;
 				}
