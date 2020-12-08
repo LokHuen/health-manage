@@ -75,6 +75,7 @@ var api = {
 	adviceListRequest:(data)=>{return rq("/wx/patient/advice/findPage",data,"GET");},
 	
 	//业务员
+	salesuserlist:(data)=>{return rq("/",data,"GET");}, //绑定的用户
 	salesregister:(data)=>{return rq("/",data,"POST");}, //登录
 }
 

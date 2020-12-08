@@ -26,6 +26,12 @@
 				"navigationBarTitleText": "业务员登录"
 			}
 		},
+		{
+			"path": "pages/sales/user",
+			"style": {
+				"navigationBarTitleText": "绑定的用户"
+			}
+		},
 		
 		
 		{
