@@ -68,19 +68,19 @@
 			judgeDoctorAuthenticationStatus(){
 				app.authentication({id:app.getCache('uid')}).then(res =>{
 					 if(res.status == 1){
-						 let url = "/pages/authentication/index";
+						 let url = "/pages/sales/authentication/index";
 						 if(res.data.status==-1){
 							 //认证失败
-							 url = "/pages/authentication/index";
+							 url = "/pages/sales/authentication/index";
 						 }else if(res.data.status==0){
 							 //未认证
-							 url = "/pages/authentication/index";
+							 url = "/pages/sales/authentication/index";
 						 }else if(res.data.status==1){
 							 //认证中
-							 url = "/pages/authentication/result";
+							 url = "/pages/sales/authentication/result";
 						 }else if(res.data.status==2){
 							 //已认证
-							 url = "/pages/authentication/detail";
+							 url = "/pages/sales/authentication/detail";
 						 }
 						 uni.navigateTo({
 						 	url

@@ -38,6 +38,31 @@
 			}
 		},
 		{			"path": "pages/sales/sales-business-card",			"style": {				"navigationBarTitleText": "名片码"			}		},{			"path": "pages/sales/sales-account-list",			"style": {				"navigationBarTitleText": "账户"			}		},{			"path": "pages/sales/already-transferred-bankcard",			"style": {				"navigationBarTitleText": "已转账到银行卡"			},			"enablePullDownRefresh": true		},		{			"path": "pages/sales/transferred-bankcard",			"style": {				"navigationBarTitleText": "待转账到银行卡"			},			"enablePullDownRefresh": true		},
+		{
+			"path": "pages/sales/sales-bill-detail",
+			"style": {
+				"navigationBarTitleText": "转账详情"
+			},
+			"enablePullDownRefresh": true
+		},
+		{
+			"path": "pages/sales/authentication/index",
+			"style": {
+				"navigationBarTitleText": "身份认证"
+			}
+		},
+		{
+			"path": "pages/sales/authentication/detail",
+			"style": {
+				"navigationBarTitleText": "身份认证"
+			}
+		},
+		{
+			"path": "pages/sales/authentication/result",
+			"style": {
+				"navigationBarTitleText": "身份认证"
+			}
+		},
 		
 		
 		{
