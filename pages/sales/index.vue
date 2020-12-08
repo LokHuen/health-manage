@@ -1,12 +1,15 @@
 <template>
 	<view class="container">
-		
+		<view>
 		<view class="item-list" v-for="(item,index) in list" :key="index" @click="clickItem(index)">
 			<view class="left-name">{{item}}</view>
 			<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
 			<view class="line" ></view>
 		</view>
-		<view class="bottom"></view>
+		</view>
+		<view class="pagebottombt">
+			<view @click="cleartoken">退出登录</view>
+		</view>
 	</view>
 </template>
 
@@ -16,7 +19,7 @@
 	
 		data() {
 			return {
-				list: ["名片码","账户","身份认证"],
+				list: ["名片码","绑定的用户","账户","身份认证"],
 				data:{}
 			}
 		},
@@ -30,6 +33,10 @@
 						url:'sales-business-card?id='+app.getCache('uid')
 					});
 				}else if(index==1){
+					uni.navigateTo({
+						url:'user'
+					});
+				}else if(index==2){
 					uni.navigateTo({
 						url:'sales-account-list'
 					});
@@ -68,7 +75,16 @@
 						 })
 					 }
 				});
-			}
+			},
+			cleartoken(){
+				localStorage.removeItem("token");
+				app.tip("退出成功");
+				setTimeout(()=>{
+					uni.reLaunch({
+						url:"/pages/sales/register"
+					})
+				},1000)
+			},
 			
 		},
 
@@ -77,7 +93,7 @@
 
 <style lang="scss">
 	.container{
-		height: 100%;
+		height: 100vh;background-color: #F5F6F6;
 		
 		.item-list{
 			// background-color: #FFFFFF;
@@ -106,6 +122,19 @@
 		.bottom{
 			background-color: #F5F6F6;
 			height: 400px;
+		}
+	}
+	.pagebottombt {
+		padding: 100rpx 0;
+		
+		view {
+			background: #52A29E;
+			color: #fff;
+			text-align: center;
+			font-size: 34rpx;
+			line-height: 88rpx;
+			border-radius: 45rpx;
+			margin: 0 20rpx 0 20rpx;
 		}
 	}
 </style>
