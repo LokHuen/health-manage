@@ -1,19 +1,18 @@
 {
 	"pages": [
 		{
+			"path": "pages/patient/patient-nutrition-manage",
+			"style": {
+				"navigationBarTitleText": "营养管理"
+			}
+		},
+		{
 			"path": "pages/doctor/doctor-nutrition-manage",
 			"style": {
 				"navigationBarTitleText": "营养管理"
 			},
 			"enablePullDownRefresh": true
 		},
-		{
-			"path": "pages/patient/patient-nutrition-manage",
-			"style": {
-				"navigationBarTitleText": "营养管理"
-			}
-		},
-		
 		{
 			"path": "pages/doctor/doctor-center",
 			"style": {
@@ -38,6 +37,7 @@
 				"navigationBarTitleText": "绑定的用户"
 			}
 		},
+		{			"path": "pages/sales/sales-business-card",			"style": {				"navigationBarTitleText": "名片码"			}		},{			"path": "pages/sales/sales-account-list",			"style": {				"navigationBarTitleText": "账户"			}		},{			"path": "pages/sales/already-transferred-bankcard",			"style": {				"navigationBarTitleText": "已转账到银行卡"			},			"enablePullDownRefresh": true		},		{			"path": "pages/sales/transferred-bankcard",			"style": {				"navigationBarTitleText": "待转账到银行卡"			},			"enablePullDownRefresh": true		},
 		
 		
 		{

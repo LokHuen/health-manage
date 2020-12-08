@@ -1,15 +1,6 @@
 <template>
 	<view class="container">
-		<view class="message-box">
-			<image src="../../static/img/doctor_center.png" mode="widthFix" class="background-img"></image>
-			<view class="info-box">
-				<view class="title"> </view>
-				<image :src="data.portrait" mode="widthFix" class="avator"></image>
-				<view class="name">{{data.doctorName}}</view>
-				<view class="position">{{data.technicalTitle}}</view>
-				<view class="department">{{data.hospital+data.department}}</view>
-			</view>
-		</view>
+		
 		<view class="item-list" v-for="(item,index) in list" :key="index" @click="clickItem(index)">
 			<view class="left-name">{{item}}</view>
 			<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
@@ -36,11 +27,11 @@
 			clickItem(index){
 				if(index==0){
 					uni.navigateTo({
-						url:'doctor-business-card?id='+app.getCache('uid')
+						url:'sales-business-card?id='+app.getCache('uid')
 					});
 				}else if(index==1){
 					uni.navigateTo({
-						url:'doctor-account-list'
+						url:'sales-account-list'
 					});
 				}else{
 					this.judgeDoctorAuthenticationStatus();
@@ -87,47 +78,7 @@
 <style lang="scss">
 	.container{
 		height: 100%;
-		.message-box{
-			height: 510rpx;
-			position: relative;
-			text-align: center;
-			.background-img{
-				height: 510rpx;
-				width: 100%;
-			}
-			.info-box{
-				position: absolute;
-				top: 0;
-				left: 0;
-				right: 0;
-				height: 510rpx;
-				color: #FFFFFF;
-				.title{
-					padding-top: 25rpx;
-					font-size: 17px;
-				}
-				.avator{
-					width: 136rpx;
-					height: 136rpx;
-					margin-top: 66rpx;
-					border-radius: 50%;
-				}
-				.name{
-					font-size: 20px;
-					margin-top: 15rpx;
-				}
-				.position{
-					font-size: 14px;
-					margin-top: 12rpx;
-				}
-				.department{
-					font-size: 14px;
-					margin-top: 12rpx;
-				}
-			}
-			
-			
-		}
+		
 		.item-list{
 			// background-color: #FFFFFF;
 			height: 106rpx;
