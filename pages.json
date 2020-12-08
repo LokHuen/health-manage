@@ -20,7 +20,12 @@
 				"navigationBarTitleText": "个人中心"
 			}
 		},
-		
+		{
+			"path": "pages/sales/index",
+			"style": {
+				"navigationBarTitleText": "业务管理中心"
+			}
+		},
 		{
 			"path": "pages/sales/register",
 			"style": {
