@@ -33,13 +33,13 @@
 		</view>
 
 
-		<view class="fake-box" v-if="show">
+		<view class="fake-box" v-if="doctorInfo.showData==1">
 			<image src="../../static/icon/remind_icon2.png" mode="widthFix" class="fake-icon"></image>
 			<view class="fake-title">下方为演示数据，非真实患者，关闭请点击：</view>
 			<view class="fake-close" @click="closeShowInfo">关闭</view>
 		</view>
 
-		<view class="fake-content-box" v-if="show">
+		<view class="fake-content-box" v-if="doctorInfo.showData==1">
 			<view style="height: 25rpx; background-color: #F8F8F8;"></view>
 			<view class="fakelistContent">
 				<view class="fakemsg-box">
@@ -175,7 +175,12 @@
 				}
 			},
 			closeShowInfo() {
-				this.show = false;
+				app.closeShowData().then(res =>{
+					if(res.status ==1 ){
+						this.doctorInfo.showData = 0;
+					}
+				});
+				
 			},
 			closeTips() {
 				this.$refs.popupTips.close();

@@ -75,6 +75,10 @@ var api = {
 	adviceListRequest:(data)=>{return rq("/wx/patient/advice/findPage",data,"GET");},
 	//营养首页——演示数据（主页2）
 	doctorShowInfo:(data)=>{return rq("/wx/doctor/showInfo",data,"GET");},
+	//关闭演示数据
+	closeShowData:(data)=>{return rq("/wx/doctor/closeShowData",data,"POST");},
+	
+	
 	//业务员
 	salesuserlist:(data)=>{return rq("/",data,"GET");}, //绑定的用户
 	salesregister:(data)=>{return rq("/",data,"POST");}, //登录
