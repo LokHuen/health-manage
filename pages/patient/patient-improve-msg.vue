@@ -65,7 +65,7 @@
 				<text :class="patientGender==2?'i-sex-item active':'i-sex-item'" @click="selectSex(2)">女</text>
 			</view>
 		</uni-popup>
-		
+
 		<uni-popup type="bottom" ref="tipPopup" :maskClick="maskClick">
 				<view class="popup-content">
 					<scroll-view scroll-y="true" style="max-height: 800rpx;">
@@ -102,7 +102,7 @@
 						<view class="agree-btn" @click="agree">我已阅读并同意隐私保护指引内容</view>
 						<view class="disagree-btn" @click="disagree">不同意</view>
 						<view style="height: 30rpx;" ></view>
-				</view> 
+				</view>
 		</uni-popup>
 	</view>
 </template>
@@ -161,7 +161,7 @@
 				],
 				imgList: [],
 				pathologyUrl: '',
-				
+
 				type: 1, //1表示点击更新信息进来，2表示用户未填写信息系统自动跳进来的
 				hasArea: false,
 				infoData:{},
@@ -202,7 +202,7 @@
 						}else{
 							this.showTipPopup();
 						}
-						this.showTipPopup();
+
 					}
 				});
 			},
@@ -613,7 +613,7 @@
 				margin-top: 30rpx;
 				margin-left: 50rpx;
 				margin-right: 50rpx;
-				
+
 			}
 		}
 	}
