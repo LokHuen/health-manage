@@ -2,18 +2,16 @@
 	<!-- 医生名片界面 -->
 	<view class="container">
 		<view class="i-content-box" @click="saveimg" id="doctorcode"  click="saveQRCode">
-			<image src="../../static/img/doctor_bg.png" mode="widthFix" class="content-bg"></image>
+			<image src="../../static/sales/codebg.png" mode="widthFix" class="content-bg"></image>
 			<view class="content-info">
-				<image :src="infoData.portrait" mode="widthFix" class="avator"></image>
-				<view class="name">{{infoData.doctorName}}</view>
-				<view class="technicalTitle" :style="create?'':''"><text>{{infoData.technicalTitle}}</text></view>
-				<view class="department">{{infoData.hospital+infoData.department}} </view>
+				<image src="../../static/mine/code.png" mode="widthFix" class="qrcode"></image>
 			</view>
+			<view class="lineshow"></view>
 			<view class="qrCode-box">
-				<image :src="infoData.qrCode" mode="widthFix" class="qrcode"></image>
-				<view class="qrCode-tips">患者院外营养管理平台</view>
-				<view class="line"></view>
-				<view class="qrCode-subtips">中国健康促进基金会·肿瘤精准个体化防治公益项目·肿瘤营养教育专题</view>
+				<view class="qrCode-tips">
+					<view style="padding-bottom:10rpx;">微信扫一扫</view>
+					<view>开通患者院外营养管理平台</view>
+				</view>
 			</view>
 		</view>
 		<view class="i-sava-tip">点击上方二维码，生成分享图</view>
@@ -140,7 +138,6 @@
 	.container {
 
 		.i-content-box {
-			height: 920rpx;
 			width: 648rpx;
 			margin: 50rpx auto 0;
 			position: relative;
@@ -152,10 +149,9 @@
 
 			.content-info {
 				position: absolute;
-				top: 0;
+				top: 90rpx;
 				right: 0;
 				left: 0;
-				height: 460rpx;
 				text-align: center;
 
 				.avator {
@@ -190,24 +186,26 @@
 					font-size: 13px;
 				}
 			}
-
+			.qrcode {
+				width: 342rpx;
+				height: 342rpx;
+				margin-top: 0rpx;
+			}
+			.lineshow{
+				background: #E5E5E5;height:2rpx;position: absolute;
+				top: 510rpx;
+				right: 70rpx;
+				left: 70rpx;
+			}
 			.qrCode-box {
 				position: absolute;
-				bottom: 0;
+				bottom: 80rpx;
 				right: 0;
 				left: 0;
-				height: 490rpx;
 				text-align: center;
 
-				.qrcode {
-					width: 263rpx;
-					height: 263rpx;
-					margin-top: 40rpx;
-				}
-
 				.qrCode-tips {
-					font-size: 12px;
-					color: #55A29E;
+					font-size: 28rpx;
 					margin-top: 0rpx;
 				}
 				.line{
