@@ -39,7 +39,7 @@
 			<view class="fake-close" @click="closeShowInfo">关闭</view>
 		</view>
 
-		<view class="fake-content-box" v-if="doctorInfo.showData==1">
+		<view class="fake-content-box" v-if="doctorInfo.showData==1" @click="clickShowInfo">
 			<view style="height: 25rpx; background-color: #F8F8F8;"></view>
 			<view class="fakelistContent">
 				<view class="fakemsg-box">
@@ -182,6 +182,11 @@
 				});
 				
 			},
+			clickShowInfo(){
+				uni.navigateTo({
+					url: 'doc-patient-nutrition?uid=' + this.showInfo.id
+				});
+			},
 			closeTips() {
 				this.$refs.popupTips.close();
 			},
@@ -195,7 +200,6 @@
 				});
 			},
 			select(item) {
-				console.log('uid==' + item.id);
 				uni.navigateTo({
 					//url:'patient-detail?uid='+item.id
 					url: 'doc-patient-nutrition?uid=' + item.id
@@ -403,7 +407,7 @@
 			display: flex;
 
 			.fake-icon {
-				margin-top: 5rpx;
+				margin-top: 7rpx;
 				width: 22rpx;
 				height: 22rpx;
 			}
