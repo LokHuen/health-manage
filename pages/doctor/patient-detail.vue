@@ -27,7 +27,7 @@
 		<view class="listContent" v-if="recordData.id">
 			<view class="health-list-item" @click="toanswerlist(recordData.id)">	
 				<view class="health-list-item-avatar-content">
-					<image class="health-list-item-avatar" src="../../static/icon/cry_icon.png"></image>
+					<image class="health-list-item-avatar" :src="recordData.result=='营养良好'?'../../static/icon/smile.png':'../../static/icon/cry_icon.png'"></image>
 				</view>
 				<view class="health-list-item-content">
 					<view class="health-list-item-title">{{recordData.result}}</view>

@@ -9,6 +9,7 @@
 			mydata: 1,
 			// AppID:"wx152a400c7aa92a9e",
 			// AppSecret:"05ba4e0d30666a44d2c5be39fabf759d",
+			isSales:false,
 		},
 		onLaunch: function(option) {
 
@@ -18,8 +19,14 @@
 			let timeStamp = new Date()
 			let windowUrl = window.location.href;
 			
-			// if(windowUrl.indexOf("?")==-1) windowUrl = windowUrl + '?timeStamp=' + timeStamp.getTime();
-			// else windowUrl = windowUrl + '&timeStamp=' + timeStamp.getTime();
+			if(option.query.isSales||this.globalData.isSales){ //判断业务员
+				this.globalData.isSales = true;
+				if(!this.getCache("token")) 
+				uni.reLaunch({
+					url:"/pages/sales/register"
+				})
+				return;
+			}
 			
 			let nowtime = new Date().getTime();
 			let pretime = this.getCache("time") || nowtime;
