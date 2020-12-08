@@ -73,6 +73,9 @@ var api = {
 	saveAdvice:(data)=>{return rq("/wx/patient/advice/save",data,"POST");},
 	//病患医嘱分页列表
 	adviceListRequest:(data)=>{return rq("/wx/patient/advice/findPage",data,"GET");},
+	
+	//业务员
+	salesregister:(data)=>{return rq("/",data,"POST");}, //登录
 }
 
 export {api};
