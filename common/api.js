@@ -76,6 +76,7 @@ var api = {
 	//营养首页——演示数据（主页2）
 	doctorShowInfo:(data)=>{return rq("/wx/doctor/showInfo",data,"GET");},
 	//业务员
+	salesuserlist:(data)=>{return rq("/",data,"GET");}, //绑定的用户
 	salesregister:(data)=>{return rq("/",data,"POST");}, //登录
 	
 	
