@@ -36,7 +36,7 @@
 		methods: {
 			select(item) {
 				uni.navigateTo({
-					url: 'doctor-bill-detail?id=' + item.id
+					url: 'sales-bill-detail?id=' + item.id
 				});
 			},
 			getListData() {
