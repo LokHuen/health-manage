@@ -66,7 +66,7 @@
 				});
 			},
 			judgeDoctorAuthenticationStatus(){
-				app.authentication({id:app.getCache('uid')}).then(res =>{
+				app.sale_authentication({}).then(res =>{
 					 if(res.status == 1){
 						 let url = "/pages/sales/authentication/index";
 						 if(res.data.status==-1){

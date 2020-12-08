@@ -80,10 +80,14 @@ var api = {
 	
 	
 	//业务员
-	salesuserlist:(data)=>{return rq("/",data,"GET");}, //绑定的用户
-	salesregister:(data)=>{return rq("/",data,"POST");}, //登录
-	
-	
+	salesuserlist:(data)=>{return rq("/wx/salesman/bindUserList",data,"GET");}, //绑定的用户
+	salesregister:(data)=>{return rq("/wx/salesman/login",data,"POST");}, //登录
+	//保存当前用户的身份认证
+	sale_saveAuthentication:(data)=>{return rq("/wx/sales/auth/save",data,"POST");},
+	//获取认证详情
+	sale_authentication:(data)=>{return rq("/wx/sales/auth/get",data,"GET");},
+	//获取医生名片
+	sale_doctorBusinessCard:(data)=>{return rq("/wx/salesman/getQRCode",data,"GET");},
 }
 
 export {api};

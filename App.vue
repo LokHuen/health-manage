@@ -21,7 +21,7 @@
 			
 			if(option.query.isSales||this.globalData.isSales){ //判断业务员
 				this.globalData.isSales = true;
-				if(!this.getCache("token")) 
+				if(!this.getCache("salesToken")) 
 				uni.reLaunch({
 					url:"/pages/sales/register"
 				})

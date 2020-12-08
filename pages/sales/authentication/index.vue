@@ -170,9 +170,7 @@
 		methods: {
 			getinfo() {
 				app.loading("连接中");
-				app.authentication({
-					id: app.getCache('uid')
-				}).then(res => {
+				app.sale_authentication({}).then(res => {
 					res.data = res.data || this.form;
 					if (res.data.idCardFront) res.data.idCardFront = res.data.idCardFront.split(",")[0]; // 身份证正面图片url
 					if (res.data.idCardBack) res.data.idCardBack = res.data.idCardBack.split(",")[0];
@@ -380,7 +378,7 @@
 				let data = JSON.parse(JSON.stringify(this.form));
 
 				app.loading("保存中");
-				app.saveAuthentication(data).then(res => {
+				app.sale_saveAuthentication(data).then(res => {
 					app.loaded();
 					uni.reLaunch({
 						url: "/pages/sales/authentication/result",

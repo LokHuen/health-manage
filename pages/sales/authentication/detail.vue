@@ -29,7 +29,7 @@
 		methods: {
 			getinfo(){
 				app.loading("连接中");
-				app.authentication({id:app.getCache('uid')}).then(res => {
+				app.sale_authentication({}).then(res => {
 					if (res.data.idCardFront) res.data.idCardFront = res.data.idCardFront.split(",")[0]; // 身份证正面图片url
 					if (res.data.bankCardFront) res.data.bankCardFront = res.data.bankCardFront.split(",")[0];
 					this.info = res.data;

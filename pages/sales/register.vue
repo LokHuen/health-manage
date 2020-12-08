@@ -3,11 +3,11 @@
 		<view class="bigtitle">欢迎登录业务管理系统</view>
 		<view class="flex linebox">
 			<view class="lefttext flex"><image src="../../static/sales/user.png" mode="widthFix"></image>帐号</view>
-			<input class="rightarea" v-model="form.legalName" maxlength="20" placeholder="请输入" />
+			<input class="rightarea" v-model="form.username" maxlength="20" placeholder="请输入" />
 		</view>
 		<view class="flex linebox">
 			<view class="lefttext flex"><image src="../../static/sales/lock.png" mode="widthFix"></image>密码</view>
-			<input class="rightarea" password="true" v-model="form.legalIdCard" maxlength="20" placeholder="请输入" />
+			<input class="rightarea" password="true" v-model="form.password" maxlength="20" placeholder="请输入" />
 		</view>
 	
 		<view class="pagebottombt">
@@ -24,11 +24,12 @@
 				baseUrl:app.globalData.baseUrl,
 				imgUrl:app.globalData.imageUrl,
 				form:{
-					
+					username:"",
+					password:""
 				},
 				warn: {
-					idCardFront: "请上传身份证人像面",
-					idCardBack: "请上传身份证国徽面",
+					username: "请输入账号",
+					password: "请输入密码",
 				},
 			}
 		},
@@ -48,12 +49,15 @@
 				}
 				let data = JSON.parse(JSON.stringify(this.form));
 			
-				app.loading("保存中");
+				app.loading("登录中");
 				app.salesregister(data).then(res => {
 					app.loaded();
+					app.setCache("salesToken",res.data.salesToken);
 					uni.reLaunch({
-						url: "",
+						url: "/pages/sales/index",
 					})
+				}).catch((res)=>{
+					app.tip(res);
 				})
 			},
 		}

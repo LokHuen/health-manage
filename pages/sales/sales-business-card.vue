@@ -4,7 +4,7 @@
 		<view class="i-content-box" @click="saveimg" id="doctorcode"  click="saveQRCode">
 			<image src="../../static/sales/codebg.png" mode="widthFix" class="content-bg"></image>
 			<view class="content-info">
-				<image src="../../static/mine/code.png" mode="widthFix" class="qrcode"></image>
+				<image :src="infoData" mode="widthFix" class="qrcode"></image>
 			</view>
 			<view class="lineshow"></view>
 			<view class="qrCode-box">
@@ -34,7 +34,7 @@
 
 		data() {
 			return {
-				infoData: {},
+				infoData:"",
 				id: '',
 				imgUrl:"",
 				create:false,
@@ -42,22 +42,17 @@
 		},
 		methods: {
 			getData() {
-				//{uid:app.getCache('uid')}
-				app.doctorBusinessCard({
-					// uid:43
-					uid: this.id
-				}).then(res => {
+				app.sale_doctorBusinessCard({}).then(res => {
 					console.log(res);
 					if (res.status == 1) {
 						this.infoData = res.data;
-						this.downImage(this.infoData.portrait, res => {
-							this.infoData.portrait = res;
-						})
-						if(this.infoData.qrCode.indexOf(app.globalData.baseUrl)!=-1){
-							this.infoData.qrCode = this.infoData.qrCode.replace(app.globalData.baseUrl,"/api");
+						if(this.infoData.indexOf(app.globalData.baseUrl)!=-1){
+							this.infoData = this.infoData.replace(app.globalData.baseUrl,"/api");
+						}else{
+							this.infoData = "/api"+this.infoData;
 						}
-						this.downImage(this.infoData.qrCode, res => {
-							this.infoData.qrCode = res;
+						this.downImage(this.infoData, res => {
+							this.infoData = res;
 							
 						})
 					}

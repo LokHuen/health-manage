@@ -2,14 +2,14 @@
 	<view class="listbox">
 		<view class="pagebackground"></view>
 		<view >
-			<view class="flex userlist">
-				<image src="../../static/img/avator.png" mode="aspectFill" class="userhead"></image>
+			<view class="flex userlist" v-for="(item,index) in list" :key="index">
+				<image :src="item.wx_portrait" mode="aspectFill" class="userhead"></image>
 				<view style="flex:1;">
-					<view class="username">陈聪</view>
-					<view class="userinfo">来看书到付款时间的</view>
+					<view class="username">{{item.doctor_name}}</view>
+					<view class="userinfo">{{item.hospital}}</view>
 				</view>
 				<view class="flex usernum">
-					<text>80</text>患者
+					<text>{{item.bind_patient||0}}</text>患者
 				</view>
 			</view>
 		</view>
@@ -44,14 +44,14 @@
 				}
 				app.salesuserlist(data).then(res => {
 					this.pageCount = res.data.pageCount;
-					if(this.page==1) this.list = res.data.list;
-					else this.list = this.list.concat(res.data.list);
-					if(res.data.list.length>0) this.page++; 
+					if(this.page==1) this.list = res.data;
+					else this.list = this.list.concat(res.data);
+					if(res.data.length>0) this.page++; 
 				});
 			},
 		},
 		onReachBottom(){
-			this.init();
+			// this.init();
 		},
 	}
 </script>
