@@ -1,16 +1,20 @@
 <template>
 	<view class="listbox">
-		<view class="flex">
-			<image src="../../static/img/avator.png" mode="aspectFill" class="userhead"></image>
-			<view style="flex:1;">
-				<view>陈聪</view>
-				<view>来看书到付款时间的</view>
-			</view>
-			<view class="flex">
-				<text>80</text>患者
+		<view class="pagebackground"></view>
+		<view >
+			<view class="flex userlist">
+				<image src="../../static/img/avator.png" mode="aspectFill" class="userhead"></image>
+				<view style="flex:1;">
+					<view class="username">陈聪</view>
+					<view class="userinfo">来看书到付款时间的</view>
+				</view>
+				<view class="flex usernum">
+					<text>80</text>患者
+				</view>
 			</view>
 		</view>
 		<view v-show="!list[0]" class="hadnodata">暂无数据</view>
+		
 	</view>
 </template>
 
@@ -53,8 +57,23 @@
 </script>
 
 <style lang="scss">
+	.userlist{
+		background:#fff;padding:34rpx 50rpx;margin-top:10rpx;
+	}
 	.listbox{
 		.userhead{width:100rpx;height:100rpx;border-radius:50%;margin-right:20rpx;}
+		.username{
+			font-weight: 600;padding-bottom:6rpx;
+		}
+		.userinfo{font-size: 26rpx;}
+		.usernum{
+			font-size: 26rpx;
+			color: #666666;
+			text{
+				font-size: 42rpx;padding-right:10rpx;
+				color: #4B8BE8;
+			}
+		}
 	}
 	.hadnodata{color:#888;padding-top:200rpx;text-align:center;}
 </style>

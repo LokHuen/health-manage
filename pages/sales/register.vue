@@ -1,11 +1,12 @@
 <template>
 	<view class="contentbox">
+		<view class="bigtitle">欢迎登录业务管理系统</view>
 		<view class="flex linebox">
-			<view class="lefttext">帐号</view>
+			<view class="lefttext flex"><image src="../../static/sales/user.png" mode="widthFix"></image>帐号</view>
 			<input class="rightarea" v-model="form.legalName" maxlength="20" placeholder="请输入" />
 		</view>
 		<view class="flex linebox">
-			<view class="lefttext">密码</view>
+			<view class="lefttext flex"><image src="../../static/sales/lock.png" mode="widthFix"></image>密码</view>
 			<input class="rightarea" password="true" v-model="form.legalIdCard" maxlength="20" placeholder="请输入" />
 		</view>
 	
@@ -61,17 +62,24 @@
 
 <style lang="scss">
 	.contentbox {
-		padding: 0 40rpx;
-	
+		padding: 0 60rpx;
+		.bigtitle{
+			font-size: 44rpx;padding:56rpx 0 80rpx;
+			font-weight: 600;
+			color: #333333;
+		}
 		.linebox {
 			border-bottom: 1px solid #eee;
-			min-height: 100rpx;
-			font-size: 32rpx;
+			min-height: 110rpx;
+			font-size: 34rpx;
 			padding: 0 0 0 6rpx;
 	
 			.lefttext {
-				width: 120rpx;text-align:center;
-				padding-right: 32rpx;
+				width: 130rpx;text-align:center;
+				padding: 0 32rpx 0 20rpx;
+				image{
+					width:32rpx;margin-right:15rpx;
+				}
 			}
 	
 			.rightarea {
@@ -82,16 +90,16 @@
 		}
 	
 		.pagebottombt {
-			padding: 100rpx 0;
+			padding: 150rpx 0;
 	
 			view {
-				background: #52A29E;
+				background: #4B8BE8;
 				color: #fff;
 				text-align: center;
 				font-size: 34rpx;
 				line-height: 88rpx;
 				border-radius: 45rpx;
-				margin: 0 20rpx 0 20rpx;
+				margin: 0 0rpx 0 0rpx;
 			}
 		}
 	}
