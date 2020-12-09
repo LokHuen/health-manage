@@ -88,6 +88,15 @@ var api = {
 	sale_authentication:(data)=>{return rq("/wx/sales/auth/get",data,"GET");},
 	//获取医生名片
 	sale_doctorBusinessCard:(data)=>{return rq("/wx/salesman/getQRCode",data,"GET");},
+	saleshomepage:(data)=>{return rq("/wx/salesman/homepage",data,"GET");}, //首页数据
+	//账户首页的金额
+	sale_doctorAccountInfo:(data)=>{return rq("/wx/salesman/accountInfo",data,"GET");},
+	//待转账到银行卡
+	sale_doctorWaitDivide:(data)=>{return rq("/wx/salesman/waitDivide",data,"GET");},
+	//已转账到银行卡
+	sale_doctorGetDivide:(data)=>{return rq("/wx/salesman/getDividePage",data,"GET");},
+	//转账记录详情
+	sale_divideRecord:(data)=>{return rq("/wx/salesman/getDivideRecord",data,"GET");},
 }
 
 export {api};

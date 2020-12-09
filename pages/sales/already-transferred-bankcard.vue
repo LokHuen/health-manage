@@ -40,7 +40,7 @@
 				});
 			},
 			getListData() {
-				app.doctorGetDivide({
+				app.sale_doctorGetDivide({
 					pageNo: this.pageNo
 				}).then(res => {
 					if (res.status === 1) {

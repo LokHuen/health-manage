@@ -46,13 +46,13 @@
 	export default {
 		data() {
 			return {
-				id:1,
+				id:"",
 				data:{}
 			}
 		},
 		methods: {
 			getDetail(){
-				app.divideRecord({id:this.id}).then(res =>{
+				app.sale_divideRecord({id:this.id}).then(res =>{
 					if(res.status ==1){
 						this.data = res.data;
 					}

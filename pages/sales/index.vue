@@ -1,13 +1,13 @@
 <template>
 	<view class="container">
-		<view class="welcome">欢迎您，刘晓</view>
+		<view class="welcome">欢迎您，{{info.name}}</view>
 		<view class="flex numbox">
 			<view class="numitem">
-				<view class="number">0</view>
+				<view class="number">{{info.orderNum}}</view>
 				<view>本月订单数</view>
 			</view>
 			<view class="numitem">
-				<view class="number">1000</view>
+				<view class="number">{{info.income}}</view>
 				<view>本月收益（元）</view>
 			</view>
 		</view>
@@ -32,7 +32,7 @@
 		data() {
 			return {
 				list: ["名片码","绑定的用户","账户","身份认证"],
-				data:{}
+				info:{}
 			}
 		},
 		onLoad(){
@@ -58,10 +58,10 @@
 			},
 			getData(){
 				//
-				app.doctorBusinessCard({uid:app.getCache('uid')}).then(res => {
+				app.saleshomepage({}).then(res => {
 					console.log(res);
 					if (res.status == 1) {
-						this.data = res.data;
+						this.info = res.data;
 					}
 				});
 			},
@@ -149,7 +149,7 @@
 		}
 	}
 	.pagebottombt {
-		padding: 100rpx 0;
+		padding: 120rpx 0 100rpx;
 		
 		view {
 			background: #4B8BE8;

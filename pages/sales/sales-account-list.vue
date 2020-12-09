@@ -34,7 +34,7 @@
 		},
 		methods:{
 			doctorAccountInfo(){
-				app.doctorAccountInfo({}).then(res =>{
+				app.sale_doctorAccountInfo({}).then(res =>{
 					if(res.status == 1){
 						this.data = res.data;
 					}
@@ -43,11 +43,11 @@
 			select(index){
 				if(index==0){
 					uni.navigateTo({
-						url:'transferred-bankcard?money='+this.data.waitIncome
+						url:'transferred-bankcard?money='+(this.data.waitIncome||0)
 					});
 				}else{
 					uni.navigateTo({
-						url:'already-transferred-bankcard?money='+this.data.realIncome
+						url:'already-transferred-bankcard?money='+(this.data.realIncome||0)
 					});
 				}
 			}

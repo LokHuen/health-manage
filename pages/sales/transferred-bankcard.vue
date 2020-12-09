@@ -41,7 +41,7 @@
 				// });
 			},
             getListData(){
-				app.doctorWaitDivide({pageNo:this.pageNo}).then(res =>{
+				app.sale_doctorWaitDivide({pageNo:this.pageNo}).then(res =>{
 					if(res.status===1){
 						if(this.pageNo===1){
 							this.list = res.data.list;

@@ -44,8 +44,7 @@
 				}
 				app.salesuserlist(data).then(res => {
 					this.pageCount = res.data.pageCount;
-					if(this.page==1) this.list = res.data;
-					else this.list = this.list.concat(res.data);
+					this.list = this.page==1?res.data:this.list.concat(res.data);
 					if(res.data.length>0) this.page++; 
 				});
 			},
@@ -58,7 +57,7 @@
 
 <style lang="scss">
 	.userlist{
-		background:#fff;padding:34rpx 50rpx;margin-top:10rpx;
+		background:#fff;padding:28rpx 50rpx;margin-top:10rpx;
 	}
 	.listbox{
 		.userhead{width:100rpx;height:100rpx;border-radius:50%;margin-right:20rpx;}
