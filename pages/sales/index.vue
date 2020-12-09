@@ -36,6 +36,9 @@
 			}
 		},
 		onLoad(){
+			
+		},
+		onShow(){
 			this.getData();
 		},
 		methods: {
