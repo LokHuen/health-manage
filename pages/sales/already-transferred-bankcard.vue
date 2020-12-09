@@ -11,8 +11,8 @@
 			<view class="health-list-content">
 				<view class="health-list-title">转账记录</view>
 				<view class="health-item" v-for="(item,index) in listDatas" @click="select(item)">
-					<view class="item-amount">{{item.money}}</view>
-					<view class="item-time">{{item.createTime}}&nbsp;&nbsp;&nbsp;&nbsp;{{'来自'+item.name+'的购物订单'}}</view>
+					<view class="item-amount">￥{{item.money}}</view>
+					<view class="item-time">{{item.createTime}}&nbsp;&nbsp;&nbsp;&nbsp;{{'来自'+item.name+'的订单'}}</view>
 				</view>
 			</view>
 

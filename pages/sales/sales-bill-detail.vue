@@ -1,16 +1,16 @@
 <template>
-	<!-- 医生账单详情 -->
+	<!-- 账单详情 -->
 	<view class="container">
 		<view class="info">
 			<image :src="data.portrait" mode="widthFix" class="avtor"></image>
 			<view class="info-box">
 				<view class="list-name-box">
-					<view class="name">{{data.name}}</view>
-					<view class="time">{{data.createTime}}</view>
+					<view class="name">来自{{data.name}}的订单</view>
+					<view class="time"></view>
 				</view>
-				<view class="list-detail">{{'购买'+data.commodity}}</view>
+				<view class="list-detail time">{{data.createTime}}</view>
 			</view>
-			<view class="list-money">{{'¥'+data.money}}</view>
+			<!-- <view class="list-money">{{'¥'+data.money}}</view> -->
 		</view>
 		<view class="line"></view>
 		<view class="list-item">
@@ -47,7 +47,9 @@
 		data() {
 			return {
 				id:"",
-				data:{}
+				data:{
+					
+				}
 			}
 		},
 		methods: {
@@ -96,8 +98,6 @@
 					.time{
 						font-size: 12px;
 						color: #999999;
-						margin-left: 15rpx;
-						margin-top: 8rpx;
 					}
 				}
 		

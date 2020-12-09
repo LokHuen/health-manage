@@ -14,8 +14,8 @@
 		<view class="list-item" v-for="(item,index) in list" :key="index" @click="select(item)">
 			<image :src="item.portrait" mode="widthFix" class="avtor"></image>
 			<view class="info-box">
-				<view class="list-name">{{item.name}}</view>
-				<view class="list-detail">{{item.createTime+' 购买'+item.commodity}}</view>
+				<view class="list-name">来自{{item.name}}的订单</view>
+				<view class="list-detail">{{item.createTime}}</view>
 			</view>
 			<view class="list-money">{{'¥'+item.money}}</view>
 		</view>
