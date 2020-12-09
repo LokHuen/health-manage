@@ -3,18 +3,18 @@
 		<view class="welcome">欢迎您，{{info.name}}</view>
 		<view class="flex numbox">
 			<view class="numitem">
-				<view class="number">{{info.orderNum}}</view>
+				<view class="number">{{info.orderNum||0}}</view>
 				<view>本月订单数</view>
 			</view>
 			<view class="numitem">
-				<view class="number">{{info.income}}</view>
-				<view>本月收益（元）</view>
+				<view class="number">{{info.income||0}}</view>
+				<view>本月收益(元)</view>
 			</view>
 		</view>
 		<view>
 		<view class="item-list flex" v-for="(item,index) in list" :key="index" @click="clickItem(index)">
 			<view class="left-name">{{item}}</view>
-			<view v-if="index==1" style="padding-right:20rpx;">12</view>
+			<view v-if="index==1" style="padding-right:20rpx;">{{info.bindDoctorCount||0}}</view>
 			<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
 			<!-- <view class="line" ></view> -->
 		</view>
@@ -93,7 +93,7 @@
 				app.tip("退出成功");
 				setTimeout(()=>{
 					uni.reLaunch({
-						url:"/pages/sales/register"
+						url:"/pages/sales/register?isSales=1"
 					})
 				},1000)
 			},

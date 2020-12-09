@@ -381,7 +381,7 @@
 				app.sale_saveAuthentication(data).then(res => {
 					app.loaded();
 					uni.reLaunch({
-						url: "/pages/sales/authentication/result",
+						url: "/pages/sales/authentication/result?isSales=1",
 					})
 				})
 			},
