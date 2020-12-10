@@ -129,7 +129,7 @@
 			.left-name{
 				height: 106rpx;flex:1;
 				line-height: 106rpx;
-				font-size: 15px;
+				font-size: 32rpx;
 				color: #333333;
 				padding-left: 60rpx;
 			}
