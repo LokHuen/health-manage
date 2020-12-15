@@ -486,7 +486,7 @@
 									yAxis: '1'
 								}],
 								[{
-									yAxis: '1',
+									yAxis: '2',
 									itemStyle: {
 										color: '#ffd687'
 									}
@@ -494,7 +494,7 @@
 									yAxis: '3'
 								}],
 								[{
-									yAxis: '3',
+									yAxis: '4',
 									itemStyle: {
 										color: '#ffc000'
 									}
