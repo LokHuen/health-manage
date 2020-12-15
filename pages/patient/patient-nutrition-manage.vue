@@ -251,25 +251,25 @@
 				this.$refs.popupEnergy.close();
 			},
 			judgeUserAuth(){
-				// app.judgeUserAuth({}).then(res =>{
-				// 	if(res.status ==1){
-				// 		if(res.data.userType == 2){
-				// 			//如果是医生，就跳过去医生的营养管理页面
-				// 			uni.redirectTo({
-				// 				url:'../doctor/doctor-nutrition-manage'
-				// 			});
-				// 		}else{
-				// 			if(res.data.perfect==true){
+				app.judgeUserAuth({}).then(res =>{
+					if(res.status ==1){
+						if(res.data.userType == 2){
+							//如果是医生，就跳过去医生的营养管理页面
+							uni.redirectTo({
+								url:'../doctor/doctor-nutrition-manage'
+							});
+						}else{
+							if(res.data.perfect==true){
 								this.getUserData();
-				// 			}else{
-				// 				uni.redirectTo({
-				// 					url:'patient-improve-msg?type=2'
-				// 				});
-				// 			}
+							}else{
+								uni.redirectTo({
+									url:'patient-improve-msg?type=2'
+								});
+							}
 							
-				// 		}
-				// 	}
-				// });
+						}
+					}
+				});
 			},
 			getUserData(){
 				this.loadCount = 0;
