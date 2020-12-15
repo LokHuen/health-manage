@@ -84,15 +84,18 @@
 		</view>
 
 		<view class="record-chart-box" v-if="(hasLoadLindData==0)||(lineData.categories.length>0 &&hasLoadLindData ==1)">
-			<view class="record-chart-title">营养自测评分记录图</view>
-			<view class="record-chart-subtitle">分值越小，营养状况约好</view>
+			<view class="record-chart-title">PG-SGA营养状况评估</view>
+			<view class="record-chart-subtitle">分值越小，营养状况越好</view>
 
 			<!-- 折线Line纯数字-->
 			<!-- <view class="line-chart-box">
 				<line-chart class="line-chart" ref="lineData" canvasId="index_line_2" :dataAs="lineData" :splitNumber="splitNumber" />
 			</view> -->
 			<div id="echarts" class="echarts"></div>
-
+			<view style="font-size:24rpx;padding:0 0 30rpx 40rpx;text-align:left;">
+			<view ><text class="centerwh">0~1:无营养不良</text>2~3:可疑营养不良 </view>
+			<view ><text class="centerwh">4~8:中度营养不良</text>>9:高度营养不良</view>
+			</view>
 		</view>
 
 		<view class="last-one" v-if="latelyData.result">最近一次评价</view>
@@ -1051,4 +1054,5 @@
 		width: 85vw;
 		height: 85vw;
 	}
+	.centerwh{width:250rpx;display:inline-block;}
 </style>
