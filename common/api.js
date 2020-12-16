@@ -47,6 +47,7 @@ var api = {
 	savePatientInfo:(data)=>{return rq("/wx/patient/savePatient",data,"POST");},
 	//账户首页的金额
 	doctorAccountInfo:(data)=>{return rq("/wx/doctor/accountInfo",data,"GET");},
+	doctor_settleInfo:(data)=>{return rq("/wx/doctor/settleInfo",data,"GET");}, //账户已结算的金额
 	//营养主页——医生头部信息
 	doctorInfo:(data)=>{return rq("/wx/doctor/doctorInfo",data,"GET");},
 	//待转账到银行卡
@@ -97,6 +98,7 @@ var api = {
 	sale_doctorGetDivide:(data)=>{return rq("/wx/salesman/getDividePage",data,"GET");},
 	//转账记录详情
 	sale_divideRecord:(data)=>{return rq("/wx/salesman/getDivideRecord",data,"GET");},
+	sale_settleInfo:(data)=>{return rq("/wx/salesman/settleInfo",data,"GET");}, //账户已结算页的金额
 }
 
 export {api};

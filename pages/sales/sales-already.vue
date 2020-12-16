@@ -1,23 +1,23 @@
 <template>
-	<!-- 医生账户列表 -->
+	<!-- 账户列表 -->
 	<view class="container">
 		<view class="not-received-item" @click="select(0)">
 			<view class="money-box">
-				<view class="money">{{data.waitIncome?data.waitIncome:'0'}}</view>
+				<view class="money">{{data.online?data.online:'0'}}</view>
 				<view class="yuan">元</view>
 			</view>
-			<view class="tips">待结算金额</view>
+			<view class="tips">累计转账到银行卡的金额</view>
 			<view class="detail"></view>
 		</view>
 		<view class="line"> </view>
 		
 		<view class="received-item" @click="select(1)">
 			<view class="received-money-box">
-				<view class="received-money">{{data.realIncome?data.realIncome :'0'}}</view>
+				<view class="received-money">{{data.offline?data.offline :'0'}}</view>
 				<view class="received-yuan">元</view>
 			</view>
 			
-			<view class="received-detail">已结算金额</view>
+			<view class="received-detail">线下结算累计金额</view>
 		</view>
 		<view class="line"> </view>
 		
@@ -34,7 +34,7 @@
 		},
 		methods:{
 			doctorAccountInfo(){
-				app.doctorAccountInfo({}).then(res =>{
+				app.sale_settleInfo({}).then(res =>{
 					if(res.status == 1){
 						this.data = res.data;
 					}
@@ -43,12 +43,11 @@
 			select(index){
 				if(index==0){
 					uni.navigateTo({
-						url:'transferred-bankcard?money='+(this.data.waitIncome||0)
+						url:'already-transferred-bankcard?money='+(this.data.offline||0)
 					});
 				}else{
 					uni.navigateTo({
-						// url:'already-transferred-bankcard?money='+(this.data.realIncome||0)
-						url:'doctor-already?money='+(this.data.realIncome||0)
+						url:'offline-already?money='+(this.data.online||0)
 					});
 				}
 			}
@@ -78,7 +77,7 @@
 				}
 			}
 			.tips{
-				color: #52A29E;
+				color: #4B8BE8;
 				font-size: 15px;
 				margin-top: 25rpx;
 			}

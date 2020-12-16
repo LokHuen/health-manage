@@ -1,7 +1,7 @@
 <template>
 	<!-- 账单详情 -->
 	<view class="container">
-		<view class="info">
+		<!-- <view class="info">
 			<image :src="data.portrait" mode="widthFix" class="avtor"></image>
 			<view class="info-box">
 				<view class="list-name-box">
@@ -10,11 +10,15 @@
 				</view>
 				<view class="list-detail time">{{data.createTime}}</view>
 			</view>
-			<!-- <view class="list-money">{{'¥'+data.money}}</view> -->
-		</view>
+			<view class="list-money">{{'¥'+data.money}}</view>
+		</view> -->
 		<view class="line"></view>
 		<view class="list-item">
-			<view class="item-name">我的收益</view>
+			<view class="item-name">收益来源</view>
+			<view class="item-detail">{{data.name}}</view>
+		</view>
+		<view class="list-item">
+			<view class="item-name">收益金额</view>
 			<view class="item-detail">{{data.money+'元'}}</view>
 		</view>
 		

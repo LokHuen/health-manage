@@ -1,7 +1,7 @@
 <template>
 	<!-- 医生账单详情 -->
 	<view class="container">
-		<view class="info">
+		<!-- <view class="info">
 			<image :src="data.portrait" mode="widthFix" class="avtor"></image>
 			<view class="info-box">
 				<view class="list-name-box">
@@ -11,10 +11,14 @@
 				<view class="list-detail">{{'购买'+data.commodity}}</view>
 			</view>
 			<view class="list-money">{{'¥'+data.money}}</view>
-		</view>
+		</view> -->
 		<view class="line"></view>
 		<view class="list-item">
-			<view class="item-name">我的收益</view>
+			<view class="item-name">收益来源</view>
+			<view class="item-detail">{{data.name}}</view>
+		</view>
+		<view class="list-item">
+			<view class="item-name">收益金额</view>
 			<view class="item-detail">{{data.money+'元'}}</view>
 		</view>
 		
@@ -96,8 +100,6 @@
 					.time{
 						font-size: 12px;
 						color: #999999;
-						margin-left: 15rpx;
-						margin-top: 8rpx;
 					}
 				}
 		

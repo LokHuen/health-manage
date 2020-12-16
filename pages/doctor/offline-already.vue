@@ -35,13 +35,13 @@
 		},
 		methods: {
 			select(item) {
-				uni.navigateTo({
-					url: 'sales-bill-detail?id=' + item.id
-				});
+				// uni.navigateTo({
+				// 	url: 'sales-bill-detail?id=' + item.id
+				// });
 			},
 			getListData() {
-				app.sale_doctorGetDivide({
-					pageNo: this.pageNo,type:1,
+				app.doctorGetDivide({
+					pageNo: this.pageNo,type:2,
 				}).then(res => {
 					if (res.status === 1) {
 						if (this.pageNo === 1) {
