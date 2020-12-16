@@ -94,7 +94,7 @@
 			<div id="echarts" class="echarts"></div>
 			<view style="font-size:24rpx;padding:0 0 30rpx 40rpx;text-align:left;">
 			<view ><text class="centerwh">0~1:无营养不良</text>2~3:可疑营养不良 </view>
-			<view ><text class="centerwh">4~8:中度营养不良</text>>9:高度营养不良</view>
+			<view ><text class="centerwh">4~8:中度营养不良</text>>=9:重度营养不良</view>
 			</view>
 		</view>
 
