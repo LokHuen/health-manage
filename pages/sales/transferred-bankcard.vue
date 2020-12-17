@@ -1,7 +1,7 @@
 <template>
-	<!-- 待转账到银行卡 -->
+	<!-- 待结算 -->
 	<view class="container">
-		<view class="not-received-item">
+		<!-- <view class="not-received-item">
 			<view class="money-box">
 				<view class="money">{{money}}</view>
 				<view class="yuan">元</view>
@@ -10,14 +10,22 @@
 			<view class="detail">收益会在第二天转入您的银行卡</view>
 		</view>
 		<view class="line"> </view>
-		<view class="list-tips">收益待转账的订单</view>
-		<view class="list-item" v-for="(item,index) in list" :key="index" @click="select(item)">
-			<image :src="item.portrait" mode="widthFix" class="avtor"></image>
+		<view class="list-tips">收益待转账的订单</view> -->
+		<!-- <view class="list-item" v-for="(item,index) in list" :key="index" @click="select(item)">
 			<view class="info-box">
-				<view class="list-name">来自{{item.name}}的订单</view>
+				<view class="list-name">来自于{{item.name}}</view>
 				<view class="list-detail">{{item.createTime}}</view>
 			</view>
 			<view class="list-money">{{'¥'+item.money}}</view>
+		</view> -->
+		<view class="health-list">
+			<view class="health-list-content">
+				<view class="health-item" v-for="(item,index) in list" @click="select(item)">
+					<view class="item-amount">￥{{item.money}}</view>
+					<view class="item-time">{{item.createTime}}&nbsp;&nbsp;&nbsp;&nbsp;{{'来自于'+item.name}}</view>
+				</view>
+			</view>
+		
 		</view>
 		<view class="no-data-tips" v-if="list.length == 0">暂无数据</view>
 
@@ -164,7 +172,36 @@
 			right: 0;
 			top: 40rpx;
 		}
-
-
+	}
+	.health-list {
+		background-color: white;
+		margin-top: 20rpx;
+	
+		.health-list-content {
+			margin: 20rpx 58rpx 0;
+	
+			.health-list-title {
+				padding-top: 39rpx;
+				padding-bottom: 30rpx;
+				color: #666666;
+				font-size: 30rpx;
+			}
+	
+			.health-item {
+				height: 126rpx;
+				border-bottom: 0.01rem #EEEEEE solid;
+	
+				.item-amount {
+					padding-top: 25rpx;
+					color: #333333;
+					font-size: 34rpx;
+				}
+	
+				.item-time {
+					color: #999999;
+					font-size: 24rpx;
+				}
+			}
+		}
 	}
 </style>

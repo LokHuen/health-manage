@@ -37,7 +37,19 @@
 				"navigationBarTitleText": "绑定的用户"
 			}
 		},
-		{			"path": "pages/sales/sales-business-card",			"style": {				"navigationBarTitleText": "名片码"			}		},{			"path": "pages/sales/sales-account-list",			"style": {				"navigationBarTitleText": "账户"			}		},{			"path": "pages/sales/already-transferred-bankcard",			"style": {				"navigationBarTitleText": "已转账到银行卡"			},			"enablePullDownRefresh": true		},		{			"path": "pages/sales/transferred-bankcard",			"style": {				"navigationBarTitleText": "待转账到银行卡"			},			"enablePullDownRefresh": true		},
+		{			"path": "pages/sales/sales-business-card",			"style": {				"navigationBarTitleText": "名片码"			}		},{			"path": "pages/sales/sales-account-list",			"style": {				"navigationBarTitleText": "账户"			}		},{			"path": "pages/sales/already-transferred-bankcard",			"style": {				"navigationBarTitleText": "已转账到银行卡"			},			"enablePullDownRefresh": true		},		{			"path": "pages/sales/transferred-bankcard",			"style": {				"navigationBarTitleText": "待结算订单列表"			},			"enablePullDownRefresh": true		},
+		{
+			"path": "pages/sales/sales-already",
+			"style": {
+				"navigationBarTitleText": "已结算金额"
+			}
+		},
+		{
+			"path": "pages/sales/offline-already",
+			"style": {
+				"navigationBarTitleText": "线下结算记录"
+			}
+		},
 		{
 			"path": "pages/sales/sales-bill-detail",
 			"style": {
@@ -202,10 +214,11 @@
 		{
 			"path": "pages/doctor/transferred-bankcard",
 			"style": {
-				"navigationBarTitleText": "待转账到银行卡"
+				"navigationBarTitleText": "待结算订单列表"
 			},
 			"enablePullDownRefresh": true
 		},
+		{			"path": "pages/doctor/doctor-already",			"style": {				"navigationBarTitleText": "已结算金额"			}		},		{			"path": "pages/doctor/offline-already",			"style": {				"navigationBarTitleText": "线下结算记录"			}		},
 		
 		{
 			"path": "pages/doctor/doctor-submit-result",

@@ -1,18 +1,18 @@
 <template>
 	<!-- 已经转账到银行卡界面 -->
 	<view>
-		<view class="health-title">
+		<!-- <view class="health-title">
 			<view class="health-title-content">
 				<view class="health-title-amount">{{money+'元'}}</view>
 				<view class="health-title-detail">已转账金额</view>
 			</view>
-		</view>
+		</view> -->
 		<view class="health-list">
 			<view class="health-list-content">
-				<view class="health-list-title">转账记录</view>
+				<!-- <view class="health-list-title">转账记录</view> -->
 				<view class="health-item" v-for="(item,index) in listDatas" @click="select(item)">
-					<view class="item-amount">{{item.money}}</view>
-					<view class="item-time">{{item.createTime}}&nbsp;&nbsp;&nbsp;&nbsp;{{'来自'+item.name+'的购物订单'}}</view>
+					<view class="item-amount">￥{{item.money}}</view>
+					<view class="item-time">{{item.createTime}}&nbsp;&nbsp;&nbsp;&nbsp;{{'来自于'+item.name}}</view>
 				</view>
 			</view>
 
@@ -41,7 +41,7 @@
 			},
 			getListData() {
 				app.doctorGetDivide({
-					pageNo: this.pageNo
+					pageNo: this.pageNo,type:1,
 				}).then(res => {
 					if (res.status === 1) {
 						if (this.pageNo === 1) {

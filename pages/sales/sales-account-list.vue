@@ -1,13 +1,13 @@
 <template>
-	<!-- 医生账户列表 -->
+	<!-- 账户列表 -->
 	<view class="container">
 		<view class="not-received-item" @click="select(0)">
 			<view class="money-box">
 				<view class="money">{{data.waitIncome?data.waitIncome:'0'}}</view>
-				<view class="yuan">元</view>
+				<view class="yuan"> 元</view>
 			</view>
-			<view class="tips">待转账到银行卡</view>
-			<view class="detail">收益会在第二天转入您的银行卡</view>
+			<view class="tips">待结算金额</view>
+			<view class="detail"></view>
 		</view>
 		<view class="line"> </view>
 		
@@ -17,7 +17,7 @@
 				<view class="received-yuan">元</view>
 			</view>
 			
-			<view class="received-detail">已转账到银行卡</view>
+			<view class="received-detail">已结算金额</view>
 		</view>
 		<view class="line"> </view>
 		
@@ -47,7 +47,8 @@
 					});
 				}else{
 					uni.navigateTo({
-						url:'already-transferred-bankcard?money='+(this.data.realIncome||0)
+						// url:'already-transferred-bankcard?money='+(this.data.realIncome||0)
+						url:'sales-already?money='+(this.data.realIncome||0)
 					});
 				}
 			}
