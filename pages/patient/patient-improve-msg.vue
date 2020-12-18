@@ -25,6 +25,12 @@
 				<view :class="(city&&province&&hasArea)||infoData.region?'has-value':'sex-value'">{{(city&&province&&hasArea)?(province+' '+city):(infoData.region?infoData.region:'点击选择')}}</view>
 			</picker>
 		</view>
+		
+		<view class="name-box">
+			<view class="name-tips">* 联系电话</view>
+			<input class="name-input" type="number" value="" placeholder="请填写联系电话" v-model="phone" />
+		</view>
+		
 		<view class="name-box">
 			<view class="name-tips">* 所患疾病</view>
 			<input class="name-input" type="text" value="" placeholder="请填写疾病名称" v-model="illness" />
@@ -146,6 +152,7 @@
 			return {
 				maskClick:false,
 				patientName: '',
+				phone:"",
 				patientGender: 0,
 				birthday: '',
 				cityId: '',
@@ -189,6 +196,7 @@
 						if(res.data.patientName && res.data.cityId && res.data.provinceId){
 							this.infoData = res.data;
 							this.patientName = this.infoData.patientName;
+							this.phone = this.infoData.phone;
 							this.patientGender = this.infoData.patientGender == '男'?1:2;
 							this.cityId = this.infoData.cityId;
 							this.provinceId = this.infoData.provinceId;
@@ -278,7 +286,7 @@
 			submit() {
 				if (!this.patientName ||
 					this.patientGender == 0 || !this.birthday || !this.cityId || !this.provinceId || !this.illness ||
-					!this.weight || !this.height) {
+					!this.weight || !this.height || !this.phone) {
 					app.tip('请输入完整信息');
 					return;
 				}
@@ -320,6 +328,7 @@
 			submitRequest() {
 				app.savePatientInfo({
 					patientName: this.patientName,
+					phone:this.phone,
 					patientGender: this.patientGender,
 					birthday: this.birthday,
 					cityId: this.cityId,
