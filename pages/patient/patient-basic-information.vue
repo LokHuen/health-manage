@@ -23,6 +23,13 @@
 		
 		<view class="health-content">
 			<view class="health-item">
+				<view class="health-item-title">联系电话</view>
+				<view class="health-item-detail">{{infoData.phone}}</view>
+			</view>
+		</view>
+		
+		<view class="health-content">
+			<view class="health-item">
 				<view class="health-item-title">所患疾病</view>
 				<view class="health-item-detail">{{infoData.illness}}</view>
 			</view>
