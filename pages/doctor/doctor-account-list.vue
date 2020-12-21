@@ -1,13 +1,14 @@
 <template>
 	<!-- 医生账户列表 -->
 	<view class="container">
-		<view class="not-received-item" @click="select(0)">
+		<view class="not-received-item prelative" @click="select(0)">
 			<view class="money-box">
-				<view class="money">{{data.waitIncome?data.waitIncome:'0'}}</view>
+				<view class="money">{{eye?(data.waitIncome||0):star}}</view>
 				<view class="yuan">元</view>
 			</view>
 			<view class="tips">待结算金额</view>
 			<view class="detail"></view>
+			<image @click.stop="changeeye" class="eyeimg" mode="widthFix" :src="'../../static/eye'+(eye?1:2)+'.png'"></image>
 		</view>
 		<view class="line"> </view>
 		
@@ -29,7 +30,9 @@
 	export default {
 	 	data() {
 	 		return {
-	 			data:{}
+				eye:app.getCache("eye"),
+	 			data:{},
+				star:"*",
 			}
 		},
 		methods:{
@@ -37,6 +40,8 @@
 				app.doctorAccountInfo({}).then(res =>{
 					if(res.status == 1){
 						this.data = res.data;
+						this.data.waitIncome = this.data.waitIncome?(this.data.waitIncome+''):"0";
+						this.star = new Array((this.data.waitIncome.length||1)+1).join("*");
 					}
 				});
 			},
@@ -51,6 +56,11 @@
 						url:'doctor-already?money='+(this.data.realIncome||0)
 					});
 				}
+			},
+			changeeye(){
+				this.eye = !this.eye;
+				if(this.eye) app.setCache("eye",true);
+				else app.setCache("eye",false);
 			}
 		},
 		onLoad(){
@@ -60,6 +70,7 @@
 </script>
 
 <style lang="scss">
+	.eyeimg{position:absolute;right:50rpx;top:70rpx;width:50rpx;z-index:3;}
 	.container{
 		.not-received-item{
 			margin-left: 60rpx;

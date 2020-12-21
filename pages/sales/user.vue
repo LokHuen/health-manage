@@ -2,7 +2,7 @@
 	<view class="listbox">
 		<view class="pagebackground"></view>
 		<view >
-			<view class="flex userlist" v-for="(item,index) in list" :key="index">
+			<view class="flex userlist" v-for="(item,index) in list" :key="index" @click="showcode(item)">
 				<image :src="item.wx_portrait" mode="aspectFill" class="userhead"></image>
 				<view style="flex:1;">
 					<view class="username">{{item.doctor_name}}</view>
@@ -47,6 +47,12 @@
 					this.list = this.page==1?res.data:this.list.concat(res.data);
 					if(res.data.length>0) this.page++; 
 				});
+			},
+			showcode(item){
+				uni.previewImage({
+					current:0,
+					urls:[item.qrCode],
+				})
 			},
 		},
 		onReachBottom(){
