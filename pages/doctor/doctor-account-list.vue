@@ -18,7 +18,10 @@
 				<view class="received-yuan">元</view>
 			</view>
 			
-			<view class="received-detail">已结算金额</view>
+			<view class="received-detail">已结算金额
+				<view >当天转账的款项，在第二天（节假日顺延）入账银行账户</view>
+			</view>
+			
 		</view>
 		<view class="line"> </view>
 		
