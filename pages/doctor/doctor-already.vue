@@ -1,13 +1,14 @@
 <template>
 	<!-- 账户列表 -->
 	<view class="container">
-		<view class="not-received-item" @click="select(0)">
+		<view class="not-received-item prelative" @click="select(0)">
 			<view class="money-box">
 				<view class="money">{{eye?star:(data.online||0)}}</view>
 				<view class="yuan">元</view>
 			</view>
 			<view class="tips">累计转账到银行卡的金额</view>
 			<view class="detail"></view>
+			<image @click.stop="changeeye" class="eyeimg" mode="widthFix" :src="'../../static/eye'+(eye?2:1)+'.png'"></image>
 		</view>
 		<view class="line"> </view>
 		
@@ -54,6 +55,11 @@
 						url:'offline-already?money='+(this.data.online||0)
 					});
 				}
+			},
+			changeeye(){
+				this.eye = !this.eye;
+				if(this.eye) app.setCache("eye",true);
+				else app.setCache("eye",false);
 			}
 		},
 		onLoad(){
@@ -63,6 +69,7 @@
 </script>
 
 <style lang="scss">
+	.eyeimg{position:absolute;right:50rpx;top:70rpx;width:50rpx;z-index:3;}
 	.container{
 		.not-received-item{
 			margin-left: 60rpx;
