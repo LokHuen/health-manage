@@ -3,18 +3,18 @@
 	<view class="container">
 		<view class="not-received-item prelative" @click="select(0)">
 			<view class="money-box">
-				<view class="money">{{eye?(data.waitIncome||0):star}}</view>
+				<view class="money">{{eye?star:(data.waitIncome||0)}}</view>
 				<view class="yuan">元</view>
 			</view>
 			<view class="tips">待结算金额</view>
 			<view class="detail"></view>
-			<image @click.stop="changeeye" class="eyeimg" mode="widthFix" :src="'../../static/eye'+(eye?1:2)+'.png'"></image>
+			<image @click.stop="changeeye" class="eyeimg" mode="widthFix" :src="'../../static/eye'+(eye?2:1)+'.png'"></image>
 		</view>
 		<view class="line"> </view>
 		
 		<view class="received-item" @click="select(1)">
 			<view class="received-money-box">
-				<view class="received-money">{{data.realIncome?data.realIncome :'0'}}</view>
+				<view class="received-money">{{eye?star:(data.realIncome||0)}}</view>
 				<view class="received-yuan">元</view>
 			</view>
 			
