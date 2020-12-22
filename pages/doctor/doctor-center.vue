@@ -10,7 +10,7 @@
 				<view class="department">{{data.hospital+data.department}}</view>
 			</view>
 		</view>
-		<view class="item-list" v-for="(item,index) in list" :key="index" v-if="index!=1||(index==1&&data.showAccount==1)" @click="clickItem(index)">
+		<view class="item-list" v-for="(item,index) in list" :key="index" v-if="index==0||(index!=0&&data.showAccount==1)" @click="clickItem(index)">
 			<view class="left-name">{{item}}</view>
 			<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
 			<view class="line" ></view>
