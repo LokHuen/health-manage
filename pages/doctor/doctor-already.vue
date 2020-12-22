@@ -7,7 +7,7 @@
 				<view class="yuan">元</view>
 			</view>
 			<view class="tips">累计转账到银行卡的金额</view>
-			<view class="detail"></view>
+			<view class="detail">当天转账的款项，在第二天（节假日顺延）入账银行账户</view>
 			<image @click.stop="changeeye" class="eyeimg" mode="widthFix" :src="'../../static/eye'+(eye?2:1)+'.png'"></image>
 		</view>
 		<view class="line"> </view>
