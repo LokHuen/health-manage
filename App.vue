@@ -19,7 +19,7 @@
 			let timeStamp = new Date()
 			let windowUrl = window.location.href;
 			
-			let passurl = ["/pages/sales/register"]; //路径白名单
+			let passurl = ["/pages/sales/register","/pages/sales"]; //路径白名单
 			for (var i = 0; i < passurl.length; i++) {
 				if(passurl[i]==window.location.pathname) return;
 			}

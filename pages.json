@@ -20,6 +20,12 @@
 			}
 		},
 		{
+			"path": "pages/sales",
+			"style": {
+				"navigationBarTitleText": "业务中心"
+			}
+		},
+		{
 			"path": "pages/sales/index",
 			"style": {
 				"navigationBarTitleText": "业务管理中心"
