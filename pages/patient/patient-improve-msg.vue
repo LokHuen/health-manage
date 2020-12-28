@@ -452,11 +452,13 @@
 			}
 
 			.name-input {
+				flex: 1;
 				margin-left: 30rpx;
 				color: #333333;
 				font-size: 15px;
 				height: 100rpx;
 				line-height: 100rpx;
+				//border: 2rpx solid #007AFF;
 			}
 
 			.right-tip {
