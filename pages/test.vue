@@ -25,6 +25,7 @@
 		methods: {
 			loginagain(){
 				localStorage.removeItem("uid");
+				localStorage.removeItem("salesToken");
 				let windowUrl;
 				windowUrl = window.location.href;
 				

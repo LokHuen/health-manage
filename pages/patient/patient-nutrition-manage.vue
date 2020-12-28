@@ -84,14 +84,18 @@
 		</view>
 
 		<view class="record-chart-box" v-if="(hasLoadLindData==0)||(lineData.categories.length>0 &&hasLoadLindData ==1)">
-			<view class="record-chart-title">营养自测评分记录图</view>
-			<view class="record-chart-subtitle">分值越小，营养状况约好</view>
+			<view class="record-chart-title">PG-SGA营养状况评估</view>
+			<view class="record-chart-subtitle">分值越小，营养状况越好</view>
 
 			<!-- 折线Line纯数字-->
-			<view class="line-chart-box">
+			<!-- <view class="line-chart-box">
 				<line-chart class="line-chart" ref="lineData" canvasId="index_line_2" :dataAs="lineData" :splitNumber="splitNumber" />
+			</view> -->
+			<div id="echarts" class="echarts"></div>
+			<view style="font-size:24rpx;padding:0 0 30rpx 40rpx;text-align:left;">
+			<view ><text class="centerwh">0~1:无营养不良</text>2~3:可疑营养不良 </view>
+			<view ><text class="centerwh">4~8:中度营养不良</text>>=9:重度营养不良</view>
 			</view>
-
 		</view>
 
 		<view class="last-one" v-if="latelyData.result">最近一次评价</view>
@@ -172,6 +176,7 @@
 <script>
 	const app = getApp();
 	import LineChart from '@/components/stan-ucharts/LineChart.vue';
+	import echarts from '../../plugins/echarts';
 	export default {
 		components: {
 			LineChart,
@@ -316,12 +321,128 @@
 								this.lineData.series[0].name=item.phase
 							})
 							console.log(this.lineData);
-							this.$refs['lineData'].showCharts();
+							this.$nextTick(()=>{
+								this.setlinebox();
+							})
+							// this.$refs['lineData'].showCharts();
 						}
 						this.hasLoadLindData = 1;
 					}
 
 				});
+			},
+			setlinebox() { //折线图
+				var myChart = echarts.init(document.getElementById('echarts'));
+				// 指定图表的配置项和数据
+				var option = {
+					tooltip: {
+						trigger: 'axis',
+					},
+					grid: {
+						left: '3%',
+						right: '3%',
+						bottom: '6%',
+						top: '5%',
+						containLabel: true,
+					},
+					xAxis: {
+						type: 'category',
+						axisLabel:{fontSize:10},
+						axisLine: {
+							show: false
+						},
+						axisTick: {
+							show: false,
+							alignWithLabel: true
+						},
+						data: this.lineData.categories,
+					},
+					yAxis: {
+						name:"",
+						axisLabel:{fontSize:10},
+						axisLine: {
+							show: false
+						},
+						min: 0,
+						axisTick: {
+							show: false
+						},
+						type: 'value',
+						splitLine: {
+							show: false
+						},
+						scale: true,
+			
+					},
+			
+					series: [{
+						name: '',
+						type: 'line',
+						symbolSize: 7,
+						label: {
+							normal: {
+								show: true,
+								distance: 0,
+								fontSize: 11,
+								color: "#333",
+								formatter: (opt) => { //设置拐点文字颜色
+									if (opt.value > 9) return '{a|' + opt.value + '}';
+								},
+								rich: {
+									a: {
+										color: 'red',
+									}
+								}
+							},
+			
+						},
+						lineStyle: {
+							color: "#59A29F", //设置线条颜色
+							width:1,
+						},
+						itemStyle: {
+							color: (opt) => { //设置拐点颜色
+								if (opt.value > 9) return "red";
+								else return "#59A29F";
+							},
+						},
+						symbol: "circle",
+						data: this.lineData.series[0].data,
+						markArea: { //标记区域
+							data: [
+								[{
+									yAxis: '0', //y轴坐标控制
+									itemStyle: {
+										color: '#a8cd97'
+									},
+								}, {
+									yAxis: '1'
+								}],
+								[{
+									yAxis: '2',
+									itemStyle: {
+										color: '#ffd687'
+									}
+								}, {
+									yAxis: '3'
+								}],
+								[{
+									yAxis: '4',
+									itemStyle: {
+										color: '#ffc000'
+									}
+								}, {
+									yAxis: '8'
+								}],
+								
+							]
+						},
+					}]
+				};
+			
+				// 使用刚指定的配置项和数据显示图表。
+				myChart.clear();
+				myChart.setOption(option);
 			},
 			toanswerlist(id){
 				uni.navigateTo({
@@ -466,7 +587,7 @@
 		.record-chart-box {
 			margin-top: 40rpx;
 			width: 650rpx;
-			height: 700rpx;
+			// height: 700rpx;
 			margin-left: 50rpx;
 			box-shadow: 1px 1px 5px #999999;
 			color: #333333;
@@ -749,4 +870,9 @@
 			}
 		}
 	}
+	.echarts {
+		width: 85vw;
+		height: 85vw;
+	}
+	.centerwh{width:250rpx;display:inline-block;}
 </style>

@@ -1,9 +1,9 @@
 <template>
 	
 	<view>
-		<view class="tips">
+		<view class="flex tips">
 			<image src="../../static/icon/remind_icon.png" mode="widthFix" class="remind"></image> 
-			<view class="remind-tips">根据肿瘤患者膳食营养处方专家共识说明， 建议您每周进行一次营养测评。</view>
+			<view class="remind-tips">根据肿瘤患者膳食营养处方专家共识说明， 建议您每周进行一次营养测评。<image src="../../static/icon/wenhaoIcon.png" class="question" mode="widthFix" @click="$refs.popup.open()"></image></view>
 		</view>
 		
 		<view class="nodata-tips-box" v-if="listDatas.length==0">
@@ -30,6 +30,15 @@
 			</view>
 		</view>
 		<view style="height: 100px;"></view>
+		<uni-popup ref="popup" type="bottom">
+			<view class="testbox" style="padding-top:30rpx;background:#fff;border-radius:20rpx 20rpx 0 0;">
+			<view >建议测评周期</view>
+			<view >重度营养不良：1次/1周</view>
+			<view >中度营养不良：1次/1-2周</view>
+			<view >可疑或轻度营养不良： 1次/2周-4周</view>
+			<view >无营养不良： 1次/4周-12周</view>
+			</view>
+		</uni-popup>
 	</view>
 </template>
 
@@ -93,10 +102,12 @@
 
 
 <style lang="scss">	
+	.testbox{padding:40rpx 40rpx;}
+	.question{width:30rpx;}
     .tips{
 		margin-left: 50rpx;
 		margin-right: 50rpx;
-		display: flex;
+		display: flex;align-items:unset;
 		padding-top: 35rpx;
 		.remind{
 			width: 35rpx;
@@ -104,7 +115,7 @@
 			margin-top: 10rpx;
 		}
 		.remind-tips{
-			margin-left: 10rpx;
+			margin-left: 10rpx;flex:1;
 			color: #333333;
 			font-size: 15px;
 			line-height: 50rpx;

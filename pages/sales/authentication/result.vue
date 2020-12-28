@@ -27,7 +27,7 @@
 		methods: {
 			tomine(){
 				uni.reLaunch({
-					url:"/pages/sales/index"
+					url:"/pages/sales/index?isSales=1"
 				})
 			},
 		}

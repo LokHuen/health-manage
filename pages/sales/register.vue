@@ -54,7 +54,7 @@
 					app.loaded();
 					app.setCache("salesToken",res.data.salesToken);
 					uni.reLaunch({
-						url: "/pages/sales/index",
+						url: "/pages/sales/index?isSales=1",
 					})
 				}).catch((res)=>{
 					app.tip(res);

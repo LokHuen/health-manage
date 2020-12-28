@@ -77,7 +77,7 @@
 				}
 			}
 			.tips{
-				color: #52A29E;
+				color: #4B8BE8;
 				font-size: 15px;
 				margin-top: 25rpx;
 			}

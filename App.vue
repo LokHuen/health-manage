@@ -19,6 +19,11 @@
 			let timeStamp = new Date()
 			let windowUrl = window.location.href;
 			
+			let passurl = ["/pages/sales/register"]; //路径白名单
+			for (var i = 0; i < passurl.length; i++) {
+				if(passurl[i]==window.location.pathname) return;
+			}
+			
 			if(option.query.isSales||this.globalData.isSales){ //判断业务员
 				this.globalData.isSales = true;
 				if(!this.getCache("salesToken")) 

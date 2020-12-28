@@ -59,7 +59,8 @@
 				code:'',
 				bindSale:1,  //	绑定销售id
 				isSend: false,   // 是否发送验证码
-				codetext:'获取验证码'
+				codetext:'获取验证码',
+				commiting:false,
 			}
 		},
 		onLoad(props) {
@@ -88,6 +89,9 @@
 					   app.tip('请输入完整信息');
 					   return;
 				   }
+				   if(this.commiting) return;
+				   this.commiting = true;
+				   app.loading("保存中");
 				   app.saveDoctorInfo({
 					   doctorName:this.name,
 					   technicalTitle:this.position,
@@ -96,12 +100,13 @@
 					   mobile:this.mobile,
 					   verifyCode:this.code,
 					   bindSale:this.bindSale}).then(res =>{
+						   app.loaded();this.commiting = false;
 					   if(res.status==1){
 						   uni.navigateTo({
 						   	url:'doctor-submit-result'
 						   });
 					   }
-				   });
+				   }).catch(res=>{app.loaded();this.commiting = false;});
 			},
 			getCode(){
 				if (this.isSend) return;

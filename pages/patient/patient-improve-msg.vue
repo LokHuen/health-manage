@@ -440,7 +440,7 @@
 			display: flex;
 			margin-left: 43rpx;
 			margin-right: 43rpx;
-			height: 100rpx;
+			// height: 100rpx;
 			border-bottom: 2rpx solid #EEEEEE;
 			position: relative;
 
@@ -449,6 +449,7 @@
 				font-size: 15px;
 				height: 100rpx;
 				line-height: 100rpx;
+				min-width: 130rpx;
 			}
 
 			.name-input {
@@ -458,7 +459,6 @@
 				font-size: 15px;
 				height: 100rpx;
 				line-height: 100rpx;
-				//border: 2rpx solid #007AFF;
 			}
 
 			.right-tip {
@@ -482,6 +482,7 @@
 				font-size: 15px;
 				height: 100rpx;
 				line-height: 100rpx;
+				min-width: 130rpx;
 			}
 
 			.sex-value {

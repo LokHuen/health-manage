@@ -44,7 +44,7 @@
 			},
 			toindex(){
 				uni.reLaunch({
-					url:"/pages/sales/authentication/index"
+					url:"/pages/sales/authentication/index?isSales=1"
 				})
 			},
 		}
