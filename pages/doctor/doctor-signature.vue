@@ -26,9 +26,10 @@
 				});
 			}
 		},
-		onShow() {
-			
+		onLoad(props) {
+			this.name = props.name;
 		},
+	
 
 	}
 </script>

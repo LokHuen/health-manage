@@ -29,7 +29,7 @@
 				data:{}
 			}
 		},
-		onLoad(){
+		onShow(){
 			this.getData();
 		},
 		methods: {
@@ -46,7 +46,7 @@
 					this.judgeDoctorAuthenticationStatus();
 				}else{
 				    uni.navigateTo({
-				    	url:'doctor-signature'
+				    	url:'doctor-signature?name='+this.data.doctorName
 				    });
 				}
 			},
