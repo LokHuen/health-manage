@@ -168,7 +168,7 @@
 			  line-height: 88rpx;
 			  width: 600rpx;
 			  font-size: 38rpx;
-			  background-color: #FCA62B;
+			  background-color: #52A29E;
 			  color: #FFFFFF;
 			  text-align: center;
 			  margin-left: 74rpx;

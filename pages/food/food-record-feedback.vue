@@ -89,7 +89,7 @@
 			color: #272727;
 		}
 		.button{
-			background: #FCA62B;
+			background: #52A29E;
 			border-radius: 10rpx;
             height: 88rpx;line-height: 88rpx;
 			margin-left: 74rpx;margin-right: 74rpx; margin-top: 150rpx;

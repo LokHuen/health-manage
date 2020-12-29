@@ -285,7 +285,7 @@
 					display: flex;
 
 					.list-detail-number {
-						color: #FCA62B;
+						color: #52A29E;
 					}
 
 					.list-detail-tip {
@@ -307,7 +307,7 @@
 				margin-left: 74rpx;
 				margin-right: 74rpx;
 				height: 88rpx;
-				background: #FCA62B;
+				background: #52A29E;
 				border-radius: 10rpx;
 				line-height: 88rpx;
 				font-size: 38rpx;

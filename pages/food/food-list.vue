@@ -333,7 +333,7 @@
 					display: flex;
 
 					.list-detail-number {
-						color: #FCA62B;
+						color: #52A29E;
 					}
 
 					.list-detail-tip {
