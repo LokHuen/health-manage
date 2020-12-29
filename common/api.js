@@ -78,6 +78,7 @@ var api = {
 	doctorShowInfo:(data)=>{return rq("/wx/doctor/showInfo",data,"GET");},
 	//关闭演示数据
 	closeShowData:(data)=>{return rq("/wx/doctor/closeShowData",data,"POST");},
+	statTemplate:(data)=>{return rq("/wx/diet/record/statTemplate",data,"GET");}, //7天30天摄入和运动能量图表
 	
 	
 	//业务员
