@@ -21,9 +21,19 @@
 		},
 		methods: {
 			save(){
-				uni.navigateBack({
-					
+				if(!this.name){
+					app.tip('请输入医生名字')
+					return;
+				}
+				app.updateDoctorName({doctorName:this.name}).then(res =>{
+					if(res.status ==1){
+						uni.navigateBack({
+							
+						});
+					}
 				});
+				
+				
 			}
 		},
 		onLoad(props) {

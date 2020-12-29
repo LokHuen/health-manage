@@ -114,7 +114,8 @@ var api = {
 	sportType:(data)=>{return rq("/wx/exercise/type/list",data,"GET");},
 	//运动列表
 	sportList:(data)=>{return rq("/wx/exercise/list",data,"GET");},
-	
+	//修改医嘱签名 
+	updateDoctorName:(data)=>{return rq("/wx/doctor/updateInfo",data,"POST");},
 }
 
 export {api};
