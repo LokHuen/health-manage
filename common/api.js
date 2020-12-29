@@ -99,6 +99,21 @@ var api = {
 	//转账记录详情
 	sale_divideRecord:(data)=>{return rq("/wx/salesman/getDivideRecord",data,"GET");},
 	sale_settleInfo:(data)=>{return rq("/wx/salesman/settleInfo",data,"GET");}, //账户已结算页的金额
+	
+	//添加运动
+	saveSport:(data)=>{return rq("/wx/exercise/record/save",data,"POST");},
+	//获取饮食 时间段list
+	dietTimeType:(data)=>{return rq("/wx/diet/record/dietTimeType",data,"GET");},
+	//食物分类 列表
+	foodTypeList:(data)=>{return rq("/wx/food/type/list",data,"GET");},
+	//食物 列表（不分页）
+	foodList:(data)=>{return rq("/wx/food/list",data,"GET");},
+	//保存食物记录
+	saveFood:(data)=>{return rq("/wx/diet/record/save",data,"POST");},
+	//运动分类list
+	sportType:(data)=>{return rq("/wx/exercise/type/list",data,"GET");},
+	//运动列表
+	sportList:(data)=>{return rq("/wx/exercise/list",data,"GET");},
 }
 
 export {api};

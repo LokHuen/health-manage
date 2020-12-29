@@ -1,6 +1,72 @@
 {
 	"pages": [
 		{
+		
+			"path": "pages/food/food-list",
+		
+			"style": {
+		
+				"navigationBarTitleText": "添加食物"
+		
+			}
+		
+		},
+		{
+		
+			"path": "pages/food/record-food",
+		
+			"style": {
+		
+				"navigationBarTitleText": "记录饮食"
+		
+			}
+		
+		},
+		{
+		
+			"path": "pages/food/food-record-feedback",
+		
+			"style": {
+		
+				"navigationBarTitleText": "饮食记录反馈"
+		
+			}
+		
+		},
+		{
+		
+			"path": "pages/sport/sport-list",
+		
+			"style": {
+		
+				"navigationBarTitleText": "添加运动"
+		
+			}
+		
+		},
+		{
+		
+			"path": "pages/sport/record-sport",
+		
+			"style": {
+		
+				"navigationBarTitleText": "记录运动"
+		
+			}
+		
+		},
+		{
+		
+			"path": "pages/sport/sport-record-feedback",
+		
+			"style": {
+		
+				"navigationBarTitleText": "运动记录反馈"
+		
+			}
+		
+		},
+		{
 			"path": "pages/patient/patient-nutrition-manage",
 			"style": {
 				"navigationBarTitleText": "营养管理"
@@ -13,6 +79,7 @@
 			},
 			"enablePullDownRefresh": true
 		},
+		
 		{
 			"path": "pages/doctor/doctor-center",
 			"style": {
