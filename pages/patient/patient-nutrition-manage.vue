@@ -82,6 +82,55 @@
 				</view>
 			</view>
 		</view>
+		
+		<view class="flex choosedaybox">
+			<view v-for="(item,index) in daytab" :key="index" :class="dayindex==index?'daylist on':'daylist'" @click="clickday(index)" style="">{{item}}</view>
+		</view>
+		<view v-if="dayindex==0">
+			<view class="health-msg-box other prelative" style="">
+					<view class="blockbox">
+						<view class="blockbigbox flex">
+							{{echartsdata.needEnergy}}
+							<view class="smfont pabs20">总能量已摄入</view>
+							<view class="smfont pabs0">0</view>
+							<view class="smfont pabs10">{{echartsdata.dailyEnergy}}</view>
+							<view v-for="(item,index) in 25" :key="index" :class="'greenline position'+(index+1)+' '+(index<greenindex?'green':'')"></view>
+						</view>
+						<view>单位：千卡</view>
+					</view>			
+			</view>
+			<view class="health-msg-box other prelative" style="">
+				<div id="threeecharts" class="echarts"></div>
+				<view class="flex blocklistbox">
+					<view class="blockgreen"></view>
+					空腹血糖正常区间
+					<view class="blockblue"></view>
+					餐后2小时正常区间
+				</view>
+			</view>
+		</view>
+		<view v-if="dayindex!=0">
+			<block>
+			<view class="health-msg-box other prelative" style="margin-bottom:80rpx;">
+				<view >摄入：</view>
+				<div id="line71echarts" class="echarts"></div>
+				<view class="flex blocklistbox">
+					<view class="blockgreen"></view>
+					空腹血糖正常区间
+					<view class="blockblue"></view>
+					餐后2小时正常区间
+				</view>
+				<view >运动消耗：</view>
+				<div id="line72echarts" class="echarts"></div>
+			</view>
+			</block>
+			<block >
+				<view class="nodatabox">
+					<image src="../../static/patient/nodata.png" mode="widthFix" class="nodata"></image>
+					<view>暂时没有数据</view>
+				</view>
+			</block>
+		</view>
 
 		<view class="record-chart-box" v-if="(hasLoadLindData==0)||(lineData.categories.length>0 &&hasLoadLindData ==1)">
 			<view class="record-chart-title">PG-SGA营养状况评估</view>
@@ -201,9 +250,394 @@
 				showDetail: true,
 				hasLoadLindData: 0,
 				splitNumber: 5,
+				echartsdata:{},
+				daytab: ["今日","近7天", "近30天"],
+				dayindex: 0,
+				greenindex:20,
 			}
 		},
 		methods: {
+			clickday(index) {
+				this.dayindex = index;
+				switch (index) {
+					case 0:
+						// this.getxuetangdata(() => {
+							this.$nextTick(() => {
+								this.settiaoxingbox();
+							})
+						// })
+						// this.getdietstatTemplate();
+						break;
+					case 1:
+						// this.gettwolinedata(() => {
+							this.$nextTick(() => {
+								this.settwolinebox();
+								this.settwolinebox1();
+							})
+						// })
+						break;
+					case 2:
+						// this.gettwolinedata(() => {
+							this.$nextTick(() => {
+								this.settwolinebox();
+								this.settwolinebox1();
+							})
+						// })
+						break;
+				}
+			},
+			gettwolinedata(cal){ //近7天数据
+				app.statTemplate({}).then(res => {
+					res.data.reverse();
+					this.uricacid = res.data;
+					cal();
+				});
+			},
+			settwolinebox() { //近7天图1
+				// let list = this.blooddata.resultList0;
+				// let xdata=[],linedata=[];
+				// if(list.length==0) return;
+				// for (var i = 0; i < list.length; i++) {
+				// 	let date = list[i].bgdate.split("-");
+				// 	xdata.push(date[1] + "/" + date[2]);
+				// 	linedata.push(list[i].bloodGlucose);
+				// }
+				// this.nowblood = list[list.length-1].bloodGlucose;
+				// let mindata = Math.min(...linedata);
+				// let maxdata = Math.max(...linedata);
+				var myChart = echarts.init(document.getElementById('line71echarts'));
+				// 指定图表的配置项和数据
+				var option = {
+					tooltip: {
+						trigger: 'axis',
+					},
+					grid: {
+						left: '-5%',
+						right: '3%',
+						bottom: '4%',
+						top: '10%',
+						containLabel: true,
+					},
+					xAxis: {
+						type: 'category',
+						axisLabel: {
+							fontSize: 10
+						},
+						axisLine: {
+							show: false
+						},
+						axisTick: {
+							show: false,
+							alignWithLabel: true
+						},
+						data: ["12/1","12/2"]//xdata
+					},
+					yAxis: {
+						show:false,
+						name: "",
+						axisLabel: {
+							fontSize: 10,
+							formatter: function(v){
+							    return  tranNumber(v);
+							}
+						},
+						axisLine: {
+							show: false
+						},
+						// min: mindata>3.5?3.5:mindata,
+						// max: maxdata>11?maxdata:11,
+						axisTick: {
+							show: false
+						},
+						type: 'value',
+						splitLine: {
+							show: false
+						},
+						scale: true,
+			
+					},
+					series: [{
+						name: '血糖',
+						type: 'line',
+						symbolSize: 7,
+						label: {
+							normal: {
+								show: true,
+								distance: 0,
+								fontSize: 11,
+								color: "#333",
+								formatter: (opt) => { //设置拐点文字颜色
+									if (opt.value > 11.1||opt.value<3.9) return '{a|' + opt.value + '}';
+								},
+								rich: {
+									a: {
+										color: 'red',
+									}
+								}
+							},
+			
+						},
+						lineStyle: {
+							color: "#979797", //设置线条颜色
+							width: 1,
+						},
+						itemStyle: {
+							color: (opt) => { //设置拐点颜色
+								if (opt.value > 11.1||opt.value<3.9) return "red";
+								else return "#008FD9";
+							},
+						},
+						symbol: "circle",
+						data: [12,20],//linedata,
+						markArea: { //标记区域
+							data: [
+								[{
+									yAxis: '3.9', //y轴坐标控制
+									itemStyle: {
+										color: '#DCF4E7'
+									},
+								}, {
+									yAxis: '6.1'
+								}],
+								[{
+									yAxis: '6.1',
+									itemStyle: {
+										color: '#DAF2FF'
+									}
+								}, {
+									yAxis: '11.1'
+								}]
+							]
+						},
+					}]
+				};
+			
+				// 使用刚指定的配置项和数据显示图表。
+				myChart.clear();
+				myChart.setOption(option);
+			},
+			settwolinebox1() { //近7天图2
+				// let list = this.blooddata.resultList0;
+				// let xdata=[],linedata=[];
+				// if(list.length==0) return;
+				// for (var i = 0; i < list.length; i++) {
+				// 	let date = list[i].bgdate.split("-");
+				// 	xdata.push(date[1] + "/" + date[2]);
+				// 	linedata.push(list[i].bloodGlucose);
+				// }
+				// this.nowblood = list[list.length-1].bloodGlucose;
+				// let mindata = Math.min(...linedata);
+				// let maxdata = Math.max(...linedata);
+				var myChart = echarts.init(document.getElementById('line72echarts'));
+				// 指定图表的配置项和数据
+				var option = {
+					tooltip: {
+						trigger: 'axis',
+					},
+					grid: {
+						left: '-5%',
+						right: '3%',
+						bottom: '4%',
+						top: '10%',
+						containLabel: true,
+					},
+					xAxis: {
+						type: 'category',
+						axisLabel: {
+							fontSize: 10
+						},
+						axisLine: {
+							show: false
+						},
+						axisTick: {
+							show: false,
+							alignWithLabel: true
+						},
+						data: ["12/1","12/2"]//xdata
+					},
+					yAxis: {
+						show:false,
+						name: "",
+						axisLabel: {
+							fontSize: 10,
+							formatter: function(v){
+							    return  tranNumber(v);
+							}
+						},
+						axisLine: {
+							show: false
+						},
+						// min: mindata>3.5?3.5:mindata,
+						// max: maxdata>11?maxdata:11,
+						axisTick: {
+							show: false
+						},
+						type: 'value',
+						splitLine: {
+							show: false
+						},
+						scale: true,
+			
+					},
+					series: [{
+						name: '血糖',
+						type: 'line',
+						symbolSize: 7,
+						label: {
+							normal: {
+								show: true,
+								distance: 0,
+								fontSize: 11,
+								color: "#333",
+								formatter: (opt) => { //设置拐点文字颜色
+									if (opt.value > 11.1||opt.value<3.9) return '{a|' + opt.value + '}';
+								},
+								rich: {
+									a: {
+										color: 'red',
+									}
+								}
+							},
+			
+						},
+						lineStyle: {
+							color: "#979797", //设置线条颜色
+							width: 1,
+						},
+						itemStyle: {
+							color: (opt) => { //设置拐点颜色
+								if (opt.value > 11.1||opt.value<3.9) return "red";
+								else return "#008FD9";
+							},
+						},
+						symbol: "circle",
+						data: [23,34],//linedata,
+						markArea: { //标记区域
+							data: [
+								[{
+									yAxis: '3.9', //y轴坐标控制
+									itemStyle: {
+										color: '#DCF4E7'
+									},
+								}, {
+									yAxis: '6.1'
+								}],
+								[{
+									yAxis: '6.1',
+									itemStyle: {
+										color: '#DAF2FF'
+									}
+								}, {
+									yAxis: '11.1'
+								}]
+							]
+						},
+					}]
+				};
+			
+				// 使用刚指定的配置项和数据显示图表。
+				myChart.clear();
+				myChart.setOption(option);
+			},
+			settiaoxingbox() { //柱状图
+				// let list = this.blooddata.resultList2;
+				// let xdata=[],linedata=[];
+				// if(list.length==0) return;
+				// let typetext=["",'凌晨', '空腹', '早餐后', '午餐前', '午餐后', '晚餐前', '晚餐后', '睡前', '随机'];
+				// for (var i = 0; i < list.length; i++) {
+				// 	let name = typetext[list[i].timeQuantum];
+				// 	xdata.push(name);
+				// 	linedata.push({name:name,value:list[i].avg});
+				// }
+				
+				var myChart = echarts.init(document.getElementById('threeecharts'));
+				var option = {
+				    color: ['#333333','#12C660'],
+				    tooltip: {
+				        trigger: 'axis',
+				    },
+				    grid: {
+						top:"10%",
+				        left: '0%',
+				        right: '0%',
+				        bottom: '5%',
+				        containLabel: true
+				    },
+				    xAxis: [
+				        {
+				            type: 'category',
+							axisLabel:{fontSize:10},
+				            data: ["蛋白质","脂肪","碳水化合物"],//xdata,
+				            axisTick: {
+								show: false,
+				                alignWithLabel: true
+				            }
+							
+				        }
+				    ],
+				    yAxis: [
+				        {
+							show:false,
+				            type: 'value',
+							axisLabel:{fontSize:10},
+							axisLine: {
+								show: false
+							},
+							axisTick: {
+								show: false
+							},
+							splitLine: {
+								show: false
+							},
+				        }
+				    ],
+				    series: [
+				        {
+				            name: '建议摄入值',
+				            type: 'bar',
+				            barWidth: '20%',
+				            data: [60,60,160],//linedata,
+							label: {
+								normal: {
+									show: true,
+									fontSize: 11,
+									color: "#333",
+									position: 'top',
+								},
+							
+							},
+				        },
+						{
+						    name: '留存值',
+						    type: 'bar',
+						    barWidth: '20%',
+						    data: [30,20,100],//linedata,
+							label: {
+								normal: {
+									show: true,
+									fontSize: 11,
+									color: "#333",
+									position: 'top',
+								},
+							
+							},
+						}
+				    ]
+				};
+				myChart.clear();
+				myChart.setOption(option);
+			},
+			getdietstatTemplate(cal){ //仪表盘
+				app.dietstatTemplate({}).then(res => {
+					this.echartsdata = res.data;
+					let gindex = parseFloat(this.echartsdata.needEnergy/this.echartsdata.dailyEnergy*25);
+					this.greenindex = 0;
+					let ghandler = setInterval(()=>{
+						if(this.greenindex<gindex) ++this.greenindex;
+						else clearInterval(ghandler);
+					},50)
+				});
+			},
 			beginTest() {
 				uni.navigateTo({
 					url: 'nutritional-self-test'
@@ -453,6 +887,7 @@
 		onShow() {
 			  if(app.getCache('uid')){
 				  this.judgeUserAuth();
+				  this.clickday(this.dayindex);
 			  } 
 		},
 
@@ -461,6 +896,86 @@
 </script>
 
 <style lang="scss">
+	.blocklistbox{
+		font-size:26rpx;color:#555;margin-bottom: 10px;justify-content: center;
+		.blockgreen{border-radius:4rpx;width:40rpx;height:20rpx;background:#DCF4E7;margin-right:12rpx;}
+		.blockblue{border-radius:4rpx;width:40rpx;height:20rpx;background:#DAF2FF;margin:0 12rpx 0 50rpx;}
+	}
+	.blockbox{
+		text-align:center;
+		padding:60rpx 0;
+		.blockbigbox{
+			width:240rpx;height:204rpx;position:relative;margin:0 auto 26rpx;justify-content:center;
+			.smfont{font-size:20rpx;color:#888;}
+			.pabs0{position:absolute;left:40rpx;bottom:0rpx;}
+			.pabs10{position:absolute;right:40rpx;bottom:0rpx;}
+			.pabs20{position:absolute;left:82rpx;bottom:50rpx;color:#aaa;}
+			.greenline{position:absolute;background:#eaeaea;width:26rpx;height:6rpx;
+				&.green{background:#9be352;}
+			}
+			//左下
+			.position1{transform: rotate(-32deg);left:12rpx;top:170rpx;}
+			.position2{transform: rotate(-28deg);left:6rpx;top:154rpx;}
+			.position3{transform: rotate(-20deg);left:0rpx;top:136rpx;}
+			.position4{transform: rotate(-10deg);left:-4rpx;top:118rpx;}
+			.position5{transform: rotate(-5deg);left:-4rpx;top:98rpx;}
+			
+			//右下
+			.position25{transform: rotate(28deg);right:10rpx;top:172rpx;}
+			.position24{transform: rotate(17deg);right:2rpx;top:156rpx;}
+			.position23{transform: rotate(9deg);right:-2rpx;top:136rpx;}
+			.position22{transform: rotate(-2deg);right:-2rpx;top:116rpx;}
+			.position21{transform: rotate(-10deg);right:0rpx;top:96rpx;}
+			
+			//中
+			.position13{transform: rotate(90deg);left:106rpx;top:4rpx;}
+			
+			//左中
+			.position6{transform: rotate(12deg);left:-2rpx;top:80rpx;}
+			.position7{transform: rotate(25deg);left:6rpx;top:60rpx;}
+			.position8{transform: rotate(37deg);left:20rpx;top:44rpx;}
+			.position9{transform: rotate(50deg);left:32rpx;top:30rpx;}
+			.position10{transform: rotate(56deg);left:48rpx;top:18rpx;}
+			.position11{transform: rotate(65deg);left:68rpx;top:10rpx;}
+			.position12{transform: rotate(78deg);left:88rpx;top:6rpx;}
+			
+			//右中
+			.position20{transform: rotate(-21deg);right:4rpx;top:78rpx;}
+			.position19{transform: rotate(-29deg);right:14rpx;top:60rpx;}
+			.position18{transform: rotate(-37deg);right:24rpx;top:46rpx;}
+			.position17{transform: rotate(-47deg);right:36rpx;top:32rpx;}
+			.position16{transform: rotate(-57deg);right:50rpx;top:22rpx;}
+			.position15{transform: rotate(-65deg);right:68rpx;top:13rpx;}
+			.position14{transform: rotate(-78deg);right:88rpx;top:6rpx;}
+		}
+	}
+	.nodatabox{
+		text-align:center;padding-bottom:80rpx;
+		image{margin:80rpx 0 60rpx;width:308rpx;}
+	}
+	.choosedaybox {
+		margin: 0 30rpx 50rpx;
+		border: 1rpx solid #ddd;
+		border-radius: 60rpx;
+		flex-wrap: unset;
+		font-size: 30rpx;
+	
+		.daylist {
+			width: 33.3%;
+			box-sizing: border-box;
+			line-height: 1;padding:24rpx 0;
+			text-align: center;
+			border-radius: 60rpx;
+			-webkit-box-flex: 1;
+			-webkit-flex: 1 0 auto;
+			flex: 1 0 auto;
+	
+			&.on {
+				color: #fff;
+				background: #FCA62B;
+			}
+		}
+	}
 	.container {
 
 		.info-box {
@@ -518,9 +1033,12 @@
 		}
 
 		.health-msg-box {
-			width: 650rpx;
-			margin-left: 50rpx;
+			margin: 0 30rpx 30rpx;
 			box-shadow: 1px 1px 5px #999999;
+			&.other {
+				padding: 30rpx;
+				box-sizing: border-box;
+			}
 
 			.health-list-box {
 				text-align: center;
@@ -535,13 +1053,13 @@
 
 					.top-title {
 						margin-top: 40rpx;
-						display: flex;
+						display: flex;align-items: center;
 						font-size: 13px;
 						justify-content: center;
 
 						.askIcon {
-							width: 22rpx;
-							height: 22rpx;
+							width: 24rpx;
+							height: 24rpx;
 						}
 					}
 
