@@ -284,6 +284,7 @@
 				greenindex:20,
 				enptylist:["总能量","脂肪","蛋白质","碳水化合物"],
 				enptyindex:0,
+				twolinedata:{},
 			}
 		},
 		methods: {
@@ -314,14 +315,15 @@
 				}
 			},
 			gettwolinedata(cal){ //近7天数据
-				app.statTemplate({}).then(res => {
-					res.data.reverse();
-					this.uricacid = res.data;
+				app.statTemplate({type:this.dayindex}).then(res => {
+					if(res.data.dietEnergy) res.data.dietEnergy.reverse();
+					if(res.data.exerciseEnergy) res.data.exerciseEnergy.reverse();
+					this.tlinedata = res.data;
 					cal();
 				});
 			},
 			settwolinebox() { //近7天图1
-				// let list = this.blooddata.resultList0;
+				// let list = this.tlinedata.dietEnergy;
 				// let xdata=[],linedata=[];
 				// if(list.length==0) return;
 				// for (var i = 0; i < list.length; i++) {
@@ -448,7 +450,7 @@
 				myChart.setOption(option);
 			},
 			settwolinebox1() { //近7天图2
-				// let list = this.blooddata.resultList0;
+				// let list = this.tlinedata.exerciseEnergy;
 				// let xdata=[],linedata=[];
 				// if(list.length==0) return;
 				// for (var i = 0; i < list.length; i++) {
@@ -575,15 +577,6 @@
 				myChart.setOption(option);
 			},
 			settiaoxingbox() { //柱状图
-				// let list = this.blooddata.resultList2;
-				// let xdata=[],linedata=[];
-				// if(list.length==0) return;
-				// let typetext=["",'凌晨', '空腹', '早餐后', '午餐前', '午餐后', '晚餐前', '晚餐后', '睡前', '随机'];
-				// for (var i = 0; i < list.length; i++) {
-				// 	let name = typetext[list[i].timeQuantum];
-				// 	xdata.push(name);
-				// 	linedata.push({name:name,value:list[i].avg});
-				// }
 				
 				var myChart = echarts.init(document.getElementById('threeecharts'));
 				var option = {
@@ -657,7 +650,7 @@
 									color: "#52A29E",
 									position: 'top',
 									formatter:(opt)=>{
-										if(opt.value==1.1) return "0g";
+										if(opt.value==1.01) return "0g";
 										return opt.value+"g";
 									}
 								},
@@ -747,9 +740,9 @@
 					if (res.status == 1) {
 						this.infoData = res.data;
 					}
-					this.infoData.protein = this.infoData.protein>0?this.infoData.protein:1.1;
-					this.infoData.fat = this.infoData.fat>0?this.infoData.fat:1.1;
-					this.infoData.carbohyrate = this.infoData.carbohyrate>0?this.infoData.carbohyrate:1.1;
+					this.infoData.protein = this.infoData.protein>0?this.infoData.protein:1.01;
+					this.infoData.fat = this.infoData.fat>0?this.infoData.fat:1.01;
+					this.infoData.carbohyrate = this.infoData.carbohyrate>0?this.infoData.carbohyrate:1.01;
 					this.$nextTick(() => {
 						this.settiaoxingbox();
 					})
