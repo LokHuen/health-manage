@@ -81,55 +81,68 @@
 					</view>
 				</view>
 			</view>
-		</view>
 		
 		<view class="flex choosedaybox">
 			<view v-for="(item,index) in daytab" :key="index" :class="dayindex==index?'daylist on':'daylist'" @click="clickday(index)" style="">{{item}}</view>
 		</view>
 		<view v-if="dayindex==0">
-			<view class="health-msg-box other prelative" style="">
+			<view class="prelative " style="">
 					<view class="blockbox">
 						<view class="blockbigbox flex">
-							{{echartsdata.needEnergy}}
+							{{infoData.dietCalories}}
 							<view class="smfont pabs20">总能量已摄入</view>
 							<view class="smfont pabs0">0</view>
-							<view class="smfont pabs10">{{echartsdata.dailyEnergy}}</view>
+							<view class="smfont pabs10">{{infoData.dailyEnergy}}</view>
 							<view v-for="(item,index) in 25" :key="index" :class="'greenline position'+(index+1)+' '+(index<greenindex?'green':'')"></view>
 						</view>
 						<view>单位：千卡</view>
 					</view>			
 			</view>
-			<view class="health-msg-box other prelative" style="">
+			<view class="prelative marlr20" style="">
 				<div id="threeecharts" class="echarts"></div>
 				<view class="flex blocklistbox">
 					<view class="blockgreen"></view>
-					空腹血糖正常区间
+					建议摄入值
 					<view class="blockblue"></view>
-					餐后2小时正常区间
+					留存值<image src="../../static/icon/wenhaoIcon.png" mode="widthFix" class="askIcon" @click="$refs.leavepopup.open()"></image>
+				</view>
+			</view>
+			<view class="flex actionlist">
+				<view style="flex:1" class="flex">
+					<view class="flex leftaction mrbt" @click="tootherpage('/pages/food/food-list')">
+						<image src="../../static/patient/rice.png" mode="widthFix" ></image>记录饮食
+					</view>
+					<view class="flex leftaction" @click="tootherpage('')">
+						<image src="../../static/patient/nutriment.png" mode="widthFix" class="other"></image>记录营养品
+					</view>
+				</view>
+				<view class="flex sportitem" @click="tootherpage('/pages/sport/sport-list')">
+					<image src="../../static/patient/sport.png" mode="widthFix" ></image>记录运动
 				</view>
 			</view>
 		</view>
 		<view v-if="dayindex!=0">
-			<block>
-			<view class="health-msg-box other prelative" style="margin-bottom:80rpx;">
-				<view >摄入：</view>
+			
+			<view class="prelative marlr20" style="margin-bottom:80rpx;">
+				<block>
+				<view class="flex" style="padding:0 0 15rpx 10rpx;">摄入:
+					<view v-for="(item,index) in enptylist" :class="enptyindex==index?'enptylist on':'enptylist'" @click="clickenpty(index)">{{item}}</view>
+				</view>
 				<div id="line71echarts" class="echarts"></div>
-				<view class="flex blocklistbox">
-					<view class="blockgreen"></view>
-					空腹血糖正常区间
-					<view class="blockblue"></view>
-					餐后2小时正常区间
-				</view>
-				<view >运动消耗：</view>
+				
+				<view style="padding:0 0 15rpx 10rpx;margin-top:20rpx;">运动消耗：</view>
 				<div id="line72echarts" class="echarts"></div>
+				</block>
+				<block >
+					<view class="nodatabox">
+						<image src="../../static/patient/nodata.png" mode="widthFix" class="nodata"></image>
+						<view>暂时没有数据</view>
+					</view>
+				</block>
 			</view>
-			</block>
-			<block >
-				<view class="nodatabox">
-					<image src="../../static/patient/nodata.png" mode="widthFix" class="nodata"></image>
-					<view>暂时没有数据</view>
-				</view>
-			</block>
+			
+		</view>
+			<view style="height:10rpx;"></view>
 		</view>
 
 		<view class="record-chart-box" v-if="(hasLoadLindData==0)||(lineData.categories.length>0 &&hasLoadLindData ==1)">
@@ -218,6 +231,20 @@
 				<view class="white-background-energy-close" @click="closeEnergyTips">关闭</view>
 			</view>
 		</uni-popup>
+		
+		<uni-popup ref="leavepopup" type="bottom">
+			<!-- 留存值 -->
+			<view class="white-background">
+				<view style="padding:40rpx 30rpx;text-align:left;">
+					<view style="text-align:center;">留存值=摄入值-运动消耗值</view>
+					<view style="padding:20rpx 0;">运动消耗值的计算方法 》</view>
+					<view>假设当次运动消耗900kcal能量，蛋白质、脂肪、碳水化合物按各占30%计算，即都为300kcal。按下方换算规则即可算出消耗的克数。</view>
+					<view>蛋白质 4kcal/g</view>
+					<view>碳水化合物 4kcal/g</view>
+					<view>脂肪 9kcal/g</view>
+				</view>
+			</view>
+		</uni-popup>
 
 	</view>
 </template>
@@ -237,7 +264,8 @@
 				list: [
 					["/static/icon/baseInfoicon.png", "基础信息"],
 					["/static/icon/bingliMangmenticon.png", "病例管理"],
-					["/static/icon/testRecordIcon.png", "测评记录"]
+					["/static/icon/testRecordIcon.png", "测评记录"],
+					["/static/icon/food.png", "饮食配餐"]
 				],
 				lineData: {
 					//数字的图--折线图数据
@@ -254,19 +282,18 @@
 				daytab: ["今日","近7天", "近30天"],
 				dayindex: 0,
 				greenindex:20,
+				enptylist:["总能量","脂肪","蛋白质","碳水化合物"],
+				enptyindex:0,
 			}
 		},
 		methods: {
+			clickenpty(index){
+				this.enptyindex = index;
+			},
 			clickday(index) {
 				this.dayindex = index;
 				switch (index) {
-					case 0:
-						// this.getxuetangdata(() => {
-							this.$nextTick(() => {
-								this.settiaoxingbox();
-							})
-						// })
-						// this.getdietstatTemplate();
+					case 0:this.getData();
 						break;
 					case 1:
 						// this.gettwolinedata(() => {
@@ -312,7 +339,7 @@
 						trigger: 'axis',
 					},
 					grid: {
-						left: '-5%',
+						left: '3%',
 						right: '3%',
 						bottom: '4%',
 						top: '10%',
@@ -333,25 +360,29 @@
 						data: ["12/1","12/2"]//xdata
 					},
 					yAxis: {
-						show:false,
-						name: "",
+						show:true,
+						name: "千卡",
+						// nameLocation:"start",
+						nameGap:10,
+						nameTextStyle:{
+							fontSize:10,
+							color:"#888",
+						},
 						axisLabel: {
 							fontSize: 10,
-							formatter: function(v){
-							    return  tranNumber(v);
-							}
 						},
 						axisLine: {
-							show: false
+							// show: true
 						},
 						// min: mindata>3.5?3.5:mindata,
 						// max: maxdata>11?maxdata:11,
 						axisTick: {
-							show: false
+							// show: true
 						},
 						type: 'value',
 						splitLine: {
-							show: false
+							show: true,
+							lineStyle:{type:"dashed"}
 						},
 						scale: true,
 			
@@ -435,7 +466,7 @@
 						trigger: 'axis',
 					},
 					grid: {
-						left: '-5%',
+						left: '3%',
 						right: '3%',
 						bottom: '4%',
 						top: '10%',
@@ -456,16 +487,19 @@
 						data: ["12/1","12/2"]//xdata
 					},
 					yAxis: {
-						show:false,
-						name: "",
+						show:true,
+						name: "千卡",
+						// nameLocation:"start",
+						nameGap:10,
+						nameTextStyle:{
+							fontSize:10,
+							color:"#888",
+						},
 						axisLabel: {
 							fontSize: 10,
-							formatter: function(v){
-							    return  tranNumber(v);
-							}
 						},
 						axisLine: {
-							show: false
+							// show: true
 						},
 						// min: mindata>3.5?3.5:mindata,
 						// max: maxdata>11?maxdata:11,
@@ -474,7 +508,8 @@
 						},
 						type: 'value',
 						splitLine: {
-							show: false
+							show: true,
+							lineStyle:{type:"dashed"}
 						},
 						scale: true,
 			
@@ -552,14 +587,14 @@
 				
 				var myChart = echarts.init(document.getElementById('threeecharts'));
 				var option = {
-				    color: ['#333333','#12C660'],
+				    color: ['#dddddd','#52A29E'],
 				    tooltip: {
 				        trigger: 'axis',
 				    },
 				    grid: {
-						top:"10%",
-				        left: '0%',
-				        right: '0%',
+						top:"5%",
+				        left: '-5%',
+				        right: '3%',
 				        bottom: '5%',
 				        containLabel: true
 				    },
@@ -596,13 +631,16 @@
 				            name: '建议摄入值',
 				            type: 'bar',
 				            barWidth: '20%',
-				            data: [60,60,160],//linedata,
+				            data: [this.infoData.dailyProtein,this.infoData.dailyFat,this.infoData.dailyCarbonHydrate],//linedata,
 							label: {
 								normal: {
 									show: true,
 									fontSize: 11,
 									color: "#333",
 									position: 'top',
+									formatter:(opt)=>{
+										return opt.value+"g";
+									}
 								},
 							
 							},
@@ -611,32 +649,24 @@
 						    name: '留存值',
 						    type: 'bar',
 						    barWidth: '20%',
-						    data: [30,20,100],//linedata,
+						    data: [this.infoData.protein,this.infoData.fat,this.infoData.carbohyrate],//linedata,
 							label: {
 								normal: {
 									show: true,
 									fontSize: 11,
-									color: "#333",
+									color: "#52A29E",
 									position: 'top',
+									formatter:(opt)=>{
+										if(opt.value==1.1) return "0g";
+										return opt.value+"g";
+									}
 								},
-							
 							},
 						}
 				    ]
 				};
 				myChart.clear();
 				myChart.setOption(option);
-			},
-			getdietstatTemplate(cal){ //仪表盘
-				app.dietstatTemplate({}).then(res => {
-					this.echartsdata = res.data;
-					let gindex = parseFloat(this.echartsdata.needEnergy/this.echartsdata.dailyEnergy*25);
-					this.greenindex = 0;
-					let ghandler = setInterval(()=>{
-						if(this.greenindex<gindex) ++this.greenindex;
-						else clearInterval(ghandler);
-					},50)
-				});
 			},
 			beginTest() {
 				uni.navigateTo({
@@ -686,23 +716,23 @@
 			},
 			judgeUserAuth(){
 				app.judgeUserAuth({}).then(res =>{
-					if(res.status ==1){
-						if(res.data.userType == 2){
-							//如果是医生，就跳过去医生的营养管理页面
-							uni.redirectTo({
-								url:'../doctor/doctor-nutrition-manage'
-							});
-						}else{
-							if(res.data.perfect==true){
+					// if(res.status ==1){
+					// 	if(res.data.userType == 2){
+					// 		//如果是医生，就跳过去医生的营养管理页面
+					// 		uni.redirectTo({
+					// 			url:'../doctor/doctor-nutrition-manage'
+					// 		});
+					// 	}else{
+					// 		if(res.data.perfect==true){
 								this.getUserData();
-							}else{
-								uni.redirectTo({
-									url:'patient-improve-msg?type=2'
-								});
-							}
+					// 		}else{
+					// 			uni.redirectTo({
+					// 				url:'patient-improve-msg?type=2'
+					// 			});
+					// 		}
 							
-						}
-					}
+					// 	}
+					// }
 				});
 			},
 			getUserData(){
@@ -717,7 +747,18 @@
 					if (res.status == 1) {
 						this.infoData = res.data;
 					}
-
+					this.infoData.protein = this.infoData.protein>0?this.infoData.protein:1.1;
+					this.infoData.fat = this.infoData.fat>0?this.infoData.fat:1.1;
+					this.infoData.carbohyrate = this.infoData.carbohyrate>0?this.infoData.carbohyrate:1.1;
+					this.$nextTick(() => {
+						this.settiaoxingbox();
+					})
+					let gindex = parseFloat(this.infoData.dietCalories/this.infoData.dailyEnergy*25);
+					this.greenindex = 0;
+					let ghandler = setInterval(()=>{
+						if(this.greenindex<gindex) ++this.greenindex;
+						else clearInterval(ghandler);
+					},50)
 				});
 			},
 			//最近一次测评的数据
@@ -883,6 +924,11 @@
 					url:"/pages/patient/answer?id="+id
 				})
 			},
+			tootherpage(src){
+				uni.navigateTo({
+					url:src
+				})
+			},
 		},
 		onShow() {
 			  if(app.getCache('uid')){
@@ -896,10 +942,30 @@
 </script>
 
 <style lang="scss">
+	.actionlist{
+		margin:0 38rpx 38rpx;
+		.sportitem{
+			width:281.8rpx;margin-left:8rpx;box-shadow: 1px 2px 19px 2px rgba(192, 192, 192, 0.3);justify-content:center;height:172.3rpx;
+			image{width:74rpx;margin-right:20rpx;}
+		}
+		.leftaction{
+			box-shadow: 1px 2px 19px 2px rgba(192, 192, 192, 0.3);justify-content:center;height:83rpx;width:100%;
+			&.mrbt{margin-bottom:6rpx;}
+			image{width:38rpx;margin-right:20rpx;
+				&.other{width:28rpx;}
+			}
+			
+		}
+	}
+	.marlr20{margin:0 20rpx;}
+	.enptylist{
+		padding-left:24rpx;
+		&.on{color:#52A29E;}
+	}
 	.blocklistbox{
-		font-size:26rpx;color:#555;margin-bottom: 10px;justify-content: center;
-		.blockgreen{border-radius:4rpx;width:40rpx;height:20rpx;background:#DCF4E7;margin-right:12rpx;}
-		.blockblue{border-radius:4rpx;width:40rpx;height:20rpx;background:#DAF2FF;margin:0 12rpx 0 50rpx;}
+		font-size:26rpx;color:#555;padding:0 0 40rpx 30rpx;
+		.blockgreen{width:16rpx;height:16rpx;background:#ddd;margin-right:8rpx;}
+		.blockblue{width:16rpx;height:16rpx;background:#52A29E;margin:0 8rpx 0 60rpx;}
 	}
 	.blockbox{
 		text-align:center;
@@ -909,9 +975,9 @@
 			.smfont{font-size:20rpx;color:#888;}
 			.pabs0{position:absolute;left:40rpx;bottom:0rpx;}
 			.pabs10{position:absolute;right:40rpx;bottom:0rpx;}
-			.pabs20{position:absolute;left:82rpx;bottom:50rpx;color:#aaa;}
+			.pabs20{position:absolute;left: 0px;right: 0;bottom:50rpx;color:#aaa;}
 			.greenline{position:absolute;background:#eaeaea;width:26rpx;height:6rpx;
-				&.green{background:#9be352;}
+				&.green{background:#52A29E;}
 			}
 			//左下
 			.position1{transform: rotate(-32deg);left:12rpx;top:170rpx;}
@@ -954,10 +1020,10 @@
 		image{margin:80rpx 0 60rpx;width:308rpx;}
 	}
 	.choosedaybox {
-		margin: 0 30rpx 50rpx;
-		border: 1rpx solid #ddd;
-		border-radius: 60rpx;
-		flex-wrap: unset;
+		margin: 20rpx 30rpx 40rpx;
+		border: 1rpx solid #eee;
+		border-radius: 10rpx;overflow:hidden;
+		flex-wrap: unset;box-shadow: 1px 2px 19px 2px rgba(192, 192, 192, 0.3);
 		font-size: 30rpx;
 	
 		.daylist {
@@ -965,16 +1031,20 @@
 			box-sizing: border-box;
 			line-height: 1;padding:24rpx 0;
 			text-align: center;
-			border-radius: 60rpx;
+			border-radius: 0rpx;
 			-webkit-box-flex: 1;
 			-webkit-flex: 1 0 auto;
 			flex: 1 0 auto;
 	
 			&.on {
 				color: #fff;
-				background: #FCA62B;
+				background: #52A29E;
 			}
 		}
+	}
+	.askIcon {
+		width: 24rpx;
+		height: 24rpx;
 	}
 	.container {
 
@@ -1031,9 +1101,9 @@
 				}
 			}
 		}
-
+		
 		.health-msg-box {
-			margin: 0 30rpx 30rpx;
+			margin: 0 40rpx 30rpx;
 			box-shadow: 1px 1px 5px #999999;
 			&.other {
 				padding: 30rpx;
@@ -1057,10 +1127,6 @@
 						font-size: 13px;
 						justify-content: center;
 
-						.askIcon {
-							width: 24rpx;
-							height: 24rpx;
-						}
 					}
 
 					.health-detail {
@@ -1104,9 +1170,8 @@
 
 		.record-chart-box {
 			margin-top: 40rpx;
-			width: 650rpx;
-			// height: 700rpx;
-			margin-left: 50rpx;
+			margin-right: 40rpx;
+			margin-left: 40rpx;
 			box-shadow: 1px 1px 5px #999999;
 			color: #333333;
 			text-align: center;
