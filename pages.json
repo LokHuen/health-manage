@@ -1,6 +1,26 @@
 {
 	"pages": [
 		{
+			"path": "pages/nutrition/nutrition-record",
+			"style": {
+				"navigationBarTitleText": "记录营养品"
+			}
+		},
+		{
+			"path": "pages/nutrition/nutrition-list",
+			"style": {
+				"navigationBarTitleText": "记录营养品"
+			}
+		},
+		{
+			"path": "pages/nutrition/nutrition-record-feedback",
+			"style": {
+				"navigationBarTitleText": "记录营记录反馈"
+			}
+		},
+		
+		
+		{
 			"path": "pages/doctor/doctor-center",
 			"style": {
 				"navigationBarTitleText": "个人中心"
