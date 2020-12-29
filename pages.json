@@ -1,12 +1,30 @@
 {
 	"pages": [
 		{
+			"path": "pages/doctor/doctor-center",
+			"style": {
+				"navigationBarTitleText": "个人中心"
+			}
+		},
+		{
 		
 			"path": "pages/food/food-list",
 		
 			"style": {
 		
 				"navigationBarTitleText": "添加食物"
+		
+			}
+		
+		},
+	
+		{
+		
+			"path": "pages/doctor/doctor-signature",
+		
+			"style": {
+		
+				"navigationBarTitleText": "医嘱署名"
 		
 			}
 		
@@ -80,12 +98,7 @@
 			"enablePullDownRefresh": true
 		},
 		
-		{
-			"path": "pages/doctor/doctor-center",
-			"style": {
-				"navigationBarTitleText": "个人中心"
-			}
-		},
+		
 		{
 			"path": "pages/sales",
 			"style": {

@@ -25,7 +25,7 @@
 	
 		data() {
 			return {
-				list: ["名片码","账户","身份认证"],
+				list: ["名片码","账户","身份认证","医嘱署名"],
 				data:{}
 			}
 		},
@@ -42,13 +42,17 @@
 					uni.navigateTo({
 						url:'doctor-account-list'
 					});
-				}else{
+				}else if(index==2){
 					this.judgeDoctorAuthenticationStatus();
+				}else{
+				    uni.navigateTo({
+				    	url:'doctor-signature'
+				    });
 				}
 			},
 			getData(){
-				//
-				app.doctorBusinessCard({uid:app.getCache('uid')}).then(res => {
+				// FTODO {uid:app.getCache('uid')}
+				app.doctorBusinessCard({uid:34}).then(res => {
 					console.log(res);
 					if (res.status == 1) {
 						this.data = res.data;
@@ -56,7 +60,8 @@
 				});
 			},
 			judgeDoctorAuthenticationStatus(){
-				app.authentication({id:app.getCache('uid')}).then(res =>{
+				//{id:app.getCache('uid')}
+				app.authentication({id:34}).then(res =>{
 					 if(res.status == 1){
 						 let url = "/pages/authentication/index";
 						 if(res.data.status==-1){

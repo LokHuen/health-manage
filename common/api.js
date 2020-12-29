@@ -114,6 +114,8 @@ var api = {
 	sportType:(data)=>{return rq("/wx/exercise/type/list",data,"GET");},
 	//运动列表
 	sportList:(data)=>{return rq("/wx/exercise/list",data,"GET");},
+	///wx/patient/advice/save:保存医嘱
+    saveAdvice:(data)=>{return rq("/wx/patient/advice/save",data,"POST");},
 }
 
 export {api};
