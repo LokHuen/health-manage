@@ -51,8 +51,8 @@
 				}
 			},
 			getData(){
-				// FTODO {uid:app.getCache('uid')}
-				app.doctorBusinessCard({uid:34}).then(res => {
+				// 34是医生
+				app.doctorBusinessCard({uid:app.getCache('uid')}).then(res => {
 					console.log(res);
 					if (res.status == 1) {
 						this.data = res.data;
@@ -60,8 +60,8 @@
 				});
 			},
 			judgeDoctorAuthenticationStatus(){
-				//{id:app.getCache('uid')}
-				app.authentication({id:34}).then(res =>{
+				//34
+				app.authentication({id:app.getCache('uid')}).then(res =>{
 					 if(res.status == 1){
 						 let url = "/pages/authentication/index";
 						 if(res.data.status==-1){
