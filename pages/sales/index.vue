@@ -31,7 +31,7 @@
 	
 		data() {
 			return {
-				list: ["名片码","绑定的用户","账户","身份认证"],
+				list: ["名片码","绑定的用户","账户","身份认证","修改密码"],
 				info:{}
 			}
 		},
@@ -54,6 +54,10 @@
 				}else if(index==2){
 					uni.navigateTo({
 						url:'sales-account-list'
+					});
+				}else if(index==4){
+					uni.navigateTo({
+						url:'change-password'
 					});
 				}else{
 					this.judgeDoctorAuthenticationStatus();
