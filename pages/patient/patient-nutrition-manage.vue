@@ -99,7 +99,7 @@
 					</view>			
 			</view>
 			<view class="prelative marlr20" style="">
-				<div id="threeecharts" class="echarts"></div>
+				<div id="threeecharts" class="echarts" style="height:70vw;"></div>
 				<view class="flex blocklistbox">
 					<view class="blockgreen"></view>
 					建议摄入值
@@ -124,7 +124,7 @@
 		<view v-if="dayindex!=0">
 			
 			<view class="prelative marlr20" style="margin-bottom:80rpx;">
-				<block>
+				<block v-if="tlinedata.dietList">
 				<view class="flex" style="padding:0 0 15rpx 10rpx;">摄入:
 					<view v-for="(item,index) in enptylist" :class="enptyindex==index?'enptylist on':'enptylist'" @click="clickenpty(index)">{{item}}</view>
 				</view>
@@ -133,7 +133,7 @@
 				<view style="padding:0 0 15rpx 10rpx;margin-top:20rpx;">运动消耗：</view>
 				<div id="line72echarts" class="echarts"></div>
 				</block>
-				<block >
+				<block v-if="!tlinedata.dietList">
 					<view class="nodatabox">
 						<image src="../../static/patient/nodata.png" mode="widthFix" class="nodata"></image>
 						<view>暂时没有数据</view>
@@ -278,18 +278,20 @@
 				showDetail: true,
 				hasLoadLindData: 0,
 				splitNumber: 5,
-				echartsdata:{},
 				daytab: ["今日","近7天", "近30天"],
 				dayindex: 0,
 				greenindex:20,
 				enptylist:["总能量","脂肪","蛋白质","碳水化合物"],
 				enptyindex:0,
-				twolinedata:{},
+				tlinedata:{},
 			}
 		},
 		methods: {
 			clickenpty(index){
 				this.enptyindex = index;
+				this.$nextTick(() => {
+					this.settwolinebox();
+				})
 			},
 			clickday(index) {
 				this.dayindex = index;
@@ -297,42 +299,48 @@
 					case 0:this.getData();
 						break;
 					case 1:
-						// this.gettwolinedata(() => {
+						this.gettwolinedata(() => {
 							this.$nextTick(() => {
 								this.settwolinebox();
 								this.settwolinebox1();
 							})
-						// })
+						})
 						break;
 					case 2:
-						// this.gettwolinedata(() => {
+						this.gettwolinedata(() => {
 							this.$nextTick(() => {
 								this.settwolinebox();
 								this.settwolinebox1();
 							})
-						// })
+						})
 						break;
 				}
 			},
 			gettwolinedata(cal){ //近7天数据
 				app.statTemplate({type:this.dayindex}).then(res => {
-					if(res.data.dietEnergy) res.data.dietEnergy.reverse();
-					if(res.data.exerciseEnergy) res.data.exerciseEnergy.reverse();
+					// if(res.data.dietList) res.data.dietList.reverse();
+					// if(res.data.exerciseList) res.data.exerciseList.reverse();
 					this.tlinedata = res.data;
 					cal();
 				});
 			},
 			settwolinebox() { //近7天图1
-				// let list = this.tlinedata.dietEnergy;
-				// let xdata=[],linedata=[];
-				// if(list.length==0) return;
-				// for (var i = 0; i < list.length; i++) {
-				// 	let date = list[i].bgdate.split("-");
-				// 	xdata.push(date[1] + "/" + date[2]);
-				// 	linedata.push(list[i].bloodGlucose);
-				// }
-				// this.nowblood = list[list.length-1].bloodGlucose;
-				// let mindata = Math.min(...linedata);
+				let list = this.tlinedata.dietList;
+				let xdata=[],linedata=[];
+				if(list.length==0) return;
+				for (var i = 0; i < list.length; i++) {
+					let date = list[i].cDate.split("-");
+					xdata.push(date[1] + "/" + date[2]);
+					let onedata = "";
+					switch(parseInt(this.enptyindex)){
+						case 0:onedata = list[i].sum;break;
+						case 1:onedata = list[i].fat;break;
+						case 2:onedata = list[i].protein;break;
+						case 3:onedata = list[i].carbohydrate;break;
+					}
+					linedata.push(onedata);
+				}
+				let mindata = Math.min(...linedata);
 				// let maxdata = Math.max(...linedata);
 				var myChart = echarts.init(document.getElementById('line71echarts'));
 				// 指定图表的配置项和数据
@@ -359,16 +367,17 @@
 							show: false,
 							alignWithLabel: true
 						},
-						data: ["12/1","12/2"]//xdata
+						data: xdata
 					},
 					yAxis: {
 						show:true,
-						name: "千卡",
+						name: this.enptyindex==0?"千卡 ":"g ",
 						// nameLocation:"start",
 						nameGap:10,
 						nameTextStyle:{
 							fontSize:10,
-							color:"#888",
+							color:"#666",
+							align:"right"
 						},
 						axisLabel: {
 							fontSize: 10,
@@ -390,7 +399,7 @@
 			
 					},
 					series: [{
-						name: '血糖',
+						name: this.enptylist[this.enptyindex],
 						type: 'line',
 						symbolSize: 7,
 						label: {
@@ -400,7 +409,7 @@
 								fontSize: 11,
 								color: "#333",
 								formatter: (opt) => { //设置拐点文字颜色
-									if (opt.value > 11.1||opt.value<3.9) return '{a|' + opt.value + '}';
+									// if (opt.value > 11.1||opt.value<3.9) return '{a|' + opt.value + '}';
 								},
 								rich: {
 									a: {
@@ -416,31 +425,32 @@
 						},
 						itemStyle: {
 							color: (opt) => { //设置拐点颜色
-								if (opt.value > 11.1||opt.value<3.9) return "red";
-								else return "#008FD9";
+								// if (opt.value > 11.1||opt.value<3.9) return "red";
+								// else 
+								return "#59A29F";
 							},
 						},
 						symbol: "circle",
-						data: [12,20],//linedata,
+						data: linedata,
 						markArea: { //标记区域
-							data: [
-								[{
-									yAxis: '3.9', //y轴坐标控制
-									itemStyle: {
-										color: '#DCF4E7'
-									},
-								}, {
-									yAxis: '6.1'
-								}],
-								[{
-									yAxis: '6.1',
-									itemStyle: {
-										color: '#DAF2FF'
-									}
-								}, {
-									yAxis: '11.1'
-								}]
-							]
+							// data: [
+							// 	[{
+							// 		yAxis: '3.9', //y轴坐标控制
+							// 		itemStyle: {
+							// 			color: '#DCF4E7'
+							// 		},
+							// 	}, {
+							// 		yAxis: '6.1'
+							// 	}],
+							// 	[{
+							// 		yAxis: '6.1',
+							// 		itemStyle: {
+							// 			color: '#DAF2FF'
+							// 		}
+							// 	}, {
+							// 		yAxis: '11.1'
+							// 	}]
+							// ]
 						},
 					}]
 				};
@@ -450,16 +460,15 @@
 				myChart.setOption(option);
 			},
 			settwolinebox1() { //近7天图2
-				// let list = this.tlinedata.exerciseEnergy;
-				// let xdata=[],linedata=[];
-				// if(list.length==0) return;
-				// for (var i = 0; i < list.length; i++) {
-				// 	let date = list[i].bgdate.split("-");
-				// 	xdata.push(date[1] + "/" + date[2]);
-				// 	linedata.push(list[i].bloodGlucose);
-				// }
-				// this.nowblood = list[list.length-1].bloodGlucose;
-				// let mindata = Math.min(...linedata);
+				let list = this.tlinedata.exerciseList;
+				let xdata=[],linedata=[];
+				if(list.length==0) return;
+				for (var i = 0; i < list.length; i++) {
+					let date = list[i].cDate.split("-");
+					xdata.push(date[1] + "/" + date[2]);
+					linedata.push(list[i].sum);
+				}
+				let mindata = Math.min(...linedata);
 				// let maxdata = Math.max(...linedata);
 				var myChart = echarts.init(document.getElementById('line72echarts'));
 				// 指定图表的配置项和数据
@@ -486,16 +495,17 @@
 							show: false,
 							alignWithLabel: true
 						},
-						data: ["12/1","12/2"]//xdata
+						data: xdata
 					},
 					yAxis: {
 						show:true,
-						name: "千卡",
+						name: "千卡 ",
 						// nameLocation:"start",
 						nameGap:10,
 						nameTextStyle:{
 							fontSize:10,
-							color:"#888",
+							color:"#666",
+							align:"right"
 						},
 						axisLabel: {
 							fontSize: 10,
@@ -517,7 +527,7 @@
 			
 					},
 					series: [{
-						name: '血糖',
+						name: '能量',
 						type: 'line',
 						symbolSize: 7,
 						label: {
@@ -527,7 +537,7 @@
 								fontSize: 11,
 								color: "#333",
 								formatter: (opt) => { //设置拐点文字颜色
-									if (opt.value > 11.1||opt.value<3.9) return '{a|' + opt.value + '}';
+									// if (opt.value > 11.1||opt.value<3.9) return '{a|' + opt.value + '}';
 								},
 								rich: {
 									a: {
@@ -543,31 +553,32 @@
 						},
 						itemStyle: {
 							color: (opt) => { //设置拐点颜色
-								if (opt.value > 11.1||opt.value<3.9) return "red";
-								else return "#008FD9";
+								// if (opt.value > 11.1||opt.value<3.9) return "red";
+								// else 
+								return "#59A29F";
 							},
 						},
 						symbol: "circle",
-						data: [23,34],//linedata,
+						data: linedata,
 						markArea: { //标记区域
-							data: [
-								[{
-									yAxis: '3.9', //y轴坐标控制
-									itemStyle: {
-										color: '#DCF4E7'
-									},
-								}, {
-									yAxis: '6.1'
-								}],
-								[{
-									yAxis: '6.1',
-									itemStyle: {
-										color: '#DAF2FF'
-									}
-								}, {
-									yAxis: '11.1'
-								}]
-							]
+							// data: [
+							// 	[{
+							// 		yAxis: '3.9', //y轴坐标控制
+							// 		itemStyle: {
+							// 			color: '#DCF4E7'
+							// 		},
+							// 	}, {
+							// 		yAxis: '6.1'
+							// 	}],
+							// 	[{
+							// 		yAxis: '6.1',
+							// 		itemStyle: {
+							// 			color: '#DAF2FF'
+							// 		}
+							// 	}, {
+							// 		yAxis: '11.1'
+							// 	}]
+							// ]
 						},
 					}]
 				};
@@ -926,7 +937,6 @@
 		onShow() {
 			  if(app.getCache('uid')){
 				  this.judgeUserAuth();
-				  this.clickday(this.dayindex);
 			  } 
 		},
 
