@@ -184,7 +184,7 @@
 			},
 			clickShowInfo(){
 				uni.navigateTo({
-					url: 'doc-patient-nutrition?uid=' + this.showInfo.id
+					url: 'doc-patient-nutrition?id=' + this.showInfo.id
 				});
 			},
 			closeTips() {
