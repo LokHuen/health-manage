@@ -106,22 +106,32 @@
 					<view class="blockblue"></view>
 					留存值<image src="../../static/icon/wenhaoIcon.png" mode="widthFix" class="askIcon" @click="$refs.leavepopup.open()"></image>
 				</view>
+				
 			</view>
 			
 		</view>
 		<view v-if="dayindex!=0">
 			
 			<view class="prelative marlr20" style="margin-bottom:80rpx;">
-				<block v-if="tlinedata.dietList">
+				<block v-if="tlinedata.dietList&&tlinedata.dietList[0]">
 				<view class="flex" style="padding:0 0 15rpx 10rpx;">摄入:
 					<view v-for="(item,index) in enptylist" :class="enptyindex==index?'enptylist on':'enptylist'" @click="clickenpty(index)">{{item}}</view>
 				</view>
 				<div id="line71echarts" class="echarts"></div>
-				
-				<view style="padding:0 0 15rpx 10rpx;margin-top:20rpx;">运动消耗：</view>
+				</block>
+				<block v-if="tlinedata.dietList&&!tlinedata.dietList[0]">
+					<view class="flex" style="padding:0 0 15rpx 10rpx;">摄入:
+					</view>
+					<view class="nodatabox">
+						<image src="../../static/patient/nodata.png" mode="widthFix" class="nodata"></image>
+						<view>暂时没有数据</view>
+					</view>
+				</block>
+				<view style="padding:0 0 15rpx 10rpx;margin-top:45rpx;">运动消耗：</view>
+				<block v-if="tlinedata.exerciseList&&tlinedata.exerciseList[0]">
 				<div id="line72echarts" class="echarts"></div>
 				</block>
-				<block v-if="!tlinedata.dietList">
+				<block v-if="tlinedata.exerciseList&&!tlinedata.exerciseList[0]">
 					<view class="nodatabox">
 						<image src="../../static/patient/nodata.png" mode="widthFix" class="nodata"></image>
 						<view>暂时没有数据</view>
@@ -311,7 +321,7 @@
 			}
 		},
 		onLoad(props){
-			this.uid = props.uid;
+			this.uid = props.id;
 		},
 		methods: {
 			clickenpty(index){
@@ -666,7 +676,7 @@
 							label: {
 								normal: {
 									show: true,
-									fontSize: 11,
+									fontSize: 10,
 									color: "#333",
 									position: 'top',
 									formatter:(opt)=>{
@@ -681,14 +691,16 @@
 						    type: 'bar',
 						    barWidth: '20%',
 						    data: [this.infoData.protein,this.infoData.fat,this.infoData.carbohyrate],//linedata,
+							barGap:"40%",
 							label: {
 								normal: {
 									show: true,
-									fontSize: 11,
+									distance:3,
+									fontSize: 10,
 									color: "#52A29E",
 									position: 'top',
 									formatter:(opt)=>{
-										if(opt.value==1.01) return "0g";
+										if(opt.value==1.01) return "";
 										return opt.value+"g";
 									}
 								},
@@ -762,11 +774,14 @@
 					uni.navigateTo({
 						url: 'doc-patient-case-manage?patientId='+this.uid
 					});
-				} else {
+				}else if (index == 2){
 					//测评记录
 					uni.navigateTo({
-						//url: '../patient/evaluation-record?id='+this.uid
 						url:'doc-evaluation-record?id='+this.uid
+					});
+				}else{
+					uni.navigateTo({
+						url: '/pages/diet/diet-catering?id='+this.uid
 					});
 				}
 
@@ -805,7 +820,18 @@
 					if (res.status == 1) {
 						this.infoData = res.data;
 					}
-
+					this.infoData.protein = this.infoData.protein>0?this.infoData.protein:1.01;
+					this.infoData.fat = this.infoData.fat>0?this.infoData.fat:1.01;
+					this.infoData.carbohyrate = this.infoData.carbohyrate>0?this.infoData.carbohyrate:1.01;
+					this.$nextTick(() => {
+						this.settiaoxingbox();
+					})
+					let gindex = parseFloat(this.infoData.dietCalories/this.infoData.dailyEnergy*25);
+					this.greenindex = 0;
+					let ghandler = setInterval(()=>{
+						if(this.greenindex<gindex) ++this.greenindex;
+						else clearInterval(ghandler);
+					},50)
 				});
 			},
 			//最近一次测评的数据
@@ -866,7 +892,7 @@
 						left: '3%',
 						right: '3%',
 						bottom: '6%',
-						top: '5%',
+						top: '8%',
 						containLabel: true,
 					},
 					xAxis: {
@@ -1062,7 +1088,7 @@
 		}
 	}
 	.nodatabox{
-		text-align:center;padding-bottom:80rpx;
+		text-align:center;padding-bottom:80rpx;color:#aaa;font-size:30rpx;
 		image{margin:80rpx 0 60rpx;width:308rpx;}
 	}
 	.choosedaybox {
