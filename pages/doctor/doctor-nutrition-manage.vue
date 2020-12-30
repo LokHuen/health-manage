@@ -202,7 +202,7 @@
 			select(item) {
 				uni.navigateTo({
 					//url:'patient-detail?uid='+item.id
-					url: 'doc-patient-nutrition?uid=' + item.id
+					url: 'doc-patient-nutrition?id=' + item.id
 				});
 			},
 			patienScreen() {
