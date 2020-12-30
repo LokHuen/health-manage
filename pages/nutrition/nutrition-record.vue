@@ -1,15 +1,40 @@
 <template>
 	<!-- 记录营养品界面 -->
 	<view class="container">
+		
+		<view class="msg-box">
+			<view class="input-tips">请填写摄入值</view>
+			<view class="detail-box">
+				<view class="name">以爱宁</view>
+				<view>
+					<text class="black">每100克含</text>
+					<text class="red">346千卡</text>
+					<text class="black">能量</text>
+					<text class="red">77.2g</text>
+					<text class="black">碳水</text>
+				</view>
+			</view>
+			<view class="input-box">
+				<input type="text" v-model="energy" class="input" placeholder="摄入值"/>
+				<view class="ke">克</view>
+			</view>
+			<view class="bottom-tips">提示：益爱宁 每袋/20克</view>
+			
+		</view>
+		
+		<view style="height: 21rpx; background-color:#F6F6F6 ;">
+			
+		</view>
+		
 		<view class="all-count">
 			<view class="tips">本次合计</view>
 			<view class="all-count-detail">
 				<view class="left">
-					<view class="value">{{allEnergy}}</view>
+					<view class="left-value">{{allEnergy}}</view>
 					<view class="distance">千卡</view>
 				</view>
 				<view class="right">
-					<view class="value">{{allCarbohydrate}}</view>
+					<view class="right-value">{{allCarbohydrate}}</view>
 					<view class="distance">克碳水</view>
 				</view>
 			</view>
@@ -44,7 +69,8 @@
 				defaultTime: '',
 				allCarbohydrate: 0,
 				allEnergy: 0,
-				nutritionInfo:{}
+				nutritionInfo:{},
+				energy:''
 
 			}
 		},
@@ -86,41 +112,100 @@
 
 <style lang="scss">
 	.container {
-		.value {
-			margin-top: 50rpx;
-			text-align: center;
-			font-size: 60rpx;
-			color: #272727;
-		}
-
+		
 		.distance {
-			margin-top: 20rpx;
+			margin-top: 10rpx;
 			text-align: center;
-			font-size: 30rpx;
-			color: #272727;
+			font-size: 26rpx;
+			color: #333333;
+		}
+		
+		.msg-box{
+			height: 374rpx;
+		    text-align: center;
+			.input-tips{
+				font-size: 28rpx;
+				color: #666666;
+				margin-top: 40rpx;
+			}
+			.detail-box{
+				width: 560rpx;
+				height: 134rpx;
+				margin-left: 95rpx;
+				margin-top: 28rpx;
+				box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.08);
+				border-radius: 2px;
+				.name{
+					color:#333333;
+					font-size: 32rpx;
+					padding-top: 29rpx;
+				}
+				.black{
+					font-size: 24rpx;
+					color:#333333;
+					font-family: PingFang SC;
+				}
+				.red{
+					font-size: 24rpx;
+					color: #FB0D1B;
+					font-family: PingFang SC;
+				}
+			}
+			.input-box{
+				display: flex;
+				.input{
+					margin-left: 275rpx;
+					width: 170rpx;
+					border-bottom: 1rpx solid #DCDCDC;
+					color: #333333;
+					font-size: 26rpx;
+					margin-top: 33rpx;
+				}
+				.ke{
+					margin-left: 0;
+					margin-top: 30rpx;
+					font-size: 26rpx;
+				}
+				
+			}
+			.bottom-tips{
+				font-size: 18rpx;
+				color: #999999;
+				text-align: center;
+				margin-top: 20rpx;
+			}
+			
 		}
 
 		.all-count {
 			color: #272727;
-			height: 300rpx;
-			border-top: 1rpx solid #CFCFCF;
-
+			height: 219rpx;
 			.tips {
-				font-size: 30rpx;
-				margin-top: 30rpx;
-				margin-left: 30rpx;
+				font-size: 28rpx;
+				margin-top: 40rpx;
+				margin-left: 49rpx;
+				color: #666666;
 			}
 
 			.all-count-detail {
 				display: flex;
-				height: 270rpx;
-
+				height: 180rpx;
+				margin-top: 20rpx;
 				.left {
 					width: 50%;
+					.left-value{
+						color: #52A29E;
+						font-size: 44rpx;
+						text-align: center;
+					}
 				}
-
 				.right {
 					width: 50%;
+					.right-value{
+						color: #F8BD63;
+						font-size: 44rpx;
+						text-align: center;
+					}
 				}
 
 			}
