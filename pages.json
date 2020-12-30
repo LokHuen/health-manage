@@ -1,6 +1,12 @@
 {
 	"pages": [
 		{
+			"path": "pages/patient/patient-nutrition-manage",
+			"style": {
+				"navigationBarTitleText": "营养管理"
+			}
+		},
+		{
 		
 			"path": "pages/sport/sport-list",
 		
@@ -108,12 +114,7 @@
 			}
 
 		},
-		{
-			"path": "pages/patient/patient-nutrition-manage",
-			"style": {
-				"navigationBarTitleText": "营养管理"
-			}
-		},
+		
 		{
 			"path": "pages/doctor/doctor-nutrition-manage",
 			"style": {
