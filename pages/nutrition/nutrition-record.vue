@@ -18,7 +18,7 @@
 				<input type="text" v-model="energy" class="input" placeholder="摄入值" @input="change" maxlength="6"/>
 				<view class="ke">克</view>
 			</view>
-			<view class="bottom-tips">{{'提示: '+nutritionInfo.name+' 每袋/'+nutritionInfo.eachBag+'克'}}</view>
+			<view class="bottom-tips">{{'提示: '+nutritionInfo.eachBag}}</view>
 			
 		</view>
 		
