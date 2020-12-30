@@ -1,32 +1,31 @@
 {
-	"pages": [
-		{
+	"pages": [{
 			"path": "pages/nutrition/nutrition-list",
 			"style": {
 				"navigationBarTitleText": "记录营养品"
 			}
 		},
 		{
-		
+
 			"path": "pages/food/food-list",
-		
+
 			"style": {
-		
+
 				"navigationBarTitleText": "添加食物"
-		
+
 			}
-		
+
 		},
 		{
-		
+
 			"path": "pages/sport/sport-list",
-		
+
 			"style": {
-		
+
 				"navigationBarTitleText": "添加运动"
-		
+
 			}
-		
+
 		},
 		{
 			"path": "pages/nutrition/nutrition-record",
@@ -41,7 +40,7 @@
 				"navigationBarTitleText": "记录营记录反馈"
 			}
 		},
-		
+
 		
 		{
 			"path": "pages/doctor/doctor-center",
@@ -52,7 +51,7 @@
 		
 	
 		{
-		
+
 			"path": "pages/doctor/doctor-signature",
 		
 			"style": {
@@ -60,52 +59,52 @@
 				"navigationBarTitleText": "医嘱署名"
 		
 			}
-		
+
 		},
 		{
-		
+
 			"path": "pages/food/record-food",
-		
+
 			"style": {
-		
+
 				"navigationBarTitleText": "记录饮食"
-		
+
 			}
-		
+
 		},
 		{
-		
+
 			"path": "pages/food/food-record-feedback",
-		
+
 			"style": {
-		
+
 				"navigationBarTitleText": "饮食记录反馈"
-		
+
 			}
-		
+
 		},
 		
 		{
-		
+
 			"path": "pages/sport/record-sport",
-		
+
 			"style": {
-		
+
 				"navigationBarTitleText": "记录运动"
-		
+
 			}
-		
+
 		},
 		{
-		
+
 			"path": "pages/sport/sport-record-feedback",
-		
+
 			"style": {
-		
+
 				"navigationBarTitleText": "运动记录反馈"
-		
+
 			}
-		
+
 		},
 		{
 			"path": "pages/patient/patient-nutrition-manage",
@@ -120,8 +119,8 @@
 			},
 			"enablePullDownRefresh": true
 		},
-		
-		
+
+
 		{
 			"path": "pages/sales",
 			"style": {
@@ -146,7 +145,9 @@
 				"navigationBarTitleText": "绑定的用户"
 			}
 		},
-		{			"path": "pages/sales/sales-business-card",			"style": {				"navigationBarTitleText": "名片码"			}		},{			"path": "pages/sales/sales-account-list",			"style": {				"navigationBarTitleText": "账户"			}		},{			"path": "pages/sales/already-transferred-bankcard",			"style": {				"navigationBarTitleText": "已转账到银行卡"			},			"enablePullDownRefresh": true		},		{			"path": "pages/sales/transferred-bankcard",			"style": {				"navigationBarTitleText": "待结算订单列表"			},			"enablePullDownRefresh": true		},
+		{			"path": "pages/sales/sales-business-card",			"style": {				"navigationBarTitleText": "名片码"			}		}, {
+			"path": "pages/sales/sales-account-list",			"style": {				"navigationBarTitleText": "账户"			}		}, {
+			"path": "pages/sales/already-transferred-bankcard",			"style": {				"navigationBarTitleText": "已转账到银行卡"			},			"enablePullDownRefresh": true		},		{			"path": "pages/sales/transferred-bankcard",			"style": {				"navigationBarTitleText": "待结算订单列表"			},			"enablePullDownRefresh": true		},
 		{
 			"path": "pages/sales/sales-already",
 			"style": {
@@ -192,14 +193,14 @@
 		},
 		
 		{
-				"path": "pages/doctor/doc-evaluation-record",
-				"style": {
-					"navigationBarTitleText": "测评记录"
-				},
-				"enablePullDownRefresh": true
+			"path": "pages/doctor/doc-evaluation-record",
+			"style": {
+				"navigationBarTitleText": "测评记录"
+			},
+			"enablePullDownRefresh": true
 		},
-		
-		
+
+
 		{
 			"path": "pages/doctor/doc-patient-basic-information",
 			"style": {
@@ -213,7 +214,7 @@
 			},
 			"enablePullDownRefresh": true
 		},
-		
+
 		{
 			"path": "pages/doctor/doc-patient-nutrition",
 			"style": {
@@ -221,26 +222,26 @@
 			},
 			"enablePullDownRefresh": true
 		},
-		
-		
-		
-		
+
+
+
+
 		{
 			"path": "pages/patient/patient-basic-information",
 			"style": {
 				"navigationBarTitleText": "基础信息"
 			}
 		},
-		
+
 		{
 			"path": "pages/doctor/doctor-improve-msg",
 			"style": {
 				"navigationBarTitleText": "完善信息"
 			}
 		},
-		
-		
-	
+
+
+
 		{
 			"path": "pages/doctor/doctor-case-list",
 			"style": {
@@ -248,16 +249,16 @@
 			},
 			"enablePullDownRefresh": true
 		},
-		
+
 		{
 			"path": "pages/doctor/doctor-business-card",
 			"style": {
 				"navigationBarTitleText": "名片码"
 			}
 		},
-		
-		
-		
+
+
+
 		{
 			"path": "pages/testIndex",
 			"style": {
@@ -270,45 +271,45 @@
 				"navigationBarTitleText": "营养自测"
 			}
 		},
-		
-		
-		
+
+
+
 		{
 			"path": "pages/doctor/doctor-bill-detail",
 			"style": {
 				"navigationBarTitleText": "详情"
 			}
 		},
-		
+
 		{
 			"path": "pages/patient/patient-add-case",
 			"style": {
 				"navigationBarTitleText": "新增病例"
 			}
 		},
-		
+
 		{
 			"path": "pages/doctor/doctor-account-list",
 			"style": {
 				"navigationBarTitleText": "账户"
 			}
 		},
-		
-		
+
+
 		{
 			"path": "pages/patient/patient-improve-msg",
 			"style": {
 				"navigationBarTitleText": "完善信息"
 			}
-		},	
-		{
-				"path": "pages/patient/evaluation-record",
-				"style": {
-					"navigationBarTitleText": "测评记录"
-				},
-				"enablePullDownRefresh": true
 		},
-		
+		{
+			"path": "pages/patient/evaluation-record",
+			"style": {
+				"navigationBarTitleText": "测评记录"
+			},
+			"enablePullDownRefresh": true
+		},
+
 		{
 			"path": "pages/patient/patient-case-manage",
 			"style": {
@@ -316,8 +317,8 @@
 			},
 			"enablePullDownRefresh": true
 		},
-		
-		
+
+
 		{
 			"path": "pages/doctor/already-transferred-bankcard",
 			"style": {
@@ -333,7 +334,7 @@
 			"enablePullDownRefresh": true
 		},
 		{			"path": "pages/doctor/doctor-already",			"style": {				"navigationBarTitleText": "已结算金额"			}		},		{			"path": "pages/doctor/offline-already",			"style": {				"navigationBarTitleText": "线下结算记录"			}		},
-		
+
 		{
 			"path": "pages/doctor/doctor-submit-result",
 			"style": {
@@ -358,14 +359,14 @@
 				"navigationBarTitleText": "身份认证"
 			}
 		},
-		
+
 		{
 			"path": "pages/patient/test-questions",
 			"style": {
 				"navigationBarTitleText": "营养自测"
 			}
 		},
-		
+
 		{
 			"path": "pages/doctor/patient-detail",
 			"style": {
@@ -378,18 +379,18 @@
 				"navigationBarTitleText": "测试"
 			}
 		},
-		
-		
-		
+
+
+
 		// {
 		// 	"path": "pages/patient/patient-improve-msg",
 		// 	"style": {
 		// 		"navigationBarTitleText": "完善信息"
 		// 	}
 		// },
-		
-		
-		
+
+
+
 		{
 			"path": "pages/patient/evaluation-results",
 			"style": {
@@ -402,22 +403,43 @@
 				"navigationBarTitleText": "营养自测"
 			}
 		},
-	
+
 		{
 			"path": "pages/patient/patient-submit-sucess",
 			"style": {
 				"navigationBarTitleText": "提交结果"
 			}
-			
+
 		}
-		
-		
-	],
+
+		, {
+			"path": "pages/diet/diet-catering",
+			"style": {
+				"navigationBarTitleText": "饮食配餐"
+			}
+
+		}, {
+			"path": "pages/diet/disease-type",
+			"style": {
+				"navigationBarTitleText": "病种"
+			}
+
+		}
+	    ,{
+            "path" : "pages/diet/disease-type-detail",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#ffffff",
 		"backgroundColor": "#FFFFFF",
-		"navigationStyle": "custom" 
+		"navigationStyle": "custom"
 	}
 }
