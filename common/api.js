@@ -100,6 +100,7 @@ var api = {
 	//转账记录详情
 	sale_divideRecord:(data)=>{return rq("/wx/salesman/getDivideRecord",data,"GET");},
 	sale_settleInfo:(data)=>{return rq("/wx/salesman/settleInfo",data,"GET");}, //账户已结算页的金额
+	sales_changepassword:(data)=>{return rq("/wx/salesman/changePassword",data,"POST");}, //修改密码
 	
 	//添加运动
 	saveSport:(data)=>{return rq("/wx/exercise/record/save",data,"POST");},

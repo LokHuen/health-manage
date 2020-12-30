@@ -181,7 +181,12 @@
 				"navigationBarTitleText": "身份认证"
 			}
 		},
-		
+		{
+			"path": "pages/sales/change-password",
+			"style": {
+				"navigationBarTitleText": "修改密码"
+			}
+		},
 		
 		{
 				"path": "pages/doctor/doc-evaluation-record",
