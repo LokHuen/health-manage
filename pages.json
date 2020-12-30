@@ -1,24 +1,26 @@
 {
-	"pages": [{
+	"pages": [
+		{
+		
+			"path": "pages/food/food-list",
+		
+			"style": {
+		
+				"navigationBarTitleText": "添加食物"
+		
+			}
+		
+		},
+		
+		
+		
+		{
 			"path": "pages/nutrition/nutrition-list",
 			"style": {
 				"navigationBarTitleText": "记录营养品"
 			}
 		},
-		{
-
-			"path": "pages/food/food-list",
-
-			"style": {
-
-				"navigationBarTitleText": "添加食物"
-
-			}
-
-		},
-		
-		
-		{
+				{
 
 			"path": "pages/sport/sport-list",
 

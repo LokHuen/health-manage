@@ -163,6 +163,8 @@
 				var item = this.listDatas[i];
 				this.allCarbohydrate = this.allCarbohydrate + (item.weight / item.ediblePart) * item.carbohydrate;
 				this.allEnergy = this.allEnergy + (item.weight / item.ediblePart) * item.energy;
+				this.allCarbohydrate=parseFloat(this.allCarbohydrate).toFixed(2);
+				this.allEnergy=parseFloat(this.allEnergy).toFixed(2);
 			}
 		}
 
