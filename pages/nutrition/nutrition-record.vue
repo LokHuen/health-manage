@@ -18,7 +18,7 @@
 				<input type="text" v-model="energy" class="input" placeholder="摄入值" @input="change" maxlength="6"/>
 				<view class="ke">克</view>
 			</view>
-			<view class="bottom-tips">{{'提示: '+nutritionInfo.eachBag}}</view>
+			<view class="bottom-tips">{{'提示: '+nutritionInfo.name+' 每袋/'+nutritionInfo.eachBag+'克'}}</view>
 			
 		</view>
 		
@@ -93,11 +93,19 @@
 				this.defaultTime = date.f3;
 			},
 			save() {
+				if(!this.energy){
+					app.tip('请填写摄入值');
+					return;
+				}
+				if(this.energy==0){
+					app.tip('摄入值不能为0');
+					return;
+				}
 				
 				var dietReocrdExtList = [];
 				dietReocrdExtList.push({
 					foodId:this.nutritionInfo.id,
-					weight:this.nutritionInfo.weight,
+					weight:this.energy,
 					foodName:this.nutritionInfo.name,
 					foodEnergy:'每'+this.nutritionInfo.ediblePart+'克含'+this.nutritionInfo.energy+'千卡'+this.nutritionInfo.carbohydrate+'碳水'
 				});
@@ -126,6 +134,8 @@
 		onLoad(props) {
 			this.getTime();
             this.nutritionInfo =  JSON.parse(props.nutritionInfo);
+			this.allCarbohydrate=parseFloat(this.allCarbohydrate).toFixed(2);
+			this.allEnergy=parseFloat(this.allEnergy).toFixed(2);
 		}
 
 	}
@@ -235,12 +245,12 @@
 		.time {
 			height: 96rpx;
 			line-height: 96rpx;
-			color: #272727;
+			color: #666666;
 			margin-left: 30rpx;
 			margin-right: 30rpx;
 			border-bottom: 1rpx solid #CFCFCF;
 			position: relative;
-
+            font-size: 28rpx;
 		}
 
 		.type {

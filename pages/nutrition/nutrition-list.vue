@@ -1,7 +1,7 @@
 <template>
 	<!-- 营养品列表界面 -->
 	<view class="container">
-		<view style="height: 50rpx;"></view>
+		<!-- <view style="height: 20rpx;"></view> -->
 		<view class="list-content-box" v-for="(item,index) in listDatas" :key="index" @click="clickItem(item)">
 			<image :src="item.pic" mode="widthFix" class="list-img"></image>
 			<view class="list-msg">
