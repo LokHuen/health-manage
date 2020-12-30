@@ -5,20 +5,20 @@
 		<view class="msg-box">
 			<view class="input-tips">请填写摄入值</view>
 			<view class="detail-box">
-				<view class="name">以爱宁</view>
+				<view class="name">{{nutritionInfo.name}}</view>
 				<view>
-					<text class="black">每100克含</text>
-					<text class="red">346千卡</text>
+					<text class="black">{{'每'+nutritionInfo.ediblePart+'克含'}}</text>
+					<text class="red">{{nutritionInfo.energy+'千卡'}}</text>
 					<text class="black">能量</text>
-					<text class="red">77.2g</text>
+					<text class="red">{{nutritionInfo.carbohydrate+'g'}}</text>
 					<text class="black">碳水</text>
 				</view>
 			</view>
 			<view class="input-box">
-				<input type="text" v-model="energy" class="input" placeholder="摄入值"/>
+				<input type="text" v-model="energy" class="input" placeholder="摄入值" @input="change" maxlength="6"/>
 				<view class="ke">克</view>
 			</view>
-			<view class="bottom-tips">提示：益爱宁 每袋/20克</view>
+			<view class="bottom-tips">{{'提示: '+nutritionInfo.eachBag}}</view>
 			
 		</view>
 		
@@ -93,10 +93,32 @@
 				this.defaultTime = date.f3;
 			},
 			save() {
-				uni.navigateTo({
-					url:'nutrition-record-feedback'
-				})
+				
+				var dietReocrdExtList = [];
+				dietReocrdExtList.push({
+					foodId:this.nutritionInfo.id,
+					weight:this.nutritionInfo.weight,
+					foodName:this.nutritionInfo.name,
+					foodEnergy:'每'+this.nutritionInfo.ediblePart+'克含'+this.nutritionInfo.energy+'千卡'+this.nutritionInfo.carbohydrate+'碳水'
+				});
+				app.saveFood({
+					genre:2,
+					startTime: this.defaultTime,
+					dietReocrdExtList:JSON.stringify(dietReocrdExtList)
+				}).then(res => {
+				   if(res.status == 1){
+					   uni.navigateTo({
+					   	url:'nutrition-record-feedback?info='+JSON.stringify(res.data)
+					   })
+				   }
+				});
 
+			},
+			change(e){
+			this.allCarbohydrate=this.nutritionInfo.carbohydrate/this.nutritionInfo.ediblePart*this.energy;
+			this.allCarbohydrate=parseFloat(this.allCarbohydrate).toFixed(2);
+			this.allEnergy=this.nutritionInfo.energy/this.nutritionInfo.ediblePart*this.energy;
+			this.allEnergy=parseFloat(this.allEnergy).toFixed(2);
 			}
 
 
@@ -104,7 +126,6 @@
 		onLoad(props) {
 			this.getTime();
             this.nutritionInfo =  JSON.parse(props.nutritionInfo);
-
 		}
 
 	}

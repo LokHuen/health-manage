@@ -32,10 +32,9 @@
 		methods: {
 			getListData() {
 				app.foodList({
-					
+					genre:2
 				}).then(res => {
 					if (res.status == 1) {
-
 						this.listDatas = res.data;
 					}
 				});

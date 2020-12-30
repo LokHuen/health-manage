@@ -181,7 +181,8 @@
 			getListData() {
 				app.foodList({
 					name: this.searchtext,
-					type: this.foodType.id
+					type: this.foodType.id,
+					genre:1
 				}).then(res => {
 					if (res.status == 1) {
 						// for (var i = 0; i < res.data.length; i++) {
@@ -436,7 +437,7 @@
 
 				.sure-button {
 					position: absolute;
-					color: #FCA62B;
+					color: #52A29E;
 					right: 40rpx;
 					top: 0rpx;
 				}
@@ -462,7 +463,7 @@
 				text-align: center;
 
 				.motifyPopup-detail-number {
-					color: #FCA62B;
+					color: #52A29E;
 				}
 
 				.motifyPopup-detail-tip {
@@ -498,7 +499,7 @@
 
 				.foodPopup-sure-button {
 					position: absolute;
-					color: #FCA62B;
+					color: #52A29E;
 					right: 40rpx;
 					top: 0rpx;
 				}

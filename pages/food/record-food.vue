@@ -138,6 +138,7 @@
 					});
 				}
 				app.saveFood({
+					genre:1,
 					duration: this.foodType.key,
 					startTime: this.defaultTime,
 					dietReocrdExtList:JSON.stringify(dietReocrdExtList)

@@ -38,7 +38,7 @@
 		methods: {
 			complete(){
 				uni.redirectTo({
-					url:'../patient/patient-nutrition-manage?type=1'
+					url:'../patient/patient-nutrition-manage'
 				})
 			}
 		}
