@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<text class="i-title">食谱 | {{diseaseName}}患者</text>
-		<text class="i-content" v-html="info.foodPairing"></text>
+		<view class="i-content" v-html="info.foodPairing"></view>
 	</view>
 </template>
 
@@ -41,6 +41,7 @@
 		}
 
 		.i-content {
+			width: 100%;
 			margin-top: 24rpx;
 			color: #666666;
 			font-size: 26rpx;

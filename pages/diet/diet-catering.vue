@@ -41,7 +41,7 @@
 							<image style="width: 12rpx; height: 22rpx;margin-left: 10rpx;" src="../../static/icon/more_icon.png"></image>
 						</view>
 					</view>
-					<text class="i-text">{{info.foodPairing}}</text>
+					<view class="i-text" v-html="info.foodPairing"></view>
 				</view>
 
 				<view class="flexc i-type-box" v-if="!info.diseaseName">
