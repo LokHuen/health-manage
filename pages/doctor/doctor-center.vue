@@ -46,7 +46,7 @@
 					this.judgeDoctorAuthenticationStatus();
 				}else{
 				    uni.navigateTo({
-				    	url:'doctor-signature?name='+this.data.doctorName
+				    	url:'doctor-signature?name='+this.data.adviceName
 				    });
 				}
 			},

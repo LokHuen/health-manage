@@ -25,7 +25,7 @@
 					app.tip('请输入医生名字')
 					return;
 				}
-				app.updateDoctorName({doctorName:this.name}).then(res =>{
+				app.updateDoctorName({adviceName:this.name}).then(res =>{
 					if(res.status ==1){
 						uni.navigateBack({
 							
