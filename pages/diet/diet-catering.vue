@@ -163,7 +163,6 @@
 
 				.i-text-box {
 					padding-top: 50rpx;
-					width: 100%;
 					background-color: #FFFFFF;
 
 					.i-title-box {
