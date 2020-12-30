@@ -1,20 +1,26 @@
 <template>
 	<view class="container">
-		<text class="i-item" v-for="(item,index) in typeData" @click="clickHandler(item)">{{item}}</text>
+		<text class="i-item" v-for="(item,index) in typeData" @click="clickHandler(item)">{{item.diseaseName}}</text>
 	</view>
 </template>
 
 <script>
+	import http from '../../common/http.js'
 	export default {
 		data() {
 			return {
-				typeData:["病种1","病种1","病种1","病种1","病种1","病种1"]
+				typeData:[]
 			};
+		},
+		onLoad() {
+			http.get(http.urls.get_disease_list).then((res)=>{
+				this.typeData = res.data
+			})
 		},
 		methods:{
 			clickHandler(item){
 				uni.navigateTo({
-					url:'disease-type-detail'
+					url:'disease-type-detail?id='+item.id+'&diseaseName='+item.diseaseName
 				})
 			}
 		}
