@@ -1056,7 +1056,7 @@
 			.position2{transform: rotate(-28deg);left:6rpx;top:154rpx;}
 			.position3{transform: rotate(-20deg);left:0rpx;top:136rpx;}
 			.position4{transform: rotate(-10deg);left:-4rpx;top:118rpx;}
-			.position5{transform: rotate(-5deg);left:-4rpx;top:98rpx;}
+			.position5{transform: rotate(-5deg);left:-5rpx;top:100rpx;}
 			
 			//右下
 			.position25{transform: rotate(28deg);right:10rpx;top:172rpx;}
