@@ -2,6 +2,17 @@
 	"pages": [
 		{
 		
+			"path": "pages/sport/sport-list",
+		
+			"style": {
+		
+				"navigationBarTitleText": "添加运动"
+		
+			}
+		
+		},
+		{
+		
 			"path": "pages/food/food-list",
 		
 			"style": {
@@ -11,26 +22,13 @@
 			}
 		
 		},
-		
-		
-		
 		{
 			"path": "pages/nutrition/nutrition-list",
 			"style": {
 				"navigationBarTitleText": "记录营养品"
 			}
 		},
-				{
-
-			"path": "pages/sport/sport-list",
-
-			"style": {
-
-				"navigationBarTitleText": "添加运动"
-
-			}
-
-		},
+				
 		{
 			"path": "pages/nutrition/nutrition-record",
 			"style": {
