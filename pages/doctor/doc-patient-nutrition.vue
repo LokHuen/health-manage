@@ -962,7 +962,7 @@
 								[{
 									yAxis: '0', //y轴坐标控制
 									itemStyle: {
-										color: '#a8cd97'
+										color: '#52a29e'
 									},
 								}, {
 									yAxis: '1'
@@ -970,7 +970,7 @@
 								[{
 									yAxis: '1',
 									itemStyle: {
-										color: '#fffb87'
+										color: '#ffcf76'
 									}
 								}, {
 									yAxis: '3'
@@ -978,7 +978,7 @@
 								[{
 									yAxis: '3',
 									itemStyle: {
-										color: '#ffe087'
+										color: '#ffe1e1'
 									}
 								}, {
 									yAxis: '9'
@@ -986,7 +986,7 @@
 								[{
 									yAxis: '9',
 									itemStyle: {
-										color: '#ffe1e1'
+										color: '#b7c8e3'
 									}
 								}, {
 									yAxis: '36'
