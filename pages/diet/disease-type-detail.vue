@@ -21,7 +21,19 @@
 			http.get(http.urls.get_catering_detail, {
 				id: this.id
 			}).then((res) => {
-				this.info = res.data
+				res.data.foodPairing = res.data.foodPairing.replace(/<img /g,"<img class='htmlimg' ");
+				this.info = res.data;
+				this.$nextTick(()=>{
+					var imglist = document.getElementsByClassName("htmlimg");
+					for (var i = 0; i < imglist.length; i++) {
+						imglist[i].onclick=function(res){
+							uni.previewImage({
+								current:res.target.src,
+								urls:[res.target.src],
+							})
+						}
+					}
+				})
 			})
 		},
 	}
