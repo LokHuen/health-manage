@@ -104,7 +104,8 @@
 					<view class="blockgreen"></view>
 					建议摄入值
 					<view class="blockblue"></view>
-					留存值<image src="../../static/icon/wenhaoIcon.png" mode="widthFix" class="askIcon" @click="$refs.leavepopup.open()"></image>
+					<view @click="$refs.leavepopup.open()">留存值</view>
+					<image src="../../static/icon/wenhaoIcon.png" mode="widthFix" class="askIcon" @click="$refs.leavepopup.open()"></image>
 				</view>
 				
 			</view>
@@ -127,7 +128,7 @@
 						<view>暂时没有数据</view>
 					</view>
 				</block>
-				<view style="padding:0 0 15rpx 10rpx;margin-top:45rpx;">运动消耗：</view>
+				<view style="padding:0 0 15rpx 10rpx;margin-top:45rpx;">运动消耗能量：</view>
 				<block v-if="tlinedata.exerciseList&&tlinedata.exerciseList[0]">
 				<div id="line72echarts" class="echarts"></div>
 				</block>
@@ -264,13 +265,9 @@
 		<uni-popup ref="leavepopup" type="bottom">
 			<!-- 留存值 -->
 			<view class="white-background">
-				<view style="padding:40rpx 30rpx;text-align:left;">
+				<view style="padding:60rpx 30rpx;text-align:left;">
 					<view style="text-align:center;">留存值=摄入值-运动消耗值</view>
-					<view style="padding:20rpx 0;">运动消耗值的计算方法 》</view>
-					<view>假设当次运动消耗900kcal能量，蛋白质、脂肪、碳水化合物按各占30%计算，即都为300kcal。按下方换算规则即可算出消耗的克数。</view>
-					<view>蛋白质 4kcal/g</view>
-					<view>碳水化合物 4kcal/g</view>
-					<view>脂肪 9kcal/g</view>
+					
 				</view>
 			</view>
 		</uni-popup>
@@ -690,7 +687,7 @@
 						    name: '留存值',
 						    type: 'bar',
 						    barWidth: '20%',
-						    data: [this.infoData.protein,this.infoData.fat,this.infoData.carbohyrate],//linedata,
+						    data: [this.infoData.protein,this.infoData.fat,this.infoData.carbohydrate],//linedata,
 							barGap:"40%",
 							label: {
 								normal: {
@@ -822,7 +819,7 @@
 					}
 					this.infoData.protein = this.infoData.protein>0?this.infoData.protein:1.01;
 					this.infoData.fat = this.infoData.fat>0?this.infoData.fat:1.01;
-					this.infoData.carbohyrate = this.infoData.carbohyrate>0?this.infoData.carbohyrate:1.01;
+					this.infoData.carbohydrate = this.infoData.carbohydrate>0?this.infoData.carbohydrate:1.01;
 					this.$nextTick(() => {
 						this.settiaoxingbox();
 					})
@@ -889,7 +886,7 @@
 						trigger: 'axis',
 					},
 					grid: {
-						left: '3%',
+						left: '0%',
 						right: '3%',
 						bottom: '6%',
 						top: '8%',
@@ -908,12 +905,14 @@
 						data: this.lineData.categories,
 					},
 					yAxis: {
+						show:false,
 						name:"",
 						axisLabel:{fontSize:10},
 						axisLine: {
 							show: false
 						},
 						min: 0,
+						max:36,
 						axisTick: {
 							show: false
 						},
@@ -969,22 +968,29 @@
 									yAxis: '1'
 								}],
 								[{
-									yAxis: '2',
+									yAxis: '1',
 									itemStyle: {
-										color: '#ffd687'
+										color: '#fffb87'
 									}
 								}, {
 									yAxis: '3'
 								}],
 								[{
-									yAxis: '4',
+									yAxis: '3',
 									itemStyle: {
-										color: '#ffc000'
+										color: '#ffe087'
 									}
 								}, {
-									yAxis: '8'
+									yAxis: '9'
 								}],
-								
+								[{
+									yAxis: '9',
+									itemStyle: {
+										color: '#ffe1e1'
+									}
+								}, {
+									yAxis: '36'
+								}],
 							]
 						},
 					}]
@@ -1024,7 +1030,7 @@
 			box-shadow: 1px 2px 19px 2px rgba(192, 192, 192, 0.3);justify-content:center;height:83rpx;width:100%;
 			&.mrbt{margin-bottom:6rpx;}
 			image{width:38rpx;margin-right:20rpx;
-				&.other{width:28rpx;}
+				&.other{width:28rpx;margin:0 24rpx 0 6rpx;}
 			}
 			
 		}

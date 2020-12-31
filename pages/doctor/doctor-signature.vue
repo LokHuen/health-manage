@@ -2,7 +2,7 @@
 	<!-- 医嘱署名界面-->
 	<view class="container">
 		<view class="name-box">
-			<view class="name-tips">* 医嘱署名</view>
+			<view class="name-tips">医嘱署名</view>
 			<input class="name-input" type="text" value="" placeholder="请填写医嘱署名" v-model="name"/>
 		</view>
 		<view class="save" @click="save">保存</view>

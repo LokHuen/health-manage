@@ -120,6 +120,7 @@
 				},
 				currentItem: {},
 				selectItems: [],
+				page:1,
 			}
 		},
 		methods: {
@@ -182,15 +183,15 @@
 				app.foodList({
 					name: this.searchtext,
 					type: this.foodType.id,
-					genre:1
+					genre:1,pageNo:this.page,
 				}).then(res => {
 					if (res.status == 1) {
-						// for (var i = 0; i < res.data.length; i++) {
-						// 	res.data[i].pic = app.globalData.baseUrl+res.data[i].pic;
-						// }
-						this.listDatas = res.data;
+						if(this.page!=1&&this.page>=res.data.pageCount) return;
+						this.listDatas = this.page==1?res.data:this.listDatas.concat(res.data);
+						if(this.page<res.data.pageCount) this.page++;
 					}
 				});
+				
 			},
 			selectFoodType(item) {
 				this.foodType = item;
@@ -245,6 +246,9 @@
 		},
 		onLoad() {
 			this.getType();
+			this.getListData();
+		},
+		onReachBottom() {
 			this.getListData();
 		}
 
@@ -515,7 +519,7 @@
 			.foodPopup-list-box {
 				height: 152rpx;
 				margin-left: 30rpx;
-				margin-right: 30rpx;
+				margin-right: 30rpx;align-items:center;padding-right:50rpx;
 				border-bottom: 1rpx solid #CFCFCF;
 				display: flex;
 				color: #272727;
@@ -524,14 +528,14 @@
 				.foodPopup-img {
 					width: 100rpx;
 					height: 100rpx;
-					margin-top: 26rpx;
+					// margin-top: 26rpx;
 					background-color: #9A9A9A;
 				}
 
 				.foodPopup-title {
 					font-size: 34rpx;
-					margin-left: 30rpx;
-					margin-top: 55rpx;
+					margin-left: 30rpx;text-align: left;
+					margin-top: 0rpx;
 				}
 
 				.foodPopup-input {
@@ -540,13 +544,13 @@
 					background: #FFFFFF;
 					border-radius: 11rpx;
 					border: 1rpx solid #C3C3C3;
-					margin-top: 54rpx;
+					// margin-top: 54rpx;
 					margin-left: 40rpx;
 					text-align: center;
 				}
 
 				.foodPopup-distance {
-					margin-top: 65rpx;
+					// margin-top: 65rpx;
 					font-size: 26rpx;
 					margin-left: 15rpx;
 				}
