@@ -186,11 +186,12 @@
 				display: flex;
 				.input{
 					margin-left: 275rpx;
-					width: 170rpx;
+					width: 220rpx;
 					border-bottom: 1rpx solid #DCDCDC;
 					color: #333333;
 					font-size: 26rpx;
-					margin-top: 33rpx;
+					margin-top: 20rpx;
+					padding: 14rpx 0;
 				}
 				.ke{
 					margin-left: 0;
@@ -200,10 +201,10 @@
 				
 			}
 			.bottom-tips{
-				font-size: 18rpx;
+				font-size: 20rpx;
 				color: #999999;
 				text-align: center;
-				margin-top: 20rpx;
+				margin-top: 12rpx;
 			}
 			
 		}

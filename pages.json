@@ -432,8 +432,7 @@
             "path" : "pages/diet/disease-type-detail",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
+                "navigationBarTitleText": "食谱"
             }
             
         }

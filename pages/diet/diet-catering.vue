@@ -27,7 +27,7 @@
 							<view class="flex">
 								<text style="font-size: 46rpx; align-self: flex-start;">{{info.calories?info.calories:0}}</text>
 								<text style="align-self: flex-end; margin-left: 10rpx;margin-right: 5rpx;">kcal</text>
-								<image style="width: 22rpx; height: 22rpx;" src="../../static/icon/wenhaoIcon.png"></image>
+								<image style="width: 22rpx; height: 22rpx;" src="../../static/icon/wenhaoIcon.png" @click="showEnergyTips"></image>
 							</view>
 							<text>每日总能量</text>
 						</view>
@@ -35,7 +35,7 @@
 				</view>
 				<view class="flexc i-text-box" v-if="info.diseaseName">
 					<view class="flex i-title-box">
-						<text style="font-size: 28rpx; color: #333333;font-weight: bold;flex: 1;">食谱 | 乳腺癌患者</text>
+						<text style="font-size: 28rpx; color: #333333;font-weight: bold;flex: 1;">食谱 | {{info.diseaseName}}患者</text>
 						<view class="flex" style="align-items: center;justify-content: center;" @click="toMore">
 							<text>全部食谱</text>
 							<image style="width: 12rpx; height: 22rpx;margin-left: 10rpx;" src="../../static/icon/more_icon.png"></image>
@@ -52,6 +52,31 @@
 				</view>
 			</view>
 		</scroll-view>
+		
+		<uni-popup ref="popupEnergy" type="bottom">
+			<!-- 能量说明 -->
+			<view class="white-background-energy">
+				<view class="white-background-energy-title">能量值说明</view>
+				<view class="white-background-energy-desc-title">
+					根据恶性肿瘤患者膳食营养处方专家共识
+				</view>
+				<view class="white-background-energy-desc">
+					1. 每日总能量按每天30kcal/kg计算，每日总能量=体重（kg）×30kcal/kg
+				</view>
+				<view class="white-background-energy-desc">
+					2. 脂肪按总能量的30%计算，脂肪=每日总能量×30%÷9kcal/g
+				</view>
+				<view class="white-background-energy-desc">
+					3.蛋白质按1.5g/(kg.d)计算，蛋白质=体重（kg）×1.5g/(kg.d)×1d
+				</view>
+				<view class="white-background-energy-desc">
+					4.碳水化合物=（每日总能量-脂肪×9kcal/g-蛋白质×4kcal/g）÷4kcal/g
+				</view>
+				<view class="white-background-energy-space-white"></view>
+				<view class="white-background-energy-space-gray"></view>
+				<view class="white-background-energy-close" @click="closeEnergyTips">关闭</view>
+			</view>
+		</uni-popup>
 	</view>
 </template>
 
@@ -82,7 +107,13 @@
 				uni.navigateTo({
 					url: 'disease-type-detail?id=' + item.id + '&diseaseName=' + item.diseaseName
 				})
-			}
+			},
+			showEnergyTips() {
+				this.$refs.popupEnergy.open();
+			},
+			closeEnergyTips() {
+				this.$refs.popupEnergy.close();
+			},
 		}
 	}
 </script>
@@ -206,6 +237,53 @@
 
 				}
 			}
+		}
+	}
+	
+	.white-background-energy {
+		text-align: center;
+		background-color: #FFFFFF;
+		border-radius: 10px 10px 0px 0px;
+	
+		.white-background-energy-title {
+			font-size: 14px;
+			color: #666666;
+			padding-top: 35rpx;
+		}
+	
+		.white-background-energy-desc-title {
+			margin-left: 60rpx;
+			margin-right: 60rpx;
+			margin-top: 60rpx;
+			text-align: left;
+			color: #333333;
+			font-size: 15px;
+		}
+	
+		.white-background-energy-desc {
+			margin-left: 60rpx;
+			margin-right: 60rpx;
+			margin-top: 20rpx;
+			text-align: left;
+			color: #333333;
+			font-size: 15px;
+		}
+	
+		.white-background-energy-space-white {
+			background-color: #FFFFFF;
+			height: 60rpx;
+		}
+	
+		.white-background-energy-space-gray {
+			background-color: #F6F6F6;
+			height: 20rpx;
+		}
+	
+		.white-background-energy-close {
+			height: 100rpx;
+			line-height: 100rpx;
+			font-size: 15px;
+			color: #666666;
 		}
 	}
 </style>
