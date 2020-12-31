@@ -187,7 +187,7 @@
 				}).then(res => {
 					if (res.status == 1) {
 						if(this.page!=1&&this.page>=res.data.pageCount) return;
-						this.listDatas = this.page==1?res.data:this.listDatas.concat(res.data);
+						this.listDatas = this.page==1?res.data.list:this.listDatas.concat(res.data.list);
 						if(this.page<res.data.pageCount) this.page++;
 					}
 				});
