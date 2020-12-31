@@ -13,11 +13,11 @@
 							<text>脂肪{{info.fat?info.fat:0}}g</text>
 						</view>
 						<view class="flex i-target-item" style="align-items: center;">
-							<image class="i-dot"></image>
+							<image class="i-dot" style="background-color: #52A29E;"></image>
 							<text>蛋白质{{info.protein?info.protein:0}}g</text>
 						</view>
 						<view class="flex i-target-item" style="align-items: center;">
-							<image class="i-dot"></image>
+							<image class="i-dot" style="background-color: #FA94C0;"></image>
 							<text>碳水化合物{{info.carbohydrate?info.carbohydrate:0}}g</text>
 						</view>
 					</view>
@@ -172,7 +172,7 @@
 								height: 16rpx;
 								background: #F6BC6A;
 								border-radius: 8rpx;
-								margin-right: 6rpx;
+								margin-right: 10rpx;
 							}
 						}
 					}

@@ -11,7 +11,7 @@
 		    <image src="../../static/icon/right_arrow.png" mode="widthFix" class="condition-arrow"></image>
 		</view>
 		
-		<view class="search-result" v-if="searchtext && listDatas.length>0">索搜结果</view>
+		<view class="search-result" v-if="searchtext && listDatas.length>0">搜索结果</view>
 		
 		<view class="list-content-box" v-for="(item,index) in listDatas" :key = "index" @click="select(item)">
 			<image :src="item.pic" mode="widthFix" class="list-img"></image>
