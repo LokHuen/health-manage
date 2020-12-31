@@ -166,6 +166,7 @@
 						name: '全部',
 						id: ''
 					},
+					this.page = 1;
 					this.getListData();
 			},
 			getType() {
@@ -196,6 +197,7 @@
 			selectFoodType(item) {
 				this.foodType = item;
 				this.$refs.popup.close();
+				this.page = 1;
 				this.getListData();
 			},
 			motifyInputChang(e) {
