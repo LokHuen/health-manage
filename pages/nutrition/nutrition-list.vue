@@ -27,15 +27,18 @@
 		data() {
 			return {
 				listDatas: [],
+				page:1,
 			}
 		},
 		methods: {
 			getListData() {
 				app.foodList({
-					genre:2
+					genre:2,pageNo:this.page,
 				}).then(res => {
 					if (res.status == 1) {
-						this.listDatas = res.data;
+						if(this.page!=1&&this.page>=res.data.pageCount) return;
+						this.listDatas = this.page==1?res.data.list:this.listDatas.concat(res.data.list);
+						if(this.page<res.data.pageCount) this.page++;
 					}
 				});
 			},
