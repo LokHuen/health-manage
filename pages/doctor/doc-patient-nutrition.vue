@@ -238,7 +238,7 @@
 					<view class="record-content">{{item.advice}}</view>
 					<view class="record-time-box">
 						<view class="record-time">{{item.createTime}}</view>
-						<view class="record-motify" @click="motifyAdvice(item)">修改</view>
+						<view class="record-motify" @click="motifyAdvice(item)">复制</view>
 					</view>
 				</view>
 			</scroll-view>
@@ -716,7 +716,7 @@
 			},
 			motifyAdvice(item){
 				this.advice = item.advice;
-				this.adviceId = item.id;
+				this.adviceId = "";//item.id;
 				this.writeRecord = !this.writeRecord;
 			},
 			writeAdvice(){
