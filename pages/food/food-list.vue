@@ -20,8 +20,8 @@
 					<view class="list-detail-tip"> {{'每'+item.ediblePart+'克含'}} </view>
 					<view class="list-detail-number">{{item.energy}}</view>
 					<view class="list-detail-tip"> 千卡 </view>
-					<view class="list-detail-number">{{(item.carbohydrate?item.carbohydrate:0)+'g'}} </view>
-					<view class="list-detail-tip"> 碳水 </view>
+					<view class="list-detail-number">{{item.carbohydrate?item.carbohydrate:0}} </view>
+					<view class="list-detail-tip"> g碳水 </view>
 				</view>
 			</view>
 
@@ -67,8 +67,8 @@
 					<text class="motifyPopup-detail-tip">{{'每'+currentItem.ediblePart+'克含'}} </text>
 					<text class="motifyPopup-detail-number">{{currentItem.energy}}</text>
 					<text class="motifyPopup-detail-tip"> 千卡 </text>
-					<text class="motifyPopup-detail-number">{{(currentItem.carbohydrate?currentItem.carbohydrate:0)+'g'}} </text>
-					<text class="motifyPopup-detail-tip"> 碳水 </text>
+					<text class="motifyPopup-detail-number">{{currentItem.carbohydrate}} </text>
+					<text class="motifyPopup-detail-tip"> g碳水 </text>
 				</view>
 				<view class="motifyPopup-input-box">
 					<input type="number" :value="currentItem.weight" class="motifyPopup-input" placeholder="摄入值" maxlength="5" @input="motifyInputChang" />

@@ -52,8 +52,8 @@
 				</view>
 			</view>
 		</scroll-view>
-		
-		<uni-popup ref="popupEnergy" type="bottom">
+
+		<uni-popup ref="popupEnergy" type="bottom" style="z-index: 9999;">
 			<!-- 能量说明 -->
 			<view class="white-background-energy">
 				<view class="white-background-energy-title">能量值说明</view>
@@ -135,16 +135,17 @@
 
 		.i-scroll-view {
 			height: 100vh;
+			
 
 			.i-content {
-
+			
 				.i-head-tip {
+					z-index: 9998;
 					background-color: #FFFFFF;
 					padding: 32rpx 36rpx 36rpx 36rpx;
 					margin: 0 50rpx;
 					margin-top: -100rpx;
 					box-shadow: 0px 0px 27px 0px rgba(0, 0, 0, 0.08);
-					z-index: 9999;
 					border-radius: 4rpx;
 				}
 
@@ -239,18 +240,18 @@
 			}
 		}
 	}
-	
+
 	.white-background-energy {
 		text-align: center;
 		background-color: #FFFFFF;
 		border-radius: 10px 10px 0px 0px;
-	
+
 		.white-background-energy-title {
 			font-size: 14px;
 			color: #666666;
 			padding-top: 35rpx;
 		}
-	
+
 		.white-background-energy-desc-title {
 			margin-left: 60rpx;
 			margin-right: 60rpx;
@@ -259,7 +260,7 @@
 			color: #333333;
 			font-size: 15px;
 		}
-	
+
 		.white-background-energy-desc {
 			margin-left: 60rpx;
 			margin-right: 60rpx;
@@ -268,17 +269,17 @@
 			color: #333333;
 			font-size: 15px;
 		}
-	
+
 		.white-background-energy-space-white {
 			background-color: #FFFFFF;
 			height: 60rpx;
 		}
-	
+
 		.white-background-energy-space-gray {
 			background-color: #F6F6F6;
 			height: 20rpx;
 		}
-	
+
 		.white-background-energy-close {
 			height: 100rpx;
 			line-height: 100rpx;

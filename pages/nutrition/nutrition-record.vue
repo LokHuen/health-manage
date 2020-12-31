@@ -10,8 +10,8 @@
 					<text class="black">{{'每'+nutritionInfo.ediblePart+'克含'}}</text>
 					<text class="red">{{nutritionInfo.energy+'千卡'}}</text>
 					<text class="black">能量</text>
-					<text class="red">{{nutritionInfo.carbohydrate+'g'}}</text>
-					<text class="black">碳水</text>
+					<text class="red">{{nutritionInfo.carbohydrate?nutritionInfo.carbohydrate:0}}</text>
+					<text class="black">g碳水</text>
 				</view>
 			</view>
 			<view class="input-box">
@@ -107,7 +107,7 @@
 					foodId:this.nutritionInfo.id,
 					weight:this.energy,
 					foodName:this.nutritionInfo.name,
-					foodEnergy:'每'+this.nutritionInfo.ediblePart+'克含'+this.nutritionInfo.energy+'千卡'+this.nutritionInfo.carbohydrate+'碳水'
+					foodEnergy:'每'+this.nutritionInfo.ediblePart+'克含'+this.nutritionInfo.energy+'千卡'+this.nutritionInfo.carbohydrate+'g碳水'
 				});
 				app.saveFood({
 					genre:2,
