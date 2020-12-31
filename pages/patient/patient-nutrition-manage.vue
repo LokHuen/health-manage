@@ -165,8 +165,8 @@
 			</view> -->
 			<div id="echarts" class="echarts"></div>
 			<view style="font-size:24rpx;padding:0 0 30rpx 40rpx;text-align:left;">
-			<view ><text class="centerwh">0~1:无营养不良</text>2~3:可疑营养不良 </view>
-			<view ><text class="centerwh">4~8:中度营养不良</text>>=9:重度营养不良</view>
+			<view ><text class="centerwh"><text class="smallblockleft color1"></text>0~1:无营养不良</text><text class="smallblockleft color2"></text>2~3:可疑营养不良 </view>
+			<view ><text class="centerwh"><text class="smallblockleft color3"></text>4~8:中度营养不良</text><text class="smallblockleft color4"></text>>=9:重度营养不良</view>
 			</view>
 		</view>
 
@@ -965,6 +965,12 @@
 </script>
 
 <style lang="scss">
+	.smallblockleft{width:20rpx;height:20rpx;border-radius:4rpx;margin:0 10rpx 0 8rpx;display: inline-block;background:#4CD964;
+		&.color1{background:#52a29e;}
+		&.color2{background:#ffcf76;}
+		&.color3{background:#ffe1e1;}
+		&.color4{background:#b7c8e3;}
+	}
 	.actionlist{
 		margin:0 38rpx 38rpx;
 		.sportitem{
