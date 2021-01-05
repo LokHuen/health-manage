@@ -104,8 +104,8 @@
 					<view class="blockgreen"></view>
 					建议摄入值
 					<view class="blockblue"></view>
-					<view @click="$refs.leavepopup.open()">留存值</view>
-					<image src="../../static/icon/wenhaoIcon.png" mode="widthFix" class="askIcon" @click="$refs.leavepopup.open()"></image>
+					<view click="$refs.leavepopup.open()">实际摄入</view>
+					<!-- <image src="../../static/icon/wenhaoIcon.png" mode="widthFix" class="askIcon" @click="$refs.leavepopup.open()"></image> -->
 				</view>
 				
 			</view>
@@ -640,7 +640,7 @@
 				        {
 				            type: 'category',
 							axisLabel:{fontSize:10},
-				            data: ["蛋白质","脂肪","碳水化合物"],//xdata,
+				            data: ["碳水化合物","脂肪","蛋白质"],//xdata,
 				            axisTick: {
 								show: false,
 				                alignWithLabel: true
@@ -669,7 +669,7 @@
 				            name: '建议摄入值',
 				            type: 'bar',
 				            barWidth: '20%',
-				            data: [this.infoData.dailyProtein,this.infoData.dailyFat,this.infoData.dailyCarbonHydrate],//linedata,
+				            data: [this.infoData.dailyCarbonHydrate,this.infoData.dailyFat,this.infoData.dailyProtein],//linedata,
 							label: {
 								normal: {
 									show: true,
@@ -687,7 +687,7 @@
 						    name: '留存值',
 						    type: 'bar',
 						    barWidth: '20%',
-						    data: [this.infoData.protein,this.infoData.fat,this.infoData.carbohydrate],//linedata,
+						    data: [this.infoData.carbohydrate,this.infoData.fat,this.infoData.protein],//linedata,
 							barGap:"40%",
 							label: {
 								normal: {
