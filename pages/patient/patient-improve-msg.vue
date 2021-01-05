@@ -33,7 +33,9 @@
 		
 		<view class="name-box">
 			<view class="name-tips">* 所患疾病</view>
-			<input class="name-input" type="text" value="" placeholder="请填写疾病名称" v-model="illness" />
+			<!-- <input class="name-input" type="text" value="" placeholder="请填写疾病名称" v-model="illness" /> -->
+			
+			<view :class="illness?'name-input':'name-novalue-input'" @click="openSelectResult">{{illness?illness:'请选择所患疾病'}}</view>
 		</view>
 		<view class="name-box">
 			<view class="name-tips">* 当前身高</view>
@@ -110,6 +112,17 @@
 						<view style="height: 30rpx;" ></view>
 				</view>
 		</uni-popup>
+	    <uni-popup ref="resultPop" type="bottom">
+	    	<view class="i-sex-content">
+	    		<text class="i-sex-title">疾病选择</text>
+				<scroll-view scroll-y="true" style="max-height: 750rpx;">
+					<view>
+						<view v-for="(item,index) in inllList" :key="index" :class="illness==item?'i-sex-item line active':'i-sex-item line'" @click="selectmicResult(item)">{{item}}</view>
+					</view>
+				</scroll-view>
+	    		
+	    	</view>
+	    </uni-popup>
 	</view>
 </template>
 
@@ -172,12 +185,25 @@
 				type: 1, //1表示点击更新信息进来，2表示用户未填写信息系统自动跳进来的
 				hasArea: false,
 				infoData:{},
+				inllList:['乳腺癌','宫颈癌','肝癌','结直肠癌','胃癌','卵巢癌','肺癌',
+				'淋巴瘤','头颈癌','肾癌','膀胱癌','胰腺癌','黑色素瘤','鼻咽癌','前列腺癌',
+				'食管癌','子宫内膜癌','骨髓瘤','骨髓增殖性肿瘤','尿路上皮癌','胸腺癌',
+				'胆道癌','白血病','甲状腺癌','晚期实体瘤','其他疾病'
+				],
+
 			}
 		},
 		onShow(){
 			this.getInfo();
 		},
 		methods: {
+			selectmicResult(item){
+			   this.illness = item;
+			   this.$refs.resultPop.close();
+			},
+			openSelectResult(){
+				this.$refs.resultPop.open();
+			},
 			disagree(){
 			    // uni.redirectTo({
 			    // 	url:'patient-nutrition-manage'
@@ -370,7 +396,7 @@
 		border-radius: 20rpx 20rpx 0rpx 0rpx;
 
 		.i-sex-title {
-			width: 100%;
+			//width: 100%;
 			color: #272727;
 			font-size: 32rpx;
 			font-weight: bold;
@@ -380,7 +406,7 @@
 		}
 
 		.i-sex-item {
-			width: 100%;
+			//width: 100%;
 			color: #272727;
 			font-size: 32rpx;
 			padding: 20rpx;
@@ -388,7 +414,7 @@
 		}
 
 		.line {
-			// border-bottom: 1rpx solid #DDDDDD;
+			 border-bottom: 1rpx solid #DDDDDD;
 		}
 
 		.active {
@@ -469,6 +495,15 @@
 				height: 100rpx;
 				line-height: 100rpx;
 			}
+			
+			.name-novalue-input{
+				margin-left: 30rpx;
+				color: #b2b2b2;
+				font-size: 15px;
+				height: 100rpx;
+				line-height: 100rpx;
+			}
+			
 
 			.right-tip {
 				position: absolute;
