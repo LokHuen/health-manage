@@ -25,17 +25,17 @@
 				<view :class="(city&&province&&hasArea)||infoData.region?'has-value':'sex-value'">{{(city&&province&&hasArea)?(province+' '+city):(infoData.region?infoData.region:'点击选择')}}</view>
 			</picker>
 		</view>
-		
+
 		<view class="name-box">
 			<view class="name-tips">* 联系电话</view>
 			<input class="name-input" type="number" value="" placeholder="请填写联系电话" v-model="phone" />
 		</view>
-		
+
 		<view class="name-box">
-			<view class="name-tips">* 所患疾病</view>
+			<view class="name-tips">* 疾病诊断</view>
 			<!-- <input class="name-input" type="text" value="" placeholder="请填写疾病名称" v-model="illness" /> -->
-			
-			<view :class="illness?'name-input':'name-novalue-input'" @click="openSelectResult">{{illness?illness:'请选择所患疾病'}}</view>
+
+			<view :class="illness?'name-input':'name-novalue-input'" @click="openSelectResult">{{illness?illness:'请选择疾病诊断'}}</view>
 		</view>
 		<view class="name-box">
 			<view class="name-tips">* 当前身高</view>
@@ -120,7 +120,7 @@
 						<view v-for="(item,index) in inllList" :key="index" :class="illness==item?'i-sex-item line active':'i-sex-item line'" @click="selectmicResult(item)">{{item}}</view>
 					</view>
 				</scroll-view>
-	    		
+
 	    	</view>
 	    </uni-popup>
 	</view>
@@ -495,7 +495,7 @@
 				height: 100rpx;
 				line-height: 100rpx;
 			}
-			
+
 			.name-novalue-input{
 				margin-left: 30rpx;
 				color: #b2b2b2;
@@ -503,7 +503,7 @@
 				height: 100rpx;
 				line-height: 100rpx;
 			}
-			
+
 
 			.right-tip {
 				position: absolute;
