@@ -13,28 +13,28 @@
 				<view class="health-item-detail">{{infoData.patientGender}}</view>
 			</view>
 		</view>
-		
+
 		<view class="health-content">
 			<view class="health-item">
 				<view class="health-item-title">出生日期</view>
 				<view class="health-item-detail">{{infoData.birthday}}</view>
 			</view>
 		</view>
-		
+
 		<view class="health-content">
 			<view class="health-item">
 				<view class="health-item-title">联系电话</view>
 				<view class="health-item-detail">{{infoData.phone}}</view>
 			</view>
 		</view>
-		
+
 		<view class="health-content">
 			<view class="health-item">
-				<view class="health-item-title">所患疾病</view>
+				<view class="health-item-title">疾病诊断</view>
 				<view class="health-item-detail">{{infoData.illness}}</view>
 			</view>
 		</view>
-		
+
 		<view class="health-content">
 			<view class="health-item">
 				<view class="health-item-title">所在城市</view>
@@ -47,7 +47,7 @@
 				<view class="health-item-detail">{{(infoData.height?infoData.height:'')+'cm'}}</view>
 			</view>
 		</view>
-		
+
 		<view class="health-content">
 			<view class="health-item">
 				<view class="health-item-title">体重</view>
@@ -73,10 +73,12 @@
 			// 		url:'../doctor/doctor-center'
 			// 	});
 			// }else{
-				
+
 			// }
-			this.judgeUserAuth();
-			
+			if(app.getCache('uid')){
+				this.judgeUserAuth();
+			}
+
 		},
 		data() {
 			return {
@@ -92,7 +94,7 @@
 				uni.navigateTo({
 					url:'patient-improve-msg?type='+this.type
 				})
-				
+
 			},
 			getInfo(){
 				app.patientBasicInfo({}).then(res =>{
@@ -118,12 +120,12 @@
 									url:'patient-improve-msg'
 								});
 							}
-							
+
 						}
 					}
 				});
 			},
-			
+
 		}
 	}
 </script>
