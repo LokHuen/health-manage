@@ -28,11 +28,7 @@
 			
 		},
 		methods: {
-			selectItem(item){
-				uni.navigateTo({
-					url:'member-detail'
-				})
-			}
+			
 		
 		},
 
