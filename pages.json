@@ -1,6 +1,24 @@
 {
 	"pages": [
 		{
+			"path": "pages/sales/index",
+			"style": {
+				"navigationBarTitleText": "业务管理中心"
+			}
+		},
+		{
+			"path": "pages/sales/resource-report-list",
+			"style": {
+				"navigationBarTitleText": "资源报备"
+			}
+		},
+		{
+			"path": "pages/sales/resource-report",
+			"style": {
+				"navigationBarTitleText": "资源报备"
+			}
+		},
+		{
 			"path": "pages/patient/patient-improve-msg",
 			"style": {
 				"navigationBarTitleText": "完善信息"
@@ -136,12 +154,7 @@
 				"navigationBarTitleText": "Top Business System"
 			}
 		},
-		{
-			"path": "pages/sales/index",
-			"style": {
-				"navigationBarTitleText": "业务管理中心"
-			}
-		},
+		
 		{
 			"path": "pages/sales/register",
 			"style": {

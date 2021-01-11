@@ -396,17 +396,14 @@
 		border-radius: 20rpx 20rpx 0rpx 0rpx;
 
 		.i-sex-title {
-			//width: 100%;
 			color: #272727;
 			font-size: 32rpx;
 			font-weight: bold;
 			text-align: center;
 			padding-bottom: 20rpx;
-			// border-bottom: 1rpx solid #DDDDDD;
 		}
 
 		.i-sex-item {
-			//width: 100%;
 			color: #272727;
 			font-size: 32rpx;
 			padding: 20rpx;
@@ -459,7 +456,7 @@
 	.container {
 		.title {
 			color: #333333;
-			font-size: 15px;
+			font-size: 30rpx;
 			margin-left: 44rpx;
 			margin-right: 44rpx;
 			padding-top: 40rpx;
@@ -481,7 +478,7 @@
 
 			.name-tips {
 				color: #333333;
-				font-size: 15px;
+				font-size: 30rpx;
 				height: 100rpx;
 				line-height: 100rpx;
 				min-width: 130rpx;
@@ -491,7 +488,7 @@
 				flex: 1;
 				margin-left: 30rpx;
 				color: #333333;
-				font-size: 15px;
+				font-size: 30rpx;
 				height: 100rpx;
 				line-height: 100rpx;
 			}
@@ -499,7 +496,7 @@
 			.name-novalue-input{
 				margin-left: 30rpx;
 				color: #b2b2b2;
-				font-size: 15px;
+				font-size: 30rpx;
 				height: 100rpx;
 				line-height: 100rpx;
 			}
@@ -508,7 +505,7 @@
 			.right-tip {
 				position: absolute;
 				color: #333333;
-				font-size: 15px;
+				font-size: 30rpx;
 				right: 0;
 				top: 30rpx;
 			}
@@ -523,7 +520,7 @@
 
 			.sex-tips {
 				color: #333333;
-				font-size: 15px;
+				font-size: 30rpx;
 				height: 100rpx;
 				line-height: 100rpx;
 				min-width: 130rpx;
@@ -544,7 +541,7 @@
 				margin-left: 30rpx;
 				padding-right: 0;
 				color: #333333;
-				font-size: 15px;
+				font-size: 30rpx;
 				height: 100rpx;
 				line-height: 100rpx;
 				// border: 1rpx solid #4CD964;
@@ -553,13 +550,13 @@
 
 		.pic-title {
 			color: #333333;
-			font-size: 15px;
+			font-size: 30rpx;
 			padding-left: 43rpx;
 			padding-top: 30rpx;
 		}
 
 		.pic-tip {
-			font-size: 14px;
+			font-size: 28rpx;
 			color: #999999;
 			padding-top: 20rpx;
 			padding-left: 40rpx;
@@ -616,17 +613,17 @@
 				background-color: #52A29E !important;
 				border-radius: 45rpx;
 				color: #FFFFFF;
-				font-size: 17px;
+				font-size: 34rpx;
 			}
 		}
 		.popup-content{
 			background-color: #FFFFFF;
 			border-radius: 10px 10px 0px 0px;
-			font-size: 13px;
+			font-size: 26rpx;
 			.tips-title{
 				margin-top: 60rpx;
 				text-align: center;
-				font-size: 17px;
+				font-size: 34rpx;
 				color: #333333;
 			}
 			.tips-common{
@@ -643,7 +640,7 @@
 				text-align: center;
 				background-color: #59A29F;
 				color: #FFFFFF;
-				font-size: 15px;
+				font-size: 30rpx;
 				height: 90rpx;
 				line-height: 90rpx;
 				margin-top: 20rpx;
@@ -654,7 +651,7 @@
 				text-align: center;
 				background-color: #999999;
 				color: #FFFFFF;
-				font-size: 15px;
+				font-size: 30rpx;
 				height: 90rpx;
 				line-height: 90rpx;
 				margin-top: 30rpx;

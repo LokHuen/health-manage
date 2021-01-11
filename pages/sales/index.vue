@@ -31,7 +31,7 @@
 	
 		data() {
 			return {
-				list: ["名片码","绑定的用户","账户","身份认证","修改密码"],
+				list: ["名片码","绑定的用户","账户","资源报备","身份认证","修改密码"],
 				info:{}
 			}
 		},
@@ -55,11 +55,17 @@
 					uni.navigateTo({
 						url:'sales-account-list'
 					});
-				}else if(index==4){
+				}else if(index==5){
 					uni.navigateTo({
 						url:'change-password'
 					});
-				}else{
+				}else if(index==3){
+					//资源报备
+					uni.navigateTo({
+						url:'resource-report-list'
+					});
+				}
+				else{
 					this.judgeDoctorAuthenticationStatus();
 				}
 			},
