@@ -1,6 +1,63 @@
 {
 	"pages": [
 		{
+			"path": "pages/agent/index",
+			"style": {
+				"navigationBarTitleText": "业务管理中心"
+			}
+		},
+		{
+			"path": "pages/agent/order-list",
+			"style": {
+				"navigationBarTitleText": "订单列表"
+			}
+		},
+		
+		{
+			"path": "pages/patient/patient-nutrition-manage",
+			"style": {
+				"navigationBarTitleText": "营养管理"
+			}
+		},
+		
+		{
+			"path": "pages/agent/my-business",
+			"style": {
+				"navigationBarTitleText": "我开展的业务"
+			}
+		},
+		{
+			"path": "pages/agent/month-order-list",
+			"style": {
+				"navigationBarTitleText": "按月统计订单数据"
+			}
+		},
+		{
+			"path": "pages/agent/doctor-list",
+			"style": {
+				"navigationBarTitleText": "医生列表"
+			}
+		},
+		{
+			"path": "pages/agent/team-member-list",
+			"style": {
+				"navigationBarTitleText": "团队成员"
+			}
+		},
+		{
+			"path": "pages/agent/member-detail",
+			"style": {
+				"navigationBarTitleText": "成员详情"
+			}
+		},
+		{
+			"path": "pages/patient/patient-improve-msg",
+			"style": {
+				"navigationBarTitleText": "完善信息"
+			}
+		},
+		
+		{
 			"path": "pages/sales/index",
 			"style": {
 				"navigationBarTitleText": "业务管理中心"
@@ -18,18 +75,8 @@
 				"navigationBarTitleText": "资源报备"
 			}
 		},
-		{
-			"path": "pages/patient/patient-improve-msg",
-			"style": {
-				"navigationBarTitleText": "完善信息"
-			}
-		},
-		{
-			"path": "pages/patient/patient-nutrition-manage",
-			"style": {
-				"navigationBarTitleText": "营养管理"
-			}
-		},
+		
+		
 		{
 		
 			"path": "pages/sport/sport-list",
