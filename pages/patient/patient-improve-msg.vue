@@ -7,18 +7,18 @@
 			<view class="name-tips">* 姓名</view>
 			<input class="name-input" type="text" value="" placeholder="请填写真实名字" v-model="patientName" />
 		</view>
-		<view class="sex-box" @click="selectSex(0)">
+		<view class="sex-box" @click="selectSex(0)" v-if="type!=2">
 			<view class="sex-tips">* 性别</view>
 			<view :class="patientGender==0?'sex-value':'has-value'">{{patientGender==0?'点击选择':patientGender==1?'男':'女'}}</view>
 		</view>
-		<view class="sex-box">
+		<view class="sex-box" v-if="type!=2">
 			<view class="sex-tips">* 出生日期</view>
 			<picker mode="date" :value="birthday" :start="startDate" :end="endDate" @change="bindDateChange" style="flex: 1;">
 				<view :class="birthday?'has-value':'sex-value'">{{birthday?birthday:'点击选择'}}</view>
 			</picker>
 
 		</view>
-		<view class="sex-box">
+		<view class="sex-box" v-if="type!=2">
 			<view class="sex-tips">* 所在城市</view>
 			<picker mode="multiSelector" :range="areaList" :range-key="'name'" @columnchange="columnChange" @cancel="hideArea(1)"
 			 @change="hideArea(0)" style="flex: 1;">
@@ -71,9 +71,9 @@
 		</view>
 
 
-		<view class="pic-title" v-if="!infoData.patientName">病历照片</view>
-		<view class="pic-tip" v-if="!infoData.patientName">上传出院小结（重要）、影像报告等内容，方便医生 评估病情</view>
-		<view class="pic-content-box" v-if="!infoData.patientName">
+		<view class="pic-title" v-if="!infoData.patientName &&type!=2">病历照片</view>
+		<view class="pic-tip" v-if="!infoData.patientName &&type!=2">上传出院小结（重要）、影像报告等内容，方便医生 评估病情</view>
+		<view class="pic-content-box" v-if="!infoData.patientName &&type!=2">
 			<view class="ccimglist">
 				<view v-for="(item,index) in imgList" :key="index" :class="(index%3==0)?'img-box-first':'img-box'">
 					<image :src="item" mode="aspectFill" @click="previewImage(index)" class="imagelist"></image>
@@ -191,7 +191,8 @@
 	export default {
 
 		onLoad(props) {
-			this.type = props.type || 1;
+			//type==2表示患者扫描医生二维码后，点击公众号消息进入信息完善页，这张页面不显示性别、出生日期、所在城市、病例照片
+			this.type = props.type || 1; 
 			http.get(http.urls.get_all_province).then((res) => {
 				this.areaList[0] = res.data;
 				if (this.areaList[0] && this.areaList[0].length > 0) {
@@ -344,7 +345,7 @@
 			getInfo() {
 				app.patientBasicInfo({}).then(res => {
 					if (res.status == 1) {
-						if (res.data.patientName && res.data.cityId && res.data.provinceId) {
+						if (res.data) {
 							this.infoData = res.data;
 							this.patientName = this.infoData.patientName;
 							this.phone = this.infoData.phone;
@@ -363,7 +364,7 @@
 						}
 						
 						this.projectList = res.data.projectList;
-						if (this.projectList.length > 0) {
+						if (this.projectList) {
 							for (var i = 0; i < this.projectList.length; i++) {
 								var project = this.projectList[i];
 								if (project.type == 2) {
@@ -468,28 +469,41 @@
 				});
 			},
 			submit() {
-				console.log(this.projectList);
-				for (var i = 0; i < this.projectList.length; i++) {
-					var project = this.projectList[i];
-					if (project.type == 1) {
-						if (project.required == 1 && !project.detailList) {
-							app.tip('请输入必填信息')
-							return;
-						}
-
-					} else {
-						if (project.required == 1 && !project.choseContent) {
-							app.tip('请输入必填信息')
-							return;
+				if(this.projectList){
+					for (var i = 0; i < this.projectList.length; i++) {
+						var project = this.projectList[i];
+						if (project.type == 1) {
+							if (project.required == 1 && !project.detailList) {
+								app.tip('请输入必填信息')
+								return;
+							}
+					
+						} else {
+							if (project.required == 1 && !project.choseContent) {
+								app.tip('请输入必填信息')
+								return;
+							}
 						}
 					}
 				}
-				if (!this.patientName ||
-					this.patientGender == 0 || !this.birthday || !this.cityId || !this.provinceId || !this.illness ||
-					!this.weight || !this.height || !this.phone) {
-					app.tip('请输入完整信息');
-					return;
+				
+				if(this.type==2){
+					if (!this.patientName ||
+					    !this.illness ||
+						!this.weight || !this.height || !this.phone) {
+						app.tip('请输入完整信息');
+						return;
+					}
+					
+				}else{
+					if (!this.patientName ||
+						this.patientGender == 0 || !this.birthday || !this.cityId || !this.provinceId || !this.illness ||
+						!this.weight || !this.height || !this.phone) {
+						app.tip('请输入完整信息');
+						return;
+					}
 				}
+				
 				if (this.imgList.length > 0) {
 					this.uploadImg();
 				} else {
@@ -527,49 +541,70 @@
 			},
 			submitRequest() {
 				var projectList = [];
-				for (var i = 0; i < this.projectList.length; i++) {
-				   var project =this.projectList[i];
-				   if(project.type == 1){
-					   if(project.detailList){
-						   projectList.push({projectId:project.id,answer:project.detailList})
-					   }
-				   }else if(project.type == 2){
-					   if(project.choseContent){
-						   projectList.push({projectId:project.id,answer:project.choseId})
-					   }
-				   }else{
-					   if(project.choseContent){
-						   var ids = '';
-						   for (var j = 0; j < project.ids.length; j++) {
-						   	   ids = ids+project.ids[j]+',';
+			    if(this.projectList){
+					for (var i = 0; i < this.projectList.length; i++) {
+					   var project =this.projectList[i];
+					   if(project.type == 1){
+						   if(project.detailList){
+							   projectList.push({projectId:project.id,answer:project.detailList})
 						   }
-						  ids = ids.substring(0, ids.length - 1);
-					   	  projectList.push({projectId:project.id,answer:ids})
+					   }else if(project.type == 2){
+						   if(project.choseContent){
+							   projectList.push({projectId:project.id,answer:project.choseId})
+						   }
+					   }else{
+						   if(project.choseContent){
+							   var ids = '';
+							   for (var j = 0; j < project.ids.length; j++) {
+							   	   ids = ids+project.ids[j]+',';
+							   }
+							  ids = ids.substring(0, ids.length - 1);
+						   	  projectList.push({projectId:project.id,answer:ids})
+						   }
+						   
 					   }
-					   
-				   }
-				}
-				projectList = JSON.stringify(projectList);
-				app.savePatientInfo({
-					patientName: this.patientName,
-					phone: this.phone,
-					patientGender: this.patientGender,
-					birthday: this.birthday,
-					cityId: this.cityId,
-					provinceId: this.provinceId,
-					illness: this.illness,
-					height: this.height,
-					weight: this.weight,
-					pathologyUrl: this.pathologyUrl,
-					projectList:projectList,
-				}).then(res => {
-					if (res.status == 1) {
-						uni.navigateTo({
-							url: 'patient-submit-sucess?type=' + this.type
-						});
-
 					}
-				});
+					projectList = JSON.stringify(projectList);
+				}
+				if(this.type==2){
+					app.savePatientInfo({
+						patientName: this.patientName,
+						phone: this.phone,
+						illness: this.illness,
+						height: this.height,
+						weight: this.weight,
+						projectList:projectList,
+					}).then(res => {
+						if (res.status == 1) {
+							uni.navigateTo({
+								url: 'patient-submit-sucess?type=' + this.type
+							});
+					
+						}
+					});
+				}else{
+					app.savePatientInfo({
+						patientName: this.patientName,
+						phone: this.phone,
+						patientGender: this.patientGender,
+						birthday: this.birthday,
+						cityId: this.cityId,
+						provinceId: this.provinceId,
+						illness: this.illness,
+						height: this.height,
+						weight: this.weight,
+						pathologyUrl: this.pathologyUrl,
+						projectList:projectList,
+					}).then(res => {
+						if (res.status == 1) {
+							uni.navigateTo({
+								url: 'patient-submit-sucess?type=' + this.type
+							});
+					
+						}
+					});
+				}
+				
 			},
 			selectSex(type) {
 				if (type == 0) {

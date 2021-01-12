@@ -10,14 +10,14 @@
 		<view class="health-content">
 			<view class="health-item">
 				<view class="health-item-title">性别</view>
-				<view class="health-item-detail">{{infoData.patientGender}}</view>
+				<view class="health-item-detail">{{infoData.patientGender?infoData.patientGender:'暂未填写'}}</view>
 			</view>
 		</view>
 
 		<view class="health-content">
 			<view class="health-item">
 				<view class="health-item-title">出生日期</view>
-				<view class="health-item-detail">{{infoData.birthday}}</view>
+				<view class="health-item-detail">{{infoData.birthday?infoData.birthday:'暂未填写'}}</view>
 			</view>
 		</view>
 
@@ -38,7 +38,7 @@
 		<view class="health-content">
 			<view class="health-item">
 				<view class="health-item-title">所在城市</view>
-				<view class="health-item-detail">{{infoData.region}}</view>
+				<view class="health-item-detail">{{infoData.region?infoData.region:'暂未填写'}}</view>
 			</view>
 		</view>
 		<view class="health-content">
@@ -148,8 +148,6 @@
 				});
 			},
 			judgeUserAuth(){
-				this.getInfo();
-				return;
 				app.judgeUserAuth({}).then(res =>{
 					if(res.status ==1){
 						// app.setCache('userType',res.data.userType);
