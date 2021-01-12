@@ -358,41 +358,41 @@
 							var month = this.infoData.birthday.split('年')[1].split('月')[0];
 							var day = this.infoData.birthday.split('年')[1].split('月')[1].split('日')[0];
 							this.birthday = year + '-' + month + '-' + day;
-							this.projectList = res.data.projectList;
-							if (this.projectList.length > 0) {
-								for (var i = 0; i < this.projectList.length; i++) {
-									var project = this.projectList[i];
-									if (project.type == 2) {
-										//单选
-										for (var j = 0; j < project.detailList.length; j++) {
-											if (project.detailList[j].choose == 1) {
-												project.choseId = project.detailList[j].id;
-												project.choseContent = project.detailList[j].content;
-											}
-										}
-									} else if (project.type == 3) {
-										//多选
-										var ids = [];
-										var contents = [];
-										var choseContent = '';
-										for (var j = 0; j < project.detailList.length; j++) {
-											if (project.detailList[j].choose == 1) {
-												ids.push(project.detailList[j].id);
-												contents.push(project.detailList[j].content);
-												choseContent = choseContent + project.detailList[j].content + ','
-											}
-										}
-										choseContent = choseContent.substring(0, choseContent.length - 1);
-										project.ids = ids;
-										project.contents = contents;
-										project.choseContent = choseContent;
-									}
-									this.projectList[i] = project;
-								}
-							}
-							console.log(this.projectList);
 						} else {
 							this.showTipPopup();
+						}
+						
+						this.projectList = res.data.projectList;
+						if (this.projectList.length > 0) {
+							for (var i = 0; i < this.projectList.length; i++) {
+								var project = this.projectList[i];
+								if (project.type == 2) {
+									//单选
+									for (var j = 0; j < project.detailList.length; j++) {
+										if (project.detailList[j].choose == 1) {
+											project.choseId = project.detailList[j].id;
+											project.choseContent = project.detailList[j].content;
+										}
+									}
+								} else if (project.type == 3) {
+									//多选
+									var ids = [];
+									var contents = [];
+									var choseContent = '';
+									for (var j = 0; j < project.detailList.length; j++) {
+										if (project.detailList[j].choose == 1) {
+											ids.push(project.detailList[j].id);
+											contents.push(project.detailList[j].content);
+											choseContent = choseContent + project.detailList[j].content + ','
+										}
+									}
+									choseContent = choseContent.substring(0, choseContent.length - 1);
+									project.ids = ids;
+									project.contents = contents;
+									project.choseContent = choseContent;
+								}
+								this.projectList[i] = project;
+							}
 						}
 
 					}
