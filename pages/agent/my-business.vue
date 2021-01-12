@@ -45,24 +45,24 @@
 			clickItem(index){
 				if(index==0){
 					uni.navigateTo({
-						url:'sales-business-card?id='+app.getCache('uid')
+						 url:'../sales/sales-business-card?id='+app.getCache('uid')
 					});
 				}else if(index==1){
 					uni.navigateTo({
-						url:'user'
+						url:'../sales/user'
 					});
 				}else if(index==2){
 					uni.navigateTo({
-						url:'sales-account-list'
+						url:'../sales/sales-account-list'
 					});
 				}else if(index==5){
 					uni.navigateTo({
-						url:'change-password'
+						url:'../sales/change-password'
 					});
 				}else if(index==3){
 					//资源报备
 					uni.navigateTo({
-						url:'resource-report-list'
+						url:'../sales/resource-report-list'
 					});
 				}
 				else{

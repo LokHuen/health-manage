@@ -58,7 +58,7 @@
 					});
 				}else if(index==3){
 					uni.navigateTo({
-						url:'change-password'
+						url:'../sales/change-password'
 					});
 				}
 				
