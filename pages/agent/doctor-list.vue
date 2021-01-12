@@ -6,7 +6,10 @@
 		   	<view class="name">张医生</view>
 			<view class="hospital">中山医院</view>
 		   </view>
-		   <view class="number-box">78 患者</view>
+		   <view class="number-box">
+		   <text style="color: #007AFF;">78 </text>
+		   <text>患者 </text>
+		   </view>
 	   </view>
 	</view>
 </template>
