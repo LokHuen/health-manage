@@ -1,6 +1,24 @@
 {
 	"pages": [
 		{
+			"path": "pages/patient/patient-basic-information",
+			"style": {
+				"navigationBarTitleText": "基础信息"
+			}
+		},
+		{
+			"path": "pages/doctor/doc-patient-basic-information",
+			"style": {
+				"navigationBarTitleText": "基础信息"
+			}
+		},
+		{
+			"path": "pages/patient/patient-improve-msg",
+			"style": {
+				"navigationBarTitleText": "完善信息"
+			}
+		},
+		{
 			"path": "pages/agent/index",
 			"style": {
 				"navigationBarTitleText": "业务管理中心"
@@ -50,12 +68,7 @@
 				"navigationBarTitleText": "成员详情"
 			}
 		},
-		{
-			"path": "pages/patient/patient-improve-msg",
-			"style": {
-				"navigationBarTitleText": "完善信息"
-			}
-		},
+		
 		
 		{
 			"path": "pages/sales/index",
@@ -270,12 +283,7 @@
 		},
 
 
-		{
-			"path": "pages/doctor/doc-patient-basic-information",
-			"style": {
-				"navigationBarTitleText": "基础信息"
-			}
-		},
+		
 		{
 			"path": "pages/doctor/doc-patient-case-manage",
 			"style": {
@@ -295,12 +303,7 @@
 
 
 
-		{
-			"path": "pages/patient/patient-basic-information",
-			"style": {
-				"navigationBarTitleText": "基础信息"
-			}
-		},
+		
 
 		{
 			"path": "pages/doctor/doctor-improve-msg",
