@@ -7,18 +7,18 @@
 			<view class="name-tips">* 姓名</view>
 			<input class="name-input" type="text" value="" placeholder="请填写真实名字" v-model="patientName" />
 		</view>
-		<view class="sex-box" @click="selectSex(0)" v-if="type!=2">
+		<view class="sex-box" @click="selectSex(0)" v-if="formQrCode==2">
 			<view class="sex-tips">* 性别</view>
 			<view :class="patientGender==0?'sex-value':'has-value'">{{patientGender==0?'点击选择':patientGender==1?'男':'女'}}</view>
 		</view>
-		<view class="sex-box" v-if="type!=2">
+		<view class="sex-box" v-if="formQrCode==2">
 			<view class="sex-tips">* 出生日期</view>
 			<picker mode="date" :value="birthday" :start="startDate" :end="endDate" @change="bindDateChange" style="flex: 1;">
 				<view :class="birthday?'has-value':'sex-value'">{{birthday?birthday:'点击选择'}}</view>
 			</picker>
 
 		</view>
-		<view class="sex-box" v-if="type!=2">
+		<view class="sex-box" v-if="formQrCode==2">
 			<view class="sex-tips">* 所在城市</view>
 			<picker mode="multiSelector" :range="areaList" :range-key="'name'" @columnchange="columnChange" @cancel="hideArea(1)"
 			 @change="hideArea(0)" style="flex: 1;">
@@ -71,9 +71,9 @@
 		</view>
 
 
-		<view class="pic-title" v-if="!infoData.patientName &&type!=2">病历照片</view>
-		<view class="pic-tip" v-if="!infoData.patientName &&type!=2">上传出院小结（重要）、影像报告等内容，方便医生 评估病情</view>
-		<view class="pic-content-box" v-if="!infoData.patientName &&type!=2">
+		<view class="pic-title" v-if="!infoData.patientName &&formQrCode==2">病历照片</view>
+		<view class="pic-tip" v-if="!infoData.patientName &&formQrCode==2">上传出院小结（重要）、影像报告等内容，方便医生 评估病情</view>
+		<view class="pic-content-box" v-if="!infoData.patientName &&formQrCode==2">
 			<view class="ccimglist">
 				<view v-for="(item,index) in imgList" :key="index" :class="(index%3==0)?'img-box-first':'img-box'">
 					<image :src="item" mode="aspectFill" @click="previewImage(index)" class="imagelist"></image>
@@ -191,8 +191,8 @@
 	export default {
 
 		onLoad(props) {
-			//type==2表示患者扫描医生二维码后，点击公众号消息进入信息完善页，这张页面不显示性别、出生日期、所在城市、病例照片
 			this.type = props.type || 1; 
+			this.formQrCode = props.formQrCode ||2;
 			http.get(http.urls.get_all_province).then((res) => {
 				this.areaList[0] = res.data;
 				if (this.areaList[0] && this.areaList[0].length > 0) {
@@ -253,6 +253,7 @@
 				projectList: [],
 				currentProject: {},
 				currentIndex: '',
+				formQrCode:''
 			}
 		},
 		onShow() {
@@ -487,7 +488,7 @@
 					}
 				}
 				
-				if(this.type==2){
+				if(this.formQrCode==1){
 					if (!this.patientName ||
 					    !this.illness ||
 						!this.weight || !this.height || !this.phone) {
@@ -566,7 +567,7 @@
 					}
 					projectList = JSON.stringify(projectList);
 				}
-				if(this.type==2){
+				if(this.formQrCode==1){
 					app.savePatientInfo({
 						patientName: this.patientName,
 						phone: this.phone,
