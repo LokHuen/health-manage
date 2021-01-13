@@ -52,19 +52,19 @@
 		<view class="projectList" v-for="(item,index) in projectList">
 			<!-- 文本 -->
 			<view class="name-box" v-if="item.type==1">
-				<view class="name-tips">{{'* '+item.name}}</view>
+				<view class="name-tips">{{item.required==1?('* '+item.name):item.name}}</view>
 				<input class="name-input" :placeholder="item.reminder" v-model="item.detailList" />
 			</view>
 
 			<!-- 下拉单选 -->
 			<view class="name-box" v-if="item.type==2">
-				<view class="name-tips">{{'* '+item.name}}</view>
+				<view class="name-tips">{{item.required==1?('* '+item.name):item.name}}</view>
 				<view :class="item.choseContent?'name-input':'name-novalue-input'" @click="openSingleChose(index)">{{item.choseContent?item.choseContent:item.reminder}}</view>
 			</view>
 
 			<!-- 下拉多选 -->
 			<view class="name-box" v-if="item.type==3">
-				<view class="name-tips">{{'* '+item.name}}</view>
+				<view class="name-tips">{{item.required==1?('* '+item.name):item.name}}</view>
 				<view :class="item.choseContent?'name-input':'name-novalue-input'" @click="multipleChose(index)">{{item.choseContent?item.choseContent:item.reminder}}</view>
 			</view>
 
@@ -81,7 +81,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="upload-box" @click="choseImg" v-if="!infoData.patientName">点击上传</view>
+		<view class="upload-box" @click="choseImg" v-if="!infoData.patientName &&formQrCode==2">点击上传</view>
 
 
 		<view class="button-box">

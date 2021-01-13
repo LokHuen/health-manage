@@ -60,8 +60,6 @@
 						url:'change-password'
 					});
 				}else if(index==3){
-					app.tip('功能暂未开通');
-					return;
 					//资源报备
 					uni.navigateTo({
 						url:'resource-report-list'

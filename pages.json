@@ -7,6 +7,13 @@
 			}
 		},
 		{
+			"path": "pages/sales/index",
+			"style": {
+				"navigationBarTitleText": "业务管理中心"
+			}
+		},
+		
+		{
 			"path": "pages/patient/patient-basic-information",
 			"style": {
 				"navigationBarTitleText": "基础信息"
@@ -69,12 +76,7 @@
 		},
 		
 		
-		{
-			"path": "pages/sales/index",
-			"style": {
-				"navigationBarTitleText": "业务管理中心"
-			}
-		},
+		
 		{
 			"path": "pages/sales/resource-report-list",
 			"style": {
