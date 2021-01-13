@@ -104,7 +104,9 @@
 						passwd: "",
 						accountName: "",
 					};
-					uni.navigateBack();
+					uni.reLaunch({
+						url:"/pages/branch/list"
+					})
 				}).catch(res => {
 					app.loaded();
 					this.commiting = false;

@@ -54,7 +54,7 @@
 				        if (res.confirm) {
 				            app.accountdelete({id}).then(res => {
 								app.tip(res.msg);
-				            	this.getlist();
+				            	this.getlist(1);
 				            })
 				        }
 				    }
