@@ -48,6 +48,11 @@
 			
 		},
 		onShow() {
+			this.form={
+				accountCode: '',
+				passwd: "",
+				accountName: "",
+			};
 			this.id = this.$route.query.id;
 			if (this.id) this.getinfo(this.id);
 		},
