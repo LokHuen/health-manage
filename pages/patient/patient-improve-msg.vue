@@ -253,7 +253,7 @@
 				projectList: [],
 				currentProject: {},
 				currentIndex: '',
-				formQrCode:''
+				formQrCode:'',//1表示患者扫描医生二维码后，点击公众号消息进入信息完善页 2从基础信息进入
 			}
 		},
 		onShow() {
@@ -574,7 +574,7 @@
 						illness: this.illness,
 						height: this.height,
 						weight: this.weight,
-						projectList:projectList,
+						detailList:projectList,
 					}).then(res => {
 						if (res.status == 1) {
 							uni.navigateTo({
@@ -595,7 +595,7 @@
 						height: this.height,
 						weight: this.weight,
 						pathologyUrl: this.pathologyUrl,
-						projectList:projectList,
+						detailList:projectList,
 					}).then(res => {
 						if (res.status == 1) {
 							uni.navigateTo({
