@@ -1,11 +1,19 @@
 {
 	"pages": [
 		{
+			"path": "pages/sales/patient-list",
+			"style": {
+				"navigationBarTitleText": "患者列表"
+			},
+			"enablePullDownRefresh": true
+		},
+		{
 			"path": "pages/patient/patient-nutrition-manage",
 			"style": {
 				"navigationBarTitleText": "营养管理"
 			}
 		},
+		
 		{
 			"path": "pages/sales/index",
 			"style": {
