@@ -31,12 +31,7 @@
 			<input class="name-input" type="number" value="" placeholder="请填写联系电话" v-model="phone" />
 		</view>
 
-		<view class="name-box">
-			<view class="name-tips">* 疾病诊断</view>
-			<!-- <input class="name-input" type="text" value="" placeholder="请填写疾病名称" v-model="illness" /> -->
-
-			<view :class="illness?'name-input':'name-novalue-input'" @click="openSelectResult">{{illness?illness:'请选择疾病诊断'}}</view>
-		</view>
+		
 		<view class="name-box">
 			<view class="name-tips">* 当前身高</view>
 			<input class="name-input" type="text" value="" placeholder="请填写身高" v-model="height" />
@@ -48,6 +43,13 @@
 			<view class="right-tip">kg</view>
 		</view>
 
+
+        <view class="name-box">
+        	<view class="name-tips">* 疾病诊断</view>
+        	<!-- <input class="name-input" type="text" value="" placeholder="请填写疾病名称" v-model="illness" /> -->
+        
+        	<view :class="illness?'name-input':'name-novalue-input'" @click="openSelectResult">{{illness?illness:'请选择疾病诊断'}}</view>
+        </view>
 
 		<view class="projectList" v-for="(item,index) in projectList">
 			<!-- 文本 -->

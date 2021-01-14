@@ -2,12 +2,14 @@
 	<view class="container">
 		<view class="title">我的报备</view>
 		<view class="list-box" v-for="(item,index) in list">
-			<view class="list-title">医生</view>
-			<view class="list-desc">中山医院</view>
-			<view class="list-desc">内科</view>
+			<view class="list-title">{{item.type}}</view>
+			<view class="list-desc">{{item.hospital}}</view>
+			<view class="list-desc" v-if="item.type !='医院'">{{item.deptName}}</view>
+			<view class="list-desc" v-if="item.type =='医生'">{{item.doctorNmae}}</view>
 			<view style="height: 20rpx;"></view>
-			<view class="remove">移除</view>
+			<view class="remove" @click="remove(index)">移除</view>
 		</view>
+		<view style="height: 200rpx;"></view>
 		
 		<view class="button-box">
 			<button type="default" class="button" @click="submit">报备资源</button>
@@ -21,23 +23,52 @@
 	
 		data() {
 			return {
-			   list:[1,2,3]
+			   list: [],
+			   pageNo:1,
 			}
 		},
-		onLoad(){
-			
-		},
 		onShow(){
-			this.getData();
+			this.pageNo = 1;
+			this.getListData();	
+		},
+		onPullDownRefresh() {
+			this.pageNo = 1;
+			this.getListData();
+		},
+		onReachBottom() {
+			this.pageNo ++;
+			this.getListData();
 		},
 		methods: {
+			remove(index){
+				var id = this.list[index].id;
+				app.removeResource({id:id}).then(res =>{
+					if(res.status ==1){
+						app.tip('移除成功');
+					    this.list.splice(index,1);
+					}
+				});
+			},
 			submit(){
 				uni.navigateTo({
 					url:'resource-report'
 				})
-			}
-		
-			
+			},
+            getListData(){
+            	app.resourceList({pageNo:this.pageNo}).then(res =>{
+            		if(res.status===1){
+            			if(this.pageNo===1){
+            				this.list = res.data.list;
+            			}else{
+            				if(res.data.pageList.pageCount>this.pageNo){
+            					this.list = this.list.concat(res.data.list);
+            				}
+            			}
+            		}
+            		uni.stopPullDownRefresh();
+            	});
+            }
+		    
 		},
 
 	}

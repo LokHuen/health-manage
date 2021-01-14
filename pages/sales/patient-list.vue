@@ -20,6 +20,7 @@
 			<view class="desc">和医生绑定时间：2020年1月2日 12:09</view>
 			<view style="height: 40rpx;"></view>
         </view>
+		<view style="height: 100rpx;"></view>
 		
 		<uni-popup ref="popupPatient" type="bottom">
 			<!-- 选择患者 -->

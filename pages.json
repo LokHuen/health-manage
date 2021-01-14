@@ -1,6 +1,19 @@
 {
 	"pages": [
 		{
+			"path": "pages/sales/index",
+			"style": {
+				"navigationBarTitleText": "业务管理中心"
+			}
+		},
+		{
+			"path": "pages/sales/patient-list",
+			"style": {
+				"navigationBarTitleText": "患者列表"
+			},
+			"enablePullDownRefresh": true
+		},
+		{
 			"path": "pages/branch/add",
 			"style": {
 				"navigationBarTitleText": "帐号设置"
@@ -12,13 +25,7 @@
 				"navigationBarTitleText": "电脑端患者管理权限配置"
 			}
 		},
-		{
-			"path": "pages/sales/patient-list",
-			"style": {
-				"navigationBarTitleText": "患者列表"
-			},
-			"enablePullDownRefresh": true
-		},
+		
 		{
 			"path": "pages/patient/patient-nutrition-manage",
 			"style": {
@@ -26,12 +33,7 @@
 			}
 		},
 		
-		{
-			"path": "pages/sales/index",
-			"style": {
-				"navigationBarTitleText": "业务管理中心"
-			}
-		},
+		
 		
 		{
 			"path": "pages/patient/patient-basic-information",
@@ -101,7 +103,8 @@
 			"path": "pages/sales/resource-report-list",
 			"style": {
 				"navigationBarTitleText": "资源报备"
-			}
+			},
+			"enablePullDownRefresh": true
 		},
 		{
 			"path": "pages/sales/resource-report",
@@ -109,7 +112,6 @@
 				"navigationBarTitleText": "资源报备"
 			}
 		},
-		
 		
 		{
 		

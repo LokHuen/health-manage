@@ -61,8 +61,6 @@
 					});
 				}else if(index==3){
 					//资源报备
-					app.tip('功能暂未开放')
-					return;
 					uni.navigateTo({
 						url:'resource-report-list'
 					});

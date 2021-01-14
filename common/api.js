@@ -119,11 +119,20 @@ var api = {
 	//修改医嘱签名 
 	updateDoctorName:(data)=>{return rq("/wx/doctor/updateInfo",data,"POST");},
 	
-	//账号
-	accountsave:(data)=>{return rq("/wx/doctor/account/save",data,"POST");},//保存账号
-	accountdelete:(data)=>{return rq("/wx/doctor/account/delete",data,"POST");},//删除账号 
-	accountlist:(data)=>{return rq("/wx/doctor/account/list",data,"GET");},//账号列表
-	accountget:(data)=>{return rq("/wx/doctor/account/get",data,"GET");},//账号详情
+	//资源报备
+	//获取子地区，，没用
+	getChildrenArea:(data)=>{return rq("/wx/system/region/getChildren",data,"GET");},
+	//医院列表
+	hospitalList:(data)=>{return rq("/wx/service/hospital/list",data,"GET");},
+	//科室列表
+	getOptionList:(data)=>{return rq("/wx/system/dict/getOption",data,"GET");},
+	//保存资源
+	saveResource:(data)=>{return rq("/wx/sales/business/resource/save",data,"POST");},
+	//资源报备列表（分页）
+	resourceList:(data)=>{return rq("/wx/sales/business/resource/list",data,"GET");},
+	//移除报备
+	removeResource:(data)=>{return rq("/wx/sales/business/resource/delete",data,"POST");}, 
+
 }
 
 export {api};
