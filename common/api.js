@@ -118,6 +118,12 @@ var api = {
 	sportList:(data)=>{return rq("/wx/exercise/list",data,"GET");},
 	//修改医嘱签名 
 	updateDoctorName:(data)=>{return rq("/wx/doctor/updateInfo",data,"POST");},
+	
+	//账号
+	accountsave:(data)=>{return rq("/wx/doctor/account/save",data,"POST");},//保存账号
+	accountdelete:(data)=>{return rq("/wx/doctor/account/delete",data,"POST");},//删除账号 
+	accountlist:(data)=>{return rq("/wx/doctor/account/list",data,"GET");},//账号列表
+	accountget:(data)=>{return rq("/wx/doctor/account/get",data,"GET");},//账号详情
 }
 
 export {api};

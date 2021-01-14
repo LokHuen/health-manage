@@ -10,7 +10,7 @@
 				<view class="department">{{data.hospital+data.department}}</view>
 			</view>
 		</view>
-		<view class="item-list" v-for="(item,index) in list" :key="index" v-if="index==0 || index==3 || (index>0 && index<3 && data.showAccount==1)" @click="clickItem(index)">
+		<view class="item-list" v-for="(item,index) in list" :key="index" v-if="index==0 || index==3|| index==4 || (index>0 && index<3 && data.showAccount==1)" @click="clickItem(index)">
 			<view class="left-name">{{item}}</view>
 			<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
 			<view class="line" ></view>
@@ -25,7 +25,7 @@
 	
 		data() {
 			return {
-				list: ["名片码","账户","身份认证","医嘱署名"],
+				list: ["名片码","账户","身份认证","医嘱署名","电脑端患者管理权限配置"],
 				data:{}
 			}
 		},
@@ -44,10 +44,14 @@
 					});
 				}else if(index==2){
 					this.judgeDoctorAuthenticationStatus();
-				}else{
+				}else if(index==3){
 				    uni.navigateTo({
 				    	url:'doctor-signature?name='+this.data.adviceName
 				    });
+				}else{
+					uni.navigateTo({
+						url:'/pages/branch/list'
+					});
 				}
 			},
 			getData(){

@@ -1,6 +1,18 @@
 {
 	"pages": [
 		{
+			"path": "pages/branch/add",
+			"style": {
+				"navigationBarTitleText": "帐号设置"
+			}
+		},
+		{
+			"path": "pages/branch/list",
+			"style": {
+				"navigationBarTitleText": "电脑端患者管理权限配置"
+			}
+		},
+		{
 			"path": "pages/sales/patient-list",
 			"style": {
 				"navigationBarTitleText": "患者列表"
