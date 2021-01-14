@@ -18,9 +18,6 @@ function rq(url, data = {}, type, ctype) {
 				if (res.data.status === -100) {
 					reject('未登录')
 				}
-				if (res.data.status == -103){
-					resolve(res.data)
-				}
 				if (res.data.status !== 1) {
 					if(res.data.msg)
 					uni.showToast({
