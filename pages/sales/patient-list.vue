@@ -9,15 +9,15 @@
 			</view>
 		</view>
         <view class="list-box" v-for="(item,index) in list">
-			<view class="name">张小明</view>
-        	<view class="desc">男 88岁 乳腺癌</view>
-			<view class="desc">医生名字：黄利（广东省人民医院内科）</view>
+			<view class="name">{{item.patientName}}</view>
+        	<view class="desc">{{(item.patientGender &&item.age &&item.illness)?((item.patientGender==1?'男':'女')+item.age+'岁'+item.illness):'患者未完善资料'}}</view>
+			<view class="desc">{{'医生名字：'+item.docotorName+(item.hospital+item.department)}}</view>
 			<view class="desc">最近一次测评结果：中度营养不良（4分）</view>
 			<view class="desc">最近一次测评时间：2020年2月1日 12:09</view>
 			<view class="desc">暂无营养评估记录</view>
-			<view class="desc">订单数：2 （最近一次下单时间：2020年2月1日）</view>
+			<view class="desc">{{'订单数：'+item.orderCount+('最近一次下单时间：'+item.orderTime)}}</view>
 			<view style="height: 20rpx;"></view>
-			<view class="desc">和医生绑定时间：2020年1月2日 12:09</view>
+			<view class="desc">{{'和医生绑定时间：'+item.bindTime}}</view>
 			<view style="height: 40rpx;"></view>
         </view>
 		<view style="height: 100rpx;"></view>
@@ -71,7 +71,18 @@
 				this.getListData();
 			},
 			getListData() {
-				
+			   app.salesmanPatientList({pageNo:this.pageNo}).then(res =>{
+			   	if(res.status==1){
+			   		if(this.pageNo==1){
+			   			this.list = res.data.list;
+			   		}else{
+			   			if(res.data.pageCount>this.pageNo){
+			   				this.list = this.list.concat(res.data.list);
+			   			}
+			   		}
+			   	}
+			   	uni.stopPullDownRefresh();
+			   });
 			},
 
 

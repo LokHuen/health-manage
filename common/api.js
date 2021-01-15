@@ -132,7 +132,11 @@ var api = {
 	resourceList:(data)=>{return rq("/wx/sales/business/resource/list",data,"GET");},
 	//移除报备
 	removeResource:(data)=>{return rq("/wx/sales/business/resource/delete",data,"POST");}, 
-
+    //患者列表  
+    salesmanPatientList:(data)=>{return rq("/wx/salesman/patientList",data,"GET");},
+	//疾病列表
+	getIllnessSetting:(data)=>{return rq("/wx/patient/getIllnessSetting",data,"GET");},
+	
 }
 
 export {api};

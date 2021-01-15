@@ -193,6 +193,7 @@
 	export default {
 
 		onLoad(props) {
+			this.getIllnessList();
 			this.type = props.type || 1; 
 			this.formQrCode = props.formQrCode ||2;
 			http.get(http.urls.get_all_province).then((res) => {
@@ -247,10 +248,7 @@
 				type: 1, //1表示点击更新信息进来，2表示用户未填写信息系统自动跳进来的
 				hasArea: false,
 				infoData: {},
-				inllList: ['乳腺癌', '宫颈癌', '肝癌', '结直肠癌', '胃癌', '卵巢癌', '肺癌',
-					'淋巴瘤', '头颈癌', '肾癌', '膀胱癌', '胰腺癌', '黑色素瘤', '鼻咽癌', '前列腺癌',
-					'食管癌', '子宫内膜癌', '骨髓瘤', '骨髓增殖性肿瘤', '尿路上皮癌', '胸腺癌',
-					'胆道癌', '白血病', '甲状腺癌', '晚期实体瘤', '其他疾病'
+				inllList: [
 				],
 				projectList: [],
 				currentProject: {},
@@ -345,6 +343,13 @@
 			showTipPopup() {
 				this.$refs.tipPopup.open();
 			},
+			getIllnessList(){
+				app.getIllnessSetting().then(res =>{
+					if(res.status==1){
+					  this.inllList = res.data.illness;
+					}
+				});
+			},
 			getInfo() {
 				app.patientBasicInfo({}).then(res => {
 					if (res.status == 1) {
@@ -358,10 +363,12 @@
 							this.illness = this.infoData.illness;
 							this.height = this.infoData.height;
 							this.weight = this.infoData.weight;
-							var year = this.infoData.birthday.split('年')[0];
-							var month = this.infoData.birthday.split('年')[1].split('月')[0];
-							var day = this.infoData.birthday.split('年')[1].split('月')[1].split('日')[0];
-							this.birthday = year + '-' + month + '-' + day;
+							if(this.infoData.birthday){
+								var year = this.infoData.birthday.split('年')[0];
+								var month = this.infoData.birthday.split('年')[1].split('月')[0];
+								var day = this.infoData.birthday.split('年')[1].split('月')[1].split('日')[0];
+								this.birthday = year + '-' + month + '-' + day;
+							}
 						} else {
 							this.showTipPopup();
 						}
