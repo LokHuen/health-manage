@@ -263,13 +263,13 @@
 					}
 				}
 				if(this.type==1){
-					if(!this.chooseHospital.id || !this.Option.id){
+					if(!this.chooseHospital.id || !this.Option.code){
 						app.tip('请先填好报备资料');
 						return;
 					}
 				}
 				if(this.type==2){
-					if(!this.chooseHospital.id || !this.Option.id ||!this.doctorName){
+					if(!this.chooseHospital.id || !this.Option.code ||!this.doctorName){
 						app.tip('请先填好报备资料');
 						return;
 					}
@@ -290,13 +290,13 @@
 				if(this.type==1){
 					data = {
 						...data,
-						departId:this.Option.id,
+						departId:this.Option.code,
 					}
 				}
 				if(this.type==2){
 					data = {
 						...data,
-						departId:this.Option.id,
+						departId:this.Option.code,
 						doctorName:this.doctorName,
 					}
 				}
