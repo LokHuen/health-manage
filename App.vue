@@ -38,19 +38,20 @@
 			
 			if((nowtime - pretime) > 172800000) {
 				localStorage.removeItem("uid");
-				this.setCache("time",nowtime);
+				localStorage.setItem("time",nowtime);
 			}else if(nowtime == pretime){
-				this.setCache("time",nowtime);
+				localStorage.setItem("time",nowtime);
 			}
 			
 			let optionuid = option.query.uid;
 			if(optionuid&&(optionuid instanceof Array)) option.query.uid = optionuid[optionuid.length-1]; //多次登录，uid会变成数组
-			const uid = option.query.uid || this.getCache("uid");
+			var uid = option.query.uid || this.getCache("uid");
 			console.log('uid==' + uid);
-			if(!uid){
+			uid = parseInt(uid);
+			if(!uid||isNaN(uid)){
 				 window.location.href = this.globalData.baseUrl + '/wx/fwh/user/auth/index?returnUrl=' + encodeURIComponent(windowUrl);
 			}else{
-				this.setCache('uid',uid);
+				localStorage.setItem('uid',uid);
 			}
 		},
 		onShow: function() {
@@ -78,7 +79,7 @@
 				return uni.getStorageSync(key);
 			},
 			setCache(key, data) { //保存缓存
-				uni.setStorageSync(key, data);
+				localStorage.setItem(key, data);
 			},
 			tip(text, time) { //消息提示
 				uni.showToast({
