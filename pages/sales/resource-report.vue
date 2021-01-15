@@ -208,12 +208,14 @@
 							let obj2 = this.areaList[1][0];
 							this.city = obj2.name
 							this.cityId = obj2.id
+							this.chooseHospital={};
 						}
 						this.$forceUpdate();
 					})
 				} else if (column == 1) {
 					this.city = obj.name
 					this.cityId = obj.id
+					this.chooseHospital={};
 				}
 			},
 			submit(){
