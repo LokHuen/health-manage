@@ -25,7 +25,7 @@
 		
 		<view class="list-content" v-if="type==1||type==2" @click="fetctOptionList">
 			科室名称
-			<view :class="Option.id?'list-content-right':'list-content-right-novalue'">{{Option.id?Option.deptName:'请选择'}}</view>
+			<view :class="Option.code?'list-content-right':'list-content-right-novalue'">{{Option.code?Option.value:'请选择'}}</view>
 		</view>
 		
 		<view class="remind" v-if="errMsgInfo.isError==1 &&errMsgInfo.errorType==1">{{errMsgInfo.errMsg}}</view>
