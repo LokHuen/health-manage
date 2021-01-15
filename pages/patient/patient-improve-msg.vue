@@ -193,6 +193,7 @@
 	export default {
 
 		onLoad(props) {
+			if(!app.getCache("uid")) return;
 			this.getIllnessList();
 			this.type = props.type || 1; 
 			this.formQrCode = props.formQrCode ||2;
@@ -257,6 +258,7 @@
 			}
 		},
 		onShow() {
+			if(!app.getCache("uid")) return;
 			this.getInfo();
 		},
 		methods: {
