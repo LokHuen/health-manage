@@ -11,11 +11,11 @@
         <view class="list-box" v-for="(item,index) in list">
 			<view class="name">{{item.patientName}}</view>
         	<view class="desc">{{(item.patientGender || item.age || item.illness)?((item.patientGender?(item.patientGender+' '):'')+((item.age && item.age>0)?(item.age+'岁'+' '):'')+(item.illness?item.illness:'')):'患者未完善资料'}}</view>
-			<view class="desc">{{'医生名字：'+item.docotorName+' ('+item.hospital+item.department+')'}}</view>
-			<view class="desc" v-if="item.surveyResult && item.surveyScore">{{'最近一次测评结果：'+item.surveyResult+'('+item.surveyScore+')'}}</view>
+			<view class="desc">{{'医生名字：'+item.docotorName+' ('+item.hospital+' '+item.department+')'}}</view>
+			<view class="desc" v-if="item.surveyResult && item.surveyScore">{{'最近一次测评结果：'+item.surveyResult+' ('+item.surveyScore+'分)'}}</view>
 			<view class="desc" v-if="item.lastSurveyTime">{{'最近一次测评时间：'+item.lastSurveyTime}}</view>
 			<view class="desc" v-if="!item.surveyResult">暂无营养评估记录</view>
-			<view class="desc">{{'订单数：'+item.orderCount+'('+'最近一次下单时间：'+item.orderTime+')'}}</view>
+			<view class="desc">{{'订单数：'+item.orderCount+(item.orderTime?(' ('+'最近一次下单时间：'+item.orderTime+')'):'')}}</view>
 			<view style="height: 20rpx;"></view>
 			<view class="desc">{{'和医生绑定时间：'+item.bindTime}}</view>
 			<view style="height: 40rpx;"></view>
