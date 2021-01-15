@@ -9,6 +9,7 @@
 			<view style="height: 20rpx;"></view>
 			<view class="remove" @click="remove(index)">移除</view>
 		</view>
+		<view class="no-data-tips" v-if="list.length == 0">暂无数据</view>
 		<view style="height: 200rpx;"></view>
 		
 		<view class="button-box">
@@ -77,6 +78,12 @@
 <style lang="scss">
 	.container{
 		height: 100vh;background-color: #F5F6F6;overflow-y: auto;
+		.no-data-tips {
+			margin-top: 100rpx;
+			text-align: center;
+			font-size: 30rpx;
+			color: #666666;
+		}
 		.title{
 			margin-top: 30rpx;
 			margin-left: 50rpx;

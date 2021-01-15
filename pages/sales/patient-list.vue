@@ -4,13 +4,19 @@
 		
 		<view class="screen-box">
 			<view class="all-patien-box" @click="patienScreen">
-				<view class="all-patien">{{orderBy==1?'按患者最近一次测评时间顺序':'按患者和医生绑定的时间顺序'}}</view>
+				<view class="all-patien">{{orderBy==1?'按患者最近一次测评时间排序':'按患者和医生绑定的时间排序'}}</view>
 				<image class="all-arrow" src="../../static/icon/right_arrow.png" mode="widthFix"></image>
 			</view>
 		</view>
         <view class="list-box" v-for="(item,index) in list">
-			<view class="name">{{item.patientName}}</view>
-        	<view class="desc">{{(item.patientGender || item.age || item.illness)?((item.patientGender?(item.patientGender+' '):'')+((item.age && item.age>0)?(item.age+'岁'+' '):'')+(item.illness?item.illness:'')):'患者未完善资料'}}</view>
+			<view class="name">
+			{{item.patientName}}
+			<view class="photo-box" v-if="item.phone" @click="call(item)">
+				<image src="../../static/mine/choose.png" class="photo-num" v-if="false"></image>
+				<view class="photo-tip">电话联系</view>
+			</view>
+			</view>
+        	<view class="desc">{{(item.patientGender || item.age || item.illness)?((item.patientGender?(item.patientGender+' '):'')+(item.age?(item.age+' '):'')+(item.illness?item.illness:'')):'患者未完善资料'}}</view>
 			<view class="desc">{{'医生名字：'+item.docotorName+' ('+item.hospital+' '+item.department+')'}}</view>
 			<view class="desc" v-if="item.surveyResult && item.surveyScore">{{'最近一次测评结果：'+item.surveyResult+' ('+item.surveyScore+'分)'}}</view>
 			<view class="desc" v-if="item.lastSurveyTime">{{'最近一次测评时间：'+item.lastSurveyTime}}</view>
@@ -26,9 +32,9 @@
 		<uni-popup ref="popupPatient" type="bottom">
 			<!-- 选择患者 -->
 			<view class="white-background-patient">
-				<view class="first-item" @click="selecgtInfo(1)">按患者最近一次测评时间顺序</view>
+				<view class="first-item" @click="selecgtInfo(1)">按患者最近一次测评时间排序</view>
 				<view class="lines"></view>
-				<view class="second-item" @click="selecgtInfo(2)">按患者和医生绑定的时间顺序</view>
+				<view class="second-item" @click="selecgtInfo(2)">按患者和医生绑定的时间排序</view>
 				<view class="liness"></view>
 				<view class="cancel" @click="closePatienScreen">取消</view>
 			</view>
@@ -88,7 +94,17 @@
 			   	uni.stopPullDownRefresh();
 			   });
 			},
-
+           call(item){
+			   uni.makePhoneCall({
+			       phoneNumber: item.phone,//仅为示例
+				   success:(res)=> {
+				   	  
+				   },
+				   fail:(res)=>{
+				   	app.tip('调用失败');
+				   }
+			   });
+		   }
 
 		},
 		onShow() {
@@ -162,6 +178,24 @@
 				padding-top: 40rpx;
 				margin-left: 30rpx;
 				font-size: 40rpx;
+			    position: relative;
+				.photo-box{
+					position: absolute;
+					display: flex;
+					top: 50rpx;
+					right: 50rpx;
+					.photo-num{
+						width: 30rpx;
+						height: 30rpx;
+					}
+					.photo-tip{
+						color: #333333;
+						font-size: 28rpx;
+						margin-left: 10rpx;
+					}
+					
+				}
+				
 			}
 			.desc{
 				color: #666666;

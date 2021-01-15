@@ -72,17 +72,22 @@
 						关闭
 					</view>
 					<view style="width: 30rpx;"></view>
-					<view class="btn" @click="close">
+					<view class="btn" @click="contentin">
 						继续添加
 					</view>
 				</view>
 			</view>
 		</uni-popup>
 		
-		<uni-popup ref="hospitalPop" type="bottom">
+		<uni-popup ref="hospitalPop" type="bottom" @change="hospitalPopChange">
 			<view class="i-sex-content">
 				<text class="i-sex-title">医院选择</text>
-				<scroll-view scroll-y="true" style="max-height: 750rpx;">
+				<view class="search-box">
+					<image src="../../static/icon/incon_search.png" class="search-icon" mode="widthFix"></image>
+					<input type="text" v-model="searchHospital" class="search-input" placeholder="搜索" maxlength="10" @input="searchHospitalChange" />
+				</view>
+				<view style="height: 20rpx;"></view>
+				<scroll-view scroll-y="true" style="height: 750rpx;">
 					<view>
 						<view v-for="(item,index) in hospitalItems" :key="index" :class="chooseHospital.id==item.id?'i-sex-item line active':'i-sex-item line'"
 						 @click="selectHospitalItem(item)">{{item.name}}</view>
@@ -92,13 +97,18 @@
 			</view>
 		</uni-popup>
 		
-		<uni-popup ref="optionPop" type="bottom">
+		<uni-popup ref="optionPop" type="bottom" @change="optionPopChange">
 			<view class="i-sex-content">
 				<text class="i-sex-title">科室选择</text>
-				<scroll-view scroll-y="true" style="max-height: 750rpx;">
+				<view class="search-box">
+					<image src="../../static/icon/incon_search.png" class="search-icon" mode="widthFix"></image>
+					<input type="text" v-model="searchOption" class="search-input" placeholder="搜索" maxlength="10" @input="searchOptionChange" />
+				</view>
+				<view style="height: 20rpx;"></view>
+				<scroll-view scroll-y="true" style="height: 750rpx;">
 					<view>
-						<view v-for="(item,index) in OptionList" :key="index" :class="Option.id==item.id?'i-sex-item line active':'i-sex-item line'"
-						 @click="selectOptionItem(item)">{{item.deptName}}</view>
+						<view v-for="(item,index) in OptionList" :key="index" :class="Option.code==item.code?'i-sex-item line active':'i-sex-item line'"
+						 @click="selectOptionItem(item)">{{item.value}}</view>
 					</view>
 				</scroll-view>
 		
@@ -114,6 +124,8 @@
 	
 		data() {
 			return {
+			   searchHospital:'',
+			   searchOption:'',
 			   types:['医院','科室','医生'],
 			   type:4,
 			   hasArea:false,
@@ -167,6 +179,22 @@
 		
 		},
 		methods: {
+			hospitalPopChange(e){
+				if(e.show==false){
+					this.searchHospital = '';
+				}
+			},
+			optionPopChange(e){
+				if(e.show==false){
+					this.searchOption = '';
+				}
+			},
+			searchHospitalChange(e){
+			    this.fetchHospitalList();
+			},
+			searchOptionChange(e){
+				this.fetctOptionList();
+			},
 			input(){
 				this.errMsgInfo.isError = 0;
 			},
@@ -293,7 +321,18 @@
 				
 			},
 			close(){
+				uni.navigateBack({
+					
+				})
+				
+			},
+			contentin(){
+				this.remark = '';
+				this.doctorName = '';
+				this.Option = {};
+				this.chooseHospital = {};
 				this.$refs.sucesPpopup.close();
+		
 			},
 			selectHospital(){
 				if(!this.hasArea){
@@ -305,7 +344,8 @@
 			fetchHospitalList(){
 				app.hospitalList({
 					provinceId:this.provinceId,
-					cityId:this.cityId
+					cityId:this.cityId,
+					name:this.searchHospital
 				}).then(res =>{
 					if(res.status == 1){
 						this.hospitalItems = res.data.list;
@@ -324,7 +364,7 @@
 					app.tip('请先选择医院');
 					return;
 				}
-				app.getOptionList({code:'depart'}).then(res =>{
+				app.getOptionList({code:'depart',value:this.searchOption}).then(res =>{
 					if(res.status==1){
 					    this.OptionList = res.data;
 						this.$refs.optionPop.open();
@@ -561,7 +601,30 @@
 				background-color: #F7F7F7;
 			}
 		}
+		.search-box {
+			margin-left: 0rpx;
+			margin-right: 0rpx;
+			height: 78rpx;
+			background-color: #F7F7F7;
+			border-radius: 39rpx;
+			display: flex;
+			align-items: center;
+			width: 85%;
 		
+			.search-icon {
+				margin-left: 20rpx;
+				height: 42rpx;
+				width: 42rpx;
+			}
+		
+			.search-input {
+				margin-left: 0rpx;
+				height: 78rpx;
+				line-height: 78rpx;
+				margin-right: 0rpx;
+				flex: 1;
+			}
+		}
 		
 	}
 	

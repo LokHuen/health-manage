@@ -125,7 +125,7 @@ var api = {
 	//医院列表
 	hospitalList:(data)=>{return rq("/wx/service/hospital/list",data,"GET");},
 	//科室列表
-	getOptionList:(data)=>{return rq("/wx/system/dict/getOption",data,"GET");},
+	getOptionList:(data)=>{return rq("/wx/system/dict/getDetailList",data,"GET");},
 	//保存资源
 	saveResource:(data)=>{return rq("/wx/sales/business/resource/save",data,"POST");},
 	//资源报备列表（分页）
