@@ -79,7 +79,7 @@
 				return uni.getStorageSync(key);
 			},
 			setCache(key, data) { //保存缓存
-				uni.setStorageSync(key, data);
+				localStorage.setItem(key, data);
 			},
 			tip(text, time) { //消息提示
 				uni.showToast({
