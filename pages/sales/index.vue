@@ -14,7 +14,8 @@
 		<view>
 		<view class="item-list flex" v-for="(item,index) in list" :key="index" @click="clickItem(index)">
 			<view class="left-name">{{item}}</view>
-			<view v-if="index==1 " style="padding-right:20rpx;">{{index==1?(info.bindDoctorCount||0):(5)}}</view>
+			<view v-if="index==1 ||index==2 " style="padding-right:20rpx;">{{index==1?(info.bindDoctorCount||0):(info.bindPatientCount
+||0)}}</view>
 			<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
 			<!-- <view class="line" ></view> -->
 		</view>
@@ -66,8 +67,8 @@
 					});
 				}else if(index==2){
 					//患者列表
-					app.tip('功能暂未开放');
-					return;
+					// app.tip('功能暂未开放');
+					// return;
 					uni.navigateTo({
 						url:'patient-list'
 					});

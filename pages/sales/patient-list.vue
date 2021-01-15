@@ -4,30 +4,31 @@
 		
 		<view class="screen-box">
 			<view class="all-patien-box" @click="patienScreen">
-				<view class="all-patien">{{orderBy==1?'按患者和医生绑定的时间顺序':'按患者最近一次测评时间顺序'}}</view>
+				<view class="all-patien">{{orderBy==1?'按患者最近一次测评时间顺序':'按患者和医生绑定的时间顺序'}}</view>
 				<image class="all-arrow" src="../../static/icon/right_arrow.png" mode="widthFix"></image>
 			</view>
 		</view>
         <view class="list-box" v-for="(item,index) in list">
 			<view class="name">{{item.patientName}}</view>
-        	<view class="desc">{{(item.patientGender &&item.age &&item.illness)?((item.patientGender==1?'男':'女')+item.age+'岁'+item.illness):'患者未完善资料'}}</view>
-			<view class="desc">{{'医生名字：'+item.docotorName+(item.hospital+item.department)}}</view>
-			<view class="desc">最近一次测评结果：中度营养不良（4分）</view>
-			<view class="desc">最近一次测评时间：2020年2月1日 12:09</view>
-			<view class="desc">暂无营养评估记录</view>
-			<view class="desc">{{'订单数：'+item.orderCount+('最近一次下单时间：'+item.orderTime)}}</view>
+        	<view class="desc">{{(item.patientGender || item.age || item.illness)?((item.patientGender?(item.patientGender+' '):'')+((item.age && item.age>0)?(item.age+'岁'+' '):'')+(item.illness?item.illness:'')):'患者未完善资料'}}</view>
+			<view class="desc">{{'医生名字：'+item.docotorName+' ('+item.hospital+item.department+')'}}</view>
+			<view class="desc" v-if="item.surveyResult && item.surveyScore">{{'最近一次测评结果：'+item.surveyResult+'('+item.surveyScore+')'}}</view>
+			<view class="desc" v-if="item.lastSurveyTime">{{'最近一次测评时间：'+item.lastSurveyTime}}</view>
+			<view class="desc" v-if="!item.surveyResult">暂无营养评估记录</view>
+			<view class="desc">{{'订单数：'+item.orderCount+'('+'最近一次下单时间：'+item.orderTime+')'}}</view>
 			<view style="height: 20rpx;"></view>
 			<view class="desc">{{'和医生绑定时间：'+item.bindTime}}</view>
 			<view style="height: 40rpx;"></view>
         </view>
+		<view class="no-data-tips" v-if="list.length == 0">暂无数据</view>
 		<view style="height: 100rpx;"></view>
 		
 		<uni-popup ref="popupPatient" type="bottom">
 			<!-- 选择患者 -->
 			<view class="white-background-patient">
-				<view class="first-item" @click="selecgtInfo(1)">按患者和医生绑定的时间顺序</view>
+				<view class="first-item" @click="selecgtInfo(1)">按患者最近一次测评时间顺序</view>
 				<view class="lines"></view>
-				<view class="second-item" @click="selecgtInfo(2)">按患者最近一次测评时间顺序</view>
+				<view class="second-item" @click="selecgtInfo(2)">按患者和医生绑定的时间顺序</view>
 				<view class="liness"></view>
 				<view class="cancel" @click="closePatienScreen">取消</view>
 			</view>
@@ -42,9 +43,9 @@
 	export default {
 		data() {
 			return {
-				orderBy: 1, // 排序方式（测评时间排序 1，加入时间排序2）
+				orderBy: 2, // 	//排序方式（1测评时间排序 ，2绑定时间））
 				pageNo: 1,
-				list:[1,2,3]
+				list:[]
 			}
 		},
 		methods: {
@@ -71,7 +72,10 @@
 				this.getListData();
 			},
 			getListData() {
-			   app.salesmanPatientList({pageNo:this.pageNo}).then(res =>{
+			   app.salesmanPatientList({
+				   pageNo:this.pageNo,
+				   orderBy:this.orderBy
+				   }).then(res =>{
 			   	if(res.status==1){
 			   		if(this.pageNo==1){
 			   			this.list = res.data.list;

@@ -10,6 +10,7 @@ function rq(url, data = {}, type, ctype) {
 				'content-type': 'application/x-www-form-urlencoded',
 				 //'uid':126,
 				 'salesToken':localStorage.getItem("salesToken"),
+				// 'salesToken':'10adDFUL9zofJpGh4+uHqmU7+W8zieEkGtztIxE9K+yoBpZaCSug0vDW8aOjOnfKGvlI3JZ6FRUbPQ',
 		         'uid': localStorage.getItem("uid"),
 				// 'tkbgjdtoken':"ef56ZpDKDJ3qy/ttr+d4r16cTZd0ju+7Pz0eT/MtwDaIqSiojYJsYdyjGFLYy4/pJR4BSUmab7tIypyLTZtBYN/3obpPO4rLM6FyqNJEhp1LxjTgveFK/ls2Xr0/"
 				// 'tkbgjd-token':"634fw+Rth9zpdjXbKK9wEJcqlZZrzjvtudIxfIL6apurN02RT6Xn2mvhKBRqiD9cx0R2yWFv8njvE8w7FkGru5/LmmtHT0Vq+uWt"
