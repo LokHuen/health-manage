@@ -37,7 +37,9 @@
 			}
 		},
 		onLoad(){
-			
+			if(!app.getCache("salesToken")) uni.reLaunch({
+				url:"/pages/sales/register"
+			})
 		},
 		onShow(){
 			this.getData();

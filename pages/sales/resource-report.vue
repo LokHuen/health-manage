@@ -1,51 +1,51 @@
 <template>
 	<view class="container">
 		<view class="title-box">
-		<view class="left">资源所在区域：</view>
-		
-		<picker mode="multiSelector" :range="areaList" :range-key="'name'" @columnchange="columnChange" @cancel="hideArea(1)"
-		 @change="hideArea(0)" style="flex: 1;">
-			<view class="right">
-				{{(province&&city&&hasArea)?(province+city):'请选择地区'}}
-			</view>
-		</picker>
+			<view class="left">资源所在区域：</view>
+
+			<picker mode="multiSelector" :range="areaList" :range-key="'name'" @columnchange="columnChange" @cancel="hideArea(1)"
+			 @change="hideArea(0)" style="flex: 1;">
+				<view class="right">
+					{{(province&&city&&hasArea)?(province+city):'请选择地区'}}
+				</view>
+			</picker>
 		</view>
-		
+
 		<view class="list-content" @click="selectType">
 			报备类型
 			<view :class="type==4?'list-content-right-novalue':'list-content-right'">{{type==0?'医院':(type==1?'科室':(type==2?'医生':'请选择'))}}</view>
 		</view>
-		
+
 		<view class="list-content" v-if="type==0||type==1||type==2" @click="selectHospital">
-			医院名称 
+			医院名称
 			<view :class="chooseHospital.id?'list-content-right':'list-content-right-novalue'">{{chooseHospital.id?chooseHospital.name:'请选择'}}</view>
 		</view>
-		
+
 		<view class="remind" v-if="errMsgInfo.isError==1 &&errMsgInfo.errorType==0">{{errMsgInfo.errMsg}}</view>
-		
+
 		<view class="list-content" v-if="type==1||type==2" @click="fetctOptionList">
 			科室名称
 			<view :class="Option.code?'list-content-right':'list-content-right-novalue'">{{Option.code?Option.value:'请选择'}}</view>
 		</view>
-		
+
 		<view class="remind" v-if="errMsgInfo.isError==1 &&errMsgInfo.errorType==1">{{errMsgInfo.errMsg}}</view>
-		
-		<view class="list-content" v-if="type==2" >
+
+		<view class="list-content" v-if="type==2">
 			医生名字
-			<input type="text" class="list-content-input" placeholder="请填写" v-model="doctorName" @input="input"/>
+			<input type="text" class="list-content-input" placeholder="请填写" v-model="doctorName" @input="input" />
 		</view>
-		
+
 		<view class="remind" v-if="errMsgInfo.isError==1 &&errMsgInfo.errorType==2">{{errMsgInfo.errMsg}}</view>
-		
+
 		<view class="list-content" v-if="type==0||type==1||type==2">
-			备注内容		
-			<input type="text" class="list-content-input" placeholder="选填项" v-model="remark"/>
-		    
+			备注内容
+			<input type="text" class="list-content-input" placeholder="选填项" v-model="remark" />
+
 		</view>
 		<view class="button-box">
 			<button type="default" class="button" @click="submit">提交</button>
 		</view>
-		
+
 		<uni-popup ref="popup" type="bottom">
 			<view class="popup-bg">
 				<view style="height: 40rpx;"></view>
@@ -62,7 +62,7 @@
 				<view style="height: 20rpx;"></view>
 			</view>
 		</uni-popup>
-		
+
 		<uni-popup ref="sucesPpopup" type="center">
 			<view class="suc-popup-bg">
 				<image src="../../static/end.png" class="suc-img"></image>
@@ -78,7 +78,7 @@
 				</view>
 			</view>
 		</uni-popup>
-		
+
 		<uni-popup ref="hospitalPop" type="bottom" @change="hospitalPopChange">
 			<view class="i-sex-content">
 				<text class="i-sex-title">医院选择</text>
@@ -87,16 +87,16 @@
 					<input type="text" v-model="searchHospital" class="search-input" placeholder="搜索" maxlength="10" @input="searchHospitalChange" />
 				</view>
 				<view style="height: 20rpx;"></view>
-				<scroll-view scroll-y="true" style="height: 750rpx;">
+				<scroll-view scroll-y="true" style="height: 750rpx;" @scrolltolower="loadmore">
 					<view>
 						<view v-for="(item,index) in hospitalItems" :key="index" :class="chooseHospital.id==item.id?'i-sex-item line active':'i-sex-item line'"
 						 @click="selectHospitalItem(item)">{{item.name}}</view>
 					</view>
 				</scroll-view>
-		
+
 			</view>
 		</uni-popup>
-		
+
 		<uni-popup ref="optionPop" type="bottom" @change="optionPopChange">
 			<view class="i-sex-content">
 				<text class="i-sex-title">科室选择</text>
@@ -111,7 +111,7 @@
 						 @click="selectOptionItem(item)">{{item.value}}</view>
 					</view>
 				</scroll-view>
-		
+
 			</view>
 		</uni-popup>
 	</view>
@@ -121,37 +121,38 @@
 	const app = getApp();
 	import http from '../../common/http.js'
 	export default {
-	
+
 		data() {
 			return {
-			   searchHospital:'',
-			   searchOption:'',
-			   types:['医院','科室','医生'],
-			   type:4,
-			   hasArea:false,
-			   cityId: '',
-			   city: '',
-			   provinceId: '',
-			   province: '',
-			   areaList: [
-			   	[],
-			   	[]
-			   ],
-			   hospitalItems:[],
-			   chooseHospital:{},
-			   OptionList:[],
-			   Option:{},
-			   doctorName:'',
-			   remark:'',
-			   errMsgInfo:{
-				   errMsg:'',
-				   isError:0,
-				   errorType:4
-			   }
+				searchHospital: '',
+				searchOption: '',
+				types: ['医院', '科室', '医生'],
+				type: 4,
+				hasArea: false,
+				cityId: '',
+				city: '',
+				provinceId: '',
+				province: '',
+				areaList: [
+					[],
+					[]
+				],
+				hospitalItems: [],
+				chooseHospital: {},
+				OptionList: [],
+				Option: {},
+				doctorName: '',
+				remark: '',
+				errMsgInfo: {
+					errMsg: '',
+					isError: 0,
+					errorType: 4
+				},
+				dpageno: 1,
 			}
 		},
 		onLoad(props) {
-		
+
 			http.get(http.urls.get_all_province).then((res) => {
 				this.areaList[0] = res.data;
 				if (this.areaList[0] && this.areaList[0].length > 0) {
@@ -166,52 +167,56 @@
 							let obj2 = this.areaList[1][0];
 							this.city = obj2.name
 							this.cityId = obj2.id
-							
+
 						}
 						this.$forceUpdate();
 					})
 				}
 			})
-			
+
 
 		},
-		onShow(){
-		
+		onShow() {
+
 		},
 		methods: {
-			hospitalPopChange(e){
-				if(e.show==false){
+			loadmore() {
+				this.dpageno++;
+				this.fetchHospitalList(this.dpageno);
+			},
+			hospitalPopChange(e) {
+				if (e.show == false) {
 					this.searchHospital = '';
 				}
 			},
-			optionPopChange(e){
-				if(e.show==false){
+			optionPopChange(e) {
+				if (e.show == false) {
 					this.searchOption = '';
 				}
 			},
-			searchHospitalChange(e){
-			    this.fetchHospitalList();
+			searchHospitalChange(e) {
+				this.fetchHospitalList();
 			},
-			searchOptionChange(e){
+			searchOptionChange(e) {
 				this.fetctOptionList();
 			},
-			input(){
+			input() {
 				this.errMsgInfo.isError = 0;
 			},
-		    selectType(){
-				if(!this.hasArea){
+			selectType() {
+				if (!this.hasArea) {
 					app.tip('请选择地区')
 					return
 				}
 				this.$refs.popup.open();
 			},
-			selectsportType(index){
-				if(index==0){
-					this.doctorName='';
+			selectsportType(index) {
+				if (index == 0) {
+					this.doctorName = '';
 					this.Option = {};
 				}
-				if(index==1){
-					this.doctorName='';
+				if (index == 1) {
+					this.doctorName = '';
 				}
 				this.type = index;
 				this.$refs.popup.close();
@@ -236,166 +241,177 @@
 							let obj2 = this.areaList[1][0];
 							this.city = obj2.name
 							this.cityId = obj2.id
-							this.chooseHospital={};
+							this.chooseHospital = {};
 						}
 						this.$forceUpdate();
 					})
 				} else if (column == 1) {
 					this.city = obj.name
 					this.cityId = obj.id
-					this.chooseHospital={};
+					this.chooseHospital = {};
 				}
 			},
-			submit(){
-			    if(!this.hasArea){
+			submit() {
+				if (!this.hasArea) {
 					app.tip('请先填好报备资料');
 					return;
 				}
-				if(this.type==4){
+				if (this.type == 4) {
 					app.tip('请先填好报备资料');
 					return;
 				}
-				
-				if(this.type==0){
-					if(!this.chooseHospital.id){
+
+				if (this.type == 0) {
+					if (!this.chooseHospital.id) {
 						app.tip('请先填好报备资料');
 						return;
 					}
 				}
-				if(this.type==1){
-					if(!this.chooseHospital.id || !this.Option.code){
+				if (this.type == 1) {
+					if (!this.chooseHospital.id || !this.Option.code) {
 						app.tip('请先填好报备资料');
 						return;
 					}
 				}
-				if(this.type==2){
-					if(!this.chooseHospital.id || !this.Option.code ||!this.doctorName){
+				if (this.type == 2) {
+					if (!this.chooseHospital.id || !this.Option.code || !this.doctorName) {
 						app.tip('请先填好报备资料');
 						return;
 					}
 				}
 				let data = {
-					hospitalId:this.chooseHospital.id,
-					provinceId:this.provinceId,
-					cityId:this.cityId,
-					area:this.province+this.city,
-					type:this.type+1
+					hospitalId: this.chooseHospital.id,
+					provinceId: this.provinceId,
+					cityId: this.cityId,
+					area: this.province + this.city,
+					type: this.type + 1
 				}
-				if(this.remark){
+				if (this.remark) {
 					data = {
 						...data,
-						remark:this.remark
+						remark: this.remark
 					}
 				}
-				if(this.type==1){
+				if (this.type == 1) {
 					data = {
 						...data,
-						departId:this.Option.code,
+						departId: this.Option.code,
 					}
 				}
-				if(this.type==2){
+				if (this.type == 2) {
 					data = {
 						...data,
-						departId:this.Option.code,
-						doctorName:this.doctorName,
+						departId: this.Option.code,
+						doctorName: this.doctorName,
 					}
 				}
 				app.saveResource(
 					data
-				).then(res =>{
-					if(res.status == 1){
+				).then(res => {
+					if (res.status == 1) {
 						this.$refs.sucesPpopup.open();
-					}else if(res.status == -103){
-						if(this.type==0){
+					} else if (res.status == -103) {
+						if (this.type == 0) {
 							this.errMsgInfo.errMsg = '该医院已存在报备记录'
-						}else if(this.type==1){
+						} else if (this.type == 1) {
 							this.errMsgInfo.errMsg = '该科室已存在报备记录'
-						}else{
+						} else {
 							this.errMsgInfo.errMsg = '该医生已存在报备记录'
 						}
 						this.errMsgInfo.isError = 1;
 						this.errMsgInfo.errorType = this.type;
 					}
 				})
-				
-				
+
+
 			},
-			close(){
+			close() {
 				uni.navigateBack({
-					
+
 				})
-				
+
 			},
-			contentin(){
+			contentin() {
 				this.remark = '';
 				this.doctorName = '';
 				this.Option = {};
 				this.chooseHospital = {};
 				this.$refs.sucesPpopup.close();
-		
+
 			},
-			selectHospital(){
-				if(!this.hasArea){
+			selectHospital() {
+				if (!this.hasArea) {
 					app.tip('请选择地区');
 					return;
 				}
 				this.fetchHospitalList();
 			},
-			fetchHospitalList(){
+			fetchHospitalList(page=1) {
 				app.hospitalList({
-					provinceId:this.provinceId,
-					cityId:this.cityId,
-					name:this.searchHospital
-				}).then(res =>{
-					if(res.status == 1){
-						this.hospitalItems = res.data.list;
+					provinceId: this.provinceId,
+					cityId: this.cityId,
+					name: this.searchHospital,
+					pageNo: page,
+				}).then(res => {
+					if (res.status == 1) {
+						if (page > res.data.pageCount) return;
+						this.hospitalItems = page == 1 ? res.data.list : this.hospitalItems.concat(res.data.list);
 						this.$refs.hospitalPop.open();
 						this.errMsgInfo.isError = 0;
 					}
-					
+
 				})
 			},
-			selectHospitalItem(item){
+			selectHospitalItem(item) {
 				this.chooseHospital = item;
 				this.$refs.hospitalPop.close();
 			},
-			fetctOptionList(){
-				if(!this.chooseHospital.id){
+			fetctOptionList() {
+				if (!this.chooseHospital.id) {
 					app.tip('请先选择医院');
 					return;
 				}
-				app.getOptionList({code:'depart',value:this.searchOption}).then(res =>{
-					if(res.status==1){
-					    this.OptionList = res.data;
+				app.getOptionList({
+					code: 'depart',
+					value: this.searchOption
+				}).then(res => {
+					if (res.status == 1) {
+						this.OptionList = res.data;
 						this.$refs.optionPop.open();
 						this.errMsgInfo.isError = 0;
 					}
 				});
 			},
-			selectOptionItem(item){
+			selectOptionItem(item) {
 				this.Option = item;
 				this.$refs.optionPop.close();
 			}
-			
+
 		},
 
 	}
 </script>
 
 <style lang="scss">
-	.container{
-		height: 100vh;background-color: #F5F6F6;overflow-y: auto;
-		.title-box{
+	.container {
+		height: 100vh;
+		background-color: #F5F6F6;
+		overflow-y: auto;
+
+		.title-box {
 			margin-top: 30rpx;
 			margin-left: 30rpx;
 			font-size: 26rpx;
 			display: flex;
-			.left{
+
+			.left {
 				color: #333333;
 			}
-			.right{
+
+			.right {
 				color: #4B8BE8;
 			}
+
 			.sex-value {
 				padding-right: 0;
 				color: #999999;
@@ -405,7 +421,7 @@
 				line-height: 100rpx;
 				// border: 1rpx solid #007AFF;
 			}
-			
+
 			.has-value {
 				padding-right: 0;
 				color: #333333;
@@ -415,7 +431,8 @@
 				// border: 1rpx solid #4CD964;
 			}
 		}
-		.list-content{
+
+		.list-content {
 			margin-top: 20rpx;
 			padding-left: 30rpx;
 			height: 90rpx;
@@ -424,19 +441,22 @@
 			background-color: #FFFFFF;
 			font-size: 28rpx;
 			color: #333333;
-			.list-content-right{
+
+			.list-content-right {
 				position: absolute;
 				color: #333333;
 				right: 30rpx;
 				top: 0;
 			}
-			.list-content-right-novalue{
+
+			.list-content-right-novalue {
 				position: absolute;
 				color: #999999;
 				right: 30rpx;
 				top: 0;
 			}
-			.list-content-input{
+
+			.list-content-input {
 				position: absolute;
 				color: #333333;
 				right: 30rpx;
@@ -446,9 +466,10 @@
 				width: 500rpx;
 			}
 		}
-		.remind{
+
+		.remind {
 			font-size: 26rpx;
-		    margin-top: 10rpx;
+			margin-top: 10rpx;
 			margin-left: 30rpx;
 			color: #E21414;
 		}
@@ -459,7 +480,7 @@
 			bottom: 0;
 			height: 140rpx;
 			width: 100%;
-		
+
 			.button {
 				height: 90rpx;
 				line-height: 90rpx;
@@ -470,18 +491,18 @@
 				font-size: 17px;
 			}
 		}
-		
+
 		.popup-bg {
 			background: #FFFFFF;
 			border-radius: 20rpx 20rpx 0px 0px;
-		
+
 			.popup-title {
 				height: 50rpx;
 				font-size: 30rpx;
 				color: #707578;
 				text-align: center;
 				position: relative;
-		    
+
 				.popup-close {
 					position: absolute;
 					width: 36rpx;
@@ -490,6 +511,7 @@
 					right: 30rpx;
 				}
 			}
+
 			.sport-item {
 				font-size: 30rpx;
 				margin-left: 30rpx;
@@ -501,30 +523,35 @@
 				border-bottom: 1rpx solid #CFCFCF;
 			}
 		}
-		.suc-popup-bg{
+
+		.suc-popup-bg {
 			background-color: #FFFFFF;
 			border: 10rpx;
 			height: 450rpx;
 			width: 500rpx;
-			.suc-img{
+
+			.suc-img {
 				width: 150rpx;
 				height: 150rpx;
 				margin-top: 40rpx;
 				margin-left: 175rpx;
 			}
-			.suc-title{
+
+			.suc-title {
 				text-align: center;
 				margin-top: 20rpx;
 				color: #333333;
 			}
-			.btn-box{
+
+			.btn-box {
 				margin-top: 30rpx;
 				margin-left: 30rpx;
 				margin-right: 30rpx;
 				display: flex;
 				height: 70rpx;
 				line-height: 70rpx;
-				.btn{
+
+				.btn {
 					border: 2rpx solid #666666;
 					width: 200rpx;
 					text-align: center;
@@ -532,8 +559,8 @@
 				}
 			}
 		}
-		
-		
+
+
 		.i-sex-content {
 			display: flex;
 			flex-direction: column;
@@ -541,16 +568,16 @@
 			align-items: center;
 			padding-top: 30rpx;
 			border-radius: 20rpx 20rpx 0rpx 0rpx;
-		
+
 			.i-sex-title {
 				color: #272727;
 				font-size: 32rpx;
 				font-weight: bold;
 				text-align: center;
 				padding-bottom: 20rpx;
-		
+
 			}
-		
+
 			.i-sex-title1 {
 				color: #272727;
 				font-size: 32rpx;
@@ -559,7 +586,7 @@
 				padding-bottom: 20rpx;
 				width: 100%;
 				position: relative;
-		
+
 				.i-sex-title-close {
 					position: absolute;
 					left: 40rpx;
@@ -567,7 +594,7 @@
 					font-size: 26rpx;
 					color: #999999;
 				}
-		
+
 				.i-sex-title-sure {
 					position: absolute;
 					right: 40rpx;
@@ -576,14 +603,14 @@
 					color: #333333;
 				}
 			}
-		
+
 			.i-sex-item {
 				color: #272727;
 				font-size: 32rpx;
 				padding: 20rpx;
 				text-align: center;
 				position: relative;
-		
+
 				.img {
 					position: absolute;
 					width: 26rpx;
@@ -592,15 +619,16 @@
 					top: 30rpx;
 				}
 			}
-		
+
 			.line {
 				border-bottom: 1rpx solid #DDDDDD;
 			}
-		
+
 			.active {
 				background-color: #F7F7F7;
 			}
 		}
+
 		.search-box {
 			margin-left: 0rpx;
 			margin-right: 0rpx;
@@ -610,13 +638,13 @@
 			display: flex;
 			align-items: center;
 			width: 85%;
-		
+
 			.search-icon {
 				margin-left: 20rpx;
 				height: 42rpx;
 				width: 42rpx;
 			}
-		
+
 			.search-input {
 				margin-left: 0rpx;
 				height: 78rpx;
@@ -625,8 +653,6 @@
 				flex: 1;
 			}
 		}
-		
+
 	}
-	
-	
 </style>
