@@ -6,7 +6,7 @@ var api = {
 	 // mineChatList:(data)=>{return rq("/wx/interpret/consult/findMyPage",data,"GET");},
 	 // //保存报告寄出信息
 	 // savePost:(data)=>{return rq("/wx/interpret/mri/savePost",data,"POST");},
-	
+
 	// 自测
 	getQuestionSecondList:(data)=>{return rq("/wx/survey/question/secondList",data,"GET");},
 	replySecond:(data)=>{return rq("/wx/survey/question/replySecond",JSON.stringify(data),"POST");},
@@ -79,8 +79,8 @@ var api = {
 	//关闭演示数据
 	closeShowData:(data)=>{return rq("/wx/doctor/closeShowData",data,"POST");},
 	statTemplate:(data)=>{return rq("/wx/diet/record/statTemplate",data,"GET");}, //7天30天摄入和运动能量图表
-	
-	
+
+
 	//业务员
 	salesuserlist:(data)=>{return rq("/wx/salesman/bindUserList",data,"GET");}, //绑定的用户
 	salesregister:(data)=>{return rq("/wx/salesman/login",data,"POST");}, //登录
@@ -101,7 +101,7 @@ var api = {
 	sale_divideRecord:(data)=>{return rq("/wx/salesman/getDivideRecord",data,"GET");},
 	sale_settleInfo:(data)=>{return rq("/wx/salesman/settleInfo",data,"GET");}, //账户已结算页的金额
 	sales_changepassword:(data)=>{return rq("/wx/salesman/changePassword",data,"POST");}, //修改密码
-	
+
 	//添加运动
 	saveSport:(data)=>{return rq("/wx/exercise/record/save",data,"POST");},
 	//获取饮食 时间段list
@@ -116,9 +116,9 @@ var api = {
 	sportType:(data)=>{return rq("/wx/exercise/type/list",data,"GET");},
 	//运动列表
 	sportList:(data)=>{return rq("/wx/exercise/list",data,"GET");},
-	//修改医嘱签名 
+	//修改医嘱签名
 	updateDoctorName:(data)=>{return rq("/wx/doctor/updateInfo",data,"POST");},
-	
+
 	//资源报备
 	//获取子地区，，没用
 	getChildrenArea:(data)=>{return rq("/wx/system/region/getChildren",data,"GET");},
@@ -131,12 +131,17 @@ var api = {
 	//资源报备列表（分页）
 	resourceList:(data)=>{return rq("/wx/sales/business/resource/list",data,"GET");},
 	//移除报备
-	removeResource:(data)=>{return rq("/wx/sales/business/resource/delete",data,"POST");}, 
-    //患者列表  
+	removeResource:(data)=>{return rq("/wx/sales/business/resource/delete",data,"POST");},
+    //患者列表
     salesmanPatientList:(data)=>{return rq("/wx/salesman/patientList",data,"GET");},
 	//疾病列表
 	getIllnessSetting:(data)=>{return rq("/wx/patient/getIllnessSetting",data,"GET");},
-	
+
+	//账号
+	accountsave:(data)=>{return rq("/wx/doctor/account/save",data,"POST");},//保存账号
+	accountdelete:(data)=>{return rq("/wx/doctor/account/delete",data,"POST");},//删除账号
+	accountlist:(data)=>{return rq("/wx/doctor/account/list",data,"GET");},//账号列表
+	accountget:(data)=>{return rq("/wx/doctor/account/get",data,"GET");},//账号详情
 }
 
 export {api};
