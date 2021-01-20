@@ -7,7 +7,7 @@
 	   </view>
 	   <view class="no-data-tips" v-if="list.length == 0">暂无数据</view>
 	   <view style="height: 1400rpx;background-color: #F5F6F6;" v-if="list.length == 0"></view>
-	   <view style="height: 1200rpx;background-color: #F5F6F6;" v-if="list.length > 1"></view>
+	   <view style="height: 1200rpx;background-color: #F5F6F6;" v-if="list.length > 0"></view>
 	</view>
 </template>
 
@@ -88,14 +88,14 @@
 			.name{
 				padding-top: 30rpx;
 				margin-left: 20rpx;
-				font-size: 30rpx;
+				font-size: 32rpx;
 				color: #333333;
 			}
 			.desc{
 				margin-left: 20rpx;
 				margin-top: 20rpx;
 				font-size: 26rpx;
-				color: #999999;
+				color: #333333;
 			}
 		}
 	}

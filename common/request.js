@@ -17,6 +17,12 @@ function rq(url, data = {}, type, ctype) {
 			},
 			success: (res) => {
 				if (res.data.status === -100) {
+					if(location.href.indexOf("pages/sales")>-1){
+						uni.reLaunch({
+							url:'/pages/sales/register'
+						})
+						return;
+					}
 					reject('未登录')
 				}
 				if (res.data.status !== 1) {
