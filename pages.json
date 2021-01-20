@@ -1,11 +1,19 @@
 {
 	"pages": [
 		{
+			"path": "pages/agent/index",
+			"style": {
+				"navigationBarTitleText": "业务管理中心"
+			}
+		},
+		{
 			"path": "pages/sales/index",
 			"style": {
 				"navigationBarTitleText": "业务管理中心"
 			}
 		},
+		
+		
 		{
 			"path": "pages/sales/patient-list",
 			"style": {
@@ -53,17 +61,13 @@
 				"navigationBarTitleText": "完善信息"
 			}
 		},
-		{
-			"path": "pages/agent/index",
-			"style": {
-				"navigationBarTitleText": "业务管理中心"
-			}
-		},
+		
 		{
 			"path": "pages/agent/order-list",
 			"style": {
 				"navigationBarTitleText": "订单列表"
-			}
+			},
+			"enablePullDownRefresh": true
 		},
 		
 		{
@@ -76,7 +80,8 @@
 			"path": "pages/agent/month-order-list",
 			"style": {
 				"navigationBarTitleText": "按月统计订单数据"
-			}
+			},
+			"enablePullDownRefresh": true
 		},
 		{
 			"path": "pages/agent/doctor-list",
@@ -88,7 +93,8 @@
 			"path": "pages/agent/team-member-list",
 			"style": {
 				"navigationBarTitleText": "团队成员"
-			}
+			},
+			"enablePullDownRefresh": true
 		},
 		{
 			"path": "pages/agent/member-detail",

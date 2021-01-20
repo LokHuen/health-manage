@@ -137,6 +137,16 @@ var api = {
 	//疾病列表
 	getIllnessSetting:(data)=>{return rq("/wx/patient/getIllnessSetting",data,"GET");},
 	
+	//代理员
+	//代理员首页
+	agentInfo:(data)=>{return rq("/wx/sales/agent/agentInfo",data,"GET");},
+	//订单列表
+	agentOrderList:(data)=>{return rq("/wx/sales/agent/orderPage",data,"POST");},
+	//按月统计订单数据
+	agentOrderStatsList:(data)=>{return rq("wx/sales/agent/orderStatsList",data,"GET");},
+	//团队列表（分页）
+	agentTeamList:(data)=>{return rq("/wx/sales/agent/teamList",data,"GET");},
+	
 }
 
 export {api};

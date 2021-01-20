@@ -8,14 +8,14 @@
 				<view class="tips">订单统计范围:客户已付款订单</view>
 			</view>
 			<view class="numitem">
-				<view class="number">{{info.income||0}}</view>
+				<view class="number">{{info.money||0}}</view>
 				<view>本月订单总金额(元)</view>
 			</view>
 		</view>
 		<view>
 		<view class="item-list flex" v-for="(item,index) in list" :key="index" @click="clickItem(index)">
 			<view class="left-name">{{item}}</view>
-			<view v-if="index==0" style="padding-right:20rpx;">{{'8'}}</view>
+			<view v-if="index==0" style="padding-right:20rpx;">{{info.salesNum||0}}</view>
 			<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
 			<!-- <view class="line" ></view> -->
 		</view>
@@ -65,7 +65,7 @@
 			},
 			getData(){
 				//
-				app.saleshomepage({}).then(res => {
+				app.agentInfo({}).then(res => {
 					console.log(res);
 					if (res.status == 1) {
 						this.info = res.data;
@@ -76,29 +76,6 @@
 				uni.navigateTo({
 					url:'order-list'
 				})
-			},
-			judgeDoctorAuthenticationStatus(){
-				app.sale_authentication({}).then(res =>{
-					 if(res.status == 1){
-						 let url = "/pages/sales/authentication/index";
-						 if(res.data.status==-1){
-							 //认证失败
-							 url = "/pages/sales/authentication/index";
-						 }else if(res.data.status==0){
-							 //未认证
-							 url = "/pages/sales/authentication/index";
-						 }else if(res.data.status==1){
-							 //认证中
-							 url = "/pages/sales/authentication/result";
-						 }else if(res.data.status==2){
-							 //已认证
-							 url = "/pages/sales/authentication/detail";
-						 }
-						 uni.navigateTo({
-						 	url
-						 })
-					 }
-				});
 			},
 			cleartoken(){
 				localStorage.removeItem("token");
