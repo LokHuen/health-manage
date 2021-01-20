@@ -66,6 +66,7 @@
 				app.agentOrderStatsList({
 					pageNo: this.pageNo,
 				}).then(res => {
+					//app.tip(JSON.stringify(res.data),15000)
 					if (res.status == 1) {
 						if (this.pageNo == 1) {
 							this.list = res.data.list;

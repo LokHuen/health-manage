@@ -143,7 +143,7 @@ var api = {
 	//订单列表
 	agentOrderList:(data)=>{return rq("/wx/sales/agent/orderPage",data,"POST");},
 	//按月统计订单数据
-	agentOrderStatsList:(data)=>{return rq("wx/sales/agent/orderStatsList",data,"GET");},
+	agentOrderStatsList:(data)=>{return rq("/wx/sales/agent/orderStatsList",data,"GET");},
 	//团队列表（分页）
 	agentTeamList:(data)=>{return rq("/wx/sales/agent/teamList",data,"GET");},
 	//成员详情
