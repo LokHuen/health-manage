@@ -13,6 +13,20 @@
 			}
 		},
 		
+		{
+			"path": "pages/agent/change-password",
+			"style": {
+				"navigationBarTitleText": "修改密码"
+			}
+		},
+		{
+			"path": "pages/agent/register",
+			"style": {
+				"navigationBarTitleText": "代理员登录"
+			}
+		},
+		
+		
 		
 		{
 			"path": "pages/sales/patient-list",

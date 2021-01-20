@@ -51,7 +51,8 @@
 			return {
 				orderBy: 2, // 	//排序方式（1测评时间排序 ，2绑定时间））
 				pageNo: 1,
-				list: []
+				list: [],
+				salesManId:''
 			}
 		},
 		methods: {
@@ -78,10 +79,18 @@
 				this.getListData();
 			},
 			getListData() {
-				app.salesmanPatientList({
+				let data = {
 					pageNo: this.pageNo,
 					orderBy: this.orderBy
-				}).then(res => {
+				}
+				if(this.salesManId){
+					data = {
+						salesManId:this.salesManId,
+						...data
+					}
+				}
+				
+				app.salesmanPatientList(data).then(res => {
 					if (res.status == 1) {
 						if (this.pageNo == 1) {
 							this.list = res.data.list;
@@ -113,7 +122,8 @@
 			// })
 
 		},
-		onLoad() {
+		onLoad(props) {
+			this.salesManId = props.salesManId;
 			this.refreshData();
 		},
 		onPullDownRefresh() {

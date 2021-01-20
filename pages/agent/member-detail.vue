@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-	   <view class="welcome">张小明</view>
+	   <view class="welcome">{{info.name}}</view>
 	   <view class="flex numbox">
 	   	<view class="numitem">
 	   		<view class="number">{{info.orderNum||0}}</view>
@@ -13,9 +13,15 @@
 	   	</view>
 	   </view>
 	   
-	   <view class="item-list flex" @click="clickItem">
+	   <view class="item-list flex" @click="clickDoctor">
 	   	<view class="left-name">绑定的医生</view>
-	   	<view  style="padding-right:20rpx;">12</view>
+	   	<view  style="padding-right:20rpx;">{{info.bindDoctorCount||0}}</view>
+	   	<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
+	   </view>
+	   
+	   <view class="item-list flex" @click="clickPatient">
+	   	<view class="left-name">绑定的患者</view>
+	   	<view  style="padding-right:20rpx;">{{info.bindPatientCount||0}}</view>
 	   	<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
 	   </view>
 	   
@@ -28,20 +34,32 @@
 	
 		data() {
 			return {
-				list: [1,2,3],
-				info:{}
+				info:{},
+				id:1,
 			}
 		},
-		onLoad(){
-			
-		},
-		onShow(){
-			
+		onLoad(props){
+			this.id = props.id
+			this.getMemberInfo();
 		},
 		methods: {
-			clickItem(){
+			getMemberInfo(){
+				app.salesmanDetail({
+					salesManId:this.id
+				}).then(res=>{
+					if(res.status==1){
+					   this.info = res.data;
+					}
+				})
+			},
+			clickDoctor(){
 				uni.navigateTo({
-					url:'doctor-list'
+					url:'../sales/user?salesManId='+this.id
+				})
+			},
+			clickPatient(){
+				uni.navigateTo({
+					url:'../sales/patient-list?salesManId='+this.id
 				})
 			}
 		

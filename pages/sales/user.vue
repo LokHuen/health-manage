@@ -28,9 +28,12 @@
 				list:[],
 				page:1,
 				pageCount:1,
+				salesManId:''
 			}
 		},
 		onLoad(options){
+			this.salesManId = options.salesManId;
+			//salesManId 代理员的的团队成员详情传过来的
 			this.init();
 		},
 		onShow(){
@@ -41,6 +44,13 @@
 				if(this.page>this.pageCount) return;
 				let data={
 					pageNo:this.page,
+				}
+				if(this.salesManId){
+					data = {
+						salesManId:this.salesManId,
+						...data
+					}
+					
 				}
 				app.salesuserlist(data).then(res => {
 					this.pageCount = res.data.pageCount;

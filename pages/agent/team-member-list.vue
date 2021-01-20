@@ -61,7 +61,7 @@
 			},
 			selectItem(item){
 				uni.navigateTo({
-					url:'member-detail'
+					url:'member-detail?id='+item.id
 				})
 			}
 			

@@ -37,7 +37,9 @@
 			}
 		},
 		onLoad(){
-			
+			if(!app.getCache("salesToken")) uni.reLaunch({
+				url:"/pages/agent/register",
+			})
 		},
 		onShow(){
 			this.getData();
@@ -58,7 +60,7 @@
 					});
 				}else if(index==3){
 					uni.navigateTo({
-						url:'../sales/change-password'
+						url:'change-password'
 					});
 				}
 				
@@ -82,7 +84,7 @@
 				app.tip("退出成功");
 				setTimeout(()=>{
 					uni.reLaunch({
-						url:"/pages/sales/register?isSales=1"
+						url:"/pages/agent/register"
 					})
 				},1000)
 			},

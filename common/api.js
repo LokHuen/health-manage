@@ -136,7 +136,6 @@ var api = {
     salesmanPatientList:(data)=>{return rq("/wx/salesman/patientList",data,"GET");},
 	//疾病列表
 	getIllnessSetting:(data)=>{return rq("/wx/patient/getIllnessSetting",data,"GET");},
-<<<<<<< HEAD
 	
 	//代理员
 	//代理员首页
@@ -147,15 +146,16 @@ var api = {
 	agentOrderStatsList:(data)=>{return rq("wx/sales/agent/orderStatsList",data,"GET");},
 	//团队列表（分页）
 	agentTeamList:(data)=>{return rq("/wx/sales/agent/teamList",data,"GET");},
+	//成员详情
+	salesmanDetail:(data)=>{return rq("/wx/salesman/homepage",data,"GET");},
 	
-=======
 
 	//账号
 	accountsave:(data)=>{return rq("/wx/doctor/account/save",data,"POST");},//保存账号
 	accountdelete:(data)=>{return rq("/wx/doctor/account/delete",data,"POST");},//删除账号
 	accountlist:(data)=>{return rq("/wx/doctor/account/list",data,"GET");},//账号列表
 	accountget:(data)=>{return rq("/wx/doctor/account/get",data,"GET");},//账号详情
->>>>>>> 45724c5e186b01b5b9614011ce46d9d70125bb7d
+
 }
 
 export {api};
