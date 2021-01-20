@@ -53,9 +53,16 @@
 				app.salesregister(data).then(res => {
 					app.loaded();
 					app.setCache("salesToken",res.data.salesToken);
-					uni.reLaunch({
-						url: "/pages/sales/index?isSales=1",
-					})
+					if(res.data.isAgent==1){
+						uni.reLaunch({
+							url: "/pages/agent/index",
+						})
+					}else{
+						uni.reLaunch({
+							url: "/pages/sales/index?isSales=1",
+						})
+					}
+					
 				}).catch((res)=>{
 					app.tip(res);
 				})

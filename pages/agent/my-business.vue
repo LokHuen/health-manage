@@ -109,7 +109,7 @@
 				app.tip("退出成功");
 				setTimeout(()=>{
 					uni.reLaunch({
-						url:"/pages/sales/register?isSales=1"
+						url:"/pages/ageent/register"
 					})
 				},1000)
 			},
