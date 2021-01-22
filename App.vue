@@ -245,7 +245,7 @@
 		height:55vh;overflow-y:auto;background:#fff;border-radius:20rpx 20rpx 0 0;padding:30rpx 24rpx 30rpx;box-sizing: border-box;
 	}
 	.richtextarea{
-		font-size: 32rpx;
+		font-size: 30rpx;
 		img{max-width:100%;height:auto;}
 	}
 	.pagebackground{position:fixed;top:0;left:0;right:0;bottom:0;background:#F7F8F8;z-index:-1;}
