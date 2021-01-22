@@ -742,7 +742,7 @@
 								this.getUserData();
 							}else{
 								uni.redirectTo({
-									url:'patient-improve-msg?type=2'
+									url:'patient-improve-msg?type=2&formQrCode=1'
 								});
 							}
 							

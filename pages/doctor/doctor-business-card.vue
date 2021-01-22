@@ -116,7 +116,7 @@
 					this.create = false;
 					app.loaded();
 					this.$refs.imgbox.open();
-				});
+				}).catch(res=>{alert(JSON.stringify(res))});
 			},
 			downImage(url, callback) {
 				uni.getImageInfo({
