@@ -14,9 +14,11 @@
 							<text v-if="item.isMust" style="color:red;">*</text>
 							<view style="flex:1;">{{index+seq}}. {{item.title}}
 							<!-- <text v-if="item.description">（{{item.description}}）</text> -->
-							<image v-if="item.description&&item.description!=emptytext" src="../../static/icon/wenhaoIcon.png" class="questionimg ptitle" mode="widthFix" @click="openinfoframe(item.description)"></image>
+							<!-- <image v-if="item.description&&item.description!=emptytext" src="../../static/icon/wenhaoIcon.png" class="questionimg ptitle" mode="widthFix" @click="openinfoframe(item.description)"></image> -->
+							
 							</view>
 						</view>
+						<view v-if="item.description&&item.description!=emptytext" v-html="item.description" class="richtextarea" style="padding-bottom:16rpx;margin-top:-10rpx;"></view>
 						<view v-if="item.type===1">
 							<block v-if="item.specialType===0">
 								<input v-model="item.answer" :placeholder="item.tips?item.tips:'请填写'" @blur="blur(item)" />
@@ -59,9 +61,10 @@
 			                <radio-group v-model="item.optionId" @change="radiochoose($event,item)">
 			                    <view v-for="(question,index1) in item.optionList">
 									<view class="prelative">  
-										<image v-if="question.description&&question.description!=emptytext" src="../../static/icon/wenhaoIcon.png" class="questionimg other" mode="widthFix" @click="openinfoframe(question.description)"></image>
-										<radio :value="index1+''" :checked="item.optionId==question.id" :key="index1" :style="question.description?'padding-left: 6px;':''">
+										<!-- <image v-if="question.description&&question.description!=emptytext" src="../../static/icon/wenhaoIcon.png" class="questionimg other" mode="widthFix" @click="openinfoframe(question.description)"></image> -->
+										<radio :value="index1+''" :checked="item.optionId==question.id" :key="index1" >
 											<view >{{question.serialNumber}}.{{question.title}}</view>
+											<view v-if="question.description&&question.description!=emptytext" v-html="question.description" class="richtextarea" style="padding-top:8rpx;"></view>
 										</radio>
 										
 			                        </view>
@@ -82,8 +85,11 @@
 			                    <view v-for="(question,index1) in item.optionList" :key="index1">
 			
 			                        <view class="prelative">
-			                        	<image v-if="question.description&&question.description!=emptytext" src="../../static/icon/wenhaoIcon.png" class="questionimg other" mode="widthFix" @click="openinfoframe(question.description)"></image>
-											<checkbox :value="index1+''" :data-index="index1" :key="question.id" :checked="question.checked" :style="question.description?'padding-left: 6px;':''">{{question.serialNumber}}.{{question.title}}</checkbox>
+			                        	<!-- <image v-if="question.description&&question.description!=emptytext" src="../../static/icon/wenhaoIcon.png" class="questionimg other" mode="widthFix" @click="openinfoframe(question.description)"></image> -->
+											<checkbox :value="index1+''" :data-index="index1" :key="question.id" :checked="question.checked" >{{question.serialNumber}}.{{question.title}}
+											<view v-if="question.description&&question.description!=emptytext" v-html="question.description" class="richtextarea" style="padding-top:8rpx;"></view>
+											</checkbox>
+											
 			                        </view>
 			                        <view v-if="(question.isInput == 1&&question.show) || question.replyContent">
 			                            <input v-model="question.replyContent" :placeholder="question.isMust?('若选'+question.serialNumber+'此项必填'):'请填写'" @blur="getReply(question,item)"/>
