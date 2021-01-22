@@ -60,7 +60,7 @@
 					<view class="fakehealth-list-item-content">
 						<view class="fakehealth-list-item-title">{{showInfo.result}}</view>
 						<view class="fakehealth-list-item-detail">{{showInfo.phase}}</view>
-						<view class="fakehealth-list-item-time">{{'测评时间：'+showInfo.completeTime}}</view>
+						<view class="fakehealth-list-item-time">{{(orderBy==1?'测评时间：':'加入时间')+showInfo.completeTime}}</view>
 
 					</view>
 
@@ -103,7 +103,7 @@
 				<view class="health-list-item-content">
 					<view class="health-list-item-title">{{item.result}}</view>
 					<view class="health-list-item-detail">{{item.phase}}</view>
-					<view class="health-list-item-time">{{'测评时间：'+item.completeTime}}</view>
+					<view class="health-list-item-time">{{(orderBy==1?'测评时间：':'加入时间')+item.completeTime}}</view>
 
 				</view>
 
