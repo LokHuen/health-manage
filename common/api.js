@@ -148,7 +148,8 @@ var api = {
 	agentTeamList:(data)=>{return rq("/wx/sales/agent/teamList",data,"GET");},
 	//成员详情
 	salesmanDetail:(data)=>{return rq("/wx/salesman/homepage",data,"GET");},
-	
+	//获取是否 代理员身份
+	getIdentity:(data)=>{return rq("/wx/salesman/getIdentity",data,"GET");},
 
 	//账号
 	accountsave:(data)=>{return rq("/wx/doctor/account/save",data,"POST");},//保存账号

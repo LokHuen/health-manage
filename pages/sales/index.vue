@@ -40,11 +40,26 @@
 			if(!app.getCache("salesToken")) uni.reLaunch({
 				url:"/pages/sales/register"
 			})
+			
+			this.getIdentity();
 		},
 		onShow(){
 			this.getData();
 		},
 		methods: {
+			getIdentity(){
+				app.getIdentity().then(res =>{
+				    if(res.status==1){
+						if(res.data.isAgent ==1){
+							uni.reLaunch({
+								url:'/pages/agent/index'
+							})
+						}else{
+							this.getData();
+						}
+					}
+				});
+			},
 			clickItem(index){
 				if(index==0){
 					uni.navigateTo({
