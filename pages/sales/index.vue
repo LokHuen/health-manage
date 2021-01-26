@@ -32,7 +32,7 @@
 	
 		data() {
 			return {
-				list: ["名片码","绑定的用户","患者列表","账户","资源报备","身份认证","修改密码"],
+				list: ["按月统计订单数据","名片码","绑定的用户","患者列表","账户","资源报备","身份认证","修改密码"],
 				info:{}
 			}
 		},
@@ -63,26 +63,30 @@
 			clickItem(index){
 				if(index==0){
 					uni.navigateTo({
+						url:'month-order-list'
+					})
+				}else if(index==1){
+					uni.navigateTo({
 						url:'sales-business-card?id='+app.getCache('uid')
 					});
-				}else if(index==1){
+				}else if(index==2){
 					uni.navigateTo({
 						url:'user'
 					});
-				}else if(index==3){
+				}else if(index==4){
 					uni.navigateTo({
 						url:'sales-account-list'
 					});
-				}else if(index==6){
+				}else if(index==7){
 					uni.navigateTo({
 						url:'change-password'
 					});
-				}else if(index==4){
+				}else if(index==5){
 					//资源报备
 					uni.navigateTo({
 						url:'resource-report-list'
 					});
-				}else if(index==2){
+				}else if(index==3){
 					//患者列表
 					// app.tip('功能暂未开放');
 					// return;

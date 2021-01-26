@@ -7,6 +7,20 @@
 			}
 		},
 		{
+			"path": "pages/sales/month-order-list",
+			"style": {
+				"navigationBarTitleText": "按月统计订单数据"
+			},
+			"enablePullDownRefresh": true
+		},
+		{
+			"path": "pages/sales/order-list",
+			"style": {
+				"navigationBarTitleText": "订单列表"
+			},
+			"enablePullDownRefresh": true
+		},
+		{
 			"path": "pages/sales/index",
 			"style": {
 				"navigationBarTitleText": "业务管理中心"

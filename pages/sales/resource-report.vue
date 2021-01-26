@@ -37,7 +37,98 @@
 
 		<view class="remind" v-if="errMsgInfo.isError==1 &&errMsgInfo.errorType==2">{{errMsgInfo.errMsg}}</view>
 
-		<view class="list-content" v-if="type==0||type==1||type==2">
+		<view class="list-content" @click="selectTechnical" v-if="type==2">
+			医生职称
+			<view :class="technical?'list-content-right':'list-content-right-novalue'">{{technical?technical:'请选择'}}</view>
+		</view>
+
+		<view class="title-box" v-if="type!=4">
+			<view class="left">{{tipItems[type]}}</view>
+		</view>
+
+		<view class="time-box" v-if="type!=4">
+			<view class="time-tip">门诊时间</view>
+			<view class="all-chose" v-if="type==0" @click="allChose">全选</view>
+			<view class="time-item-box" v-for="(item,index) in timeChoseItem">
+				<view class="time-item-tip">{{timeItems[index]}}</view>
+				<view :class="item[0]==0?'time-detail-noChose':'time-detail-chose'" @click="selectTime(index,0)">上午</view>
+				<view :class="item[1]==0?'time-detail-noChose':'time-detail-chose'" @click="selectTime(index,1)">下午</view>
+			</view>
+			<view class="common-input-box">
+				月门诊量预估（人）
+				<input type="number" class="commom-input" maxlength="5" v-model="outpatient" />
+			</view>
+			<view class="common-tip">可以自行修改月门诊量预估数</view>
+		</view>
+
+		<view style="margin-top: 20rpx; background-color: #FFFFFF;" v-if="type!=4">
+			<view style="height: 10rpx;"></view>
+			<view class="common-input-box1">
+				每周手术量（台）
+				<input type="number" class="commom-input1" maxlength="5" placeholder="请填写台数" v-model="weekOperation" @input="weekOperationChange" />
+			</view>
+
+			<view class="common-input-box">
+				月手术量预估（台）
+				<input type="number" class="commom-input" maxlength="5" v-model="monthOperation" />
+			</view>
+			<view class="common-tip">可以自行修改月手术量预估数</view>
+		</view>
+
+
+		<view style="margin-top: 20rpx; background-color: #FFFFFF;" v-if="type!=4">
+			<view style="height: 10rpx;"></view>
+			<view class="common-input-box1">
+				主管床位数（张）
+				<input type="number" class="commom-input1" maxlength="5" placeholder="请填写张数" v-model="bed1" @input="bedChange" />
+			</view>
+			
+			<view class="common-input-box1">
+				主管床位周转天数（天）
+				<input type="number" class="commom-input1" maxlength="5" placeholder="请填写天数" v-model="bed2" @input="bedChange" />
+			</view>
+
+			<view class="common-input-box">
+				月住院病人数预估（人）
+				<input type="number" class="commom-input" maxlength="5" v-model="bedCount" />
+			</view>
+			<view class="common-tip">可以自行修改月住院病人预估数</view>
+		</view>
+        
+		<view style="margin-top: 20rpx; background-color: #FFFFFF;" v-if="type!=4">
+			<view style="height: 10rpx;"></view>
+			
+			<view class="common-input-box">
+				月患者数量预估（人）
+				<input type="number" class="commom-input" maxlength="5" v-model="patientNum" />
+			</view>
+			<view class="common-tip">可以自行修改月患者数量预估数</view>
+		</view>
+		
+		<view style="margin-top: 20rpx; background-color: #FFFFFF;" v-if="type!=4">
+			<view style="height: 20rpx;"></view>
+			<view class="common-input-box2">
+				主管床位数（张）
+				<view :class="coefficient?'commom-input2':'commom-input2-noChose'" @click="openCoefficient">
+                   {{coefficient?coefficient[0]:'请选择'}}
+				</view>
+			</view>
+			<view style="height: 50rpx;"></view>
+		
+		</view>
+		
+		<view style="margin-top: 20rpx; background-color: #FFFFFF;" v-if="type!=4">
+			<view style="height: 10rpx;"></view>
+			
+			<view class="common-input-box">
+				成交单数预估
+				<input type="number" class="commom-input" maxlength="5" v-model="orderNum" />
+			</view>
+			<view class="common-tip">可以自行修改成交预估数</view>
+		</view>
+
+
+		<view class="list-content" v-if="type!=4">
 			备注内容
 			<input type="text" class="list-content-input" placeholder="选填项" v-model="remark" />
 
@@ -114,6 +205,41 @@
 
 			</view>
 		</uni-popup>
+
+		<uni-popup ref="technicalPopup" type="bottom">
+			<view class="popup-bg">
+				<view style="height: 40rpx;"></view>
+				<view class="popup-title">
+					选择医生职称
+					<image src="../../static/icon/close_new.png" mode="widthFix" class="popup-close" @click="close"></image>
+				</view>
+				<view style="height: 5rpx;"></view>
+				<scroll-view scroll-y="true" style="max-height: 750rpx;">
+					<view class="sport-item" v-for="(item,index) in technicalItems" :key="index" @click="selectTechnicalItem(item)">
+						{{item}}
+					</view>
+				</scroll-view>
+				<view style="height: 20rpx;"></view>
+			</view>
+		</uni-popup>
+		
+		<uni-popup ref="coefficientPopup" type="bottom">
+			<view class="popup-bg">
+				<view style="height: 40rpx;"></view>
+				<view class="popup-title">
+					客情关系程度
+					<image src="../../static/icon/close_new.png" mode="widthFix" class="popup-close" @click="close"></image>
+				</view>
+				<view style="height: 5rpx;"></view>
+				<scroll-view scroll-y="true" style="max-height: 750rpx;">
+					<view class="sport-item" v-for="(item,index) in coefficientItems" :key="index" @click="selectCoefficient(item)">
+						{{item[0]}}
+					</view>
+				</scroll-view>
+				<view style="height: 20rpx;"></view>
+			</view>
+		</uni-popup>
+		
 	</view>
 </template>
 
@@ -126,7 +252,7 @@
 			return {
 				searchHospital: '',
 				searchOption: '',
-				types: ['医院', '科室', '医生'],
+				types: ['医生', '科室', '医院'],
 				type: 4,
 				hasArea: false,
 				cityId: '',
@@ -149,6 +275,29 @@
 					errorType: 4
 				},
 				dpageno: 1,
+				technicalItems: ['主任医师', '副主任医师', '主治医师', '住院医师', '护士', '护师', '主管护师', '副主任护师', '主任护师', '技师', '副主任技师', '主任技师'],
+				technical: '',
+				tipItems: ['请汇总医院信息填写以下内容', '请汇总科室信息填写以下内容', '请汇总医生信息填写以下内容'],
+				timeItems: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'],
+				timeChoseItem: [
+					[0, 0],
+					[0, 0],
+					[0, 0],
+					[0, 0],
+					[0, 0],
+					[0, 0],
+					[0, 0]
+				],
+				outpatient: 0, //月门诊量预估（人）
+				weekOperation: '', //周手术量
+				monthOperation: 0 ,//月手术量
+				bed1:'',//主管床位数（张）
+				bed2:'',//主管床位周转天数（天）
+				bedCount:0,//月住院病人数预估（人）
+				patientNum:0,//月患者数量预估（人）
+				coefficientItems:[['陌拜',0],['一般',0.2],['很好',0.5],['极好',0.8]],
+				coefficient:'',//系数
+				orderNum:0,//成交单数预估 
 			}
 		},
 		onLoad(props) {
@@ -180,6 +329,72 @@
 
 		},
 		methods: {
+			
+			//全选
+			allChose(){
+				for (var i = 0; i < this.timeChoseItem.length; i++) {
+					this.timeChoseItem[i] = [1,1];
+				}
+				this.outpatient = 14 * 120;
+				this.calculatePatientNum();
+				this.$forceUpdate();
+			},
+			//计算订单数量
+			calculateOrder(){
+				if(!this.coefficient || !this.patientNum){
+					//return;
+				}
+				this.orderNum = this.coefficient[1]*this.patientNum;
+			},
+			openCoefficient(){
+			   this.$refs.coefficientPopup.open();
+		    },
+			selectCoefficient(item){
+				this.coefficient = item;
+				this.calculateOrder();
+			   this.$refs.coefficientPopup.close();
+			},
+			calculatePatientNum(){
+			   this.patientNum = this.outpatient+this.monthOperation+this.bedCount;
+			   this.calculateOrder();
+			},
+			bedChange(e){
+				if(!this.bed1 || !this.bed2){
+					return;
+				}
+				this.bedCount =Math.floor(this.bed1/this.bed2); 
+				this.calculatePatientNum();
+			},
+			weekOperationChange(e) {
+				this.monthOperation = e.detail.value * 4;
+				this.calculatePatientNum();
+			},
+			selectTime(index, noon) {
+				var time = this.timeChoseItem[index][noon];
+				time == 0 ? time = 1 : time = 0;
+				this.timeChoseItem[index][noon] = time;
+				//outpatient
+				var count = 0;
+				for (var i = 0; i < this.timeChoseItem.length; i++) {
+					var time = this.timeChoseItem[i];
+					if (time[0] == 1) {
+						count++;
+					}
+					if (time[1] == 1) {
+						count++;
+					}
+				}
+				this.outpatient = count * 120;
+				this.calculatePatientNum();
+				this.$forceUpdate();
+			},
+			selectTechnicalItem(item) {
+				this.technical = item;
+				this.$refs.technicalPopup.close();
+			},
+			selectTechnical() {
+				this.$refs.technicalPopup.open();
+			},
 			loadmore() {
 				this.dpageno++;
 				this.fetchHospitalList(this.dpageno);
@@ -211,14 +426,19 @@
 				this.$refs.popup.open();
 			},
 			selectsportType(index) {
-				if (index == 0) {
+				if (index == 2) {
 					this.doctorName = '';
 					this.Option = {};
+					this.type = 0;
 				}
 				if (index == 1) {
 					this.doctorName = '';
+					this.type = 1;
 				}
-				this.type = index;
+				if (index == 0) {
+					this.type = 2;
+				}
+
 				this.$refs.popup.close();
 			},
 			hideArea(cancel) {
@@ -274,7 +494,7 @@
 					}
 				}
 				if (this.type == 2) {
-					if (!this.chooseHospital.id || !this.Option.code || !this.doctorName) {
+					if (!this.chooseHospital.id || !this.Option.code || !this.doctorName || !this.technical) {
 						app.tip('请先填好报备资料');
 						return;
 					}
@@ -346,7 +566,7 @@
 				}
 				this.fetchHospitalList();
 			},
-			fetchHospitalList(page=1) {
+			fetchHospitalList(page = 1) {
 				app.hospitalList({
 					provinceId: this.provinceId,
 					cityId: this.cityId,
@@ -651,6 +871,158 @@
 				line-height: 78rpx;
 				margin-right: 0rpx;
 				flex: 1;
+			}
+		}
+
+		.time-box {
+			margin-top: 20rpx;
+			position: relative;
+			background-color: #FFFFFF;
+
+			//height: 500rpx;
+			.time-tip {
+				padding-top: 30rpx;
+				margin-left: 30rpx;
+				font-size: 26rpx;
+				color: #333333;
+			}
+
+			.all-chose {
+				position: absolute;
+				font-size: 26rpx;
+				color: #4B8BE8;
+				right: 50rpx;
+				top: 30rpx;
+			}
+
+			.time-item-box {
+				display: flex;
+				height: 80rpx;
+				line-height: 80rpx;
+				margin-top: 20rpx;
+
+				.time-item-tip {
+					font-size: 26rpx;
+					color: #333333;
+					margin-left: 40rpx;
+					width: 20%;
+				}
+
+				.time-detail-noChose {
+					margin-left: 20rpx;
+					width: 30%;
+					font-size: 26rpx;
+					color: rgba(16, 16, 16, 100);
+					text-align: center;
+					background-color: rgba(248, 248, 248, 100);
+					border: 1px solid rgba(187, 187, 187, 100);
+				}
+
+				.time-detail-chose {
+					margin-left: 20rpx;
+					width: 30%;
+					font-size: 26rpx;
+					color: #FFFFFF;
+					border: 2rpx #4B8BE8 solid;
+					border-radius: 5rpx;
+					text-align: center;
+					background-color: #4B8BE8;
+				}
+
+			}
+		}
+
+		.common-input-box {
+			padding-left: 20rpx;
+			margin-top: 40rpx;
+			margin-left: 34rpx;
+			width: 650rpx;
+			height: 80rpx;
+			line-height: 80rpx;
+			border-radius: 6rpx;
+			background-color: rgba(227, 227, 227, 100);
+			text-align: center;
+			border: 2rpx solid rgba(255, 255, 255, 100);
+			color: rgba(16, 16, 16, 100);
+			font-size: 28rpx;
+			text-align: left;
+			font-family: PingFangSC-regular;
+			position: relative;
+
+			.commom-input {
+				position: absolute;
+				right: 20rpx;
+				top: 16rpx;
+				width: 150rpx;
+				text-align: right;
+			}
+		}
+
+		.common-input-box1 {
+			padding-left: 20rpx;
+			margin-left: 34rpx;
+			width: 650rpx;
+			height: 90rpx;
+			line-height: 90rpx;
+			border-radius: 6rpx;
+			text-align: left;
+			border: 2rpx solid rgba(255, 255, 255, 100);
+			color: rgba(16, 16, 16, 100);
+			font-size: 28rpx;
+			text-align: left;
+			font-family: PingFangSC-regular;
+			border-bottom: 2rpx solid rgba(187, 187, 187, 100);
+			position: relative;
+
+			.commom-input1 {
+				position: absolute;
+				right: 20rpx;
+				top: 16rpx;
+				width: 190rpx;
+				text-align: right;
+			}
+		}
+
+		.common-tip {
+			margin-top: 12rpx;
+			padding-bottom: 30rpx;
+			margin-left: 36rpx;
+			color: rgba(151, 150, 150, 100);
+			font-size: 28rpx;
+			text-align: left;
+			font-family: PingFangSC-regular;
+		}
+
+
+
+     .common-input-box2 {
+			padding-left: 20rpx;
+			margin-left: 34rpx;
+			width: 650rpx;
+			height: 90rpx;
+			line-height: 90rpx;
+			border-radius: 6rpx;
+			text-align: left;
+			border: 2rpx solid rgba(255, 255, 255, 100);
+			color: rgba(16, 16, 16, 100);
+			font-size: 28rpx;
+			text-align: left;
+			font-family: PingFangSC-regular;
+			border-bottom: 2rpx solid rgba(187, 187, 187, 100);
+			position: relative;
+
+			.commom-input2 {
+				position: absolute;
+				right: 20rpx;
+				top: 0rpx;
+				text-align: right;
+			}
+			.commom-input2-noChose{
+				position: absolute;
+				right: 20rpx;
+				top: 0rpx;
+				text-align: right;
+				color: #999999;
 			}
 		}
 
