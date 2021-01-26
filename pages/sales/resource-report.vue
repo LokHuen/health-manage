@@ -915,7 +915,8 @@
 					color: rgba(16, 16, 16, 100);
 					text-align: center;
 					background-color: rgba(248, 248, 248, 100);
-					border: 1px solid rgba(187, 187, 187, 100);
+					border: 2rpx solid rgba(187, 187, 187, 100);
+					border-radius: 5rpx;
 				}
 
 				.time-detail-chose {
