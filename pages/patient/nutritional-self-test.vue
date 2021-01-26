@@ -23,7 +23,7 @@
 			
 		</view>
 		<view v-if="showvideo" style="padding:200rpx 30rpx 200rpx;">
-			<video id="myVideo" :src="baseUrl+'/yindao.mp4'" controls style="width:100%;"></video>
+			<video id="myVideo" autoplay :src="baseUrl+'/yindao.mp4'" controls style="width:100%;"></video>
 		</view>
 		<view class="button-box">
 			<button type="default" class="button" @click="test">开始测评</button>
