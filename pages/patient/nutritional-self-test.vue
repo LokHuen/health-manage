@@ -5,6 +5,7 @@
 			<view class="left-bg"></view>
 			<view class="background-img">
 				<image src="../../static/img/nutritional_self_test_bg.png" mode="widthFix" class=""></image>
+				<view @click="videobox">测评前，建议您观看一次演示视频》</view>
 			</view>
 			<view class="content-box">
 				<view class="title">PG-SGA营养状况评量表</view>
@@ -21,7 +22,9 @@
 			</view>
 			
 		</view>
-		
+		<view v-if="showvideo" style="padding:200rpx 30rpx 200rpx;">
+			<video id="myVideo" :src="baseUrl+'/yindao.mp4'" controls style="width:100%;"></video>
+		</view>
 		<view class="button-box">
 			<button type="default" class="button" @click="test">开始测评</button>
 		</view>
@@ -30,10 +33,13 @@
 </template>
 
 <script>
+	let app = getApp();
 	export default {
 		data() {
 			return {
-				
+				baseUrl:app.globalData.baseUrl,
+				showvideo:false,
+				videoContext:"",
 			}
 		},
 		methods:{
@@ -41,7 +47,16 @@
 				uni.navigateTo({
 					url:'../testIndex'
 				});
-			}
+			},
+			videobox(){
+				if(this.showvideo) {this.showvideo = false;return;}
+				this.showvideo = true;
+				setTimeout(()=>{
+					this.videoContext = uni.createVideoContext('myVideo');
+					this.videoContext.requestFullScreen();
+					setTimeout(()=>{this.videoContext.play();},300)
+				},300)
+			},
 		}
 	}
 	
@@ -61,8 +76,8 @@
 			.background-img{
 				position: absolute;
 				top: 66rpx;
-				left: 49rpx;
-				right: 30rpx;
+				left: 55rpx;
+				right: 55rpx;
 				image{width: 100%;}
 			}
 			.content-box{
@@ -87,10 +102,10 @@
 		}
 		
 		.button-box{
-			position: fixed;
-			bottom: 0;
-			height: 140rpx;
-			width: 100%;
+			position: fixed;padding-top: 26rpx;
+			bottom: 0;background: #fff;
+			height: 130rpx;
+			width: 100%;z-index:9;
 			.button{
 				height: 90rpx;
 				line-height: 90rpx;
