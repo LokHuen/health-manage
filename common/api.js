@@ -155,6 +155,9 @@ var api = {
 	technicalTitleList:(data)=>{return rq("/wx/sales/business/resource/technicalTitleList",data,"GET");},
 	//客情关系程度 列表（不分页）
 	relateList:(data)=>{return rq("/wx/sales/business/resource/relateList",data,"GET");},
+	
+	//报备详情
+	resourceReportDetail:(data)=>{return rq("/wx/sales/business/resource/get",data,"GET");},
 
 	//账号
 	accountsave:(data)=>{return rq("/wx/doctor/account/save",data,"POST");},//保存账号

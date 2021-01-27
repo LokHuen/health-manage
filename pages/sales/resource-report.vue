@@ -250,6 +250,7 @@
 
 		data() {
 			return {
+				id:1,
 				searchHospital: '',
 				searchOption: '',
 				types: ['医生', '科室', '医院'],
@@ -301,6 +302,10 @@
 			}
 		},
 		onLoad(props) {
+			if(props.id){
+				this.id = props.id;
+				this.getDetailRequest();
+			}
             this.getTechnicalTitleList();
 			this.getAreaRequest();
 			this.relateListRequest();
@@ -310,6 +315,10 @@
 
 		},
 		methods: {
+			//如果是点详情进来的，就要请求详情数据
+			getDetailRequest(){
+				
+			},
 			//客情关系程度 列表
 			relateListRequest(){
 				app.relateList().then(res =>{
@@ -364,7 +373,7 @@
 				if(!this.coefficient || !this.patientNum){
 					//return;
 				}
-				this.orderNum = this.coefficient.key*this.patientNum*0.01;
+				this.orderNum = Math.floor(this.coefficient.key*this.patientNum*0.01);
 			},
 			openCoefficient(){
 			   this.$refs.coefficientPopup.open();
@@ -492,6 +501,7 @@
 				}
 			},
 			submit() {
+			
 				if (!this.hasArea) {
 					app.tip('请先填好报备资料');
 					return;
@@ -514,17 +524,57 @@
 					}
 				}
 				if (this.type == 2) {
-					if (!this.chooseHospital.id || !this.Option.code || !this.doctorName || !this.technical) {
+					if (!this.chooseHospital.id || !this.Option.code || !this.doctorName || !this.technical || !this.coefficient) {
 						app.tip('请先填好报备资料');
 						return;
 					}
 				}
+				if(this.outpatient ==0){
+					app.tip('请先填好报备资料');
+					return;
+				}
+				
+				if(!this.weekOperation || !this.bed1 || !this.bed2){
+					app.tip('请先填好报备资料');
+					return;
+				}
+				
+				let consultingHours = [];//门诊时间
+				for (var i = 0; i < this.timeChoseItem.length; i++) {
+				   var timeItem =this.timeChoseItem[i];
+				   if(timeItem[0]==1 ||timeItem[1]==1){
+					    var day = this.timeItems[i];
+						if(timeItem[0]==1){
+							day = day+' '+'上午';
+						}
+						if(timeItem[1]==1){
+							day = day+' '+'下午';
+						}
+						consultingHours.push(day);
+				   }
+				}
+				if(consultingHours.length==0){
+					app.tip('请先填好报备资料');
+					return;
+				}
+				consultingHours = JSON.stringify(consultingHours);
+				//console.log([consultingHours class])
 				let data = {
 					hospitalId: this.chooseHospital.id,
 					provinceId: this.provinceId,
 					cityId: this.cityId,
 					area: this.province + this.city,
-					type: this.type + 1
+					type: this.type + 1,
+					consultingHours:consultingHours,
+					monthlyConsulting:this.outpatient,//月门诊量预估（人）
+					weeklyOperate:this.weekOperation, //每周手术量（台）
+					monthlyOperate:this.monthOperation, //月手术量预估（台）
+					masterBeds:this.bed1,  // 主管床位数（张）
+					masterBedsDay:this.bed2, //// 主管床位周转天数（天）
+					monthlyInpatient:this.bedCount,   // 月住院病人人数预估（人）
+					monthlyPatient:this.patientNum,   // 月患者人数预估（人）
+					relate:this.coefficient.key,  // 客情关系
+					completedOrder:this.orderNum  // 成交单数
 				}
 				if (this.remark) {
 					data = {
@@ -543,6 +593,7 @@
 						...data,
 						departId: this.Option.code,
 						doctorName: this.doctorName,
+						technicalTitle:this.technical.key
 					}
 				}
 				app.saveResource(

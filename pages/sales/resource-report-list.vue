@@ -1,12 +1,24 @@
 <template>
 	<view class="container">
 		<view class="title">我的报备</view>
-		<view class="list-box" v-for="(item,index) in list">
+		<view class="list-box" v-for="(item,index) in list" @click="cilckItem(item)">
 			<view class="list-title">{{item.type}}</view>
 			<view class="list-desc">{{item.hospital}}</view>
 			<view class="list-desc" v-if="item.type !='医院'">{{item.deptName}}</view>
 			<view class="list-desc" v-if="item.type =='医生'">{{item.doctorNmae}}</view>
-			<view style="height: 20rpx;"></view>
+			<view style="height: 15rpx;"></view>
+			<view class="list-desc">
+				<text>{{"月患者数量预估 "}}</text>
+				<text style="color: #A80003;">{{item.monthly_patient||0}}</text>
+				<text>人</text>
+			</view>
+			<view class="list-desc">
+				<text>{{"月成交单数预估 "}}</text>
+				<text style="color: #A80003;">{{item.completed_order||0}}</text>
+				<text>单</text>
+			</view>
+			
+			<view style="height: 40rpx;"></view>
 			<view class="remove" @click="remove(index)">移除</view>
 		</view>
 		<view class="no-data-tips" v-if="list.length == 0">暂无数据</view>
@@ -41,6 +53,11 @@
 			this.getListData();
 		},
 		methods: {
+			cilckItem(item){
+				uni.navigateTo({
+					url:'resource-report?id='+item.id
+				})
+			},
 			remove(index){
 				var id = this.list[index].id;
 				app.removeResource({id:id}).then(res =>{
@@ -110,8 +127,8 @@
 			.remove{
 				position: absolute;
 				color: #4B8BE8;
-				right: 20rpx;
-				bottom: 20rpx;
+				right: 30rpx;
+				top: 20rpx;
 				font-size: 26rpx;
 			}
 		}
