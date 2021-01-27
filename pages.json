@@ -7,6 +7,16 @@
 			}
 		},
 		{
+			"path": "pages/agent/resource-report-detail",
+			"style": {
+				"navigationBarTitleText": "详情"
+			}
+		},
+		
+		
+		
+		
+		{
 			"path": "pages/sales/month-order-list",
 			"style": {
 				"navigationBarTitleText": "按月统计订单数据"

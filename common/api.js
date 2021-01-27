@@ -150,6 +150,9 @@ var api = {
 	salesmanDetail:(data)=>{return rq("/wx/salesman/homepage",data,"GET");},
 	//获取是否 代理员身份
 	getIdentity:(data)=>{return rq("/wx/salesman/getIdentity",data,"GET");},
+	
+	//职称列表（不分页）
+	technicalTitleList:(data)=>{return rq("/wx/sales/business/resource/technicalTitleList",data,"GET");},
 
 	//账号
 	accountsave:(data)=>{return rq("/wx/doctor/account/save",data,"POST");},//保存账号

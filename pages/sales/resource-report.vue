@@ -39,7 +39,7 @@
 
 		<view class="list-content" @click="selectTechnical" v-if="type==2">
 			医生职称
-			<view :class="technical?'list-content-right':'list-content-right-novalue'">{{technical?technical:'请选择'}}</view>
+			<view :class="technical?'list-content-right':'list-content-right-novalue'">{{technical?technical.value:'请选择'}}</view>
 		</view>
 
 		<view class="title-box" v-if="type!=4">
@@ -216,7 +216,7 @@
 				<view style="height: 5rpx;"></view>
 				<scroll-view scroll-y="true" style="max-height: 750rpx;">
 					<view class="sport-item" v-for="(item,index) in technicalItems" :key="index" @click="selectTechnicalItem(item)">
-						{{item}}
+						{{item.value}}
 					</view>
 				</scroll-view>
 				<view style="height: 20rpx;"></view>
@@ -275,7 +275,7 @@
 					errorType: 4
 				},
 				dpageno: 1,
-				technicalItems: ['主任医师', '副主任医师', '主治医师', '住院医师', '护士', '护师', '主管护师', '副主任护师', '主任护师', '技师', '副主任技师', '主任技师'],
+				technicalItems: [],
 				technical: '',
 				tipItems: ['请汇总医院信息填写以下内容', '请汇总科室信息填写以下内容', '请汇总医生信息填写以下内容'],
 				timeItems: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'],
@@ -301,7 +301,7 @@
 			}
 		},
 		onLoad(props) {
-
+            this.getTechnicalTitleList();
 			http.get(http.urls.get_all_province).then((res) => {
 				this.areaList[0] = res.data;
 				if (this.areaList[0] && this.areaList[0].length > 0) {
@@ -329,6 +329,14 @@
 
 		},
 		methods: {
+			
+			getTechnicalTitleList(){
+				app.technicalTitleList().then(res =>{
+					if(res.status ==1){
+						this.technicalItems = res.data;
+					}
+				});
+			},
 			
 			//全选
 			allChose(){
