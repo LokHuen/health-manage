@@ -156,6 +156,8 @@ var api = {
 	accountdelete:(data)=>{return rq("/wx/doctor/account/delete",data,"POST");},//删除账号
 	accountlist:(data)=>{return rq("/wx/doctor/account/list",data,"GET");},//账号列表
 	accountget:(data)=>{return rq("/wx/doctor/account/get",data,"GET");},//账号详情
+	
+	getWxConfig:(data)=>{return rq("/wx/common/wechatParam",data,"GET");},//微信配置
 
 }
 

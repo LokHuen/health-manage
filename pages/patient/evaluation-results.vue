@@ -22,12 +22,28 @@
 		</view>
 		
 		<view class="button-box">
+			<wx-open-launch-weapp username="gh_e44479db8d50" path="/pages/index/index.html?id=1">
+				<script type="text/wxtag-template">
+				    <style>
+						.button{
+							height: 90rpx;margin-top:30rpx;
+							width: 81%;
+							background-color: #52A29E !important;
+							border-radius: 45rpx;
+							color: #FFFFFF;
+							font-size: 17px;
+						}
+					</style>
+				    <button type="default" class="button" click="">购买益生菌</button>
+				  </script>
+			</wx-open-launch-weapp>
 			<button type="default" class="button" @click="tootherpage">完成</button>
 		</view>
 	</view>
 </template>
 
 <script>
+	import setconfig from "../../common/wxconfig.js"
 	let app = getApp();
 	export default {
 		data() {
@@ -40,6 +56,9 @@
 		onLoad(options){
 			this.id = options.id||1;
 			this.getinfo();
+			setconfig().then(res=>{
+				this.$forceUpdate();
+			});
 		},
 		methods:{
 			getinfo(){
@@ -74,10 +93,10 @@
 .button-box{
 			position: fixed;
 			bottom: 0;
-			height: 140rpx;
+			padding:0 0 30rpx;
 			width: 100%;
 			.button{
-				height: 90rpx;
+				height: 90rpx;margin-top:30rpx;
 				width: 81%;
 				background-color: #52A29E !important;
 				border-radius: 45rpx;
