@@ -54,7 +54,7 @@
 					</wx-open-launch-weapp>
 				</view>
 			</view>
-			<view class="flex ct">
+			<view class="flex ct" style="padding-bottom:20rpx;">
 				<image src="../../static/logoicon.png" class="logoicon" mode="widthFix"></image>
 				<view style="font-size:26rpx;">中国健康促进基金会公益评测项目</view>
 			</view>
@@ -134,9 +134,9 @@
 .resultbox{
 	margin:45rpx 60rpx;font-size:30rpx;
 	.imageicon{width:139rpx;height:150rpx;margin-right:40rpx;}
-	.resultname{font-weight: 600;color: #4EA29F;padding-bottom:14rpx;}
-	.resultpath{font-size: 26rpx;color: #666;padding-bottom:14rpx;}
-	.advicetext{font-size: 26rpx;color:#666;padding:30rpx 0 20rpx;}
+	.resultname{font-weight: 600;color: #4EA29F;padding-bottom:12rpx;}
+	.resultpath{font-size: 26rpx;color: #666;padding-bottom:12rpx;}
+	.advicetext{font-size: 26rpx;color:#666;padding:35rpx 0 13rpx;}
 	.infobox{margin:40rpx 0;box-shadow: 0px 0px 9px 0px rgba(4, 0, 0, 0.24);border-radius: 5rpx;padding:40rpx 35rpx;box-sizing:border-box;}
 	.textbox1{font-size: 26rpx;color: #52A29E;}
 	.textbox2{font-size: 22rpx;color: #999999;margin:32rpx 0;}
