@@ -4,10 +4,10 @@ import {api} from './api.js'
 export default function setconfig() {
 	return new Promise((resolve, reject) => {
 		let localLink = location.href.split('#')[0];
-		api.getWxConfig({url:encodeURIComponent(localLink)}).then(rs => {
+		api.getWxConfig({url:localLink}).then(rs => {
 			console.log("配置",rs.data)
 			wx.config({
-				debug: true, ////生产环境需要关闭debug模式
+				debug: false, ////生产环境需要关闭debug模式
 				appId: rs.data.appId, //appId通过微信服务号后台查看
 				timestamp: rs.data.timestamp, //生成签名的时间戳
 				nonceStr: rs.data.nonceStr, //生成签名的随机字符串
@@ -27,6 +27,7 @@ export default function setconfig() {
 				],
 			});
 			wx.ready(function() {
+				console.log("config成功")
 				resolve(wx)
 			})
 			wx.error(function(res) {
