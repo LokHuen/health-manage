@@ -108,9 +108,9 @@
 		<view style="margin-top: 20rpx; background-color: #FFFFFF;" v-if="type!=4">
 			<view style="height: 20rpx;"></view>
 			<view class="common-input-box2">
-				主管床位数（张）
+				客情关系程度
 				<view :class="coefficient?'commom-input2':'commom-input2-noChose'" @click="openCoefficient">
-                   {{coefficient?coefficient[0]:'请选择'}}
+                   {{coefficient?coefficient.value:'请选择'}}
 				</view>
 			</view>
 			<view style="height: 50rpx;"></view>
@@ -233,7 +233,7 @@
 				<view style="height: 5rpx;"></view>
 				<scroll-view scroll-y="true" style="max-height: 750rpx;">
 					<view class="sport-item" v-for="(item,index) in coefficientItems" :key="index" @click="selectCoefficient(item)">
-						{{item[0]}}
+						{{item.value}}
 					</view>
 				</scroll-view>
 				<view style="height: 20rpx;"></view>
@@ -295,41 +295,53 @@
 				bed2:'',//主管床位周转天数（天）
 				bedCount:0,//月住院病人数预估（人）
 				patientNum:0,//月患者数量预估（人）
-				coefficientItems:[['陌拜',0],['一般',0.2],['很好',0.5],['极好',0.8]],
+				coefficientItems:[],
 				coefficient:'',//系数
 				orderNum:0,//成交单数预估 
 			}
 		},
 		onLoad(props) {
             this.getTechnicalTitleList();
-			http.get(http.urls.get_all_province).then((res) => {
-				this.areaList[0] = res.data;
-				if (this.areaList[0] && this.areaList[0].length > 0) {
-					let obj = this.areaList[0][0];
-					this.province = obj.name
-					this.provinceId = obj.id
-					http.get(http.urls.get_citys, {
-						id: obj.id
-					}).then((res) => {
-						this.areaList[1] = res.data
-						if (this.areaList[1] && this.areaList[1].length > 0) {
-							let obj2 = this.areaList[1][0];
-							this.city = obj2.name
-							this.cityId = obj2.id
-
-						}
-						this.$forceUpdate();
-					})
-				}
-			})
-
-
+			this.getAreaRequest();
+			this.relateListRequest();
+		
 		},
 		onShow() {
 
 		},
 		methods: {
-			
+			//客情关系程度 列表
+			relateListRequest(){
+				app.relateList().then(res =>{
+					if(res.status == 1){
+						this.coefficientItems = res.data;
+					}
+				});
+			},
+			//获取地区
+			getAreaRequest(){
+				http.get(http.urls.get_all_province).then((res) => {
+					this.areaList[0] = res.data;
+					if (this.areaList[0] && this.areaList[0].length > 0) {
+						let obj = this.areaList[0][0];
+						this.province = obj.name
+						this.provinceId = obj.id
+						http.get(http.urls.get_citys, {
+							id: obj.id
+						}).then((res) => {
+							this.areaList[1] = res.data
+							if (this.areaList[1] && this.areaList[1].length > 0) {
+								let obj2 = this.areaList[1][0];
+								this.city = obj2.name
+								this.cityId = obj2.id
+				
+							}
+							this.$forceUpdate();
+						})
+					}
+				});
+			},
+			//医生的职称
 			getTechnicalTitleList(){
 				app.technicalTitleList().then(res =>{
 					if(res.status ==1){
@@ -352,7 +364,7 @@
 				if(!this.coefficient || !this.patientNum){
 					//return;
 				}
-				this.orderNum = this.coefficient[1]*this.patientNum;
+				this.orderNum = this.coefficient.key*this.patientNum*0.01;
 			},
 			openCoefficient(){
 			   this.$refs.coefficientPopup.open();
