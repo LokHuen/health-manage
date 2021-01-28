@@ -22,7 +22,9 @@
 			<view class="remove" @click="remove(index)" v-if="!salesId">移除</view>
 		</view>
 		<view class="no-data-tips" v-if="list.length == 0">暂无数据</view>
+		<view style="height: 900rpx;" v-if="list.length <4"></view>
 		<view style="height: 200rpx;"></view>
+		
 		
 		<view class="button-box" v-if="!salesId">
 			<button type="default" class="button" @click="submit">报备资源</button>
@@ -101,7 +103,7 @@
             			if(this.pageNo===1){
             				this.list = res.data.list;
             			}else{
-            				if(res.data.pageList.pageCount>this.pageNo){
+            				if(res.data.pageCount>=this.pageNo){
             					this.list = this.list.concat(res.data.list);
             				}
             			}
@@ -117,7 +119,7 @@
 
 <style lang="scss">
 	.container{
-		height: 100vh;background-color: #F5F6F6;overflow-y: auto;
+		background-color: #F5F6F6;
 		.no-data-tips {
 			margin-top: 100rpx;
 			text-align: center;
@@ -125,7 +127,8 @@
 			color: #666666;
 		}
 		.title{
-			margin-top: 30rpx;
+			background-color:#F5F6F6 ;
+			padding-top: 30rpx;
 			margin-left: 50rpx;
 			font-size: 26rpx;
 		}

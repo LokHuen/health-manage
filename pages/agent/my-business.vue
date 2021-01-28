@@ -14,7 +14,7 @@
 		<view>
 		<view class="item-list flex" v-for="(item,index) in list" :key="index" @click="clickItem(index)">
 			<view class="left-name">{{item}}</view>
-			<view v-if="index==1 ||index==2 " style="padding-right:20rpx;">{{index==1?(info.bindDoctorCount||0):(info.bindPatientCount
+			<view v-if="index==2 ||index==3 " style="padding-right:20rpx;">{{index==2?(info.bindDoctorCount||0):(info.bindPatientCount
 			||0)}}</view>
 			<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
 			<!-- <view class="line" ></view> -->
@@ -32,7 +32,7 @@
 	
 		data() {
 			return {
-				list: ["名片码","绑定的用户","患者列表","账户","资源报备","身份认证"],
+				list: ["按月统计订单数据","名片码","绑定的用户","患者列表","账户","资源报备","身份认证"],
 				info:{}
 			}
 		},
@@ -45,26 +45,32 @@
 		methods: {
 			clickItem(index){
 				if(index==0){
+					//订单
+				   uni.navigateTo({
+				   	url:'month-order-list'
+				   })
+					
+				}else if(index==1){
 					uni.navigateTo({
 						 url:'../sales/sales-business-card?id='+app.getCache('uid')
 					});
-				}else if(index==1){
+				}else if(index==2){
 					uni.navigateTo({
 						url:'../sales/user'
 					});
-				}else if(index==2){
+				}else if(index==3){
 			       //患者列表
 				   uni.navigateTo({
 				   	url:'../sales/patient-list'
 				   })
 					
-				}else if(index==5){
+				}else if(index==6){
 					this.judgeDoctorAuthenticationStatus();
-				}else if(index==3){
+				}else if(index==4){
 					uni.navigateTo({
 						url:'../sales/sales-account-list'
 					});
-				}else if(index==4){
+				}else if(index==5){
 			       //资源报备
 			       uni.navigateTo({
 			       	url:'../sales/resource-report-list'
