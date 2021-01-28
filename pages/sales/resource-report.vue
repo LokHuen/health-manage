@@ -56,7 +56,7 @@
 			</view>
 			<view class="common-input-box">
 				月门诊量预估（人）
-				<input type="number" class="commom-input" maxlength="5" v-model="outpatient" />
+				<input type="number" class="commom-input" maxlength="5" v-model="outpatient" @input="patienChange"/>
 			</view>
 			<view class="common-tip">可以自行修改月门诊量预估数</view>
 		</view>
@@ -70,7 +70,7 @@
 
 			<view class="common-input-box">
 				月手术量预估（台）
-				<input type="number" class="commom-input" maxlength="5" v-model="monthOperation" />
+				<input type="number" class="commom-input" maxlength="5" v-model="monthOperation" @input="patienChange"/>
 			</view>
 			<view class="common-tip">可以自行修改月手术量预估数</view>
 		</view>
@@ -90,7 +90,7 @@
 
 			<view class="common-input-box">
 				月住院病人数预估（人）
-				<input type="number" class="commom-input" maxlength="5" v-model="bedCount" />
+				<input type="number" class="commom-input" maxlength="5" v-model="bedCount" @input="patienChange" />
 			</view>
 			<view class="common-tip">可以自行修改月住院病人预估数</view>
 		</view>
@@ -100,7 +100,7 @@
 			
 			<view class="common-input-box">
 				月患者数量预估（人）
-				<input type="number" class="commom-input" maxlength="5" v-model="patientNum" />
+				<input type="number" class="commom-input" maxlength="5" v-model="patientNum" @input="orderChange" />
 			</view>
 			<view class="common-tip">可以自行修改月患者数量预估数</view>
 		</view>
@@ -504,6 +504,9 @@
 				this.calculatePatientNum();
 				this.$forceUpdate();
 			},
+			orderChange(){
+				this.orderNum = Math.floor(this.coefficient.key*Number(this.patientNum)*0.01);
+			},
 			//计算订单数量
 			calculateOrder(){
 				if(!this.coefficient || !this.patientNum){
@@ -523,11 +526,16 @@
 			   this.patientNum = this.outpatient+this.monthOperation+this.bedCount;
 			   this.calculateOrder();
 			},
+			patienChange(){
+				this.patientNum = Number(this.outpatient)+Number(this.monthOperation)+Number(this.bedCount);
+				this.calculateOrder();
+			},
 			bedChange(e){
 				if(!this.bed1 || !this.bed2){
 					return;
 				}
-				this.bedCount =Math.floor(this.bed1/this.bed2); 
+			   // 月住院病人数预估= 30除以“主管床位周转天数”* 主管床位数
+				this.bedCount =Math.floor((30/this.bed2)*this.bed1); 
 				this.calculatePatientNum();
 			},
 			weekOperationChange(e) {

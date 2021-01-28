@@ -1,18 +1,18 @@
 <template>
 	<view class="container">
 		<view class="title" v-if="!salesId">我的报备</view>
-		<view class="list-box" v-for="(item,index) in list" @click="cilckItem(item)">
+		<view class="list-box" v-for="(item,index) in list" >
 			<view class="list-title">{{item.type}}</view>
 			<view class="list-desc">{{item.hospital}}</view>
 			<view class="list-desc" v-if="item.type !='医院'">{{item.deptName}}</view>
 			<view class="list-desc" v-if="item.type =='医生'">{{item.doctorNmae+' '+item.technicalTitle}}</view>
 			<view style="height: 15rpx;"></view>
-			<view class="list-desc">
+			<view class="list-desc" @click="cilckItem(item)">
 				<text>{{"月患者数量预估 "}}</text>
 				<text style="color: #A80003;">{{item.monthly_patient||0}}</text>
 				<text>人</text>
 			</view>
-			<view class="list-desc">
+			<view class="list-desc" @click="cilckItem(item)">
 				<text>{{"月成交单数预估 "}}</text>
 				<text style="color: #A80003;">{{item.completed_order||0}}</text>
 				<text>单</text>
