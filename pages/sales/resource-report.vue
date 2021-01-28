@@ -2,11 +2,11 @@
 	<view class="container">
 		<view class="title-box">
 			<view class="left">资源所在区域：</view>
-
-			<picker mode="multiSelector" :value="cityId" :range="areaList" :range-key="'name'" @columnchange="columnChange" @cancel="hideArea(1)"
+           
+			<picker mode="multiSelector" :value="areaIndex" :range="areaList" :range-key="'name'" @columnchange="columnChange" @cancel="hideArea(1)"
 			 @change="hideArea(0)" style="flex: 1;">
 				<view class="right">
-					{{detailInfo.id?(detailInfo.area):((province&&city&&hasArea)?(province+city):'请选择地区')}}
+					{{changeArea==1?((province&&city&&hasArea)?(province+city):'请选择地区'):(detailInfo.id?(detailInfo.area):((province&&city&&hasArea)?(province+city):'请选择地区'))}}
 				</view>
 			</picker>
 		</view>
@@ -251,6 +251,7 @@
 		data() {
 			return {
 				areaIndex:[0,0],
+				changeArea:0,
 				detailInfo:{},
 				id:1,
 				searchHospital: '',
@@ -329,8 +330,103 @@
 						this.hasArea = true;
 						//res.data.type==1?(this.type=2):(res.data.type==2?this.type=1:this.type=0);
 						this.type = res.data.type-1;
+						this.doctorName = res.data.doctorName;
 						
 						
+						this.outpatient = res.data.monthlyConsulting;//月门诊量预估（人）
+						this.weekOperation = res.data.weeklyOperate;//每周手术量（台）
+						this.orderNum =res.data.completedOrder;// 成交单数
+						this.patientNum = res.data.monthlyPatient;
+						this.bedCount = res.data.monthlyInpatient;// 月住院病人人数预估（人）
+						this.bed2 = res.data.masterBedsDay;// 主管床位周转天数（天）
+						this.bed1 = res.data.masterBeds;// 主管床位数（张）
+						this.monthOperation = res.data.monthlyOperate;//月手术量预估（台）
+						this.remark = res.data.remark;
+						
+						//筛选客情关系// relate:this.coefficient.key,  // 客情关系
+						
+						app.relateList().then(res =>{
+							if(res.status == 1){
+								for (var i = 0; i < res.data.length; i++) {
+									if(res.data[i].key==this.detailInfo.relate){
+										this.coefficient = res.data[i];
+										break;
+									}
+								}
+							}
+						});
+						
+						//涮选时间  JSON.parse(jsonString);
+						var timeList =  JSON.parse(this.detailInfo.consultingHours);
+						for (var i = 0; i < timeList.length; i++) {
+						    var	time=timeList[i].split(' ');
+							for (var j = 0; i < this.timeItems.length; j++) {
+								if(this.timeItems[j] == time[0]){
+									if(time.length==3){
+										//选择了上午跟下午
+										this.timeChoseItem[j] = [1,1];
+									}else{
+										//只选了上午或者下午
+										if(time[1]=='上午'){
+											this.timeChoseItem[j] = [1,0];
+										}else{
+											this.timeChoseItem[j] = [0,1];
+										}
+									}
+									break;
+								}
+							}
+						}
+						this.$forceUpdate();
+						
+						//筛选医生职称
+						app.technicalTitleList().then(res =>{
+							if(res.status ==1){
+								for (var i = 0; i < res.data.length; i++) {
+									if(res.data[i].key==this.detailInfo.technicalTitle){
+										this.technical = res.data[i];
+										break;
+									}
+									
+								}
+							}
+						});
+						
+						//筛选科室
+					   app.getOptionList({
+					   	code: 'depart'
+					   }).then(res => {
+					   	if (res.status == 1) {
+					   		for (var i = 0; i < res.data.length; i++) {
+					   			if(res.data[i].code==this.detailInfo.departId){
+									this.Option = res.data[i];
+									break;
+								}
+					   		}
+					   	}
+					   });
+						
+						//筛选医院
+						app.hospitalList({
+							provinceId: this.provinceId,
+							cityId: this.cityId,
+							pageNo: 1,
+						}).then(res => {
+							if (res.status == 1) {
+								for (var i = 0; i < res.data.list.length; i++) {
+									if(res.data.list[i].id == this.detailInfo.hospitalId){
+										this.chooseHospital = res.data.list[i];
+									    
+										break;
+									}
+								}
+								
+							}
+						
+						})
+						
+						
+						//筛选地区
 						http.get(http.urls.get_all_province).then((res) => {
 							this.areaList[0] = res.data;
 							for (var i = 0; i < this.areaList[0].length; i++) {
@@ -347,12 +443,10 @@
 								for (var i = 0; i < this.areaList[1].length; i++) {
 									var city = this.areaList[1][i];
 									if(city.id == this.cityId){
-										this.areaIndex[1] = i;
+										this.areaIndex = [this.areaIndex[0],i];
 										break;
 									}
 								}
-								console.log(this.areaList);
-								
 								this.$forceUpdate();
 							})
 						});
@@ -524,6 +618,13 @@
 				if (column == 0) {
 					this.province = obj.name
 					this.provinceId = obj.id
+					for (var i = 0; i < this.areaList[0].length; i++) {
+						var province = this.areaList[0][i];
+						if(province.id== this.provinceId){
+							this.areaIndex[0] = i;
+							break;
+						}
+					}
 					http.get(http.urls.get_citys, {
 						id: this.provinceId
 					}).then((res) => {
@@ -534,13 +635,16 @@
 							this.cityId = obj2.id
 							this.chooseHospital = {};
 						}
+						this.areaIndex = [this.areaIndex[0],0];
 						this.$forceUpdate();
 					})
+					
 				} else if (column == 1) {
 					this.city = obj.name
 					this.cityId = obj.id
 					this.chooseHospital = {};
 				}
+				this.changeArea = 1;
 			},
 			submit() {
 			
@@ -638,6 +742,12 @@
 						technicalTitle:this.technical.key
 					}
 				}
+				if(this.id){
+					data = {
+						...data,
+						id:this.id
+					}
+				}
 				app.saveResource(
 					data
 				).then(res => {
@@ -664,11 +774,27 @@
 				})
 
 			},
+			//继续添加
 			contentin() {
 				this.remark = '';
 				this.doctorName = '';
 				this.Option = {};
 				this.chooseHospital = {};
+				for (var i = 0; i < this.timeChoseItem.length; i++) {
+					this.timeChoseItem[i] = [0,0];
+				}
+				this.outpatient = 0;
+				this.weekOperation = '';
+				this.monthOperation = 0;
+				this.bed1 = '';
+				this.bed2 = '';
+				this.bedCount = 0;
+				this.patientNum = 0;
+				this.coefficient = '';
+				this.orderNum = 0;
+				this.technical = '';
+				//如果是继续添加，要把之前传进来的id置空
+				this.id = '';
 				this.$refs.sucesPpopup.close();
 
 			},

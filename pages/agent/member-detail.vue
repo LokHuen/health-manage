@@ -13,6 +13,11 @@
 	   	</view>
 	   </view>
 	   
+	   <view class="item-list flex" @click="clickOrder">
+	   	<view class="left-name">按月统计订单数据</view>
+	   	<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
+	   </view>
+	   
 	   <view class="item-list flex" @click="clickDoctor">
 	   	<view class="left-name">绑定的医生</view>
 	   	<view  style="padding-right:20rpx;">{{info.bindDoctorCount||0}}</view>
@@ -22,6 +27,11 @@
 	   <view class="item-list flex" @click="clickPatient">
 	   	<view class="left-name">绑定的患者</view>
 	   	<view  style="padding-right:20rpx;">{{info.bindPatientCount||0}}</view>
+	   	<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
+	   </view>
+	   
+	   <view class="item-list flex" @click="clickResource">
+	   	<view class="left-name">资源报备</view>
 	   	<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
 	   </view>
 	   
@@ -51,6 +61,16 @@
 					   this.info = res.data;
 					}
 				})
+			},
+			clickResource(){
+				uni.navigateTo({
+					url:'../sales/resource-report-list?salesId='+this.id
+				})
+			},
+			clickOrder(){
+			    uni.navigateTo({
+			    	url:'month-order-list?salesId='+this.id
+			    })
 			},
 			clickDoctor(){
 				uni.navigateTo({

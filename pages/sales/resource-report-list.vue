@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<view class="title">我的报备</view>
+		<view class="title" v-if="!salesId">我的报备</view>
 		<view class="list-box" v-for="(item,index) in list" @click="cilckItem(item)">
 			<view class="list-title">{{item.type}}</view>
 			<view class="list-desc">{{item.hospital}}</view>
@@ -19,12 +19,12 @@
 			</view>
 			
 			<view style="height: 40rpx;"></view>
-			<view class="remove" @click="remove(index)">移除</view>
+			<view class="remove" @click="remove(index)" v-if="!salesId">移除</view>
 		</view>
 		<view class="no-data-tips" v-if="list.length == 0">暂无数据</view>
 		<view style="height: 200rpx;"></view>
 		
-		<view class="button-box">
+		<view class="button-box" v-if="!salesId">
 			<button type="default" class="button" @click="submit">报备资源</button>
 		</view>
 	</view>
@@ -38,11 +38,18 @@
 			return {
 			   list: [],
 			   pageNo:1,
+			   salesId:''
 			}
 		},
 		onShow(){
 			this.pageNo = 1;
 			this.getListData();	
+		},
+		onLoad(props){
+			if(props.salesId){
+				this.salesId = props.salesId;
+			}
+			
 		},
 		onPullDownRefresh() {
 			this.pageNo = 1;
@@ -54,9 +61,15 @@
 		},
 		methods: {
 			cilckItem(item){
-				uni.navigateTo({
-					url:'resource-report?id='+item.id
-				})
+				if(this.salesId){
+					uni.navigateTo({
+						url:'../agent/resource-report-detail?id='+item.id
+					})
+				}else{
+					uni.navigateTo({
+						url:'resource-report?id='+item.id
+					})
+				}
 			},
 			remove(index){
 				var id = this.list[index].id;
@@ -71,9 +84,19 @@
 				uni.navigateTo({
 					url:'resource-report'
 				})
+				
 			},
             getListData(){
-            	app.resourceList({pageNo:this.pageNo}).then(res =>{
+				let data = {
+					pageNo:this.pageNo
+				};
+				if(this.salesId){
+					data = {
+						...data,
+						salesId:this.salesId
+					}
+				}
+            	app.resourceList(data).then(res =>{
             		if(res.status===1){
             			if(this.pageNo===1){
             				this.list = res.data.list;

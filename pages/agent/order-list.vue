@@ -26,10 +26,14 @@
 		data() {
 			return {
 				list: [],
-				pageNo:1
+				pageNo:1,
+				salesId:''
 			}
 		},
-		onLoad() {
+		onLoad(props) {
+			if(props.salesId){
+				this.salesId = props.salesId;
+			}
 			this.refreshData();
 		},
 		onPullDownRefresh() {
@@ -50,9 +54,14 @@
 			},
 			
 			getListData() {
-				app.agentOrderList({
-					pageNo: this.pageNo,
-				}).then(res => {
+				let data = {pageNo: this.pageNo};
+				if(this.salesId){
+					data = {
+						...data,
+						salesId:this.salesId
+					}
+				}
+				app.agentOrderList(data).then(res => {
 					if (res.status == 1) {
 						if (this.pageNo == 1) {
 							this.list = res.data.list;

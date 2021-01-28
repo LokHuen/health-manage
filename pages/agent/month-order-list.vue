@@ -39,10 +39,14 @@
 		data() {
 			return {
 				list: [],
-				pageNo:1
+				pageNo:1,
+				salesId:'',
 			}
 		},
-		onLoad() {
+		onLoad(props) {
+			if(props.salesId){
+				this.salesId = props.salesId;
+			}
 			this.refreshData();
 		},
 		onPullDownRefresh() {
@@ -63,9 +67,14 @@
 			},
 			
 			getListData() {
-				app.agentOrderStatsList({
-					pageNo: this.pageNo,
-				}).then(res => {
+				let data = {pageNo: this.pageNo};
+				if(this.salesId){
+					data = {
+						...data,
+						salesId:this.salesId
+					}
+				}
+				app.agentOrderStatsList(data).then(res => {
 					//app.tip(JSON.stringify(res.data),15000)
 					if (res.status == 1) {
 						if (this.pageNo == 1) {
@@ -81,9 +90,16 @@
 				});
 			},
 			toOrder(){
-				uni.navigateTo({
-					url:'order-list'
-				})
+				if(this.salesId){
+					uni.navigateTo({
+						url:'order-list?salesId='+this.salesId
+					})
+				}else{
+					uni.navigateTo({
+						url:'order-list'
+					})
+				}
+				
 			}
 			
 		},
