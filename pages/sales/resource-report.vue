@@ -3,10 +3,10 @@
 		<view class="title-box">
 			<view class="left">资源所在区域：</view>
 
-			<picker mode="multiSelector" :range="areaList" :range-key="'name'" @columnchange="columnChange" @cancel="hideArea(1)"
+			<picker mode="multiSelector" :value="cityId" :range="areaList" :range-key="'name'" @columnchange="columnChange" @cancel="hideArea(1)"
 			 @change="hideArea(0)" style="flex: 1;">
 				<view class="right">
-					{{(province&&city&&hasArea)?(province+city):'请选择地区'}}
+					{{detailInfo.id?(detailInfo.area):((province&&city&&hasArea)?(province+city):'请选择地区')}}
 				</view>
 			</picker>
 		</view>
@@ -250,6 +250,8 @@
 
 		data() {
 			return {
+				areaIndex:[0,0],
+				detailInfo:{},
 				id:1,
 				searchHospital: '',
 				searchOption: '',
@@ -307,7 +309,9 @@
 				this.getDetailRequest();
 			}
             this.getTechnicalTitleList();
-			this.getAreaRequest();
+			if(!props.id){
+				this.getAreaRequest();
+			}
 			this.relateListRequest();
 		
 		},
@@ -317,7 +321,45 @@
 		methods: {
 			//如果是点详情进来的，就要请求详情数据
 			getDetailRequest(){
-				
+				app.resourceReportDetail({id:this.id}).then(res =>{
+					if(res.status == 1){
+						this.detailInfo = res.data;
+						this.cityId = res.data.cityId;
+						this.provinceId = res.data.provinceId;
+						this.hasArea = true;
+						//res.data.type==1?(this.type=2):(res.data.type==2?this.type=1:this.type=0);
+						this.type = res.data.type-1;
+						
+						
+						http.get(http.urls.get_all_province).then((res) => {
+							this.areaList[0] = res.data;
+							for (var i = 0; i < this.areaList[0].length; i++) {
+								var province = this.areaList[0][i];
+								if(province.id== this.provinceId){
+									this.areaIndex[0] = i;
+									break;
+								}
+							}
+							http.get(http.urls.get_citys, {
+								id: this.provinceId
+							}).then((res) => {
+								this.areaList[1] = res.data;
+								for (var i = 0; i < this.areaList[1].length; i++) {
+									var city = this.areaList[1][i];
+									if(city.id == this.cityId){
+										this.areaIndex[1] = i;
+										break;
+									}
+								}
+								console.log(this.areaList);
+								
+								this.$forceUpdate();
+							})
+						});
+						
+						
+					}
+				});
 			},
 			//客情关系程度 列表
 			relateListRequest(){
