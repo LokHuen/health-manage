@@ -7,21 +7,22 @@
 			</view>
 			<view class="flex numbox" @click="toOrder">
 				<!-- <view style="height: 20rpx; background-color: #007AFF;"></view> -->
-				
+
 				<view class="numitem">
 					<view class="number">{{item.orderNum||0}}</view>
 					<view>订单数</view>
-					
+
 				</view>
 				<view class="numitem">
 					<view class="number">{{item.money||0}}</view>
-					<view>{{salesId?'收益(元)':'订单总金额(元)'}}</view>
+					<!-- <view>{{salesId||isAgent?'收益(元)':'订单总金额(元)'}}</view> -->
+					<view>收益(元)</view>
 				</view>
 			</view>
 			<view>
-			
+
 			</view>
-			
+
 		</view>
 		<view class="no-data-tips" v-if="list.length == 0">暂无数据</view>
 		<view style="height: 1200rpx;background-color: #F5F6F6;" v-if="list.length == 0"></view>
@@ -35,18 +36,20 @@
 <script>
 	const app = getApp();
 	export default {
-	
+
 		data() {
 			return {
 				list: [],
-				pageNo:1,
-				salesId:'',
+				pageNo: 1,
+				salesId: '',
+				isAgent: 0
 			}
 		},
 		onLoad(props) {
-			if(props.salesId){
+			if (props.salesId) {
 				this.salesId = props.salesId;
 			}
+			this.isAgent = props.isAgent
 			this.refreshData();
 		},
 		onPullDownRefresh() {
@@ -65,13 +68,15 @@
 				this.pageNo++;
 				this.getListData();
 			},
-			
+
 			getListData() {
-				let data = {pageNo: this.pageNo};
-				if(this.salesId){
+				let data = {
+					pageNo: this.pageNo
+				};
+				if (this.salesId) {
 					data = {
 						...data,
-						salesId:this.salesId
+						salesId: this.salesId
 					}
 				}
 				app.agentOrderStatsList(data).then(res => {
@@ -85,59 +90,70 @@
 							}
 						}
 					}
-					
+
 					uni.stopPullDownRefresh();
 				});
 			},
-			toOrder(){
-				if(this.salesId){
+			toOrder() {
+				if (this.salesId) {
 					uni.navigateTo({
-						url:'order-list?salesId='+this.salesId
+						url: 'order-list?salesId=' + this.salesId
 					})
-				}else{
+				} else {
 					uni.navigateTo({
-						url:'order-list'
+						url: 'order-list'
 					})
 				}
-				
+
 			}
-			
+
 		},
 
 	}
 </script>
 
 <style lang="scss">
-	.container{
+	.container {
 		background-color: #F5F6F6;
+
 		.no-data-tips {
 			margin-top: 100rpx;
 			text-align: center;
 			font-size: 30rpx;
 			color: #666666;
 		}
-		.time{
+
+		.time {
 			margin-top: 30rpx;
 			padding-left: 20rpx;
 			padding-top: 20rpx;
 			background-color: #fff;
 		}
-		.numbox{
-			
-			padding:60rpx 30rpx;
-			background:#fff;
-			.numitem{
-				width:50%;text-align:center;font-size: 30rpx;box-sizing:border-box;
-				&:nth-child(1){border-right:2rpx solid #ddd;}
-				.number{
-					font-size: 52rpx;padding-bottom:10rpx;
+
+		.numbox {
+
+			padding: 60rpx 30rpx;
+			background: #fff;
+
+			.numitem {
+				width: 50%;
+				text-align: center;
+				font-size: 30rpx;
+				box-sizing: border-box;
+
+				&:nth-child(1) {
+					border-right: 2rpx solid #ddd;
+				}
+
+				.number {
+					font-size: 52rpx;
+					padding-bottom: 10rpx;
 					color: #4B8BE8;
 				}
 			}
-			
+
 		}
-		
-		
+
+
 	}
-	
 </style>

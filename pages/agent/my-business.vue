@@ -47,7 +47,7 @@
 				if(index==0){
 					//订单
 				   uni.navigateTo({
-				   	url:'month-order-list'
+				   	url:'month-order-list?isAgent=1'
 				   })
 					
 				}else if(index==1){

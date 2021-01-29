@@ -97,12 +97,19 @@
 
 		<view style="margin-top: 20rpx; background-color: #FFFFFF;" v-if="type!=4">
 			<view style="height: 10rpx;"></view>
-
 			<view class="common-input-box">
 				月患者数量预估（人）
 				<input type="number" class="commom-input" maxlength="5" v-model="patientNum" @input="orderChange" />
 			</view>
-			<view class="common-tip">可以自行修改月患者数量预估数</view>
+			<view class="common-tip" style="margin-right: 34rpx;">月患者数量预估人数=月门诊量预估人数+月手术量预估数+月住院病人预估数，可根据实际情况修改</view>
+		</view>
+		<view style=" background-color: #FFFFFF;" v-if="type!=4">
+			<view style="height: 10rpx;"></view>
+			<view class="common-input-box">
+				月开单潜力患者数（人）
+				<input type="number" class="commom-input" maxlength="5" v-model="monthlyPotentialPatient" />
+			</view>
+			<view class="common-tip" style="margin-right: 34rpx;">月开单潜力患者数是月患者预估数的三分之一，可根据实际情况修改</view>
 		</view>
 
 		<view style="margin-top: 20rpx; background-color: #FFFFFF;" v-if="type!=4">
@@ -300,6 +307,7 @@
 				bed2: '', //主管床位周转天数（天）
 				bedCount: 0, //月住院病人数预估（人）
 				patientNum: 0, //月患者数量预估（人）
+				monthlyPotentialPatient: 0, //月开单潜力患者数（人）
 				coefficientItems: [],
 				coefficient: '', //系数
 				orderNum: 0, //成交单数预估 
@@ -340,6 +348,7 @@
 						this.weekOperation = res.data.weeklyOperate; //每周手术量（台）
 						this.orderNum = res.data.completedOrder; // 成交单数
 						this.patientNum = res.data.monthlyPatient;
+						this.monthlyPotentialPatient = res.data.monthlyPotentialPatient;
 						this.bedCount = res.data.monthlyInpatient; // 月住院病人人数预估（人）
 						this.bed2 = res.data.masterBedsDay; // 主管床位周转天数（天）
 						this.bed1 = res.data.masterBeds; // 主管床位数（张）
@@ -520,6 +529,9 @@
 			orderChange() {
 				this.orderNum = Math.floor(this.coefficient.key * Number(this.patientNum) * 0.01);
 			},
+			monthlyPotentialPatientChange() {
+				this.monthlyPotentialPatient = Math.floor(this.coefficient.key * Number(this.monthlyPotentialPatient) * 0.01);
+			},
 			//计算订单数量
 			calculateOrder() {
 				if (!this.coefficient || !this.patientNum) {
@@ -537,6 +549,7 @@
 			},
 			calculatePatientNum() {
 				this.patientNum = Number(this.outpatient) + Number(this.monthOperation) + Number(this.bedCount);
+				this.monthlyPotentialPatient=parseInt(this.patientNum/3)
 				this.calculateOrder();
 			},
 			patienChange() {
@@ -722,22 +735,23 @@
 					hospitalId: this.chooseHospital.id,
 					provinceId: this.provinceId,
 					cityId: this.cityId,
-					area: this.province + ' '+this.city,
+					area: this.province + ' ' + this.city,
 					type: this.type + 1,
-					monthlyConsulting:this.outpatient||0,//月门诊量预估（人）
-					weeklyOperate:this.weekOperation||0, //每周手术量（台）
-					monthlyOperate:this.monthOperation||0, //月手术量预估（台）
-					masterBeds:this.bed1||0,  // 主管床位数（张）
-					masterBedsDay:this.bed2||0, //// 主管床位周转天数（天）
-					monthlyInpatient:this.bedCount||0,   // 月住院病人人数预估（人）
-					monthlyPatient:this.patientNum,   // 月患者人数预估（人）
-					relate:this.coefficient.key,  // 客情关系
-					completedOrder:this.orderNum  // 成交单数
+					monthlyConsulting: this.outpatient || 0, //月门诊量预估（人）
+					weeklyOperate: this.weekOperation || 0, //每周手术量（台）
+					monthlyOperate: this.monthOperation || 0, //月手术量预估（台）
+					masterBeds: this.bed1 || 0, // 主管床位数（张）
+					masterBedsDay: this.bed2 || 0, //// 主管床位周转天数（天）
+					monthlyInpatient: this.bedCount || 0, // 月住院病人人数预估（人）
+					monthlyPatient: this.patientNum, // 月患者人数预估（人）
+					monthlyPotentialPatient: this.monthlyPotentialPatient, // 月开单潜力患者数（人）
+					relate: this.coefficient.key, // 客情关系
+					completedOrder: this.orderNum // 成交单数
 				}
-				if(consultingHours){
+				if (consultingHours) {
 					data = {
 						...data,
-						consultingHours:consultingHours
+						consultingHours: consultingHours
 					}
 				}
 				if (this.remark) {
@@ -1219,7 +1233,7 @@
 		.common-input-box1 {
 			padding-left: 20rpx;
 			margin-left: 34rpx;
-			width: 650rpx;
+			// width: 650rpx;
 			height: 90rpx;
 			line-height: 90rpx;
 			border-radius: 6rpx;
