@@ -6,7 +6,7 @@
 			<picker mode="multiSelector" :value="areaIndex" :range="areaList" :range-key="'name'" @columnchange="columnChange" @cancel="hideArea(1)"
 			 @change="hideArea(0)" style="flex: 1;">
 				<view class="right">
-					{{changeArea==1?((province&&city&&hasArea)?(province+city):'请选择地区'):(detailInfo.id?(detailInfo.area):((province&&city&&hasArea)?(province+city):'请选择地区'))}}
+					{{changeArea==1?((province&&city&&hasArea)?(province+' '+city):'请选择地区'):(detailInfo.id?(detailInfo.area):((province&&city&&hasArea)?(province+city):'请选择地区'))}}
 				</view>
 			</picker>
 		</view>
@@ -719,7 +719,7 @@
 					hospitalId: this.chooseHospital.id,
 					provinceId: this.provinceId,
 					cityId: this.cityId,
-					area: this.province + this.city,
+					area: this.province + ' '+this.city,
 					type: this.type + 1,
 					monthlyConsulting:this.outpatient||0,//月门诊量预估（人）
 					weeklyOperate:this.weekOperation||0, //每周手术量（台）
