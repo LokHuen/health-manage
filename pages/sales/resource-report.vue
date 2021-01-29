@@ -107,7 +107,7 @@
 			<view style="height: 10rpx;"></view>
 			<view class="common-input-box">
 				月开单潜力患者数（人）
-				<input type="number" class="commom-input" maxlength="5" v-model="monthlyPotentialPatient" />
+				<input type="number" class="commom-input" maxlength="5" v-model="monthlyPotentialPatient" @input="monthlyPotentialPatientChange" />
 			</view>
 			<view class="common-tip" style="margin-right: 34rpx;">月开单潜力患者数是月患者预估数的三分之一，可根据实际情况修改</view>
 		</view>
@@ -526,18 +526,22 @@
 				this.calculatePatientNum();
 				this.$forceUpdate();
 			},
+			//tag
 			orderChange() {
-				this.orderNum = Math.floor(this.coefficient.key * Number(this.patientNum) * 0.01);
+
+				this.monthlyPotentialPatient = parseInt(this.patientNum / 3)
+				this.orderNum = Math.floor(this.coefficient.key * Number(this.monthlyPotentialPatient) * 0.01);
 			},
 			monthlyPotentialPatientChange() {
-				this.monthlyPotentialPatient = Math.floor(this.coefficient.key * Number(this.monthlyPotentialPatient) * 0.01);
+				this.orderNum = Math.floor(this.coefficient.key * Number(this.monthlyPotentialPatient) * 0.01);
 			},
 			//计算订单数量
 			calculateOrder() {
 				if (!this.coefficient || !this.patientNum) {
 					//return;
 				}
-				this.orderNum = Math.floor(this.coefficient.key * this.patientNum * 0.01);
+				//tag
+				this.orderNum = Math.floor(this.coefficient.key * this.monthlyPotentialPatient * 0.01);
 			},
 			openCoefficient() {
 				this.$refs.coefficientPopup.open();
@@ -549,7 +553,7 @@
 			},
 			calculatePatientNum() {
 				this.patientNum = Number(this.outpatient) + Number(this.monthOperation) + Number(this.bedCount);
-				this.monthlyPotentialPatient=parseInt(this.patientNum/3)
+				this.monthlyPotentialPatient = parseInt(this.patientNum / 3)
 				this.calculateOrder();
 			},
 			patienChange() {
