@@ -132,7 +132,7 @@
 				月销售潜力（单数）
 				<input type="number" class="commom-input" maxlength="5" v-model="orderNum" />
 			</view>
-			<view class="common-tip" style="padding-right: 14rpx;">月销售潜力根据月患者数量预估和客情关系程度评估，可根据实际情况修改。</view>
+			<view class="common-tip" style="padding-right: 14rpx;">月销售潜力根据月开单潜力患者数和客情关系程度评估，可根据实际情况修改</view>
 		</view>
 
 
