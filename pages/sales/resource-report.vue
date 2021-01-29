@@ -2,9 +2,9 @@
 	<view class="container">
 		<view class="title-box">
 			<view class="left">资源所在区域：</view>
-           
-			<picker mode="multiSelector" :value="areaIndex" :range="areaList" :range-key="'name'" @columnchange="columnChange" @cancel="hideArea(1)"
-			 @change="hideArea(0)" style="flex: 1;">
+
+			<picker mode="multiSelector" :value="areaIndex" :range="areaList" :range-key="'name'" @columnchange="columnChange"
+			 @cancel="hideArea(1)" @change="hideArea(0)" style="flex: 1;">
 				<view class="right">
 					{{changeArea==1?((province&&city&&hasArea)?(province+' '+city):'请选择地区'):(detailInfo.id?(detailInfo.area):((province&&city&&hasArea)?(province+city):'请选择地区'))}}
 				</view>
@@ -56,7 +56,7 @@
 			</view>
 			<view class="common-input-box">
 				月门诊量预估（人）
-				<input type="number" class="commom-input" maxlength="5" v-model="outpatient" @input="patienChange"/>
+				<input type="number" class="commom-input" maxlength="5" v-model="outpatient" @input="patienChange" />
 			</view>
 			<view class="common-tip">可以自行修改月门诊量预估数</view>
 		</view>
@@ -70,7 +70,7 @@
 
 			<view class="common-input-box">
 				月手术量预估（台）
-				<input type="number" class="commom-input" maxlength="5" v-model="monthOperation" @input="patienChange"/>
+				<input type="number" class="commom-input" maxlength="5" v-model="monthOperation" @input="patienChange" />
 			</view>
 			<view class="common-tip">可以自行修改月手术量预估数</view>
 		</view>
@@ -82,7 +82,7 @@
 				主管床位数（张）
 				<input type="number" class="commom-input1" maxlength="5" placeholder="请填写张数" v-model="bed1" @input="bedChange" />
 			</view>
-			
+
 			<view class="common-input-box1">
 				主管床位周转天数（天）
 				<input type="number" class="commom-input1" maxlength="5" placeholder="请填写天数" v-model="bed2" @input="bedChange" />
@@ -94,37 +94,38 @@
 			</view>
 			<view class="common-tip">可以自行修改月住院病人预估数</view>
 		</view>
-        
+
 		<view style="margin-top: 20rpx; background-color: #FFFFFF;" v-if="type!=4">
 			<view style="height: 10rpx;"></view>
-			
+
 			<view class="common-input-box">
 				月患者数量预估（人）
 				<input type="number" class="commom-input" maxlength="5" v-model="patientNum" @input="orderChange" />
 			</view>
 			<view class="common-tip">可以自行修改月患者数量预估数</view>
 		</view>
-		
+
 		<view style="margin-top: 20rpx; background-color: #FFFFFF;" v-if="type!=4">
 			<view style="height: 20rpx;"></view>
 			<view class="common-input-box2">
 				客情关系程度
 				<view :class="coefficient?'commom-input2':'commom-input2-noChose'" @click="openCoefficient">
-                   {{coefficient?coefficient.value:'请选择'}}
+					{{coefficient?coefficient.value:'请选择'}}
 				</view>
+				<view class="common-tip" style="margin-left: 0;padding-left: 0rpx;">客情关系程度用于销售潜力评估,"陌拜"、"一般"、"很好"、"极好"
+					系数分别对应0%、20%、50%和80%</view>
 			</view>
-			<view style="height: 50rpx;"></view>
-		
+			<view style="height: 10rpx;"></view>
+
 		</view>
-		
+
 		<view style="margin-top: 20rpx; background-color: #FFFFFF;" v-if="type!=4">
 			<view style="height: 10rpx;"></view>
-			
 			<view class="common-input-box">
-				成交单数预估
+				月销售潜力（单数）
 				<input type="number" class="commom-input" maxlength="5" v-model="orderNum" />
 			</view>
-			<view class="common-tip">可以自行修改成交预估数</view>
+			<view class="common-tip" style="padding-right: 14rpx;">月销售潜力根据月患者数量预估和客情关系程度评估，可根据实际情况修改。</view>
 		</view>
 
 
@@ -222,7 +223,7 @@
 				<view style="height: 20rpx;"></view>
 			</view>
 		</uni-popup>
-		
+
 		<uni-popup ref="coefficientPopup" type="bottom">
 			<view class="popup-bg">
 				<view style="height: 40rpx;"></view>
@@ -239,7 +240,7 @@
 				<view style="height: 20rpx;"></view>
 			</view>
 		</uni-popup>
-		
+
 	</view>
 </template>
 
@@ -250,10 +251,10 @@
 
 		data() {
 			return {
-				areaIndex:[0,0],
-				changeArea:0,
-				detailInfo:{},
-				id:'',
+				areaIndex: [0, 0],
+				changeArea: 0,
+				detailInfo: {},
+				id: '',
 				searchHospital: '',
 				searchOption: '',
 				types: ['医生', '科室', '医院'],
@@ -294,85 +295,87 @@
 				],
 				outpatient: 0, //月门诊量预估（人）
 				weekOperation: '', //周手术量
-				monthOperation: 0 ,//月手术量
-				bed1:'',//主管床位数（张）
-				bed2:'',//主管床位周转天数（天）
-				bedCount:0,//月住院病人数预估（人）
-				patientNum:0,//月患者数量预估（人）
-				coefficientItems:[],
-				coefficient:'',//系数
-				orderNum:0,//成交单数预估 
+				monthOperation: 0, //月手术量
+				bed1: '', //主管床位数（张）
+				bed2: '', //主管床位周转天数（天）
+				bedCount: 0, //月住院病人数预估（人）
+				patientNum: 0, //月患者数量预估（人）
+				coefficientItems: [],
+				coefficient: '', //系数
+				orderNum: 0, //成交单数预估 
 			}
 		},
 		onLoad(props) {
-			if(props.id){
+			if (props.id) {
 				this.id = props.id;
 				this.getDetailRequest();
 			}
-            this.getTechnicalTitleList();
-			if(!props.id){
+			this.getTechnicalTitleList();
+			if (!props.id) {
 				this.getAreaRequest();
 			}
 			this.relateListRequest();
-		
+
 		},
 		onShow() {
 
 		},
 		methods: {
 			//如果是点详情进来的，就要请求详情数据
-			getDetailRequest(){
-				app.resourceReportDetail({id:this.id}).then(res =>{
-					if(res.status == 1){
+			getDetailRequest() {
+				app.resourceReportDetail({
+					id: this.id
+				}).then(res => {
+					if (res.status == 1) {
 						this.detailInfo = res.data;
 						this.cityId = res.data.cityId;
 						this.provinceId = res.data.provinceId;
 						this.hasArea = true;
 						//res.data.type==1?(this.type=2):(res.data.type==2?this.type=1:this.type=0);
-						this.type = res.data.type-1;
+						this.type = res.data.type - 1;
 						this.doctorName = res.data.doctorName;
-						
-						
-						this.outpatient = res.data.monthlyConsulting;//月门诊量预估（人）
-						this.weekOperation = res.data.weeklyOperate;//每周手术量（台）
-						this.orderNum =res.data.completedOrder;// 成交单数
+
+
+						this.outpatient = res.data.monthlyConsulting; //月门诊量预估（人）
+						this.weekOperation = res.data.weeklyOperate; //每周手术量（台）
+						this.orderNum = res.data.completedOrder; // 成交单数
 						this.patientNum = res.data.monthlyPatient;
-						this.bedCount = res.data.monthlyInpatient;// 月住院病人人数预估（人）
-						this.bed2 = res.data.masterBedsDay;// 主管床位周转天数（天）
-						this.bed1 = res.data.masterBeds;// 主管床位数（张）
-						this.monthOperation = res.data.monthlyOperate;//月手术量预估（台）
+						this.bedCount = res.data.monthlyInpatient; // 月住院病人人数预估（人）
+						this.bed2 = res.data.masterBedsDay; // 主管床位周转天数（天）
+						this.bed1 = res.data.masterBeds; // 主管床位数（张）
+						this.monthOperation = res.data.monthlyOperate; //月手术量预估（台）
 						this.remark = res.data.remark;
-						
+
 						//筛选客情关系// relate:this.coefficient.key,  // 客情关系
-						
-						app.relateList().then(res =>{
-							if(res.status == 1){
+
+						app.relateList().then(res => {
+							if (res.status == 1) {
 								for (var i = 0; i < res.data.length; i++) {
-									if(res.data[i].key==this.detailInfo.relate){
+									if (res.data[i].key == this.detailInfo.relate) {
 										this.coefficient = res.data[i];
 										break;
 									}
 								}
 							}
 						});
-						
-						
+
+
 						//涮选时间  JSON.parse(jsonString);
-						if(this.detailInfo.consultingHours){
-							var timeList =  JSON.parse(this.detailInfo.consultingHours);
+						if (this.detailInfo.consultingHours) {
+							var timeList = JSON.parse(this.detailInfo.consultingHours);
 							for (var i = 0; i < timeList.length; i++) {
-							    var	time=timeList[i].split(' ');
+								var time = timeList[i].split(' ');
 								for (var j = 0; i < this.timeItems.length; j++) {
-									if(this.timeItems[j] == time[0]){
-										if(time.length==3){
+									if (this.timeItems[j] == time[0]) {
+										if (time.length == 3) {
 											//选择了上午跟下午
-											this.timeChoseItem[j] = [1,1];
-										}else{
+											this.timeChoseItem[j] = [1, 1];
+										} else {
 											//只选了上午或者下午
-											if(time[1]=='上午'){
-												this.timeChoseItem[j] = [1,0];
-											}else{
-												this.timeChoseItem[j] = [0,1];
+											if (time[1] == '上午') {
+												this.timeChoseItem[j] = [1, 0];
+											} else {
+												this.timeChoseItem[j] = [0, 1];
 											}
 										}
 										break;
@@ -381,41 +384,41 @@
 							}
 							this.$forceUpdate();
 						}
-						
-						
+
+
 						//筛选医生职称
-						if(this.detailInfo.technicalTitle){
-							app.technicalTitleList().then(res =>{
-								if(res.status ==1){
+						if (this.detailInfo.technicalTitle) {
+							app.technicalTitleList().then(res => {
+								if (res.status == 1) {
 									for (var i = 0; i < res.data.length; i++) {
-										if(res.data[i].key==this.detailInfo.technicalTitle){
+										if (res.data[i].key == this.detailInfo.technicalTitle) {
 											this.technical = res.data[i];
 											break;
 										}
-										
+
 									}
 								}
 							});
 						}
-						
-						
+
+
 						//筛选科室
-						if(this.detailInfo.departId){
+						if (this.detailInfo.departId) {
 							app.getOptionList({
 								code: 'depart'
 							}).then(res => {
 								if (res.status == 1) {
 									for (var i = 0; i < res.data.length; i++) {
-										if(res.data[i].code==this.detailInfo.departId){
-																this.Option = res.data[i];
-																break;
-															}
+										if (res.data[i].code == this.detailInfo.departId) {
+											this.Option = res.data[i];
+											break;
+										}
 									}
 								}
 							});
 						}
-					   
-						
+
+
 						//筛选医院
 						app.hospitalList({
 							provinceId: this.provinceId,
@@ -424,24 +427,24 @@
 						}).then(res => {
 							if (res.status == 1) {
 								for (var i = 0; i < res.data.list.length; i++) {
-									if(res.data.list[i].id == this.detailInfo.hospitalId){
+									if (res.data.list[i].id == this.detailInfo.hospitalId) {
 										this.chooseHospital = res.data.list[i];
-									    
+
 										break;
 									}
 								}
-								
+
 							}
-						
+
 						})
-						
-						
+
+
 						//筛选地区
 						http.get(http.urls.get_all_province).then((res) => {
 							this.areaList[0] = res.data;
 							for (var i = 0; i < this.areaList[0].length; i++) {
 								var province = this.areaList[0][i];
-								if(province.id== this.provinceId){
+								if (province.id == this.provinceId) {
 									this.areaIndex[0] = i;
 									break;
 								}
@@ -452,29 +455,29 @@
 								this.areaList[1] = res.data;
 								for (var i = 0; i < this.areaList[1].length; i++) {
 									var city = this.areaList[1][i];
-									if(city.id == this.cityId){
-										this.areaIndex = [this.areaIndex[0],i];
+									if (city.id == this.cityId) {
+										this.areaIndex = [this.areaIndex[0], i];
 										break;
 									}
 								}
 								this.$forceUpdate();
 							})
 						});
-						
-						
+
+
 					}
 				});
 			},
 			//客情关系程度 列表
-			relateListRequest(){
-				app.relateList().then(res =>{
-					if(res.status == 1){
+			relateListRequest() {
+				app.relateList().then(res => {
+					if (res.status == 1) {
 						this.coefficientItems = res.data;
 					}
 				});
 			},
 			//获取地区
-			getAreaRequest(){
+			getAreaRequest() {
 				http.get(http.urls.get_all_province).then((res) => {
 					this.areaList[0] = res.data;
 					if (this.areaList[0] && this.areaList[0].length > 0) {
@@ -489,7 +492,7 @@
 								let obj2 = this.areaList[1][0];
 								this.city = obj2.name
 								this.cityId = obj2.id
-				
+
 							}
 							this.$forceUpdate();
 						})
@@ -497,54 +500,54 @@
 				});
 			},
 			//医生的职称
-			getTechnicalTitleList(){
-				app.technicalTitleList().then(res =>{
-					if(res.status ==1){
+			getTechnicalTitleList() {
+				app.technicalTitleList().then(res => {
+					if (res.status == 1) {
 						this.technicalItems = res.data;
 					}
 				});
 			},
-			
+
 			//全选
-			allChose(){
+			allChose() {
 				for (var i = 0; i < this.timeChoseItem.length; i++) {
-					this.timeChoseItem[i] = [1,1];
+					this.timeChoseItem[i] = [1, 1];
 				}
 				this.outpatient = 14 * 120;
 				this.calculatePatientNum();
 				this.$forceUpdate();
 			},
-			orderChange(){
-				this.orderNum = Math.floor(this.coefficient.key*Number(this.patientNum)*0.01);
+			orderChange() {
+				this.orderNum = Math.floor(this.coefficient.key * Number(this.patientNum) * 0.01);
 			},
 			//计算订单数量
-			calculateOrder(){
-				if(!this.coefficient || !this.patientNum){
+			calculateOrder() {
+				if (!this.coefficient || !this.patientNum) {
 					//return;
 				}
-				this.orderNum = Math.floor(this.coefficient.key*this.patientNum*0.01);
+				this.orderNum = Math.floor(this.coefficient.key * this.patientNum * 0.01);
 			},
-			openCoefficient(){
-			   this.$refs.coefficientPopup.open();
-		    },
-			selectCoefficient(item){
+			openCoefficient() {
+				this.$refs.coefficientPopup.open();
+			},
+			selectCoefficient(item) {
 				this.coefficient = item;
 				this.calculateOrder();
-			   this.$refs.coefficientPopup.close();
+				this.$refs.coefficientPopup.close();
 			},
-			calculatePatientNum(){
-			   this.patientNum = Number(this.outpatient)+Number(this.monthOperation)+Number(this.bedCount);
-			   this.calculateOrder();
+			calculatePatientNum() {
+				this.patientNum = Number(this.outpatient) + Number(this.monthOperation) + Number(this.bedCount);
+				this.calculateOrder();
 			},
-			patienChange(){
+			patienChange() {
 				this.calculatePatientNum();
 			},
-			bedChange(e){
-				if(!this.bed1 || !this.bed2){
+			bedChange(e) {
+				if (!this.bed1 || !this.bed2) {
 					return;
 				}
-			   // 月住院病人数预估= 30除以“主管床位周转天数”* 主管床位数
-				this.bedCount =Math.floor(30/this.bed2)*this.bed1; 
+				// 月住院病人数预估= 30除以“主管床位周转天数”* 主管床位数
+				this.bedCount = Math.floor(30 / this.bed2) * this.bed1;
 				this.calculatePatientNum();
 			},
 			weekOperationChange(e) {
@@ -637,7 +640,7 @@
 					this.provinceId = obj.id
 					for (var i = 0; i < this.areaList[0].length; i++) {
 						var province = this.areaList[0][i];
-						if(province.id== this.provinceId){
+						if (province.id == this.provinceId) {
 							this.areaIndex[0] = i;
 							break;
 						}
@@ -652,10 +655,10 @@
 							this.cityId = obj2.id
 							this.chooseHospital = {};
 						}
-						this.areaIndex = [this.areaIndex[0],0];
+						this.areaIndex = [this.areaIndex[0], 0];
 						this.$forceUpdate();
 					})
-					
+
 				} else if (column == 1) {
 					this.city = obj.name
 					this.cityId = obj.id
@@ -664,7 +667,7 @@
 				this.changeArea = 1;
 			},
 			submit() {
-			
+
 				if (!this.hasArea) {
 					app.tip('请先填好报备资料');
 					return;
@@ -687,33 +690,33 @@
 					}
 				}
 				if (this.type == 2) {
-					if (!this.chooseHospital.id || !this.Option.code || !this.doctorName || !this.technical ) {
+					if (!this.chooseHospital.id || !this.Option.code || !this.doctorName || !this.technical) {
 						app.tip('请先填好报备资料');
 						return;
 					}
 				}
 
-				if(this.patientNum ==0 || this.orderNum==0|| !this.coefficient){
+				if (this.patientNum == 0 || this.orderNum == 0 || !this.coefficient) {
 					app.tip('请先填好报备资料');
 					return;
 				}
-				
-				
-				let consultingHours = [];//门诊时间
+
+
+				let consultingHours = []; //门诊时间
 				for (var i = 0; i < this.timeChoseItem.length; i++) {
-				   var timeItem =this.timeChoseItem[i];
-				   if(timeItem[0]==1 ||timeItem[1]==1){
-					    var day = this.timeItems[i];
-						if(timeItem[0]==1){
-							day = day+' '+'上午';
+					var timeItem = this.timeChoseItem[i];
+					if (timeItem[0] == 1 || timeItem[1] == 1) {
+						var day = this.timeItems[i];
+						if (timeItem[0] == 1) {
+							day = day + ' ' + '上午';
 						}
-						if(timeItem[1]==1){
-							day = day+' '+'下午';
+						if (timeItem[1] == 1) {
+							day = day + ' ' + '下午';
 						}
 						consultingHours.push(day);
-				   }
+					}
 				}
-			
+
 				consultingHours = JSON.stringify(consultingHours);
 				let data = {
 					hospitalId: this.chooseHospital.id,
@@ -754,13 +757,13 @@
 						...data,
 						departId: this.Option.code,
 						doctorName: this.doctorName,
-						technicalTitle:this.technical.key
+						technicalTitle: this.technical.key
 					}
 				}
-				if(this.id){
+				if (this.id) {
 					data = {
 						...data,
-						id:this.id
+						id: this.id
 					}
 				}
 				app.saveResource(
@@ -796,7 +799,7 @@
 				this.Option = {};
 				this.chooseHospital = {};
 				for (var i = 0; i < this.timeChoseItem.length; i++) {
-					this.timeChoseItem[i] = [0,0];
+					this.timeChoseItem[i] = [0, 0];
 				}
 				this.outpatient = 0;
 				this.weekOperation = '';
@@ -1250,20 +1253,16 @@
 
 
 
-     .common-input-box2 {
-			padding-left: 20rpx;
+		.common-input-box2 {
 			margin-left: 34rpx;
-			width: 650rpx;
-			height: 90rpx;
-			line-height: 90rpx;
+			margin-right: 34rpx;
+			// width: 650rpx;
 			border-radius: 6rpx;
 			text-align: left;
-			border: 2rpx solid rgba(255, 255, 255, 100);
 			color: rgba(16, 16, 16, 100);
 			font-size: 28rpx;
 			text-align: left;
 			font-family: PingFangSC-regular;
-			border-bottom: 2rpx solid rgba(187, 187, 187, 100);
 			position: relative;
 
 			.commom-input2 {
@@ -1272,7 +1271,8 @@
 				top: 0rpx;
 				text-align: right;
 			}
-			.commom-input2-noChose{
+
+			.commom-input2-noChose {
 				position: absolute;
 				right: 20rpx;
 				top: 0rpx;

@@ -82,7 +82,7 @@
 		</view>
 		
 		<view class="common-box">
-			<view class="left">成交单数预估</view>
+			<view class="left">月销售潜力（单数）</view>
 			<view class="right">{{detailInfo.completedOrder||0}}</view>
 		</view>
 		

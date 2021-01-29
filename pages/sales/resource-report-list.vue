@@ -13,7 +13,7 @@
 				<text>人</text>
 			</view>
 			<view class="list-desc" @click="cilckItem(item)">
-				<text>{{"月成交单数预估 "}}</text>
+				<text>{{"月销售潜力 "}}</text>
 				<text style="color: #A80003;">{{item.completed_order||0}}</text>
 				<text>单</text>
 			</view>
