@@ -721,16 +721,21 @@
 					cityId: this.cityId,
 					area: this.province + this.city,
 					type: this.type + 1,
-					consultingHours:consultingHours,
-					monthlyConsulting:this.outpatient,//月门诊量预估（人）
+					monthlyConsulting:this.outpatient||0,//月门诊量预估（人）
 					weeklyOperate:this.weekOperation||0, //每周手术量（台）
-					monthlyOperate:this.monthOperation, //月手术量预估（台）
+					monthlyOperate:this.monthOperation||0, //月手术量预估（台）
 					masterBeds:this.bed1||0,  // 主管床位数（张）
 					masterBedsDay:this.bed2||0, //// 主管床位周转天数（天）
-					monthlyInpatient:this.bedCount,   // 月住院病人人数预估（人）
+					monthlyInpatient:this.bedCount||0,   // 月住院病人人数预估（人）
 					monthlyPatient:this.patientNum,   // 月患者人数预估（人）
 					relate:this.coefficient.key,  // 客情关系
 					completedOrder:this.orderNum  // 成交单数
+				}
+				if(consultingHours){
+					data = {
+						...data,
+						consultingHours:consultingHours
+					}
 				}
 				if (this.remark) {
 					data = {
