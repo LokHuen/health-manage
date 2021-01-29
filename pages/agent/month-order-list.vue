@@ -16,7 +16,7 @@
 				<view class="numitem">
 					<view class="number">{{item.money||0}}</view>
 					<!-- <view>{{salesId||isAgent?'收益(元)':'订单总金额(元)'}}</view> -->
-					<view>收益(元)</view>
+					<view>订单总金额(元)</view>
 				</view>
 			</view>
 			<view>
