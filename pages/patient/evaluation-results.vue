@@ -85,6 +85,12 @@
 	import setconfig from "../../common/wxconfig.js"
 	import wx from '../../plugins/jweixin.js'
 	let app = getApp();
+	setconfig().then(res=>{
+		if(!localStorage.getItem("reloadpage")){
+			localStorage.setItem("reloadpage",1);
+			location.reload();
+		}
+	});
 	export default {
 		data() {
 			return {
@@ -97,9 +103,13 @@
 		onLoad(options){
 			this.id = options.id||1;
 			this.getinfo();
-			setconfig().then(res=>{
-				this.$forceUpdate();
-			});
+			
+			// setconfig().then(res=>{
+			// 	if(!localStorage.getItem("reloadpage")){
+			// 		localStorage.setItem("reloadpage",1);
+			// 		location.reload();
+			// 	}
+			// });
 		},
 		methods:{
 			getinfo(){

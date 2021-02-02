@@ -49,7 +49,7 @@
 			console.log('uid==' + uid);
 			uid = parseInt(uid);
 			if(!uid||isNaN(uid)){
-				 window.location.href = this.globalData.baseUrl + '/wx/fwh/user/auth/index?returnUrl=' + encodeURIComponent(windowUrl);
+				 window.location.href = this.globalData.baseUrl + '/wx/fwh/user/auth/index?returnUrl=' + encodeURIComponent(windowUrl)+"&channel=1";
 			}else{
 				localStorage.setItem('uid',uid);
 			}

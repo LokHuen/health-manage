@@ -304,6 +304,7 @@
 			                this.getQuestions("next");  //取下一页的题
 			
 			            }else{
+							localStorage.removeItem("reloadpage");
 			                this.$router.push({
 			                    path:'/pages/patient/evaluation-results?id='+this.params.surveyId
 			                })
