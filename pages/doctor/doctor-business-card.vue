@@ -11,7 +11,7 @@
 			</view>
 			<view class="qrCode-box">
 				<image :src="infoData.qrCode" mode="widthFix" class="qrcode"></image>
-				<view class="qrCode-tips">患者院外营养管理平台</view>
+				<view class="qrCode-tips">肿瘤患者营养管理平台</view>
 				<view class="line"></view>
 				<view class="qrCode-subtips">中国健康促进基金会·肿瘤精准个体化防治公益项目·肿瘤营养教育专题</view>
 			</view>
