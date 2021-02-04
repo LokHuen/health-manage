@@ -60,7 +60,6 @@
 						}
 						this.downImage(this.infoData.qrCode, res => {
 							this.infoData.qrCode = res;
-							
 						})
 					}
 				});

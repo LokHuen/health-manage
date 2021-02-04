@@ -263,13 +263,8 @@
 					orderBy: this.orderBy
 				}).then(res => {
 					if (res.status === 1) {
-						if (this.pageNo === 1) {
-							this.listDatas = res.data.list;
-						} else {
-							if (res.data.pageList.pageCount > this.pageNo) {
-								this.listDatas = this.listDatas.concat(res.data.list);
-							}
-						}
+						if(this.pageNo>res.data.pageCount) return;
+						this.listDatas = this.pageNo==1?res.data.list:this.listDatas.concat(res.data.list);
 					}
 					uni.stopPullDownRefresh();
 				});
