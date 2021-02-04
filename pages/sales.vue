@@ -16,6 +16,7 @@
 					{name:"维新生物业务",src:"https://weixingzh.cvddr.com/pages/sales/index?isSales=1"},
 					{name:"健康随我行业务",src:"https://nourishgzh.healthme.cn/pages/sales/index?isSales=1"},
 					{name:"拓普健康业务",src:"https://jxgzh.healxin.com/pages/sales/register"},
+					{name:"孤独症业务",src:"https://autismgzh.heartme.cn/pages/sales/register"},
 				]
 			}
 		},
