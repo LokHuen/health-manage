@@ -29,7 +29,7 @@
 				let windowUrl;
 				windowUrl = window.location.href;
 				
-				window.location.href = this.baseUrl + '/wx/fwh/user/auth/index?returnUrl=' + encodeURIComponent(windowUrl);
+				window.location.href = this.baseUrl + '/wx/fwh/user/auth/index?returnUrl=' + encodeURIComponent(windowUrl)+"&channel=1";
 			}
 		}
 	}

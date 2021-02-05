@@ -196,7 +196,7 @@
 			if(!app.getCache("uid")) return;
 			this.getIllnessList();
 			this.type = props.type || 1; 
-			this.formQrCode = props.formQrCode ||2;
+			this.formQrCode = props.formQrCode ||1;
 			http.get(http.urls.get_all_province).then((res) => {
 				this.areaList[0] = res.data;
 				if (this.areaList[0] && this.areaList[0].length > 0) {

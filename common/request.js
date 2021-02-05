@@ -24,6 +24,10 @@ function rq(url, data = {}, type, ctype) {
 						})
 						return;
 					}
+					if(localStorage.getItem("uid")){
+						localStorage.removeItem("uid");
+						location.reload();
+					}
 					reject('未登录')
 				}
 				if (res.data.status !== 1) {
