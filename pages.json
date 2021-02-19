@@ -1,6 +1,13 @@
 {
 	"pages": [
 		{
+			"path": "pages/patient/patient-nutrition-manage",
+			"style": {
+				"navigationBarTitleText": "营养管理"
+			}
+		},
+		
+		{
 			"path": "pages/agent/index",
 			"style": {
 				"navigationBarTitleText": "业务管理中心"
@@ -69,12 +76,6 @@
 			}
 		},
 		
-		{
-			"path": "pages/patient/patient-nutrition-manage",
-			"style": {
-				"navigationBarTitleText": "营养管理"
-			}
-		},
 		
 		
 		

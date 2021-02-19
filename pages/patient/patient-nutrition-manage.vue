@@ -9,7 +9,7 @@
 					{{infoData.patientName||"游客"}}
 				</view>
 				<view class="msg">{{(infoData.patientGender||"")+' '+((infoData.age || infoData.age!=0)?(infoData.age+'岁 '):'')+(infoData.illness||"")}}
-				
+
 				</view>
 			</view>
 		</view>
@@ -81,12 +81,13 @@
 					</view>
 				</view>
 			</view>
-		
-		<view class="flex choosedaybox">
-			<view v-for="(item,index) in daytab" :key="index" :class="dayindex==index?'daylist on':'daylist'" @click="clickday(index)" style="">{{item}}</view>
-		</view>
-		<view v-if="dayindex==0">
-			<view class="prelative " style="">
+
+			<view class="flex choosedaybox">
+				<view v-for="(item,index) in daytab" :key="index" :class="dayindex==index?'daylist on':'daylist'" @click="clickday(index)"
+				 style="">{{item}}</view>
+			</view>
+			<view v-if="dayindex==0">
+				<view class="prelative " style="">
 					<view class="blockbox">
 						<view class="blockbigbox flex">
 							{{infoData.dietCalories}}
@@ -96,66 +97,70 @@
 							<view v-for="(item,index) in 25" :key="index" :class="'greenline position'+(index+1)+' '+(index<greenindex?'green':'')"></view>
 						</view>
 						<view>单位：千卡</view>
-					</view>			
-			</view>
-			<view class="prelative marlr20" style="">
-				<div id="threeecharts" class="echarts" style="height:70vw;"></div>
-				<view class="flex blocklistbox">
-					<view class="blockgreen"></view>
-					建议摄入值
-					<view class="blockblue"></view>
-					<view click="$refs.leavepopup.open()">实际摄入</view>
-					<!-- <image src="../../static/icon/wenhaoIcon.png" mode="widthFix" class="askIcon" @click="$refs.leavepopup.open()"></image> -->
-				</view>
-			</view>
-			<view class="flex actionlist">
-				<view style="flex:1" class="flex">
-					<view class="flex leftaction mrbt" @click="tootherpage('/pages/food/food-list')">
-						<view class="flex" style="width:224rpx;"><image src="../../static/patient/rice.png" mode="widthFix" ></image>记录饮食</view>
-					</view>
-					<view class="flex leftaction" @click="tootherpage('/pages/nutrition/nutrition-list')">
-						<view class="flex" style="width:224rpx;"><image src="../../static/patient/nutriment.png" mode="widthFix" class="other"></image>记录营养品</view>
 					</view>
 				</view>
-				<view class="flex sportitem" @click="tootherpage('/pages/sport/sport-list')">
-					<image src="../../static/patient/sport.png" mode="widthFix" ></image>记录运动
+				<view class="prelative marlr20" style="">
+					<div id="threeecharts" class="echarts" style="height:70vw;"></div>
+					<view class="flex blocklistbox">
+						<view class="blockgreen"></view>
+						建议摄入值
+						<view class="blockblue"></view>
+						<view click="$refs.leavepopup.open()">实际摄入</view>
+						<!-- <image src="../../static/icon/wenhaoIcon.png" mode="widthFix" class="askIcon" @click="$refs.leavepopup.open()"></image> -->
+					</view>
+				</view>
+				<view class="flex actionlist">
+					<view style="flex:1" class="flex">
+						<view class="flex leftaction mrbt" @click="tootherpage('/pages/food/food-list')">
+							<view class="flex" style="width:224rpx;">
+								<image src="../../static/patient/rice.png" mode="widthFix"></image>记录饮食
+							</view>
+						</view>
+						<view class="flex leftaction" @click="tootherpage('/pages/nutrition/nutrition-list')">
+							<view class="flex" style="width:224rpx;">
+								<image src="../../static/patient/nutriment.png" mode="widthFix" class="other"></image>记录营养品
+							</view>
+						</view>
+					</view>
+					<view class="flex sportitem" @click="tootherpage('/pages/sport/sport-list')">
+						<image src="../../static/patient/sport.png" mode="widthFix"></image>记录运动
+					</view>
 				</view>
 			</view>
-		</view>
-		<view v-if="dayindex!=0">
-			
-			<view class="prelative marlr20" style="margin-bottom:80rpx;">
-				<block v-if="tlinedata.dietList&&tlinedata.dietList[0]">
-				<view class="flex" style="padding:0 0 15rpx 10rpx;">摄入:
-					<view v-for="(item,index) in enptylist" :class="enptyindex==index?'enptylist on':'enptylist'" @click="clickenpty(index)">{{item}}</view>
+			<view v-if="dayindex!=0">
+
+				<view class="prelative marlr20" style="margin-bottom:80rpx;">
+					<block v-if="tlinedata.dietList&&tlinedata.dietList[0]">
+						<view class="flex" style="padding:0 0 15rpx 10rpx;">摄入:
+							<view v-for="(item,index) in enptylist" :class="enptyindex==index?'enptylist on':'enptylist'" @click="clickenpty(index)">{{item}}</view>
+						</view>
+						<div id="line71echarts" class="echarts"></div>
+					</block>
+					<block v-if="tlinedata.dietList&&!tlinedata.dietList[0]">
+						<view class="flex" style="padding:0 0 15rpx 10rpx;">摄入:
+						</view>
+						<view class="nodatabox">
+							<image src="../../static/patient/nodata.png" mode="widthFix" class="nodata"></image>
+							<view>暂时没有数据</view>
+						</view>
+					</block>
+					<view style="padding:0 0 15rpx 10rpx;margin-top:45rpx;">运动消耗能量：</view>
+					<block v-if="tlinedata.exerciseList&&tlinedata.exerciseList[0]">
+						<div id="line72echarts" class="echarts"></div>
+					</block>
+					<block v-if="tlinedata.exerciseList&&!tlinedata.exerciseList[0]">
+						<view class="nodatabox">
+							<image src="../../static/patient/nodata.png" mode="widthFix" class="nodata"></image>
+							<view>暂时没有数据</view>
+						</view>
+					</block>
 				</view>
-				<div id="line71echarts" class="echarts"></div>
-				</block>
-				<block v-if="tlinedata.dietList&&!tlinedata.dietList[0]">
-					<view class="flex" style="padding:0 0 15rpx 10rpx;">摄入:
-					</view>
-					<view class="nodatabox">
-						<image src="../../static/patient/nodata.png" mode="widthFix" class="nodata"></image>
-						<view>暂时没有数据</view>
-					</view>
-				</block>
-				<view style="padding:0 0 15rpx 10rpx;margin-top:45rpx;">运动消耗能量：</view>
-				<block v-if="tlinedata.exerciseList&&tlinedata.exerciseList[0]">
-				<div id="line72echarts" class="echarts"></div>
-				</block>
-				<block v-if="tlinedata.exerciseList&&!tlinedata.exerciseList[0]">
-					<view class="nodatabox">
-						<image src="../../static/patient/nodata.png" mode="widthFix" class="nodata"></image>
-						<view>暂时没有数据</view>
-					</view>
-				</block>
+
 			</view>
-			
-		</view>
 			<view style="height:10rpx;"></view>
 		</view>
 
-		<view class="record-chart-box" v-if="(hasLoadLindData==0)||(lineData.categories.length>0 &&hasLoadLindData ==1)">
+		<view class="record-chart-box" v-if="((hasLoadLindData==0)||(lineData.categories.length>0 &&hasLoadLindData ==1))&&(testtype==1)">
 			<view class="record-chart-title">PG-SGA营养状况评估</view>
 			<view class="record-chart-subtitle">分值越小，营养状况越好</view>
 
@@ -165,8 +170,28 @@
 			</view> -->
 			<div id="echarts" class="echarts"></div>
 			<view style="font-size:24rpx;padding:0 0 30rpx 40rpx;text-align:left;">
-			<view ><text class="centerwh"><text class="smallblockleft color1"></text>0~1:无营养不良</text><text class="smallblockleft color2"></text>2~3:可疑营养不良 </view>
-			<view ><text class="centerwh"><text class="smallblockleft color3"></text>4~8:中度营养不良</text><text class="smallblockleft color4"></text>>=9:重度营养不良</view>
+				<view><text class="centerwh"><text class="smallblockleft color1"></text>0~1:无营养不良</text><text class="smallblockleft color2"></text>2~3:可疑营养不良
+				</view>
+				<view><text class="centerwh"><text class="smallblockleft color3"></text>4~8:中度营养不良</text><text class="smallblockleft color4"></text>>=9:重度营养不良</view>
+			</view>
+		</view>
+
+
+		<view class="record-chart-box" v-if="((hasLoadLindData==0)||(lineData.categories.length>0 &&hasLoadLindData ==1))&&(testtype==2)">
+			<view class="record-chart-title">SGA营养状况评估</view>
+			<!-- <view class="record-chart-subtitle">分值越小，营养状况越好</view> -->
+
+			<!-- 折线Line纯数字-->
+			<!-- <view class="line-chart-box">
+				<line-chart class="line-chart" ref="lineData" canvasId="index_line_2" :dataAs="lineData" :splitNumber="splitNumber" />
+			</view> -->
+			<div id="echarts" class="echarts"></div>
+			<view style="font-size:24rpx;padding:0 0 30rpx 40rpx;text-align:left;">
+				<view><text class="centerwh"><text class="smallblockleft color1"></text>营养良好</text><text class="smallblockleft color2"></text>轻-中度营养不良</view>
+				<view>
+					<text class="centerwh">
+						<text class="smallblockleft color3"></text>重度营养不良</text>
+				</view>
 			</view>
 		</view>
 
@@ -185,7 +210,7 @@
 					<view class="advice-content">
 						<rich-text :nodes="latelyData.content" v-if="showDetail"></rich-text>
 					</view>
-					
+
 				</view>
 				<image class="health-list-item-arrow" :src="showDetail?'../../static/icon/right_arrow_top.png':'../../static/icon/right_arrow.png'"
 				 mode="widthFix" @click.stop="showDetailMessage" v-show="false"></image>
@@ -193,7 +218,7 @@
 		</view>
 
 		<view class="button-box">
-			<button type="default" class="button" @click="beginTest">PG-SGA 营养测评</button>
+			<button type="default" class="button" @click="beginTest">{{testtype==1?'PG-SGA 营养测评':'SGA 营养测评'}}</button>
 		</view>
 		<view style="height: 200px;"></view>
 		<uni-popup ref="popup" type="bottom">
@@ -241,13 +266,13 @@
 				<view class="white-background-energy-close" @click="closeEnergyTips">关闭</view>
 			</view>
 		</uni-popup>
-		
+
 		<uni-popup ref="leavepopup" type="bottom">
 			<!-- 留存值 -->
 			<view class="white-background">
 				<view style="padding:60rpx 30rpx;text-align:left;">
 					<view style="text-align:center;">留存值=摄入值-运动消耗值</view>
-					
+
 				</view>
 			</view>
 		</uni-popup>
@@ -284,16 +309,18 @@
 				showDetail: true,
 				hasLoadLindData: 0,
 				splitNumber: 5,
-				daytab: ["今日","近7天", "近30天"],
+				daytab: ["今日", "近7天", "近30天"],
 				dayindex: 0,
-				greenindex:20,
-				enptylist:["总能量","脂肪","蛋白质","碳水化合物"],
-				enptyindex:0,
-				tlinedata:{},
+				greenindex: 20,
+				enptylist: ["总能量", "脂肪", "蛋白质", "碳水化合物"],
+				enptyindex: 0,
+				tlinedata: {},
+				// PG-SGA   testtype=1 testtype=2  SGA
+				testtype: 1
 			}
 		},
 		methods: {
-			clickenpty(index){
+			clickenpty(index) {
 				this.enptyindex = index;
 				this.$nextTick(() => {
 					this.settwolinebox();
@@ -302,7 +329,8 @@
 			clickday(index) {
 				this.dayindex = index;
 				switch (index) {
-					case 0:this.getData();
+					case 0:
+						this.getData();
 						break;
 					case 1:
 						this.gettwolinedata(() => {
@@ -322,8 +350,10 @@
 						break;
 				}
 			},
-			gettwolinedata(cal){ //近7天数据
-				app.statTemplate({type:this.dayindex}).then(res => {
+			gettwolinedata(cal) { //近7天数据
+				app.statTemplate({
+					type: this.dayindex
+				}).then(res => {
 					// if(res.data.dietList) res.data.dietList.reverse();
 					// if(res.data.exerciseList) res.data.exerciseList.reverse();
 					this.tlinedata = res.data;
@@ -332,17 +362,26 @@
 			},
 			settwolinebox() { //近7天图1
 				let list = this.tlinedata.dietList;
-				let xdata=[],linedata=[];
-				if(list.length==0) return;
+				let xdata = [],
+					linedata = [];
+				if (list.length == 0) return;
 				for (var i = 0; i < list.length; i++) {
 					let date = list[i].cDate.split("-");
 					xdata.push(date[1] + "/" + date[2]);
 					let onedata = "";
-					switch(parseInt(this.enptyindex)){
-						case 0:onedata = list[i].sum;break;
-						case 1:onedata = list[i].fat;break;
-						case 2:onedata = list[i].protein;break;
-						case 3:onedata = list[i].carbohydrate;break;
+					switch (parseInt(this.enptyindex)) {
+						case 0:
+							onedata = list[i].sum;
+							break;
+						case 1:
+							onedata = list[i].fat;
+							break;
+						case 2:
+							onedata = list[i].protein;
+							break;
+						case 3:
+							onedata = list[i].carbohydrate;
+							break;
 					}
 					linedata.push(onedata);
 				}
@@ -376,14 +415,14 @@
 						data: xdata
 					},
 					yAxis: {
-						show:true,
-						name: this.enptyindex==0?"千卡 ":"g ",
+						show: true,
+						name: this.enptyindex == 0 ? "千卡 " : "g ",
 						// nameLocation:"start",
-						nameGap:10,
-						nameTextStyle:{
-							fontSize:10,
-							color:"#666",
-							align:"right"
+						nameGap: 10,
+						nameTextStyle: {
+							fontSize: 10,
+							color: "#666",
+							align: "right"
 						},
 						axisLabel: {
 							fontSize: 10,
@@ -399,10 +438,12 @@
 						type: 'value',
 						splitLine: {
 							show: true,
-							lineStyle:{type:"dashed"}
+							lineStyle: {
+								type: "dashed"
+							}
 						},
 						scale: true,
-			
+
 					},
 					series: [{
 						name: this.enptylist[this.enptyindex],
@@ -423,7 +464,7 @@
 									}
 								}
 							},
-			
+
 						},
 						lineStyle: {
 							color: "#979797", //设置线条颜色
@@ -460,15 +501,16 @@
 						},
 					}]
 				};
-			
+
 				// 使用刚指定的配置项和数据显示图表。
 				myChart.clear();
 				myChart.setOption(option);
 			},
 			settwolinebox1() { //近7天图2
 				let list = this.tlinedata.exerciseList;
-				let xdata=[],linedata=[];
-				if(list.length==0) return;
+				let xdata = [],
+					linedata = [];
+				if (list.length == 0) return;
 				for (var i = 0; i < list.length; i++) {
 					let date = list[i].cDate.split("-");
 					xdata.push(date[1] + "/" + date[2]);
@@ -504,14 +546,14 @@
 						data: xdata
 					},
 					yAxis: {
-						show:true,
+						show: true,
 						name: "千卡 ",
 						// nameLocation:"start",
-						nameGap:10,
-						nameTextStyle:{
-							fontSize:10,
-							color:"#666",
-							align:"right"
+						nameGap: 10,
+						nameTextStyle: {
+							fontSize: 10,
+							color: "#666",
+							align: "right"
 						},
 						axisLabel: {
 							fontSize: 10,
@@ -527,10 +569,12 @@
 						type: 'value',
 						splitLine: {
 							show: true,
-							lineStyle:{type:"dashed"}
+							lineStyle: {
+								type: "dashed"
+							}
 						},
 						scale: true,
-			
+
 					},
 					series: [{
 						name: '能量',
@@ -551,7 +595,7 @@
 									}
 								}
 							},
-			
+
 						},
 						lineStyle: {
 							color: "#979797", //设置线条颜色
@@ -588,120 +632,119 @@
 						},
 					}]
 				};
-			
+
 				// 使用刚指定的配置项和数据显示图表。
 				myChart.clear();
 				myChart.setOption(option);
 			},
 			settiaoxingbox() { //柱状图
-				
+
 				var myChart = echarts.init(document.getElementById('threeecharts'));
 				var option = {
-				    color: ['#dddddd','#52A29E'],
-				    tooltip: {
-				        trigger: 'axis',
-				    },
-				    grid: {
-						top:"5%",
-				        left: '-5%',
-				        right: '3%',
-				        bottom: '5%',
-				        containLabel: true
-				    },
-				    xAxis: [
-				        {
-				            type: 'category',
-							axisLabel:{fontSize:10},
-				            data: ["碳水化合物","脂肪","蛋白质"],//xdata,
-				            axisTick: {
-								show: false,
-				                alignWithLabel: true
-				            }
-							
-				        }
-				    ],
-				    yAxis: [
-				        {
-							show:false,
-				            type: 'value',
-							axisLabel:{fontSize:10},
-							axisLine: {
-								show: false
-							},
-							axisTick: {
-								show: false
-							},
-							splitLine: {
-								show: false
-							},
-				        }
-				    ],
-				    series: [
-				        {
-				            name: '建议摄入值',
-				            type: 'bar',
-				            barWidth: '20%',
-				            data: [this.infoData.dailyCarbonHydrate,this.infoData.dailyFat,this.infoData.dailyProtein],//linedata,
+					color: ['#dddddd', '#52A29E'],
+					tooltip: {
+						trigger: 'axis',
+					},
+					grid: {
+						top: "5%",
+						left: '-5%',
+						right: '3%',
+						bottom: '5%',
+						containLabel: true
+					},
+					xAxis: [{
+						type: 'category',
+						axisLabel: {
+							fontSize: 10
+						},
+						data: ["碳水化合物", "脂肪", "蛋白质"], //xdata,
+						axisTick: {
+							show: false,
+							alignWithLabel: true
+						}
+
+					}],
+					yAxis: [{
+						show: false,
+						type: 'value',
+						axisLabel: {
+							fontSize: 10
+						},
+						axisLine: {
+							show: false
+						},
+						axisTick: {
+							show: false
+						},
+						splitLine: {
+							show: false
+						},
+					}],
+					series: [{
+							name: '建议摄入值',
+							type: 'bar',
+							barWidth: '20%',
+							data: [this.infoData.dailyCarbonHydrate, this.infoData.dailyFat, this.infoData.dailyProtein], //linedata,
 							label: {
 								normal: {
 									show: true,
 									fontSize: 10,
 									color: "#333",
 									position: 'top',
-									formatter:(opt)=>{
-										return opt.value+"g";
+									formatter: (opt) => {
+										return opt.value + "g";
 									}
 								},
-							
+
 							},
-				        },
+						},
 						{
-						    name: '留存值',
-						    type: 'bar',
-						    barWidth: '20%',
-						    data: [this.infoData.carbohydrate,this.infoData.fat,this.infoData.protein],//linedata,
-							barGap:"40%",
+							name: '留存值',
+							type: 'bar',
+							barWidth: '20%',
+							data: [this.infoData.carbohydrate, this.infoData.fat, this.infoData.protein], //linedata,
+							barGap: "40%",
 							label: {
 								normal: {
 									show: true,
-									distance:3,
+									distance: 3,
 									fontSize: 10,
 									color: "#52A29E",
 									position: 'top',
-									formatter:(opt)=>{
-										if(opt.value==1.01) return "";
-										return opt.value+"g";
+									formatter: (opt) => {
+										if (opt.value == 1.01) return "";
+										return opt.value + "g";
 									}
 								},
 							},
 						}
-				    ]
+					]
 				};
 				myChart.clear();
 				myChart.setOption(option);
 			},
 			beginTest() {
 				uni.navigateTo({
-					url: 'nutritional-self-test?'+Math.random()
+					url: 'nutritional-self-test?' + Math.random()
 				});
 			},
 			clickFuction(index) {
 				if (index == 0) {
 					//基础信息
 					uni.navigateTo({
-						url: 'patient-basic-information?type='+2
+						url: 'patient-basic-information?type=' + 2
 					});
 				} else if (index == 1) {
 					//病例管理
 					uni.navigateTo({
 						url: 'patient-case-manage'
 					});
-				} else if (index == 2){
+				} else if (index == 2) {
 					//测评记录
 					uni.navigateTo({
 						url: 'evaluation-record'
 					});
-				}else{
+				} else {
 					uni.navigateTo({
 						url: '/pages/diet/diet-catering'
 					});
@@ -729,28 +772,28 @@
 			closeEnergyTips() {
 				this.$refs.popupEnergy.close();
 			},
-			judgeUserAuth(){
-				app.judgeUserAuth({}).then(res =>{
-					if(res.status ==1){
-						if(res.data.userType == 2){
+			judgeUserAuth() {
+				app.judgeUserAuth({}).then(res => {
+					if (res.status == 1) {
+						if (res.data.userType == 2) {
 							//如果是医生，就跳过去医生的营养管理页面
 							uni.redirectTo({
-								url:'../doctor/doctor-nutrition-manage'
+								url: '../doctor/doctor-nutrition-manage'
 							});
-						}else{
-							if(res.data.perfect==true){
+						} else {
+							if (res.data.perfect == true) {
 								this.getUserData();
-							}else{
+							} else {
 								uni.redirectTo({
-									url:'patient-improve-msg?type=2&formQrCode=1'
+									url: 'patient-improve-msg?type=2&formQrCode=1'
 								});
 							}
-							
+
 						}
 					}
 				});
 			},
-			getUserData(){
+			getUserData() {
 				this.loadCount = 0;
 				this.getData();
 				this.getNearlyRecord();
@@ -762,18 +805,18 @@
 					if (res.status == 1) {
 						this.infoData = res.data;
 					}
-					this.infoData.protein = this.infoData.protein>0?this.infoData.protein:1.01;
-					this.infoData.fat = this.infoData.fat>0?this.infoData.fat:1.01;
-					this.infoData.carbohydrate = this.infoData.carbohydrate>0?this.infoData.carbohydrate:1.01;
+					this.infoData.protein = this.infoData.protein > 0 ? this.infoData.protein : 1.01;
+					this.infoData.fat = this.infoData.fat > 0 ? this.infoData.fat : 1.01;
+					this.infoData.carbohydrate = this.infoData.carbohydrate > 0 ? this.infoData.carbohydrate : 1.01;
 					this.$nextTick(() => {
 						this.settiaoxingbox();
 					})
-					let gindex = parseFloat(this.infoData.dietCalories/this.infoData.dailyEnergy*25);
+					let gindex = parseFloat(this.infoData.dietCalories / this.infoData.dailyEnergy * 25);
 					this.greenindex = 0;
-					let ghandler = setInterval(()=>{
-						if(this.greenindex<gindex) ++this.greenindex;
+					let ghandler = setInterval(() => {
+						if (this.greenindex < gindex) ++this.greenindex;
 						else clearInterval(ghandler);
-					},50)
+					}, 50)
 				});
 			},
 			//最近一次测评的数据
@@ -783,9 +826,10 @@
 				}).then(res => {
 					if (res.status == 1) {
 						this.latelyData = res.data;
-						if(this.latelyData.content) this.latelyData.content=this.latelyData.content.replace(/\<span/gi, '<span class="richtext"');
+						if (this.latelyData.content) this.latelyData.content = this.latelyData.content.replace(/\<span/gi,
+							'<span class="richtext"');
 					}
-				
+
 				});
 			},
 			//拿曲线图的数据
@@ -795,7 +839,7 @@
 					pageNo: 1,
 					pageSize: 3
 				}).then(res => {
-					
+
 					if (res.status == 1) {
 						this.lineData.categories = [];
 						this.lineData.series[0].data = [];
@@ -808,10 +852,11 @@
 								this.lineData.categories.push(time[1] + '月' + date[0] + '日');
 								//this.lineData.categories.push(item.phase);
 								this.lineData.series[0].data.push(item.total)
-								this.lineData.series[0].name=item.phase
+								this.lineData.series[0].name = item.phase
 							})
 							console.log(this.lineData);
-							this.$nextTick(()=>{
+
+							this.$nextTick(() => {
 								this.setlinebox();
 							})
 							// this.$refs['lineData'].showCharts();
@@ -837,7 +882,9 @@
 					},
 					xAxis: {
 						type: 'category',
-						axisLabel:{fontSize:10},
+						axisLabel: {
+							fontSize: 10
+						},
 						axisLine: {
 							show: false
 						},
@@ -848,14 +895,16 @@
 						data: this.lineData.categories,
 					},
 					yAxis: {
-						show:false,
-						name:"",
-						axisLabel:{fontSize:10},
+						show: false,
+						name: "",
+						axisLabel: {
+							fontSize: 10
+						},
 						axisLine: {
 							show: false
 						},
 						min: 0,
-						max:36,
+						max: this.testtype==1?36:3.5,
 						axisTick: {
 							show: false
 						},
@@ -864,9 +913,9 @@
 							show: false
 						},
 						scale: true,
-			
+
 					},
-			
+
 					series: [{
 						name: '',
 						type: 'line',
@@ -886,11 +935,11 @@
 									}
 								}
 							},
-			
+
 						},
 						lineStyle: {
 							color: "#59A29F", //设置线条颜色
-							width:1,
+							width: 1,
 						},
 						itemStyle: {
 							color: (opt) => { //设置拐点颜色
@@ -899,7 +948,7 @@
 							},
 						},
 						symbol: "circle",
-						data: this.lineData.series[0].data,
+						data: this.testtype==1?this.lineData.series[0].data:[1.8,3.2],
 						markArea: { //标记区域
 							data: [
 								[{
@@ -938,26 +987,55 @@
 						},
 					}]
 				};
-			
+               
+				if (this.testtype == 2) {
+					option.series[0].markArea.data = [
+						[{
+							yAxis: '0.5', //y轴坐标控制
+							itemStyle: {
+								color: '#52a29e'
+							},
+						}, {
+							yAxis: '1.5'
+						}],
+						[{
+							yAxis: '1.5',
+							itemStyle: {
+								color: '#ffcf76'
+							}
+						}, {
+							yAxis: '2.5'
+						}],
+						[{
+							yAxis: '2.5',
+							itemStyle: {
+								color: '#ffe1e1'
+							}
+						}, {
+							yAxis: '3.5'
+						}],
+					]
+				}
+
 				// 使用刚指定的配置项和数据显示图表。
 				myChart.clear();
 				myChart.setOption(option);
 			},
-			toanswerlist(id){
+			toanswerlist(id) {
 				uni.navigateTo({
-					url:"/pages/patient/answer?id="+id
+					url: "/pages/patient/answer?id=" + id
 				})
 			},
-			tootherpage(src){
+			tootherpage(src) {
 				uni.navigateTo({
-					url:src
+					url: src
 				})
 			},
 		},
 		onShow() {
-			  if(app.getCache('uid')){
-				  this.judgeUserAuth();
-			  } 
+			if (app.getCache('uid')) {
+				this.judgeUserAuth();
+			}
 		},
 
 
@@ -965,116 +1043,350 @@
 </script>
 
 <style lang="scss">
-	.smallblockleft{width:20rpx;height:20rpx;border-radius:4rpx;margin:0 10rpx 0 8rpx;display: inline-block;background:#4CD964;
-		&.color1{background:#52a29e;}
-		&.color2{background:#ffcf76;}
-		&.color3{background:#ffe1e1;}
-		&.color4{background:#b7c8e3;}
-	}
-	.actionlist{
-		margin:0 38rpx 38rpx;
-		.sportitem{
-			width:281.8rpx;margin-left:8rpx;box-shadow: 1px 2px 19px 2px rgba(192, 192, 192, 0.3);justify-content:center;height:172.3rpx;
-			image{width:74rpx;margin-right:20rpx;}
+	.smallblockleft {
+		width: 20rpx;
+		height: 20rpx;
+		border-radius: 4rpx;
+		margin: 0 10rpx 0 8rpx;
+		display: inline-block;
+		background: #4CD964;
+
+		&.color1 {
+			background: #52a29e;
 		}
-		.leftaction{
-			box-shadow: 1px 2px 19px 2px rgba(192, 192, 192, 0.3);justify-content:center;height:83rpx;width:100%;
-			&.mrbt{margin-bottom:6rpx;}
-			image{width:38rpx;margin-right:20rpx;
-				&.other{width:28rpx;margin:0 24rpx 0 6rpx;}
-			}
-			
+
+		&.color2 {
+			background: #ffcf76;
+		}
+
+		&.color3 {
+			background: #ffe1e1;
+		}
+
+		&.color4 {
+			background: #b7c8e3;
 		}
 	}
-	.marlr20{margin:0 20rpx;}
-	.enptylist{
-		padding-left:24rpx;
-		&.on{color:#52A29E;}
-	}
-	.blocklistbox{
-		font-size:26rpx;color:#555;padding:0 0 40rpx 30rpx;
-		.blockgreen{width:16rpx;height:16rpx;background:#ddd;margin-right:8rpx;}
-		.blockblue{width:16rpx;height:16rpx;background:#52A29E;margin:0 8rpx 0 60rpx;}
-	}
-	.blockbox{
-		text-align:center;
-		padding:60rpx 0;
-		.blockbigbox{
-			width:240rpx;height:204rpx;position:relative;margin:0 auto 26rpx;justify-content:center;
-			.smfont{font-size:20rpx;color:#888;}
-			.pabs0{position:absolute;left:40rpx;bottom:0rpx;}
-			.pabs10{position:absolute;right:40rpx;bottom:0rpx;}
-			.pabs20{position:absolute;left: 0px;right: 0;bottom:50rpx;color:#aaa;}
-			.greenline{position:absolute;background:#eaeaea;width:26rpx;height:6rpx;
-				&.green{background:#52A29E;}
+
+	.actionlist {
+		margin: 0 38rpx 38rpx;
+
+		.sportitem {
+			width: 281.8rpx;
+			margin-left: 8rpx;
+			box-shadow: 1px 2px 19px 2px rgba(192, 192, 192, 0.3);
+			justify-content: center;
+			height: 172.3rpx;
+
+			image {
+				width: 74rpx;
+				margin-right: 20rpx;
 			}
+		}
+
+		.leftaction {
+			box-shadow: 1px 2px 19px 2px rgba(192, 192, 192, 0.3);
+			justify-content: center;
+			height: 83rpx;
+			width: 100%;
+
+			&.mrbt {
+				margin-bottom: 6rpx;
+			}
+
+			image {
+				width: 38rpx;
+				margin-right: 20rpx;
+
+				&.other {
+					width: 28rpx;
+					margin: 0 24rpx 0 6rpx;
+				}
+			}
+
+		}
+	}
+
+	.marlr20 {
+		margin: 0 20rpx;
+	}
+
+	.enptylist {
+		padding-left: 24rpx;
+
+		&.on {
+			color: #52A29E;
+		}
+	}
+
+	.blocklistbox {
+		font-size: 26rpx;
+		color: #555;
+		padding: 0 0 40rpx 30rpx;
+
+		.blockgreen {
+			width: 16rpx;
+			height: 16rpx;
+			background: #ddd;
+			margin-right: 8rpx;
+		}
+
+		.blockblue {
+			width: 16rpx;
+			height: 16rpx;
+			background: #52A29E;
+			margin: 0 8rpx 0 60rpx;
+		}
+	}
+
+	.blockbox {
+		text-align: center;
+		padding: 60rpx 0;
+
+		.blockbigbox {
+			width: 240rpx;
+			height: 204rpx;
+			position: relative;
+			margin: 0 auto 26rpx;
+			justify-content: center;
+
+			.smfont {
+				font-size: 20rpx;
+				color: #888;
+			}
+
+			.pabs0 {
+				position: absolute;
+				left: 40rpx;
+				bottom: 0rpx;
+			}
+
+			.pabs10 {
+				position: absolute;
+				right: 40rpx;
+				bottom: 0rpx;
+			}
+
+			.pabs20 {
+				position: absolute;
+				left: 0px;
+				right: 0;
+				bottom: 50rpx;
+				color: #aaa;
+			}
+
+			.greenline {
+				position: absolute;
+				background: #eaeaea;
+				width: 26rpx;
+				height: 6rpx;
+
+				&.green {
+					background: #52A29E;
+				}
+			}
+
 			//左下
-			.position1{transform: rotate(-32deg);left:12rpx;top:170rpx;}
-			.position2{transform: rotate(-28deg);left:6rpx;top:154rpx;}
-			.position3{transform: rotate(-20deg);left:0rpx;top:136rpx;}
-			.position4{transform: rotate(-10deg);left:-4rpx;top:118rpx;}
-			.position5{transform: rotate(-5deg);left:-5rpx;top:100rpx;}
-			
+			.position1 {
+				transform: rotate(-32deg);
+				left: 12rpx;
+				top: 170rpx;
+			}
+
+			.position2 {
+				transform: rotate(-28deg);
+				left: 6rpx;
+				top: 154rpx;
+			}
+
+			.position3 {
+				transform: rotate(-20deg);
+				left: 0rpx;
+				top: 136rpx;
+			}
+
+			.position4 {
+				transform: rotate(-10deg);
+				left: -4rpx;
+				top: 118rpx;
+			}
+
+			.position5 {
+				transform: rotate(-5deg);
+				left: -5rpx;
+				top: 100rpx;
+			}
+
 			//右下
-			.position25{transform: rotate(28deg);right:10rpx;top:172rpx;}
-			.position24{transform: rotate(17deg);right:2rpx;top:156rpx;}
-			.position23{transform: rotate(9deg);right:-2rpx;top:136rpx;}
-			.position22{transform: rotate(-2deg);right:-2rpx;top:116rpx;}
-			.position21{transform: rotate(-10deg);right:0rpx;top:96rpx;}
-			
+			.position25 {
+				transform: rotate(28deg);
+				right: 10rpx;
+				top: 172rpx;
+			}
+
+			.position24 {
+				transform: rotate(17deg);
+				right: 2rpx;
+				top: 156rpx;
+			}
+
+			.position23 {
+				transform: rotate(9deg);
+				right: -2rpx;
+				top: 136rpx;
+			}
+
+			.position22 {
+				transform: rotate(-2deg);
+				right: -2rpx;
+				top: 116rpx;
+			}
+
+			.position21 {
+				transform: rotate(-10deg);
+				right: 0rpx;
+				top: 96rpx;
+			}
+
 			//中
-			.position13{transform: rotate(90deg);left:106rpx;top:4rpx;}
-			
+			.position13 {
+				transform: rotate(90deg);
+				left: 106rpx;
+				top: 4rpx;
+			}
+
 			//左中
-			.position6{transform: rotate(12deg);left:-2rpx;top:80rpx;}
-			.position7{transform: rotate(25deg);left:6rpx;top:60rpx;}
-			.position8{transform: rotate(37deg);left:20rpx;top:44rpx;}
-			.position9{transform: rotate(50deg);left:32rpx;top:30rpx;}
-			.position10{transform: rotate(56deg);left:48rpx;top:18rpx;}
-			.position11{transform: rotate(65deg);left:68rpx;top:10rpx;}
-			.position12{transform: rotate(78deg);left:88rpx;top:6rpx;}
-			
+			.position6 {
+				transform: rotate(12deg);
+				left: -2rpx;
+				top: 80rpx;
+			}
+
+			.position7 {
+				transform: rotate(25deg);
+				left: 6rpx;
+				top: 60rpx;
+			}
+
+			.position8 {
+				transform: rotate(37deg);
+				left: 20rpx;
+				top: 44rpx;
+			}
+
+			.position9 {
+				transform: rotate(50deg);
+				left: 32rpx;
+				top: 30rpx;
+			}
+
+			.position10 {
+				transform: rotate(56deg);
+				left: 48rpx;
+				top: 18rpx;
+			}
+
+			.position11 {
+				transform: rotate(65deg);
+				left: 68rpx;
+				top: 10rpx;
+			}
+
+			.position12 {
+				transform: rotate(78deg);
+				left: 88rpx;
+				top: 6rpx;
+			}
+
 			//右中
-			.position20{transform: rotate(-21deg);right:4rpx;top:78rpx;}
-			.position19{transform: rotate(-29deg);right:14rpx;top:60rpx;}
-			.position18{transform: rotate(-37deg);right:24rpx;top:46rpx;}
-			.position17{transform: rotate(-47deg);right:36rpx;top:32rpx;}
-			.position16{transform: rotate(-57deg);right:50rpx;top:22rpx;}
-			.position15{transform: rotate(-65deg);right:68rpx;top:13rpx;}
-			.position14{transform: rotate(-78deg);right:88rpx;top:6rpx;}
+			.position20 {
+				transform: rotate(-21deg);
+				right: 4rpx;
+				top: 78rpx;
+			}
+
+			.position19 {
+				transform: rotate(-29deg);
+				right: 14rpx;
+				top: 60rpx;
+			}
+
+			.position18 {
+				transform: rotate(-37deg);
+				right: 24rpx;
+				top: 46rpx;
+			}
+
+			.position17 {
+				transform: rotate(-47deg);
+				right: 36rpx;
+				top: 32rpx;
+			}
+
+			.position16 {
+				transform: rotate(-57deg);
+				right: 50rpx;
+				top: 22rpx;
+			}
+
+			.position15 {
+				transform: rotate(-65deg);
+				right: 68rpx;
+				top: 13rpx;
+			}
+
+			.position14 {
+				transform: rotate(-78deg);
+				right: 88rpx;
+				top: 6rpx;
+			}
 		}
 	}
-	.nodatabox{
-		text-align:center;padding-bottom:80rpx;color:#aaa;font-size:30rpx;
-		image{margin:80rpx 0 60rpx;width:308rpx;}
+
+	.nodatabox {
+		text-align: center;
+		padding-bottom: 80rpx;
+		color: #aaa;
+		font-size: 30rpx;
+
+		image {
+			margin: 80rpx 0 60rpx;
+			width: 308rpx;
+		}
 	}
+
 	.choosedaybox {
 		margin: 20rpx 30rpx 40rpx;
 		border: 1rpx solid #eee;
-		border-radius: 10rpx;overflow:hidden;
-		flex-wrap: unset;box-shadow: 1px 2px 19px 2px rgba(192, 192, 192, 0.3);
+		border-radius: 10rpx;
+		overflow: hidden;
+		flex-wrap: unset;
+		box-shadow: 1px 2px 19px 2px rgba(192, 192, 192, 0.3);
 		font-size: 30rpx;
-	
+
 		.daylist {
 			width: 33.3%;
 			box-sizing: border-box;
-			line-height: 1;padding:24rpx 0;
+			line-height: 1;
+			padding: 24rpx 0;
 			text-align: center;
 			border-radius: 0rpx;
 			-webkit-box-flex: 1;
 			-webkit-flex: 1 0 auto;
 			flex: 1 0 auto;
-	
+
 			&.on {
 				color: #fff;
 				background: #52A29E;
 			}
 		}
 	}
+
 	.askIcon {
 		width: 24rpx;
 		height: 24rpx;
 	}
+
 	.container {
 
 		.info-box {
@@ -1130,10 +1442,11 @@
 				}
 			}
 		}
-		
+
 		.health-msg-box {
 			margin: 0 40rpx 30rpx;
 			box-shadow: 1px 1px 5px #999999;
+
 			&.other {
 				padding: 30rpx;
 				box-sizing: border-box;
@@ -1152,7 +1465,8 @@
 
 					.top-title {
 						margin-top: 40rpx;
-						display: flex;align-items: center;
+						display: flex;
+						align-items: center;
 						font-size: 13px;
 						justify-content: center;
 
@@ -1278,9 +1592,9 @@
 					}
 
 					.advice-content {
-						font-size: 22rpx!important;
+						font-size: 22rpx !important;
 						color: #666666;
-						padding:20rpx 20rpx 0 0;
+						padding: 20rpx 20rpx 0 0;
 					}
 				}
 
@@ -1482,9 +1796,14 @@
 			}
 		}
 	}
+
 	.echarts {
 		width: 85vw;
 		height: 85vw;
 	}
-	.centerwh{width:250rpx;display:inline-block;}
+
+	.centerwh {
+		width: 250rpx;
+		display: inline-block;
+	}
 </style>
