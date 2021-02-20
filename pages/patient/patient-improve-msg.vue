@@ -16,7 +16,6 @@
 			<picker mode="date" :value="birthday" :start="startDate" :end="endDate" @change="bindDateChange" style="flex: 1;">
 				<view :class="birthday?'has-value':'sex-value'">{{birthday?birthday:'点击选择'}}</view>
 			</picker>
-
 		</view>
 		<view class="sex-box" v-if="formQrCode==2">
 			<view class="sex-tips">* 所在城市</view>
@@ -31,7 +30,7 @@
 			<input class="name-input" type="number" value="" placeholder="请填写联系电话" v-model="phone" />
 		</view>
 
-		
+
 		<view class="name-box">
 			<view class="name-tips">* 当前身高</view>
 			<input class="name-input" type="text" value="" placeholder="请填写身高" v-model="height" />
@@ -44,12 +43,12 @@
 		</view>
 
 
-        <view class="name-box">
-        	<view class="name-tips">* 疾病诊断</view>
-        	<!-- <input class="name-input" type="text" value="" placeholder="请填写疾病名称" v-model="illness" /> -->
-        
-        	<view :class="illness?'name-input':'name-novalue-input'" @click="openSelectResult">{{illness?illness:'请选择疾病诊断'}}</view>
-        </view>
+		<view class="name-box">
+			<view class="name-tips">* 疾病诊断</view>
+			<!-- <input class="name-input" type="text" value="" placeholder="请填写疾病名称" v-model="illness" /> -->
+
+			<view :class="illness?'name-input':'name-novalue-input'" @click="openSelectResult">{{illness?illness:'请选择疾病诊断'}}</view>
+		</view>
 
 		<view class="projectList" v-for="(item,index) in projectList">
 			<!-- 文本 -->
@@ -193,10 +192,10 @@
 	export default {
 
 		onLoad(props) {
-			if(!app.getCache("uid")) return;
+			if (!app.getCache("uid")) return;
 			this.getIllnessList();
-			this.type = props.type || 1; 
-			this.formQrCode = props.formQrCode ||1;
+			this.type = props.type || 1;
+			this.formQrCode = props.formQrCode || 1;
 			http.get(http.urls.get_all_province).then((res) => {
 				this.areaList[0] = res.data;
 				if (this.areaList[0] && this.areaList[0].length > 0) {
@@ -249,16 +248,15 @@
 				type: 1, //1表示点击更新信息进来，2表示用户未填写信息系统自动跳进来的
 				hasArea: false,
 				infoData: {},
-				inllList: [
-				],
+				inllList: [],
 				projectList: [],
 				currentProject: {},
 				currentIndex: '',
-				formQrCode:'',//1表示患者扫描医生二维码后，点击公众号消息进入信息完善页 2从基础信息进入
+				formQrCode: '', //1表示患者扫描医生二维码后，点击公众号消息进入信息完善页 2从基础信息进入
 			}
 		},
 		onShow() {
-			if(!app.getCache("uid")) return;
+			if (!app.getCache("uid")) return;
 			this.getInfo();
 		},
 		methods: {
@@ -345,10 +343,10 @@
 			showTipPopup() {
 				this.$refs.tipPopup.open();
 			},
-			getIllnessList(){
-				app.getIllnessSetting().then(res =>{
-					if(res.status==1){
-					  this.inllList = res.data.illness;
+			getIllnessList() {
+				app.getIllnessSetting().then(res => {
+					if (res.status == 1) {
+						this.inllList = res.data.illness;
 					}
 				});
 			},
@@ -365,7 +363,7 @@
 							this.illness = this.infoData.illness;
 							this.height = this.infoData.height;
 							this.weight = this.infoData.weight;
-							if(this.infoData.birthday){
+							if (this.infoData.birthday) {
 								var year = this.infoData.birthday.split('年')[0];
 								var month = this.infoData.birthday.split('年')[1].split('月')[0];
 								var day = this.infoData.birthday.split('年')[1].split('月')[1].split('日')[0];
@@ -374,7 +372,7 @@
 						} else {
 							this.showTipPopup();
 						}
-						
+
 						this.projectList = res.data.projectList;
 						if (this.projectList) {
 							for (var i = 0; i < this.projectList.length; i++) {
@@ -481,7 +479,7 @@
 				});
 			},
 			submit() {
-				if(this.projectList){
+				if (this.projectList) {
 					for (var i = 0; i < this.projectList.length; i++) {
 						var project = this.projectList[i];
 						if (project.type == 1) {
@@ -489,7 +487,7 @@
 								app.tip('请输入必填信息')
 								return;
 							}
-					
+
 						} else {
 							if (project.required == 1 && !project.choseContent) {
 								app.tip('请输入必填信息')
@@ -498,16 +496,16 @@
 						}
 					}
 				}
-				
-				if(this.formQrCode==1){
+
+				if (this.formQrCode == 1) {
 					if (!this.patientName ||
-					    !this.illness ||
+						!this.illness ||
 						!this.weight || !this.height || !this.phone) {
 						app.tip('请输入完整信息');
 						return;
 					}
-					
-				}else{
+
+				} else {
 					if (!this.patientName ||
 						this.patientGender == 0 || !this.birthday || !this.cityId || !this.provinceId || !this.illness ||
 						!this.weight || !this.height || !this.phone) {
@@ -515,7 +513,7 @@
 						return;
 					}
 				}
-				
+
 				if (this.imgList.length > 0) {
 					this.uploadImg();
 				} else {
@@ -553,48 +551,57 @@
 			},
 			submitRequest() {
 				var projectList = [];
-			    if(this.projectList){
+				if (this.projectList) {
 					for (var i = 0; i < this.projectList.length; i++) {
-					   var project =this.projectList[i];
-					   if(project.type == 1){
-						   if(project.detailList){
-							   projectList.push({projectId:project.id,answer:project.detailList})
-						   }
-					   }else if(project.type == 2){
-						   if(project.choseContent){
-							   projectList.push({projectId:project.id,answer:project.choseId})
-						   }
-					   }else{
-						   if(project.choseContent){
-							   var ids = '';
-							   for (var j = 0; j < project.ids.length; j++) {
-							   	   ids = ids+project.ids[j]+',';
-							   }
-							  ids = ids.substring(0, ids.length - 1);
-						   	  projectList.push({projectId:project.id,answer:ids})
-						   }
-						   
-					   }
+						var project = this.projectList[i];
+						if (project.type == 1) {
+							if (project.detailList) {
+								projectList.push({
+									projectId: project.id,
+									answer: project.detailList
+								})
+							}
+						} else if (project.type == 2) {
+							if (project.choseContent) {
+								projectList.push({
+									projectId: project.id,
+									answer: project.choseId
+								})
+							}
+						} else {
+							if (project.choseContent) {
+								var ids = '';
+								for (var j = 0; j < project.ids.length; j++) {
+									ids = ids + project.ids[j] + ',';
+								}
+								ids = ids.substring(0, ids.length - 1);
+								projectList.push({
+									projectId: project.id,
+									answer: ids
+								})
+							}
+
+						}
 					}
 					projectList = JSON.stringify(projectList);
 				}
-				if(this.formQrCode==1){
+				if (this.formQrCode == 1) {
 					app.savePatientInfo({
 						patientName: this.patientName,
 						phone: this.phone,
 						illness: this.illness,
 						height: this.height,
 						weight: this.weight,
-						detailList:projectList,
+						detailList: projectList,
 					}).then(res => {
 						if (res.status == 1) {
 							uni.navigateTo({
 								url: 'patient-submit-sucess?type=' + this.type
 							});
-					
+
 						}
 					});
-				}else{
+				} else {
 					app.savePatientInfo({
 						patientName: this.patientName,
 						phone: this.phone,
@@ -606,17 +613,17 @@
 						height: this.height,
 						weight: this.weight,
 						pathologyUrl: this.pathologyUrl,
-						detailList:projectList,
+						detailList: projectList,
 					}).then(res => {
 						if (res.status == 1) {
 							uni.navigateTo({
 								url: 'patient-submit-sucess?type=' + this.type
 							});
-					
+
 						}
 					});
 				}
-				
+
 			},
 			selectSex(type) {
 				if (type == 0) {
