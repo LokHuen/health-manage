@@ -7,7 +7,7 @@
 			<view class="name-tips">* 姓名</view>
 			<input class="name-input" type="text" value="" placeholder="请填写真实名字" v-model="patientName" />
 		</view>
-		<view class="sex-box" @click="selectSex(0)" v-if="formQrCode==2">
+		<view class="sex-box" @click="selectSex(0)">
 			<view class="sex-tips">* 性别</view>
 			<view :class="patientGender==0?'sex-value':'has-value'">{{patientGender==0?'点击选择':patientGender==1?'男':'女'}}</view>
 		</view>

@@ -102,7 +102,7 @@
 		methods:{
 			updateInfo(){
 				uni.navigateTo({
-					url:'patient-improve-msg?type='+this.type
+					url:'patient-improve-msg?type='+this.type+'&formQrCode=2'
 				})
 
 			},
