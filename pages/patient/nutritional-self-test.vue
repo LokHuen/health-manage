@@ -50,7 +50,7 @@
 				baseUrl:app.globalData.baseUrl,
 				showvideo:false,
 				videoContext:"",
-				testtype:1
+				testtype:''
 			}
 		},
 		methods:{
@@ -68,9 +68,16 @@
 					setTimeout(()=>{this.videoContext.play();},300)
 				},300)
 			},
+			getSgaType(){
+			    app.getSgaType().then(res =>{
+					if(res.status == 1){
+						this.testtype = res.data.sgaType;
+					}
+				});	
+			},
 		},
 		onLoad(option){
-			option.testtype?option.testtype=option.testtype:'';
+			this.getSgaType();
 		}
 	}
 	

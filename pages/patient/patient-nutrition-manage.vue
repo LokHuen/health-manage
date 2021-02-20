@@ -316,7 +316,8 @@
 				enptyindex: 0,
 				tlinedata: {},
 				// PG-SGA   testtype=1 testtype=2  SGA
-				testtype: 1
+				testtype: '',
+				surveyId:''
 			}
 		},
 		methods: {
@@ -772,6 +773,14 @@
 			closeEnergyTips() {
 				this.$refs.popupEnergy.close();
 			},
+			getSgaType(){
+			    app.getSgaType().then(res =>{
+					if(res.status == 1){
+						this.testtype = res.data.sgaType;
+						this.surveyId = res.data.surveyId;
+					}
+				});	
+			},
 			judgeUserAuth() {
 				app.judgeUserAuth({}).then(res => {
 					if (res.status == 1) {
@@ -822,7 +831,7 @@
 			//最近一次测评的数据
 			getNearlyRecord() {
 				app.patientNearlyRecord({
-					surveyId: 1
+					surveyId: this.surveyId
 				}).then(res => {
 					if (res.status == 1) {
 						this.latelyData = res.data;
@@ -835,7 +844,7 @@
 			//拿曲线图的数据
 			getLineChartData() {
 				app.memberReplyRecordList({
-					surveyId: 1,
+					surveyId: this.surveyId,
 					pageNo: 1,
 					pageSize: 3
 				}).then(res => {
@@ -1036,6 +1045,7 @@
 			if (app.getCache('uid')) {
 				this.judgeUserAuth();
 			}
+			this.getSgaType();
 		},
 
 

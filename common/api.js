@@ -166,6 +166,9 @@ var api = {
 	accountget:(data)=>{return rq("/wx/doctor/account/get",data,"GET");},//账号详情
 	
 	getWxConfig:(data)=>{return rq("/wx/common/wechatParam",data,"GET");},//微信配置
+	
+	//sga类型判断
+	getSgaType:(data)=>{return rq("/wx/survey/question/getSgaType",data,"GET");},
 
 }
 

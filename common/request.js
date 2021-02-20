@@ -8,10 +8,10 @@ function rq(url, data = {}, type, ctype) {
 			method:type||"GET",
 		    header: {
 				'content-type': 'application/x-www-form-urlencoded',
-				 //'uid':2002,
+				 'uid':2002,
 				 'salesToken':localStorage.getItem("salesToken"),
 				//'salesToken':'a4dd128WYmMiZ9rFTCt+yDztmcXiJ+st1GSz42gJjdsLLfeGbAiAWB3dE4UzCTQIAx0G0j6P7MVfcw',
-		         'uid': localStorage.getItem("uid"),
+		         //'uid': localStorage.getItem("uid"),
 				 'channel':1,
 				// 'tkbgjdtoken':"ef56ZpDKDJ3qy/ttr+d4r16cTZd0ju+7Pz0eT/MtwDaIqSiojYJsYdyjGFLYy4/pJR4BSUmab7tIypyLTZtBYN/3obpPO4rLM6FyqNJEhp1LxjTgveFK/ls2Xr0/"
 				// 'tkbgjd-token':"634fw+Rth9zpdjXbKK9wEJcqlZZrzjvtudIxfIL6apurN02RT6Xn2mvhKBRqiD9cx0R2yWFv8njvE8w7FkGru5/LmmtHT0Vq+uWt"
