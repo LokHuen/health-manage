@@ -8,16 +8,26 @@
 				<view @click="videobox" style="color: #01b936;padding-top: 20rpx;">测评前，建议您观看一次演示视频》</view>
 			</view>
 			<view class="content-box">
-				<view class="title">PG-SGA营养状况评量表</view>
-				<view class="desc">
+				<view class="title" v-if="testtype==1">PG-SGA营养状况评量表</view>
+				<view class="desc" v-if="testtype==1">
 					PG-SGA（患者主观整体评估）是临床上专门为肿瘤患者设计的营养状况评估方法，该评估方法得到美国营养师协会（ADA）等国际营养机构和中国抗癌协会肿瘤营养专业委员会（CSNO）大力推荐，是目前肿瘤患者营养评测的标准工具。
 				</view>
-				<view class="desc">
+				<view class="desc" v-if="testtype==1">
 					建议测评周期
 					<view>重度营养不良：1次/1周</view>
 					<view>中度营养不良：1次/1-2周</view>
 					<view>可疑或轻度营养不良： 1次/2周-4周</view>
 					<view>无营养不良： 1次/4周-12周</view>
+				</view>
+				<view class="title" v-if="testtype==2">SGA营养状况评估</view>
+				<view class="desc" v-if="testtype==2">
+					SGA(主观综合性营养评估)是临床常用营养评价方法之一，其通过评估患者体重和膳食变化、消化道症状、活动能力变化以及有无应激反应，并测量三头肌皮褶厚度，检查有无足踝水肿和腹水等指标综合判断病人的营养状态，具有简单性、易重复性、有效性及前瞻性的特点。
+				</view>
+				<view class="desc" v-if="testtype==2">
+					建议测评周期
+					<view>重度营养不良：1次/周</view>
+					<view>轻-中度营养不良：1次/1-2周</view>
+					<view>营养良好：1次/4-12周</view>
 				</view>
 			</view>
 			
@@ -40,6 +50,7 @@
 				baseUrl:app.globalData.baseUrl,
 				showvideo:false,
 				videoContext:"",
+				testtype:1
 			}
 		},
 		methods:{
@@ -57,6 +68,9 @@
 					setTimeout(()=>{this.videoContext.play();},300)
 				},300)
 			},
+		},
+		onLoad(option){
+			option.testtype?option.testtype=option.testtype:'';
 		}
 	}
 	

@@ -3,7 +3,7 @@
 	<view>
 		<view class="flex tips">
 			<image src="../../static/icon/remind_icon.png" mode="widthFix" class="remind"></image> 
-			<view class="remind-tips">根据肿瘤患者膳食营养处方专家共识说明， 建议您每周进行一次营养测评。<image src="../../static/icon/wenhaoIcon.png" class="question" mode="widthFix" @click="$refs.popup.open()"></image></view>
+			<view class="remind-tips">根据患者膳食营养处方专家共识说明，建议您每周进行一次营养状况评估。<image src="../../static/icon/wenhaoIcon.png" class="question" mode="widthFix" @click="$refs.popup.open()"></image></view>
 		</view>
 		
 		<view class="nodata-tips-box" v-if="listDatas.length==0">

@@ -725,7 +725,7 @@
 			},
 			beginTest() {
 				uni.navigateTo({
-					url: 'nutritional-self-test?' + Math.random()
+					url: 'nutritional-self-test?' +Math.random()
 				});
 			},
 			clickFuction(index) {
