@@ -159,7 +159,7 @@
 			<view ><text class="centerwh"><text class="smallblockleft color3"></text>4~8:中度营养不良</text><text class="smallblockleft color4"></text>>=9:重度营养不良</view>
 				</view>
 				<view v-show="testtype==2">
-					<view><text class="centerwh"><text class="smallblockleft color1"></text>营养良好</text>
+					<view><text class="centerwh"><text class="smallblockleft color1" style="background-color:#a8cd97;"></text>营养良好</text>
 					<text class="centerwh"><text class="smallblockleft color2"></text>轻-中度营养不良</text></view>
 					<view><text class="centerwh"><text class="smallblockleft color3"></text>重度营养不良</text></view>
 				</view>
@@ -169,7 +169,7 @@
 		<view class="last-one" v-if="latelyData.result">最近一次评价</view>
 
 		<view class="listContent" v-if="latelyData.result">
-			<view class="health-list-item" @click="toanswerlist(latelyData.id)">
+			<view class="health-list-item" @click="toanswerlist(latelyData)">
 				<view class="health-list-item-avatar-content">
 					<image class="health-list-item-avatar" :src="latelyData.result=='营养良好'?'../../static/icon/smile.png':'../../static/icon/cry_icon.png'"></image>
 				</view>
@@ -1014,11 +1014,13 @@
 					}]
 				};
 				if(this.testtype==2){
+					option.yAxis.min = 0.5;
+					option.yAxis.max = 3.5;
 					option.series[0].markArea.data=[
 								[{
 									yAxis: '0.5', //y轴坐标控制
 									itemStyle: {
-										color: '#52a29e'
+										color: '#a8cd97'
 									},
 								}, {
 									yAxis: '1.5'
@@ -1045,9 +1047,9 @@
 				myChart.clear();
 				myChart.setOption(option);
 			},
-			toanswerlist(id){
+			toanswerlist(val){
 				uni.navigateTo({
-					url:"/pages/patient/answer?id="+id+"&testtype="+this.testtype
+					url:"/pages/patient/answer?id="+val.id+"&testtype="+val.surveyId
 				})
 			},
 			tootherpage(src){
