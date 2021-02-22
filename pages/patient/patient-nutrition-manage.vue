@@ -178,7 +178,7 @@
 
 
 		<view class="record-chart-box" v-if="((hasLoadLindData==0)||(lineData.categories.length>0 &&hasLoadLindData ==1))&&(testtype==2)">
-			<view class="record-chart-title">SGA 营养测评</view>
+			<view class="record-chart-title">SGA 营养状况评估</view>
 			<!-- <view class="record-chart-subtitle">分值越小，营养状况越好</view> -->
 
 			<!-- 折线Line纯数字-->
@@ -217,7 +217,7 @@
 		</view>
 
 		<view class="button-box">
-			<button type="default" class="button" @click="beginTest">{{testtype==1?'PG-SGA 营养测评':'SGA 营养测评'}}</button>
+			<button type="default" class="button" @click="beginTest">{{testtype==1?'PG-SGA 营养状况评估':'SGA 营养状况评估'}}</button>
 		</view>
 		<view style="height: 200px;"></view>
 		<uni-popup ref="popup" type="bottom">

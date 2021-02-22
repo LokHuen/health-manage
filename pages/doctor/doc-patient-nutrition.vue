@@ -159,9 +159,9 @@
 			<view ><text class="centerwh"><text class="smallblockleft color3"></text>4~8:中度营养不良</text><text class="smallblockleft color4"></text>>=9:重度营养不良</view>
 				</view>
 				<view v-show="testtype==2">
-					<view><text class="centerwh"><text class="smallblockleft color1" style="background-color:#a8cd97;"></text>营养良好</text>
-					<text class="centerwh"><text class="smallblockleft color2"></text>轻-中度营养不良</text></view>
-					<view><text class="centerwh"><text class="smallblockleft color3"></text>重度营养不良</text></view>
+					<text class="centerwh1"><text class="smallblockleft color1" style="background-color:#a8cd97;"></text>营养良好</text>
+					<text class="centerwh1"><text class="smallblockleft color2"></text>轻-中度营养不良</text>
+					<text class="centerwh1"><text class="smallblockleft color3"></text>重度营养不良</text>
 				</view>
 			</view>
 		</view>
@@ -1708,4 +1708,5 @@
 		height: 85vw;
 	}
 	.centerwh{width:250rpx;display:inline-block;}
+	.centerwh1{display:inline-block;padding-right:16rpx;}
 </style>
