@@ -5,7 +5,7 @@
 			<view class="left-bg"></view>
 			<view class="background-img">
 				<image src="../../static/img/nutritional_self_test_bg.png" mode="widthFix" class=""></image>
-				<view @click="videobox" style="color: #01b936;padding-top: 20rpx;">测评前，建议您观看一次演示视频》</view>
+				<view @click="videobox" style="color: #01b936;padding-top: 20rpx;" v-show="testtype==1">测评前，建议您观看一次演示视频》</view>
 			</view>
 			<view class="content-box">
 				<view class="title" v-if="testtype==1">PG-SGA营养状况评量表</view>
