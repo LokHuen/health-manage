@@ -178,7 +178,7 @@
 
 
 		<view class="record-chart-box" v-if="((hasLoadLindData==0)||(lineData.categories.length>0 &&hasLoadLindData ==1))&&(testtype==2)">
-			<view class="record-chart-title">SGA营养状况评估</view>
+			<view class="record-chart-title">SGA 营养测评</view>
 			<!-- <view class="record-chart-subtitle">分值越小，营养状况越好</view> -->
 
 			<!-- 折线Line纯数字-->
@@ -187,11 +187,10 @@
 			</view> -->
 			<div id="echarts" class="echarts"></div>
 			<view style="font-size:24rpx;padding:0 0 30rpx 40rpx;text-align:left;">
-				<view><text class="centerwh"><text class="smallblockleft color1"></text>营养良好</text><text class="smallblockleft color2"></text>轻-中度营养不良</view>
 				<view>
-					<text class="centerwh">
-						<text class="smallblockleft color3"></text>重度营养不良</text>
-				</view>
+					<text class="centerwh1"><text class="smallblockleft1 color1"></text>营养良好</text>
+					<text class="smallblockleft1 color2"></text>轻-中度营养不良 <text class="smallblockleft1 color3"></text>重度营养不良</text></view>
+				、
 			</view>
 		</view>
 
@@ -1077,6 +1076,31 @@
 			background: #b7c8e3;
 		}
 	}
+	
+	.smallblockleft1 {
+		width: 20rpx;
+		height: 20rpx;
+		border-radius: 4rpx;
+		margin: 0 5rpx 0 28rpx;
+		display: inline-block;
+		background: #4CD964;
+	
+		&.color1 {
+			background: #52a29e;
+		}
+	
+		&.color2 {
+			background: #ffcf76;
+		}
+	
+		&.color3 {
+			background: #ffe1e1;
+		}
+	
+		&.color4 {
+			background: #b7c8e3;
+		}
+	}
 
 	.actionlist {
 		margin: 0 38rpx 38rpx;
@@ -1814,6 +1838,9 @@
 
 	.centerwh {
 		width: 250rpx;
+		display: inline-block;
+	}
+	.centerwh1 {
 		display: inline-block;
 	}
 </style>
