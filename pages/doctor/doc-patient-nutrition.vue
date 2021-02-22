@@ -159,7 +159,7 @@
 			<view ><text class="centerwh"><text class="smallblockleft color3"></text>4~8:中度营养不良</text><text class="smallblockleft color4"></text>>=9:重度营养不良</view>
 				</view>
 				<view v-show="testtype==2">
-					<view><text class="centerwh"><text class="smallblockleft color1"></text>营养良好</text>
+					<view><text class="centerwh"><text class="smallblockleft color1" style="background-color:#a8cd97;"></text>营养良好</text>
 					<text class="centerwh"><text class="smallblockleft color2"></text>轻-中度营养不良</text></view>
 					<view><text class="centerwh"><text class="smallblockleft color3"></text>重度营养不良</text></view>
 				</view>
@@ -1014,11 +1014,13 @@
 					}]
 				};
 				if(this.testtype==2){
+					option.yAxis.min = 0.5;
+					option.yAxis.max = 3.5;
 					option.series[0].markArea.data=[
 								[{
 									yAxis: '0.5', //y轴坐标控制
 									itemStyle: {
-										color: '#52a29e'
+										color: '#a8cd97'
 									},
 								}, {
 									yAxis: '1.5'
