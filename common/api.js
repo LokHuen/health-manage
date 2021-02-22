@@ -6,6 +6,7 @@ var api = {
 	 // mineChatList:(data)=>{return rq("/wx/interpret/consult/findMyPage",data,"GET");},
 	 // //保存报告寄出信息
 	 // savePost:(data)=>{return rq("/wx/interpret/mri/savePost",data,"POST");},
+	getSgaType:(data)=>{return rq("/wx/survey/question/getSgaType",data,"GET");},//sga类型判断
 
 	// 自测
 	getQuestionSecondList:(data)=>{return rq("/wx/survey/question/secondList",data,"GET");},

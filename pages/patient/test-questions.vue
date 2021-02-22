@@ -286,14 +286,16 @@
 			        }
 					
 			    }
-				for(let i=0,l=list.length;i<l;i++){
-					if(list[i].description) list[i].description="";
-					for (let j = 0; j < list[i].optionList.length; j++) {
-						if(list[i].optionList[j].description) list[i].optionList[j].description="";
+				let listdata = JSON.parse(JSON.stringify(list));
+				for(let i=0,l=listdata.length;i<l;i++){
+					if(listdata[i].description) listdata[i].description="";
+					for (let j = 0; j < listdata[i].optionList.length; j++) {
+						if(listdata[i].optionList[j].description) listdata[i].optionList[j].description="";
+						if(listdata[i].optionList[j].title) listdata[i].optionList[j].title=encodeURI(listdata[i].optionList[j].title);
 					}
 				}
-			    console.log(this.questionList);
-			    app.replySecond(this.questionList).then(rs=>{
+			    console.log(listdata);
+			    app.replySecond(listdata).then(rs=>{
 			        if(rs.status==1){
 			            const{section,field,grade,nomore,toThird}=rs.data;
 			            this.nomore=nomore;

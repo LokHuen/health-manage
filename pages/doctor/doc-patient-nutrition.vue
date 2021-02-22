@@ -145,8 +145,8 @@
 		</view>
 
 		<view class="record-chart-box" v-if="(hasLoadLindData==0)||(lineData.categories.length>0 &&hasLoadLindData ==1)">
-			<view class="record-chart-title">PG-SGA营养状况评估</view>
-			<view class="record-chart-subtitle">分值越小，营养状况越好</view>
+			<view class="record-chart-title">{{testtype==1?"PG-":""}}SGA营养状况评估</view>
+			<view v-show="testtype==1" class="record-chart-subtitle">分值越小，营养状况越好</view>
 
 			<!-- 折线Line纯数字-->
 			<!-- <view class="line-chart-box">
@@ -154,8 +154,15 @@
 			</view> -->
 			<div id="echarts" class="echarts"></div>
 			<view style="font-size:24rpx;padding:0 0 30rpx 40rpx;text-align:left;">
+				<view v-show="testtype==1">
 			<view ><text class="centerwh"><text class="smallblockleft color1"></text>0~1:无营养不良</text><text class="smallblockleft color2"></text>2~3:可疑营养不良 </view>
 			<view ><text class="centerwh"><text class="smallblockleft color3"></text>4~8:中度营养不良</text><text class="smallblockleft color4"></text>>=9:重度营养不良</view>
+				</view>
+				<view v-show="testtype==2">
+					<view><text class="centerwh"><text class="smallblockleft color1"></text>营养良好</text>
+					<text class="centerwh"><text class="smallblockleft color2"></text>轻-中度营养不良</text></view>
+					<view><text class="centerwh"><text class="smallblockleft color3"></text>重度营养不良</text></view>
+				</view>
 			</view>
 		</view>
 
@@ -315,6 +322,7 @@
 				enptylist:["总能量","脂肪","蛋白质","碳水化合物"],
 				enptyindex:0,
 				tlinedata:{},
+				testtype:1,
 			}
 		},
 		onLoad(props){
@@ -810,6 +818,16 @@
 				this.getData();
 				this.getNearlyRecord();
 				this.getLineChartData();
+				
+				app.getSgaType({uid: this.uid}).then(res => {
+					if (res.status == 1) {
+						this.testtype = res.data.sgaType;
+						if(this.testtype==2){
+							this.getNearlyRecord();
+							this.getLineChartData();
+						}
+					}
+				});
 			},
 			//用户信息数据
 			getData() {
@@ -834,7 +852,7 @@
 			//最近一次测评的数据
 			getNearlyRecord() {
 				app.patientNearlyRecord({
-					surveyId: 1,
+					surveyId: this.testtype,
 					userId:this.uid
 				}).then(res => {
 					if (res.status == 1) {
@@ -848,7 +866,7 @@
 			//拿曲线图的数据
 			getLineChartData() {
 				app.memberReplyRecordList({
-					surveyId: 1,
+					surveyId: this.testtype,
 					pageNo: 1,
 					pageSize: 3,
 					userId:this.uid
@@ -930,7 +948,7 @@
 						symbolSize: 7,
 						label: {
 							normal: {
-								show: true,
+								show: this.testtype==1?true:false,
 								distance: 0,
 								fontSize: 11,
 								color: "#333",
@@ -995,14 +1013,41 @@
 						},
 					}]
 				};
-			
+				if(this.testtype==2){
+					option.series[0].markArea.data=[
+								[{
+									yAxis: '0.5', //y轴坐标控制
+									itemStyle: {
+										color: '#52a29e'
+									},
+								}, {
+									yAxis: '1.5'
+								}],
+								[{
+									yAxis: '1.5',
+									itemStyle: {
+										color: '#ffcf76'
+									}
+								}, {
+									yAxis: '2.5'
+								}],
+								[{
+									yAxis: '2.5',
+									itemStyle: {
+										color: '#ffe1e1'
+									}
+								}, {
+									yAxis: '3.5'
+								}],
+							]
+				}
 				// 使用刚指定的配置项和数据显示图表。
 				myChart.clear();
 				myChart.setOption(option);
 			},
 			toanswerlist(id){
 				uni.navigateTo({
-					url:"/pages/patient/answer?id="+id
+					url:"/pages/patient/answer?id="+id+"&testtype="+this.testtype
 				})
 			},
 			tootherpage(src){

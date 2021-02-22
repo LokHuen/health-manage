@@ -29,7 +29,7 @@
 					<view class="count-tip">测评患者数</view>
 				</view>
 			</view>
-			<view class="join-box" @click="joinTest">PG-SGA营养状况评量表></view>
+			<view class="join-box" @click="joinTest">营养状况评量表></view>
 		</view>
 
 
@@ -195,8 +195,13 @@
 
 			},
 			joinTest() {
-				uni.navigateTo({
-					url: '../patient/nutritional-self-test'
+				uni.showActionSheet({
+				    itemList: ['PG-SGA营养状况评量表', 'SGA营养状况评量表'],
+				    success: (res)=>{
+						uni.navigateTo({
+							url: '../patient/nutritional-self-test?id='+(res.tapIndex+1)
+						});
+				    }
 				});
 			},
 			select(item) {
