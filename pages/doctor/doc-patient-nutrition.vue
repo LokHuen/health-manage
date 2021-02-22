@@ -169,7 +169,7 @@
 		<view class="last-one" v-if="latelyData.result">最近一次评价</view>
 
 		<view class="listContent" v-if="latelyData.result">
-			<view class="health-list-item" @click="toanswerlist(latelyData.id)">
+			<view class="health-list-item" @click="toanswerlist(latelyData)">
 				<view class="health-list-item-avatar-content">
 					<image class="health-list-item-avatar" :src="latelyData.result=='营养良好'?'../../static/icon/smile.png':'../../static/icon/cry_icon.png'"></image>
 				</view>
@@ -1045,9 +1045,9 @@
 				myChart.clear();
 				myChart.setOption(option);
 			},
-			toanswerlist(id){
+			toanswerlist(val){
 				uni.navigateTo({
-					url:"/pages/patient/answer?id="+id+"&testtype="+this.testtype
+					url:"/pages/patient/answer?id="+val.id+"&testtype="+val.surveyId
 				})
 			},
 			tootherpage(src){
