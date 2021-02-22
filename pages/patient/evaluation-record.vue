@@ -12,7 +12,7 @@
 		</view>
         
 		<view class="listContent" v-for="(item, index) in listDatas" :key="index" v-if="listDatas.length!=0">
-			<view class="health-list-item" @click="toanswerlist(item.id)">
+			<view class="health-list-item" @click="toanswerlist(item)">
 				<view class="health-list-item-avatar-content">
 					<image class="health-list-item-avatar" :src="item.result=='营养良好'?'../../static/icon/smile.png':'../../static/icon/cry_icon.png'"></image>
 				</view>
@@ -72,7 +72,7 @@
 			},
 		    getRecordData(){
 				app.loading();
-				app.memberReplyRecordList({surveyId:1,pageNo:this.pageNo,userId:this.id}).then(res =>{
+				app.memberReplyRecordList({pageNo:this.pageNo,userId:this.id}).then(res =>{
 					app.loaded();
 					if(res.status===1){
 						if(this.pageNo==1){
@@ -90,9 +90,9 @@
 					uni.stopPullDownRefresh();
 				});
 			},
-			toanswerlist(id){
+			toanswerlist(item){
 				uni.navigateTo({
-					url:"/pages/patient/answer?id="+id
+					url:"/pages/patient/answer?id="+item.id+'&surveyId='+item.surveyId
 				})
 			},
 		}

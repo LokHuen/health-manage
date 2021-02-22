@@ -8,7 +8,7 @@ function rq(url, data = {}, type, ctype) {
 			method:type||"GET",
 		    header: {
 				'content-type': 'application/x-www-form-urlencoded',
-				 //'uid':161,
+				 //'uid':2002,
 				 'salesToken':localStorage.getItem("salesToken"),
 				//'salesToken':'a4dd128WYmMiZ9rFTCt+yDztmcXiJ+st1GSz42gJjdsLLfeGbAiAWB3dE4UzCTQIAx0G0j6P7MVfcw',
 		         'uid': localStorage.getItem("uid"),

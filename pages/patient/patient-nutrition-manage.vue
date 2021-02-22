@@ -778,6 +778,8 @@
 					if(res.status == 1){
 						this.testtype = res.data.sgaType;
 						this.surveyId = res.data.surveyId;
+						this.getNearlyRecord();
+						this.getLineChartData();
 					}
 				});	
 			},
@@ -805,8 +807,7 @@
 			getUserData() {
 				this.loadCount = 0;
 				this.getData();
-				this.getNearlyRecord();
-				this.getLineChartData();
+				this.getSgaType();
 			},
 			//用户信息数据
 			getData() {
@@ -912,7 +913,7 @@
 						axisLine: {
 							show: false
 						},
-						min: 0,
+						min: this.testtype==1?0:0.5,
 						max: this.testtype==1?36:3.5,
 						axisTick: {
 							show: false
@@ -931,7 +932,7 @@
 						symbolSize: 7,
 						label: {
 							normal: {
-								show: true,
+								show: this.testtype==1?true:false,
 								distance: 0,
 								fontSize: 11,
 								color: "#333",
@@ -947,17 +948,17 @@
 
 						},
 						lineStyle: {
-							color: "#59A29F", //设置线条颜色
+							color: "#333", //设置线条颜色
 							width: 1,
 						},
 						itemStyle: {
 							color: (opt) => { //设置拐点颜色
 								if (opt.value > 9) return "red";
-								else return "#59A29F";
+								else return "#333";
 							},
 						},
 						symbol: "circle",
-						data: this.testtype==1?this.lineData.series[0].data:[1.8,3.2],
+						data: this.lineData.series[0].data,
 						markArea: { //标记区域
 							data: [
 								[{
@@ -1032,7 +1033,7 @@
 			},
 			toanswerlist(id) {
 				uni.navigateTo({
-					url: "/pages/patient/answer?id=" + id
+					url: "/pages/patient/answer?id=" + id+'&surveyId='+this.latelyData.surveyId
 				})
 			},
 			tootherpage(src) {
@@ -1045,7 +1046,6 @@
 			if (app.getCache('uid')) {
 				this.judgeUserAuth();
 			}
-			this.getSgaType();
 		},
 
 
