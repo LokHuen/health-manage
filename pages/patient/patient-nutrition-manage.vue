@@ -190,7 +190,6 @@
 				<view>
 					<text class="centerwh1"><text class="smallblockleft1 color1"></text>营养良好</text>
 					<text class="smallblockleft1 color2"></text>轻-中度营养不良 <text class="smallblockleft1 color3"></text>重度营养不良</text></view>
-				、
 			</view>
 		</view>
 
