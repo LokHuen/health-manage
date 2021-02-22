@@ -56,7 +56,7 @@
 		methods:{
 			test(){
 				uni.navigateTo({
-					url:'../testIndex'
+					url:'../testIndex?id='+this.testtype
 				});
 			},
 			videobox(){
@@ -77,7 +77,11 @@
 			},
 		},
 		onLoad(option){
-			this.getSgaType();
+			if(option.id){
+				this.testtype = option.id;
+			}else{
+				this.getSgaType();
+			}
 		}
 	}
 	
