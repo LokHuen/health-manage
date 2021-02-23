@@ -1,6 +1,5 @@
 {
-	"pages": [
-		{
+	"pages": [{
 			"path": "pages/patient/patient-nutrition-manage",
 			"style": {
 				"navigationBarTitleText": "营养管理"
@@ -588,6 +587,17 @@
 				"navigationBarTitleText": "病种"
 			}
 
+		}, {
+			"path": "pages/diet/disease-type-detail",
+			"style": {
+				"navigationBarTitleText": "食谱"
+			}
+		},
+		{
+			"path": "pages/doctor/doctor-patient-list",
+			"style": {
+				"navigationBarTitleText": "医生的患者"
+			}
 		}
 	,{
 			"path" : "pages/diet/disease-type-detail",

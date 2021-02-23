@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<view class="welcome">欢迎您，{{info.name}}</view>
-		<view class="flex numbox">
+		<view class="flex numbox" @click="toOrder">
 			<view class="numitem">
 				<view class="number">{{info.orderNum||0}}</view>
 				<view>本月订单数</view>
@@ -14,10 +14,8 @@
 		<view>
 			<view class="item-list flex" v-for="(item,index) in list" :key="index" @click="clickItem(index)">
 				<view class="left-name">{{item}}</view>
-				<view v-if="index==2 ||index==3 " style="padding-right:20rpx;">{{index==2?(info.bindDoctorCount||0):(info.bindPatientCount
-||0)}}</view>
+				<view v-if="index==2 ||index==3 " style="padding-right:20rpx;">{{index==2?(info.bindDoctorCount||0):(info.bindPatientCount||0)}}</view>
 				<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
-				<!-- <view class="line" ></view> -->
 			</view>
 		</view>
 		<view class="pagebottombt">
@@ -139,6 +137,13 @@
 					})
 				}, 1000)
 			},
+			toOrder() {
+				let date = new Date()
+				let month = date.getFullYear() + '-' + (date.getMonth() + 1)
+				uni.navigateTo({
+					url: 'order-list?'+'&month='+month
+				})
+			}
 
 		},
 
