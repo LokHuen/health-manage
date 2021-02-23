@@ -74,8 +74,10 @@
 				});
 			},
 			toOrder() {
+				let date = new Date()
+				let month = date.getFullYear() + '-' + (date.getMonth() + 1)
 				uni.navigateTo({
-					url: 'order-list'
+					url: 'order-list?month='+ month
 				})
 			},
 			cleartoken() {

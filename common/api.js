@@ -171,7 +171,7 @@ var api = {
 	//sga类型判断
 	getSgaType:(data)=>{return rq("/wx/survey/question/getSgaType",data,"GET");},
 	
-	
+	//获取医生下的患者
 	getDoctorPatients:(data)=>{return rq("/wx/doctor/patientList",data,"GET");},
 
 }

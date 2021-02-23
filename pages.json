@@ -596,7 +596,7 @@
 		{
 			"path": "pages/doctor/doctor-patient-list",
 			"style": {
-				"navigationBarTitleText": "lala"
+				"navigationBarTitleText": "医生的患者"
 			}
 		}
 	],

@@ -6,11 +6,11 @@
 			<view class="common">{{'订单号:'+item.order_number}}<text style="margin-left: 28rpx; color: #4B8BE8;" v-if="item.rePurchase">复购</text></view>
 			<view class="common">{{'商品名称:'+item.commodity}}</view>
 			<view class="common">{{'下单时间:'+item.create_time}}</view>
+			<view class="common">{{'实付款:'+item.pay_amount+'元'}}</view>
 			<view class="common">{{'业务员:'+item.sale}}</view>
 			<view class="common">{{'业务员收益:'+item.salesMoney+'元'}}</view>
 			<view class="common">{{'患者名字:'+item.patient}}</view>
 			<view class="common">{{'医生名字:'+item.doctorName}}</view>
-			<view class="common">{{'实付款:'+item.pay_amount+'元'}}</view>
 
 			<view style="height: 20rpx;"></view>
 		</view>
@@ -32,8 +32,8 @@
 				list: [],
 				pageNo: 1,
 				salesId: '',
-				isSalesPage:'',
-				month:''
+				isSalesPage: '',
+				month: ''
 			}
 		},
 		onLoad(props) {
@@ -43,11 +43,11 @@
 			if (props.isSalesPage) {
 				this.isSalesPage = props.isSalesPage
 			}
-			
+
 			if (props.month) {
 				this.month = props.month;
 			}
-			
+
 			this.refreshData();
 		},
 		onPullDownRefresh() {
@@ -69,8 +69,8 @@
 			getListData() {
 				let data = {
 					pageNo: this.pageNo,
-					isSalesPage:this.isSalesPage,
-					month:this.month
+					isSalesPage: this.isSalesPage,
+					month: this.month
 				};
 				if (this.salesId) {
 					data = {
