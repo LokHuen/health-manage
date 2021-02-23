@@ -357,7 +357,7 @@
 							this.infoData = res.data;
 							this.patientName = this.infoData.patientName;
 							this.phone = this.infoData.phone;
-							this.patientGender = this.infoData.patientGender == '男' ? 1 : 2;
+							this.patientGender = this.infoData.patientGender?(this.infoData.patientGender == '男' ? 1 : 2):0;
 							this.cityId = this.infoData.cityId;
 							this.provinceId = this.infoData.provinceId;
 							this.illness = this.infoData.illness;
