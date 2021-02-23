@@ -12,6 +12,8 @@
 
 				</view>
 			</view>
+			<view class="eidt" @click="more" v-if="showAdvice==1">...</view>
+			
 		</view>
 		<view class="line-space"></view>
 		<view class="content">
@@ -189,7 +191,7 @@
 		</view>
 
 		<view class="button-box">
-			<button type="default" class="button" @click="beginTest">医 嘱</button>
+			<button type="default" class="button" @click="beginTest" v-show="showAdvice==1">医 嘱</button>
 		</view>
 		<view style="height: 200px;"></view>
 		<uni-popup ref="popup" type="bottom">
@@ -279,6 +281,20 @@
 			</view>
 		</uni-popup>
 		
+		<uni-popup ref="popupPatient" type="bottom">
+			<!-- 选择患者 -->
+			<view class="white-background-patient">
+				<scroll-view scroll-y="true" style="max-height: 650rpx;">
+					<view v-for="(item,index) in doctorList" :key=index>
+						<view class="first-item" @click="selectInfo(item)">{{item.doctorName+item.technicalTitle}}</view>
+						<view class="lines"></view>
+					</view>
+				</scroll-view>
+				<view class="liness"></view>
+				<view class="cancel" @click="closePatienScreen">取消</view>
+			</view>
+		</uni-popup>
+		
 	</view>
 </template>
 
@@ -323,12 +339,45 @@
 				enptyindex:0,
 				tlinedata:{},
 				testtype:1,
+				doctorList:'',
+				showAdvice:1
 			}
 		},
 		onLoad(props){
 			this.uid = props.id;
 		},
 		methods: {
+			selectInfo(item){
+				app.changeBindDoctor({patientId:this.uid,id:item.id}).then(res =>{
+					if(res.status == 1){
+						app.tip('转交成功');
+						this.closePatienScreen();
+						this.getData();
+					}
+				});
+			},
+			closePatienScreen(){
+				this.$refs.popupPatient.close();
+			},
+			more(){
+				uni.showModal({
+				    title: '提示',
+				    content: '将患者转给其他医生？',
+				    success: (res)=>{
+				        if (res.confirm) {
+				            this.$refs.popupPatient.open();
+				        } 
+				    }
+				});
+			    
+			},
+			getDepartmentDoctors(){
+			  app.getDepartmentDoctors().then(res =>{
+				 if(res.status == 1){
+					 this.doctorList = res.data;
+				 } 
+			  });	
+			},
 			clickenpty(index){
 				this.enptyindex = index;
 				this.$nextTick(() => {
@@ -835,6 +884,12 @@
 					if (res.status == 1) {
 						this.infoData = res.data;
 					}
+					if(app.getCache('uid')==this.infoData.bindDoctor){
+						this.showAdvice = 1;
+					}else{
+						this.showAdvice = 0;
+					}
+					//this.showAdvice = localStorage.getItem("uid")==this.infoData.bindDoctor;
 					this.infoData.protein = this.infoData.protein>0?this.infoData.protein:1.01;
 					this.infoData.fat = this.infoData.fat>0?this.infoData.fat:1.01;
 					this.infoData.carbohydrate = this.infoData.carbohydrate>0?this.infoData.carbohydrate:1.01;
@@ -1060,6 +1115,7 @@
 		},
 		onShow() {
 			this.getUserData();
+			this.getDepartmentDoctors();
 		},
 
 
@@ -1067,6 +1123,40 @@
 </script>
 
 <style lang="scss">
+	.white-background-patient {
+		text-align: center;
+		background-color: #FFFFFF;
+		border-radius: 10px 10px 0px 0px;
+		color: #333333;
+		font-size: 15px;
+	
+		.first-item {
+			height: 120rpx;
+			line-height: 120rpx;
+		}
+	
+		.lines {
+			height: 2rpx;
+			margin-left: 200rpx;
+			margin-right: 200rpx;
+			background-color: #DCDCDC;
+		}
+	
+		.second-item {
+			height: 128rpx;
+			line-height: 128rpx;
+		}
+	
+		.liness {
+			height: 20rpx;
+			background-color: #F6F6F6;
+		}
+	
+		.cancel {
+			height: 100rpx;
+			line-height: 100rpx;
+		}
+	}
 	.smallblockleft{width:20rpx;height:20rpx;border-radius:4rpx;margin:0 10rpx 0 8rpx;display: inline-block;background:#4CD964;
 		&.color1{background:#52a29e;}
 		&.color2{background:#ffcf76;}
@@ -1182,6 +1272,13 @@
 		.info-box {
 			height: 198rpx;
 			display: flex;
+			position: relative;
+			.eidt{
+				position: absolute;
+				right: 40rpx;
+				font-size: 50rpx;
+				top: 20rpx;
+			}
 
 			.avator {
 				margin-top: 40rpx;

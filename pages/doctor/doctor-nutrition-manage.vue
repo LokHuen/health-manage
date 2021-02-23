@@ -72,8 +72,8 @@
 
 		<view class="line-space" v-if="listDatas.length>0"></view>
 		<view class="screen-box" v-if="listDatas.length>0">
-			<view class="all-patien-box" @click="patienScreen">
-				<view class="all-patien">{{hasInfor==2?'全部患者':'资料已完善的患者'}}</view>
+			<view class="all-patien-box" @click="patienScreen" v-if="doctorList.length>1">
+				<view class="all-patien">{{doctorItem.doctorName+doctorItem.technicalTitle}}</view>
 				<image class="all-arrow" src="../../static/icon/right_arrow.png" mode="widthFix"></image>
 			</view>
 			<view class="all-patien-box" @click="timeScreen">
@@ -118,9 +118,16 @@
 		<uni-popup ref="popupPatient" type="bottom">
 			<!-- 选择患者 -->
 			<view class="white-background-patient">
-				<view class="first-item" @click="selecgtInfo(1)">资料已完善的患者</view>
+				<!-- <view class="first-item" @click="selecgtInfo(1)">资料已完善的患者</view>
 				<view class="lines"></view>
 				<view class="second-item" @click="selecgtInfo(2)">全部患者</view>
+				<view class="liness"></view> -->
+				<scroll-view scroll-y="true" style="max-height: 650rpx;">
+					<view v-for="(item,index) in doctorList">
+						<view class="first-item" @click="selecgtInfo(item)">{{item.doctorName+item.technicalTitle}}</view>
+						<view class="lines"></view>
+					</view>
+				</scroll-view>
 				<view class="liness"></view>
 				<view class="cancel" @click="closePatienScreen">取消</view>
 			</view>
@@ -162,9 +169,22 @@
 				listDatas: [],
 				showInfo: {},
 				show: true,
+				doctorList:[{id:'',technicalTitle:'',doctorName:'我的患者'}],
+				doctorItem:{id:'',technicalTitle:'',doctorName:'我的患者'},
 			}
 		},
 		methods: {
+			getManageDepartment(){
+				app.getManageDepartment().then(res =>{
+					if(res.status == 1){
+						if(res.data){
+							for (var i = 0; i < res.data.length; i++) {
+								this.doctorList.push(res.data[i]); 
+							}
+						}
+					}
+				});
+			},
 			judgeFirst() {
 				//判断是不是首次进入这个页面，如果是的话，就弹出提示
 				let frist = app.getCache('frist');
@@ -222,13 +242,15 @@
 			closeTimeScreen() {
 				this.$refs.popupTime.close();
 			},
-			selecgtInfo(hasInfor) {
+			selecgtInfo(item) {
 				//是否完善资料（1：已经完善资料患者，2：全部患者）
 				this.closePatienScreen();
-				if (this.hasInfor != hasInfor) {
-					this.hasInfor = hasInfor;
-					this.refreshData();
-				}
+				// if (this.hasInfor != hasInfor) {
+				// 	this.hasInfor = hasInfor;
+				// 	this.refreshData();
+				// }
+				this.doctorItem = item;
+				this.refreshData();
 			},
 			selectOrderBy(orderBy) {
 				//排序方式（测评时间排序 1，加入时间排序2）
@@ -264,8 +286,8 @@
 			getListData() {
 				app.patientListInfo({
 					pageNo: this.pageNo,
-					hasInfor: this.hasInfor,
-					orderBy: this.orderBy
+					orderBy: this.orderBy,
+					bindDoctor:this.doctorItem.id
 				}).then(res => {
 					if (res.status === 1) {
 						if(this.pageNo>res.data.pageCount) return;
@@ -287,6 +309,7 @@
 			this.getDoctorInfo();
 			this.refreshData();
 			this.getShowInfo();
+		    this.getManageDepartment();
 		},
 		onPullDownRefresh() {
 			this.refreshData();
