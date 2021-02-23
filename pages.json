@@ -1,12 +1,11 @@
 {
-	"pages": [
-		{
+	"pages": [{
 			"path": "pages/patient/patient-nutrition-manage",
 			"style": {
 				"navigationBarTitleText": "营养管理"
 			}
 		},
-		
+
 		{
 			"path": "pages/agent/index",
 			"style": {
@@ -19,7 +18,7 @@
 				"navigationBarTitleText": "详情"
 			}
 		},
-		
+
 		{
 			"path": "pages/sales/month-order-list",
 			"style": {
@@ -40,7 +39,7 @@
 				"navigationBarTitleText": "业务管理中心"
 			}
 		},
-		
+
 		{
 			"path": "pages/agent/change-password",
 			"style": {
@@ -53,9 +52,9 @@
 				"navigationBarTitleText": "代理员登录"
 			}
 		},
-		
-		
-		
+
+
+
 		{
 			"path": "pages/sales/patient-list",
 			"style": {
@@ -75,10 +74,10 @@
 				"navigationBarTitleText": "电脑端患者管理权限配置"
 			}
 		},
-		
-		
-		
-		
+
+
+
+
 		{
 			"path": "pages/patient/patient-basic-information",
 			"style": {
@@ -97,7 +96,7 @@
 				"navigationBarTitleText": "完善信息"
 			}
 		},
-		
+
 		{
 			"path": "pages/agent/order-list",
 			"style": {
@@ -105,7 +104,7 @@
 			},
 			"enablePullDownRefresh": true
 		},
-		
+
 		{
 			"path": "pages/agent/my-business",
 			"style": {
@@ -138,9 +137,9 @@
 				"navigationBarTitleText": "成员详情"
 			}
 		},
-		
-		
-		
+
+
+
 		{
 			"path": "pages/sales/resource-report-list",
 			"style": {
@@ -154,28 +153,28 @@
 				"navigationBarTitleText": "资源报备"
 			}
 		},
-		
+
 		{
-		
+
 			"path": "pages/sport/sport-list",
-		
+
 			"style": {
-		
+
 				"navigationBarTitleText": "添加运动"
-		
+
 			}
-		
+
 		},
 		{
-		
+
 			"path": "pages/food/food-list",
-		
+
 			"style": {
-		
+
 				"navigationBarTitleText": "添加食物"
-		
+
 			}
-		
+
 		},
 		{
 			"path": "pages/nutrition/nutrition-list",
@@ -183,14 +182,14 @@
 				"navigationBarTitleText": "记录营养品"
 			}
 		},
-				
+
 		{
 			"path": "pages/nutrition/nutrition-record",
 			"style": {
 				"navigationBarTitleText": "记录营养品"
 			}
 		},
-		
+
 		{
 			"path": "pages/nutrition/nutrition-record-feedback",
 			"style": {
@@ -198,23 +197,23 @@
 			}
 		},
 
-		
+
 		{
 			"path": "pages/doctor/doctor-center",
 			"style": {
 				"navigationBarTitleText": "个人中心"
 			}
 		},
-		
-	
+
+
 		{
 
 			"path": "pages/doctor/doctor-signature",
-		
+
 			"style": {
-		
+
 				"navigationBarTitleText": "医嘱署名"
-		
+
 			}
 
 		},
@@ -240,7 +239,7 @@
 			}
 
 		},
-		
+
 		{
 
 			"path": "pages/sport/record-sport",
@@ -263,7 +262,7 @@
 			}
 
 		},
-		
+
 		{
 			"path": "pages/doctor/doctor-nutrition-manage",
 			"style": {
@@ -279,7 +278,7 @@
 				"navigationBarTitleText": "Top Business System"
 			}
 		},
-		
+
 		{
 			"path": "pages/sales/register",
 			"style": {
@@ -292,9 +291,30 @@
 				"navigationBarTitleText": "绑定的用户"
 			}
 		},
-		{			"path": "pages/sales/sales-business-card",			"style": {				"navigationBarTitleText": "名片码"			}		}, {
-			"path": "pages/sales/sales-account-list",			"style": {				"navigationBarTitleText": "账户"			}		}, {
-			"path": "pages/sales/already-transferred-bankcard",			"style": {				"navigationBarTitleText": "已转账到银行卡"			},			"enablePullDownRefresh": true		},		{			"path": "pages/sales/transferred-bankcard",			"style": {				"navigationBarTitleText": "待结算订单列表"			},			"enablePullDownRefresh": true		},
+		{
+			"path": "pages/sales/sales-business-card",
+			"style": {
+				"navigationBarTitleText": "名片码"
+			}
+		}, {
+			"path": "pages/sales/sales-account-list",
+			"style": {
+				"navigationBarTitleText": "账户"
+			}
+		}, {
+			"path": "pages/sales/already-transferred-bankcard",
+			"style": {
+				"navigationBarTitleText": "已转账到银行卡"
+			},
+			"enablePullDownRefresh": true
+		},
+		{
+			"path": "pages/sales/transferred-bankcard",
+			"style": {
+				"navigationBarTitleText": "待结算订单列表"
+			},
+			"enablePullDownRefresh": true
+		},
 		{
 			"path": "pages/sales/sales-already",
 			"style": {
@@ -338,7 +358,7 @@
 				"navigationBarTitleText": "修改密码"
 			}
 		},
-		
+
 		{
 			"path": "pages/doctor/doc-evaluation-record",
 			"style": {
@@ -348,7 +368,7 @@
 		},
 
 
-		
+
 		{
 			"path": "pages/doctor/doc-patient-case-manage",
 			"style": {
@@ -368,7 +388,7 @@
 
 
 
-		
+
 
 		{
 			"path": "pages/doctor/doctor-improve-msg",
@@ -433,7 +453,7 @@
 		},
 
 
-		
+
 		{
 			"path": "pages/patient/evaluation-record",
 			"style": {
@@ -465,7 +485,18 @@
 			},
 			"enablePullDownRefresh": true
 		},
-		{			"path": "pages/doctor/doctor-already",			"style": {				"navigationBarTitleText": "已结算金额"			}		},		{			"path": "pages/doctor/offline-already",			"style": {				"navigationBarTitleText": "线下结算记录"			}		},
+		{
+			"path": "pages/doctor/doctor-already",
+			"style": {
+				"navigationBarTitleText": "已结算金额"
+			}
+		},
+		{
+			"path": "pages/doctor/offline-already",
+			"style": {
+				"navigationBarTitleText": "线下结算记录"
+			}
+		},
 
 		{
 			"path": "pages/doctor/doctor-submit-result",
@@ -556,16 +587,19 @@
 				"navigationBarTitleText": "病种"
 			}
 
+		}, {
+			"path": "pages/diet/disease-type-detail",
+			"style": {
+				"navigationBarTitleText": "食谱"
+			}
+		},
+		{
+			"path": "pages/doctor/doctor-patient-list",
+			"style": {
+				"navigationBarTitleText": "lala"
+			}
 		}
-	    ,{
-            "path" : "pages/diet/disease-type-detail",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "食谱"
-            }
-            
-        }
-    ],
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",

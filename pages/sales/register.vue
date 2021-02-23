@@ -53,6 +53,7 @@
 				app.salesregister(data).then(res => {
 					app.loaded();
 					app.setCache("salesToken",res.data.salesToken);
+					console.log(res.data.isAgent)
 					if(res.data.isAgent==1){
 						uni.reLaunch({
 							url: "/pages/agent/index",

@@ -5,7 +5,7 @@
 			<view class="time">
 				{{item.month}}
 			</view>
-			<view class="flex numbox" @click="toOrder">
+			<view class="flex numbox" @click="toOrder(item.month)">
 				<!-- <view style="height: 20rpx; background-color: #007AFF;"></view> -->
 
 				<view class="numitem">
@@ -42,12 +42,16 @@
 				list: [],
 				pageNo: 1,
 				salesId: '',
-				isAgent: 0
+				isAgent: 0,
+				isSalesPage: ''
 			}
 		},
 		onLoad(props) {
 			if (props.salesId) {
 				this.salesId = props.salesId;
+			}
+			if (props.isSalesPage) {
+				this.isSalesPage = props.isSalesPage
 			}
 			this.isAgent = props.isAgent
 			this.refreshData();
@@ -56,7 +60,6 @@
 			this.refreshData();
 		},
 		onReachBottom() {
-			console.log(12)
 			this.loadMoreData();
 		},
 		methods: {
@@ -71,16 +74,18 @@
 
 			getListData() {
 				let data = {
-					pageNo: this.pageNo
+					pageNo: this.pageNo,
 				};
+				if (this.isSalesPage) {
+					data.isSalesPage = this.isSalesPage
+				}
 				if (this.salesId) {
 					data = {
 						...data,
-						salesId: this.salesId
+						salesId: this.salesId,
 					}
 				}
 				app.agentOrderStatsList(data).then(res => {
-					//app.tip(JSON.stringify(res.data),15000)
 					if (res.status == 1) {
 						if (this.pageNo == 1) {
 							this.list = res.data.list;
@@ -94,17 +99,19 @@
 					uni.stopPullDownRefresh();
 				});
 			},
-			toOrder() {
+			toOrder(month) {
+				if (month) {
+					month = month.replace('年', '-').replace('月', '')
+				}
 				if (this.salesId) {
 					uni.navigateTo({
-						url: 'order-list?salesId=' + this.salesId
+						url: 'order-list?salesId=' + this.salesId + '&isSalesPage=' + this.isSalesPage + '&month=' + month
 					})
 				} else {
 					uni.navigateTo({
-						url: 'order-list'
+						url: 'order-list?' + '&isSalesPage=' + this.isSalesPage + '&month=' + month
 					})
 				}
-
 			}
 
 		},

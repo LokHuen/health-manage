@@ -170,6 +170,9 @@ var api = {
 	
 	//sga类型判断
 	getSgaType:(data)=>{return rq("/wx/survey/question/getSgaType",data,"GET");},
+	
+	
+	getDoctorPatients:(data)=>{return rq("/wx/doctor/patientList",data,"GET");},
 
 }
 
