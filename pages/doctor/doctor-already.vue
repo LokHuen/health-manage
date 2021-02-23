@@ -1,19 +1,20 @@
 <template>
 	<!-- 账户列表 -->
 	<view class="container">
-		<view class="not-received-item" @click="select(0)">
+		<view class="not-received-item prelative" @click="select(0)">
 			<view class="money-box">
-				<view class="money">{{data.online?data.online:'0'}}</view>
+				<view class="money">{{eye?star:(data.online||0)}}</view>
 				<view class="yuan">元</view>
 			</view>
 			<view class="tips">累计转账到银行卡的金额</view>
-			<view class="detail"></view>
+			<view class="detail">当天转账的款项，在第二天（节假日顺延）入账银行账户</view>
+			<image @click.stop="changeeye" class="eyeimg" mode="widthFix" :src="'../../static/eye'+(eye?2:1)+'.png'"></image>
 		</view>
 		<view class="line"> </view>
 		
 		<view class="received-item" @click="select(1)">
 			<view class="received-money-box">
-				<view class="received-money">{{data.offline?data.offline :'0'}}</view>
+				<view class="received-money">{{eye?star:(data.offline||0)}}</view>
 				<view class="received-yuan">元</view>
 			</view>
 			
@@ -29,6 +30,8 @@
 	export default {
 	 	data() {
 	 		return {
+				eye:app.getCache("eye"),
+				star:"*",
 	 			data:{}
 			}
 		},
@@ -37,6 +40,8 @@
 				app.doctor_settleInfo({}).then(res =>{
 					if(res.status == 1){
 						this.data = res.data;
+						this.data.online = this.data.online?(this.data.online+''):"0";
+						this.star = new Array((this.data.online.length||1)+1).join("*");
 					}
 				});
 			},
@@ -50,6 +55,11 @@
 						url:'offline-already?money='+(this.data.online||0)
 					});
 				}
+			},
+			changeeye(){
+				this.eye = !this.eye;
+				if(this.eye) app.setCache("eye",true);
+				else app.setCache("eye",false);
 			}
 		},
 		onLoad(){
@@ -59,6 +69,7 @@
 </script>
 
 <style lang="scss">
+	.eyeimg{position:absolute;right:50rpx;top:70rpx;width:50rpx;z-index:3;}
 	.container{
 		.not-received-item{
 			margin-left: 60rpx;

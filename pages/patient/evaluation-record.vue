@@ -3,7 +3,7 @@
 	<view>
 		<view class="flex tips">
 			<image src="../../static/icon/remind_icon.png" mode="widthFix" class="remind"></image> 
-			<view class="remind-tips">根据肿瘤患者膳食营养处方专家共识说明， 建议您每周进行一次营养测评。<image src="../../static/icon/wenhaoIcon.png" class="question" mode="widthFix" @click="$refs.popup.open()"></image></view>
+			<view class="remind-tips">根据患者膳食营养处方专家共识说明，建议您每周进行一次营养状况评估。<image src="../../static/icon/wenhaoIcon.png" class="question" mode="widthFix" @click="$refs.popup.open()"></image></view>
 		</view>
 		
 		<view class="nodata-tips-box" v-if="listDatas.length==0">
@@ -12,7 +12,7 @@
 		</view>
         
 		<view class="listContent" v-for="(item, index) in listDatas" :key="index" v-if="listDatas.length!=0">
-			<view class="health-list-item" @click="toanswerlist(item.id)">
+			<view class="health-list-item" @click="toanswerlist(item)">
 				<view class="health-list-item-avatar-content">
 					<image class="health-list-item-avatar" :src="item.result=='营养良好'?'../../static/icon/smile.png':'../../static/icon/cry_icon.png'"></image>
 				</view>
@@ -72,7 +72,7 @@
 			},
 		    getRecordData(){
 				app.loading();
-				app.memberReplyRecordList({surveyId:1,pageNo:this.pageNo,userId:this.id}).then(res =>{
+				app.memberReplyRecordList({pageNo:this.pageNo,userId:this.id}).then(res =>{
 					app.loaded();
 					if(res.status===1){
 						if(this.pageNo==1){
@@ -90,9 +90,9 @@
 					uni.stopPullDownRefresh();
 				});
 			},
-			toanswerlist(id){
+			toanswerlist(item){
 				uni.navigateTo({
-					url:"/pages/patient/answer?id="+id
+					url:"/pages/patient/answer?id="+item.id+'&surveyId='+item.surveyId
 				})
 			},
 		}

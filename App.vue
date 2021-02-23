@@ -4,7 +4,7 @@
 	} from "common/api";
 	export default {
 		globalData: {
-			baseUrl: "http://weixinapi-test.cvddr.com",
+			baseUrl: "http://weixinapi.cvddr.com",
 			imageUrl: "https://bgjdapi-test.ttxyw.cn/upload/mini",
 			mydata: 1,
 			// AppID:"wx152a400c7aa92a9e",
@@ -19,7 +19,7 @@
 			let timeStamp = new Date()
 			let windowUrl = window.location.href;
 			
-			let passurl = ["/pages/sales/register"]; //路径白名单
+			let passurl = ["/pages/sales/register","/pages/sales"]; //路径白名单
 			for (var i = 0; i < passurl.length; i++) {
 				if(passurl[i]==window.location.pathname) return;
 			}
@@ -38,19 +38,20 @@
 			
 			if((nowtime - pretime) > 172800000) {
 				localStorage.removeItem("uid");
-				this.setCache("time",nowtime);
+				localStorage.setItem("time",nowtime);
 			}else if(nowtime == pretime){
-				this.setCache("time",nowtime);
+				localStorage.setItem("time",nowtime);
 			}
 			
 			let optionuid = option.query.uid;
 			if(optionuid&&(optionuid instanceof Array)) option.query.uid = optionuid[optionuid.length-1]; //多次登录，uid会变成数组
-			const uid = option.query.uid || this.getCache("uid");
+			var uid = option.query.uid || this.getCache("uid");
 			console.log('uid==' + uid);
-			if(!uid){
-				 window.location.href = this.globalData.baseUrl + '/wx/fwh/user/auth/index?returnUrl=' + encodeURIComponent(windowUrl);
+			uid = parseInt(uid);
+			if(!uid||isNaN(uid)){
+				 window.location.href = this.globalData.baseUrl + '/wx/fwh/user/auth/index?returnUrl=' + encodeURIComponent(windowUrl)+"&channel=1";
 			}else{
-				this.setCache('uid',uid);
+				localStorage.setItem('uid',uid);
 			}
 		},
 		onShow: function() {
@@ -78,7 +79,7 @@
 				return uni.getStorageSync(key);
 			},
 			setCache(key, data) { //保存缓存
-				uni.setStorageSync(key, data);
+				localStorage.setItem(key, data);
 			},
 			tip(text, time) { //消息提示
 				uni.showToast({
@@ -173,6 +174,7 @@
 </script>
 
 <style lang="scss">
+	img {margin: 0; padding: 0; width: 100%; height: 100%; object-fit: cover;}
 	.edit {
 		.uni-radio-wrapper{width:100%;display: block;padding:0 30rpx;box-sizing:border-box;}
 		.uni-radio-input{float:right;margin:-6rpx 0 0 0;width: 40rpx;height:40rpx;}
@@ -243,7 +245,7 @@
 		height:55vh;overflow-y:auto;background:#fff;border-radius:20rpx 20rpx 0 0;padding:30rpx 24rpx 30rpx;box-sizing: border-box;
 	}
 	.richtextarea{
-		font-size: 32rpx;
+		font-size: 30rpx;
 		img{max-width:100%;height:auto;}
 	}
 	.pagebackground{position:fixed;top:0;left:0;right:0;bottom:0;background:#F7F8F8;z-index:-1;}

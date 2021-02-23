@@ -10,7 +10,7 @@
 				<view class="department">{{data.hospital+data.department}}</view>
 			</view>
 		</view>
-		<view class="item-list" v-for="(item,index) in list" :key="index" @click="clickItem(index)">
+		<view class="item-list" v-for="(item,index) in list" :key="index" v-if="index==0 || index==3|| index==4 || (index>0 && index<3 && data.showAccount==1)" @click="clickItem(index)">
 			<view class="left-name">{{item}}</view>
 			<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
 			<view class="line" ></view>
@@ -25,11 +25,11 @@
 	
 		data() {
 			return {
-				list: ["名片码","账户","身份认证"],
+				list: ["名片码","账户","身份认证","医嘱署名","电脑端患者管理权限配置"],
 				data:{}
 			}
 		},
-		onLoad(){
+		onShow(){
 			this.getData();
 		},
 		methods: {
@@ -42,12 +42,20 @@
 					uni.navigateTo({
 						url:'doctor-account-list'
 					});
-				}else{
+				}else if(index==2){
 					this.judgeDoctorAuthenticationStatus();
+				}else if(index==3){
+				    uni.navigateTo({
+				    	url:'doctor-signature?name='+this.data.adviceName
+				    });
+				}else{
+					uni.navigateTo({
+						url:'/pages/branch/list'
+					});
 				}
 			},
 			getData(){
-				//
+				// 34是医生
 				app.doctorBusinessCard({uid:app.getCache('uid')}).then(res => {
 					console.log(res);
 					if (res.status == 1) {
@@ -56,6 +64,7 @@
 				});
 			},
 			judgeDoctorAuthenticationStatus(){
+				//34
 				app.authentication({id:app.getCache('uid')}).then(res =>{
 					 if(res.status == 1){
 						 let url = "/pages/authentication/index";

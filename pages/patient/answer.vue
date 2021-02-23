@@ -140,6 +140,7 @@
 		onLoad(options){
 			let id = options.id||1;
 			this.params.recordId = id;
+			this.params.surveyId = options.surveyId||options.testtype||1;
 			this.getQuestions();
 		},
 		methods:{

@@ -2,7 +2,7 @@
 	<view class="listbox">
 		<view class="pagebackground"></view>
 		<view >
-			<view class="flex userlist" v-for="(item,index) in list" :key="index">
+			<view class="flex userlist" v-for="(item,index) in list" :key="index" @click="showcode(item)">
 				<image :src="item.wx_portrait" mode="aspectFill" class="userhead"></image>
 				<view style="flex:1;">
 					<view class="username">{{item.doctor_name}}</view>
@@ -28,9 +28,12 @@
 				list:[],
 				page:1,
 				pageCount:1,
+				salesManId:''
 			}
 		},
 		onLoad(options){
+			this.salesManId = options.salesManId;
+			//salesManId 代理员的的团队成员详情传过来的
 			this.init();
 		},
 		onShow(){
@@ -42,11 +45,24 @@
 				let data={
 					pageNo:this.page,
 				}
+				if(this.salesManId){
+					data = {
+						salesManId:this.salesManId,
+						...data
+					}
+					
+				}
 				app.salesuserlist(data).then(res => {
 					this.pageCount = res.data.pageCount;
 					this.list = this.page==1?res.data:this.list.concat(res.data);
 					if(res.data.length>0) this.page++; 
 				});
+			},
+			showcode(item){
+				uni.previewImage({
+					current:0,
+					urls:[item.qrCode],
+				})
 			},
 		},
 		onReachBottom(){

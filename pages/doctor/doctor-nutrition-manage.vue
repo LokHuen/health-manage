@@ -29,7 +29,7 @@
 					<view class="count-tip">测评患者数</view>
 				</view>
 			</view>
-			<view class="join-box" @click="joinTest">PG-SGA营养状况评量表></view>
+			<view class="join-box" @click="joinTest">营养状况评量表></view>
 		</view>
 
 
@@ -60,7 +60,7 @@
 					<view class="fakehealth-list-item-content">
 						<view class="fakehealth-list-item-title">{{showInfo.result}}</view>
 						<view class="fakehealth-list-item-detail">{{showInfo.phase}}</view>
-						<view class="fakehealth-list-item-time">{{'测评时间：'+showInfo.completeTime}}</view>
+						<view class="fakehealth-list-item-time">{{(orderBy==1?'测评时间：':'加入时间')+showInfo.completeTime}}</view>
 
 					</view>
 
@@ -103,7 +103,7 @@
 				<view class="health-list-item-content">
 					<view class="health-list-item-title">{{item.result}}</view>
 					<view class="health-list-item-detail">{{item.phase}}</view>
-					<view class="health-list-item-time">{{'测评时间：'+item.completeTime}}</view>
+					<view class="health-list-item-time">{{(orderBy==1?'测评时间：':'加入时间')+item.completeTime}}</view>
 
 				</view>
 
@@ -184,7 +184,7 @@
 			},
 			clickShowInfo(){
 				uni.navigateTo({
-					url: 'doc-patient-nutrition?uid=' + this.showInfo.id
+					url: 'doc-patient-nutrition?id=' + this.showInfo.id
 				});
 			},
 			closeTips() {
@@ -195,14 +195,19 @@
 
 			},
 			joinTest() {
-				uni.navigateTo({
-					url: '../patient/nutritional-self-test'
+				uni.showActionSheet({
+				    itemList: ['PG-SGA营养状况评量表', 'SGA营养状况评量表'],
+				    success: (res)=>{
+						uni.navigateTo({
+							url: '../patient/nutritional-self-test?id='+(res.tapIndex+1)
+						});
+				    }
 				});
 			},
 			select(item) {
 				uni.navigateTo({
 					//url:'patient-detail?uid='+item.id
-					url: 'doc-patient-nutrition?uid=' + item.id
+					url: 'doc-patient-nutrition?id=' + item.id
 				});
 			},
 			patienScreen() {
@@ -263,13 +268,8 @@
 					orderBy: this.orderBy
 				}).then(res => {
 					if (res.status === 1) {
-						if (this.pageNo === 1) {
-							this.listDatas = res.data.list;
-						} else {
-							if (res.data.pageList.pageCount > this.pageNo) {
-								this.listDatas = this.listDatas.concat(res.data.list);
-							}
-						}
+						if(this.pageNo>res.data.pageCount) return;
+						this.listDatas = this.pageNo==1?res.data.list:this.listDatas.concat(res.data.list);
 					}
 					uni.stopPullDownRefresh();
 				});

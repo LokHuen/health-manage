@@ -13,21 +13,21 @@
 				<view class="health-item-detail">{{infoData.patientGender}}</view>
 			</view>
 		</view>
-		
+
 		<view class="health-content">
 			<view class="health-item">
 				<view class="health-item-title">出生日期</view>
 				<view class="health-item-detail">{{infoData.birthday}}</view>
 			</view>
 		</view>
-		
+
 		<view class="health-content">
 			<view class="health-item">
-				<view class="health-item-title">所患疾病</view>
+				<view class="health-item-title">疾病诊断</view>
 				<view class="health-item-detail">{{infoData.illness}}</view>
 			</view>
 		</view>
-		
+
 		<view class="health-content">
 			<view class="health-item">
 				<view class="health-item-title">所在城市</view>
@@ -40,7 +40,7 @@
 				<view class="health-item-detail">{{(infoData.height?infoData.height:'')+'cm'}}</view>
 			</view>
 		</view>
-		
+
 		<view class="health-content">
 			<view class="health-item">
 				<view class="health-item-title">体重</view>
@@ -58,7 +58,7 @@
 	export default {
 		onShow() {
 			this.getInfo();
-			
+
 		},
 		data() {
 			return {
@@ -77,8 +77,8 @@
 					}
 				});
 			},
-			
-			
+
+
 		}
 	}
 </script>

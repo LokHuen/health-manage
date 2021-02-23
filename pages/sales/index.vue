@@ -12,12 +12,13 @@
 			</view>
 		</view>
 		<view>
-		<view class="item-list flex" v-for="(item,index) in list" :key="index" @click="clickItem(index)">
-			<view class="left-name">{{item}}</view>
-			<view v-if="index==1" style="padding-right:20rpx;">{{info.bindDoctorCount||0}}</view>
-			<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
-			<!-- <view class="line" ></view> -->
-		</view>
+			<view class="item-list flex" v-for="(item,index) in list" :key="index" @click="clickItem(index)">
+				<view class="left-name">{{item}}</view>
+				<view v-if="index==2 ||index==3 " style="padding-right:20rpx;">{{index==2?(info.bindDoctorCount||0):(info.bindPatientCount
+||0)}}</view>
+				<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
+				<!-- <view class="line" ></view> -->
+			</view>
 		</view>
 		<view class="pagebottombt">
 			<view @click="cleartoken">退出登录</view>
@@ -28,38 +29,76 @@
 <script>
 	const app = getApp();
 	export default {
-	
+
 		data() {
 			return {
-				list: ["名片码","绑定的用户","账户","身份认证"],
-				info:{}
+				list: ["按月统计订单数据", "名片码", "绑定的用户", "患者列表", "账户", "资源报备", "身份认证", "修改密码"],
+				info: {}
 			}
 		},
-		onLoad(){
-			
+		onLoad() {
+			if (!app.getCache("salesToken")) uni.reLaunch({
+				url: "/pages/sales/register"
+			})
+
+			this.getIdentity();
 		},
-		onShow(){
+		onShow() {
 			this.getData();
 		},
 		methods: {
-			clickItem(index){
-				if(index==0){
+			getIdentity() {
+				app.getIdentity().then(res => {
+					if (res.status == 1) {
+						if (res.data.isAgent == 1) {
+							uni.reLaunch({
+								url: '/pages/agent/index'
+							})
+						} else {
+							this.getData();
+						}
+					}
+				});
+			},
+			clickItem(index) {
+				if (index == 0) {
 					uni.navigateTo({
-						url:'sales-business-card?id='+app.getCache('uid')
-					});
-				}else if(index==1){
+						url: 'month-order-list'
+					})
+				} else if (index == 1) {
 					uni.navigateTo({
-						url:'user'
+						url: 'sales-business-card?id=' + app.getCache('uid')
 					});
-				}else if(index==2){
+				} else if (index == 2) {
 					uni.navigateTo({
-						url:'sales-account-list'
+						url: 'user'
 					});
-				}else{
+				} else if (index == 4) {
+					uni.navigateTo({
+						url: 'sales-account-list'
+					});
+				} else if (index == 7) {
+					uni.navigateTo({
+						url: 'change-password'
+					});
+				} else if (index == 5) {
+					//资源报备
+					uni.navigateTo({
+						url: 'resource-report-list'
+					});
+				} else if (index == 3) {
+					//患者列表
+					// app.tip('功能暂未开放');
+					// return;
+					uni.navigateTo({
+						url: 'patient-list'
+					});
+				} else {
+					//身份认真
 					this.judgeDoctorAuthenticationStatus();
 				}
 			},
-			getData(){
+			getData() {
 				//
 				app.saleshomepage({}).then(res => {
 					console.log(res);
@@ -68,92 +107,118 @@
 					}
 				});
 			},
-			judgeDoctorAuthenticationStatus(){
-				app.sale_authentication({}).then(res =>{
-					 if(res.status == 1){
-						 let url = "/pages/sales/authentication/index";
-						 if(res.data.status==-1){
-							 //认证失败
-							 url = "/pages/sales/authentication/index";
-						 }else if(res.data.status==0){
-							 //未认证
-							 url = "/pages/sales/authentication/index";
-						 }else if(res.data.status==1){
-							 //认证中
-							 url = "/pages/sales/authentication/result";
-						 }else if(res.data.status==2){
-							 //已认证
-							 url = "/pages/sales/authentication/detail";
-						 }
-						 uni.navigateTo({
-						 	url
-						 })
-					 }
+			judgeDoctorAuthenticationStatus() {
+				app.sale_authentication({}).then(res => {
+					if (res.status == 1) {
+						let url = "/pages/sales/authentication/index";
+						if (res.data.status == -1) {
+							//认证失败
+							url = "/pages/sales/authentication/index";
+						} else if (res.data.status == 0) {
+							//未认证
+							url = "/pages/sales/authentication/index";
+						} else if (res.data.status == 1) {
+							//认证中
+							url = "/pages/sales/authentication/result";
+						} else if (res.data.status == 2) {
+							//已认证
+							url = "/pages/sales/authentication/detail";
+						}
+						uni.navigateTo({
+							url
+						})
+					}
 				});
 			},
-			cleartoken(){
+			cleartoken() {
 				localStorage.removeItem("token");
 				app.tip("退出成功");
-				setTimeout(()=>{
+				setTimeout(() => {
 					uni.reLaunch({
-						url:"/pages/sales/register?isSales=1"
+						url: "/pages/sales/register?isSales=1"
 					})
-				},1000)
+				}, 1000)
 			},
-			
+
 		},
 
 	}
 </script>
 
 <style lang="scss">
-	.container{
-		height: 100vh;background-color: #F5F6F6;overflow-y: auto;
-		.welcome{line-height:110rpx;padding-left:50rpx;}
-		.numbox{
-			padding:60rpx 30rpx;background:#fff;
-			.numitem{
-				width:50%;text-align:center;font-size: 30rpx;box-sizing:border-box;
-				&:nth-child(1){border-right:2rpx solid #ddd;}
-				.number{
-					font-size: 52rpx;padding-bottom:10rpx;
+	.container {
+		height: 100vh;
+		background-color: #F5F6F6;
+		overflow-y: auto;
+
+		.welcome {
+			line-height: 110rpx;
+			padding-left: 50rpx;
+		}
+
+		.numbox {
+			padding: 60rpx 30rpx;
+			background: #fff;
+
+			.numitem {
+				width: 50%;
+				text-align: center;
+				font-size: 30rpx;
+				box-sizing: border-box;
+
+				&:nth-child(1) {
+					border-right: 2rpx solid #ddd;
+				}
+
+				.number {
+					font-size: 52rpx;
+					padding-bottom: 10rpx;
 					color: #4B8BE8;
 				}
 			}
-			
+
 		}
-		.item-list{
+
+		.item-list {
 			background-color: #FFFFFF;
-			height: 108rpx;margin-top:10rpx;
-			position: relative;padding-right:40rpx;
-			.left-name{
-				height: 106rpx;flex:1;
+			height: 108rpx;
+			margin-top: 10rpx;
+			position: relative;
+			padding-right: 40rpx;
+
+			.left-name {
+				height: 106rpx;
+				flex: 1;
 				line-height: 106rpx;
 				font-size: 32rpx;
 				color: #333333;
 				padding-left: 60rpx;
 			}
-			.right-arrow{
+
+			.right-arrow {
 				// position: absolute;
 				// right: 60rpx;
 				width: 18rpx;
 				// height: 26rpx;
 				// top: 40rpx;
-				
+
 			}
-			.line{
+
+			.line {
 				height: 6rpx;
 				background-color: #F5F6F6;
 			}
 		}
-		.bottom{
+
+		.bottom {
 			background-color: #F5F6F6;
 			height: 400px;
 		}
 	}
+
 	.pagebottombt {
 		padding: 120rpx 0 100rpx;
-		
+
 		view {
 			background: #4B8BE8;
 			color: #fff;

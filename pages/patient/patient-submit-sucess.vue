@@ -4,17 +4,20 @@
 	 <view class="health-content">
 		 <view class="health-image"> <image class="health-status-image" src="../../static/icon/submit_sucess_icon.png"></image></view>
 		 <view class="health-result">提交成功</view>
-		 <button class="health-confirm" @click="complete">完成</button>
+		 <button class="health-confirm" v-show="type!=1" @click="complete" style="width:600rpx;">去做{{testtype==1?"PG-":""}}SGA营养状况评估</button>
+		 <button class="health-confirm" v-show="type==1" @click="complete">完成</button>
 	 </view>
  </view>
  
 </template>
 
 <script>
+	let app = getApp();
 	export default {
 		data() {
 			return {
 				type:1,//1跳回患者基本信息页面 2跳回患者营养界面
+				testtype:1,
 			}
 		},
 		methods: {
@@ -25,7 +28,7 @@
 					});
 				}else{
 					uni.redirectTo({
-						url:'patient-nutrition-manage'
+						url:'/pages/patient/nutritional-self-test'
 					});
 				}
 				
@@ -34,6 +37,11 @@
 		},
 		onLoad(props){
 			this.type = props.type ||1;
+			app.getSgaType({}).then(res => {
+				if (res.status == 1) {
+					this.testtype = res.data.sgaType;
+				}
+			});
 		}
 		
 

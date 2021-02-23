@@ -10,7 +10,7 @@
 			<view class="qrCode-box">
 				<view class="qrCode-tips">
 					<view style="padding-bottom:10rpx;">微信扫一扫</view>
-					<view>开通患者院外营养管理平台</view>
+					<view>开通肿瘤患者营养管理平台</view>
 				</view>
 			</view>
 		</view>

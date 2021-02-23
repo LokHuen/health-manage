@@ -65,7 +65,12 @@
 		},
 		onLoad(props) {
 			this.bindSale = props.bindSale||1;
-			this.loadUserAuth();
+			
+		},
+		onShow() {
+			  if(app.getCache('uid')){
+				  this.loadUserAuth();
+			  } 
 		},
 		methods: {
 			loadUserAuth(){

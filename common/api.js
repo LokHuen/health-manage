@@ -6,7 +6,8 @@ var api = {
 	 // mineChatList:(data)=>{return rq("/wx/interpret/consult/findMyPage",data,"GET");},
 	 // //保存报告寄出信息
 	 // savePost:(data)=>{return rq("/wx/interpret/mri/savePost",data,"POST");},
-	
+	getSgaType:(data)=>{return rq("/wx/survey/question/getSgaType",data,"GET");},//sga类型判断
+
 	// 自测
 	getQuestionSecondList:(data)=>{return rq("/wx/survey/question/secondList",data,"GET");},
 	replySecond:(data)=>{return rq("/wx/survey/question/replySecond",JSON.stringify(data),"POST");},
@@ -78,8 +79,9 @@ var api = {
 	doctorShowInfo:(data)=>{return rq("/wx/doctor/showInfo",data,"GET");},
 	//关闭演示数据
 	closeShowData:(data)=>{return rq("/wx/doctor/closeShowData",data,"POST");},
-	
-	
+	statTemplate:(data)=>{return rq("/wx/diet/record/statTemplate",data,"GET");}, //7天30天摄入和运动能量图表
+
+
 	//业务员
 	salesuserlist:(data)=>{return rq("/wx/salesman/bindUserList",data,"GET");}, //绑定的用户
 	salesregister:(data)=>{return rq("/wx/salesman/login",data,"POST");}, //登录
@@ -99,6 +101,76 @@ var api = {
 	//转账记录详情
 	sale_divideRecord:(data)=>{return rq("/wx/salesman/getDivideRecord",data,"GET");},
 	sale_settleInfo:(data)=>{return rq("/wx/salesman/settleInfo",data,"GET");}, //账户已结算页的金额
+	sales_changepassword:(data)=>{return rq("/wx/salesman/changePassword",data,"POST");}, //修改密码
+
+	//添加运动
+	saveSport:(data)=>{return rq("/wx/exercise/record/save",data,"POST");},
+	//获取饮食 时间段list
+	dietTimeType:(data)=>{return rq("/wx/diet/record/dietTimeType",data,"GET");},
+	//食物分类 列表
+	foodTypeList:(data)=>{return rq("/wx/food/type/list",data,"GET");},
+	//食物 列表（不分页）
+	foodList:(data)=>{return rq("/wx/food/list",data,"GET");},
+	//保存食物记录
+	saveFood:(data)=>{return rq("/wx/diet/record/save",data,"POST");},
+	//运动分类list
+	sportType:(data)=>{return rq("/wx/exercise/type/list",data,"GET");},
+	//运动列表
+	sportList:(data)=>{return rq("/wx/exercise/list",data,"GET");},
+	//修改医嘱签名
+	updateDoctorName:(data)=>{return rq("/wx/doctor/updateInfo",data,"POST");},
+
+	//资源报备
+	//获取子地区，，没用
+	getChildrenArea:(data)=>{return rq("/wx/system/region/getChildren",data,"GET");},
+	//医院列表
+	hospitalList:(data)=>{return rq("/wx/service/hospital/list",data,"GET");},
+	//科室列表
+	getOptionList:(data)=>{return rq("/wx/system/dict/getDetailList",data,"GET");},
+	//保存资源
+	saveResource:(data)=>{return rq("/wx/sales/business/resource/save",data,"POST");},
+	//资源报备列表（分页）
+	resourceList:(data)=>{return rq("/wx/sales/business/resource/list",data,"GET");},
+	//移除报备
+	removeResource:(data)=>{return rq("/wx/sales/business/resource/delete",data,"POST");},
+    //患者列表
+    salesmanPatientList:(data)=>{return rq("/wx/salesman/patientList",data,"GET");},
+	//疾病列表
+	getIllnessSetting:(data)=>{return rq("/wx/patient/getIllnessSetting",data,"GET");},
+	
+	//代理员
+	//代理员首页
+	agentInfo:(data)=>{return rq("/wx/sales/agent/agentInfo",data,"GET");},
+	//订单列表
+	agentOrderList:(data)=>{return rq("/wx/sales/agent/orderPage",data,"POST");},
+	//按月统计订单数据
+	agentOrderStatsList:(data)=>{return rq("/wx/sales/agent/orderStatsList",data,"GET");},
+	//团队列表（分页）
+	agentTeamList:(data)=>{return rq("/wx/sales/agent/teamList",data,"GET");},
+	//成员详情
+	salesmanDetail:(data)=>{return rq("/wx/salesman/homepage",data,"GET");},
+	//获取是否 代理员身份
+	getIdentity:(data)=>{return rq("/wx/salesman/getIdentity",data,"GET");},
+	
+	//职称列表（不分页）
+	technicalTitleList:(data)=>{return rq("/wx/sales/business/resource/technicalTitleList",data,"GET");},
+	//客情关系程度 列表（不分页）
+	relateList:(data)=>{return rq("/wx/sales/business/resource/relateList",data,"GET");},
+	
+	//报备详情
+	resourceReportDetail:(data)=>{return rq("/wx/sales/business/resource/get",data,"GET");},
+
+	//账号
+	accountsave:(data)=>{return rq("/wx/doctor/account/save",data,"POST");},//保存账号
+	accountdelete:(data)=>{return rq("/wx/doctor/account/delete",data,"POST");},//删除账号
+	accountlist:(data)=>{return rq("/wx/doctor/account/list",data,"GET");},//账号列表
+	accountget:(data)=>{return rq("/wx/doctor/account/get",data,"GET");},//账号详情
+	
+	getWxConfig:(data)=>{return rq("/wx/common/wechatParam",data,"GET");},//微信配置
+	
+	//sga类型判断
+	getSgaType:(data)=>{return rq("/wx/survey/question/getSgaType",data,"GET");},
+
 }
 
 export {api};

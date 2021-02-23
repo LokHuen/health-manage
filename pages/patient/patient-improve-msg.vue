@@ -11,24 +11,26 @@
 			<view class="sex-tips">* 性别</view>
 			<view :class="patientGender==0?'sex-value':'has-value'">{{patientGender==0?'点击选择':patientGender==1?'男':'女'}}</view>
 		</view>
-		<view class="sex-box">
+		<view class="sex-box" v-if="formQrCode==2">
 			<view class="sex-tips">* 出生日期</view>
 			<picker mode="date" :value="birthday" :start="startDate" :end="endDate" @change="bindDateChange" style="flex: 1;">
 				<view :class="birthday?'has-value':'sex-value'">{{birthday?birthday:'点击选择'}}</view>
 			</picker>
-
 		</view>
-		<view class="sex-box">
+		<view class="sex-box" v-if="formQrCode==2">
 			<view class="sex-tips">* 所在城市</view>
 			<picker mode="multiSelector" :range="areaList" :range-key="'name'" @columnchange="columnChange" @cancel="hideArea(1)"
 			 @change="hideArea(0)" style="flex: 1;">
 				<view :class="(city&&province&&hasArea)||infoData.region?'has-value':'sex-value'">{{(city&&province&&hasArea)?(province+' '+city):(infoData.region?infoData.region:'点击选择')}}</view>
 			</picker>
 		</view>
+
 		<view class="name-box">
-			<view class="name-tips">* 所患疾病</view>
-			<input class="name-input" type="text" value="" placeholder="请填写疾病名称" v-model="illness" />
+			<view class="name-tips">* 联系电话</view>
+			<input class="name-input" type="number" value="" placeholder="请填写联系电话" v-model="phone" />
 		</view>
+
+
 		<view class="name-box">
 			<view class="name-tips">* 当前身高</view>
 			<input class="name-input" type="text" value="" placeholder="请填写身高" v-model="height" />
@@ -39,9 +41,40 @@
 			<input class="name-input" type="text" value="" placeholder="请填写体重" v-model="weight" />
 			<view class="right-tip">kg</view>
 		</view>
-		<view class="pic-title" v-if="!infoData.patientName">病历照片</view>
-		<view class="pic-tip" v-if="!infoData.patientName">上传出院小结（重要）、影像报告等内容，方便医生 评估病情</view>
-		<view class="pic-content-box" v-if="!infoData.patientName">
+
+
+		<view class="name-box">
+			<view class="name-tips">* 疾病诊断</view>
+			<!-- <input class="name-input" type="text" value="" placeholder="请填写疾病名称" v-model="illness" /> -->
+
+			<view :class="illness?'name-input':'name-novalue-input'" @click="openSelectResult">{{illness?illness:'请选择疾病诊断'}}</view>
+		</view>
+
+		<view class="projectList" v-for="(item,index) in projectList">
+			<!-- 文本 -->
+			<view class="name-box" v-if="item.type==1">
+				<view class="name-tips">{{item.required==1?('* '+item.name):item.name}}</view>
+				<input class="name-input" :placeholder="item.reminder" v-model="item.detailList" />
+			</view>
+
+			<!-- 下拉单选 -->
+			<view class="name-box" v-if="item.type==2">
+				<view class="name-tips">{{item.required==1?('* '+item.name):item.name}}</view>
+				<view :class="item.choseContent?'name-input':'name-novalue-input'" @click="openSingleChose(index)">{{item.choseContent?item.choseContent:item.reminder}}</view>
+			</view>
+
+			<!-- 下拉多选 -->
+			<view class="name-box" v-if="item.type==3">
+				<view class="name-tips">{{item.required==1?('* '+item.name):item.name}}</view>
+				<view :class="item.choseContent?'name-input':'name-novalue-input'" @click="multipleChose(index)">{{item.choseContent?item.choseContent:item.reminder}}</view>
+			</view>
+
+		</view>
+
+
+		<view class="pic-title" v-if="!infoData.patientName &&formQrCode==2">病历照片</view>
+		<view class="pic-tip" v-if="!infoData.patientName &&formQrCode==2">上传出院小结（重要）、影像报告等内容，方便医生 评估病情</view>
+		<view class="pic-content-box" v-if="!infoData.patientName &&formQrCode==2">
 			<view class="ccimglist">
 				<view v-for="(item,index) in imgList" :key="index" :class="(index%3==0)?'img-box-first':'img-box'">
 					<image :src="item" mode="aspectFill" @click="previewImage(index)" class="imagelist"></image>
@@ -49,7 +82,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="upload-box" @click="choseImg" v-if="!infoData.patientName">点击上传</view>
+		<view class="upload-box" @click="choseImg" v-if="!infoData.patientName &&formQrCode==2">点击上传</view>
 
 
 		<view class="button-box">
@@ -67,42 +100,88 @@
 		</uni-popup>
 
 		<uni-popup type="bottom" ref="tipPopup" :maskClick="maskClick">
-				<view class="popup-content">
-					<scroll-view scroll-y="true" style="max-height: 800rpx;">
-						<view class="tips-title">用户隐私保护指引</view>
-						<view style="height: 60rpx;"></view>
-						<view class="tips-common">本指引是“肿瘤营养管理与干预”公众号内服务开发者收集、使用和存储你的信息而制定。</view>
-						<view style="height: 50rpx;"></view>
-						<view class="tips-common">开发者收集的信息</view>
-						<view class="tips-common">根据法律规定，开发者仅收集实现肿瘤营养管理与干预功能所必要的信息。</view>
-						<view class="tips-common">•  开发者收集你的用户信息（微信昵称、头像、性别、地区），用于注册、登录服务系统。</view>
-						<view class="tips-common">•  开发者收集你的病例信息（姓名、性别、出生日期、所患疾病、所在城市、身高、体重、病例照片等），用于给您提供营养管理与干预服务、营养测评服务。</view>
-						<view style="height: 50rpx;"></view>
-						<view class="tips-common">开发者对信息的存储</view>
-						<view class="tips-common">存储地点：境内 </view>
-						<view class="tips-common">存储期限：项目停止运营后及时删除 </view>
-						<view style="height: 50rpx;"></view>
-						<view class="tips-common">信息的使用规则</view>
-						<view class="tips-common">开发者将会在本指引所涵盖的用途内使用收集的信息。</view>
-						<view class="tips-common">如开发者使用你的信息超出本指引目的或合理范围，会及时更新本指引，并告知您。</view>
-						<view style="height: 50rpx;"></view>
-						<view class="tips-common">信息对外提供</view>
-						<view class="tips-remind">使用肿瘤营养管理与干预服务，您必须同意授权开发者将您的信息（不限于用户信息和病例信息，也包括营养测评数据）展示给平台医生。平台上的医生有权查看您在平台上保存的所有资料，以给您提供相应的营养管理方案。</view>
-						<view style="height: 50rpx;"></view>
-						<view class="tips-common">开发者承诺</view>
-						<view class="tips-common">•  不会主动共享或转让你的信息至任何第三方，如存在确需共享或转让时，开发者应当直接或确认第三方征得你的明示同意。</view>
-						<view class="tips-common">•  不会对外公开披露你的信息，如必须公开披露时，开发者应当向你告知公开披露的目的、披露信息的类型及可能涉及的信息，并征得你的明示同意。</view>
-						<view style="height: 50rpx;"></view>
-						<view class="tips-common">若你认为开发者未遵守上述约定，或有其他的投诉建议、未成年人个人信息相关问题，可通过以下方式与开发者联系。</view>
-						<view class="tips-common">联系电话：400-8585-095</view>
-						<view style="height: 50rpx;"></view>
-						<view class="tips-common">更新日期：2020-12-02</view>
-						<view class="tips-common">生效日期：2020-12-02</view>
-					</scroll-view>
-						<view class="agree-btn" @click="agree">我已阅读并同意隐私保护指引内容</view>
-						<view class="disagree-btn" @click="disagree">不同意</view>
-						<view style="height: 30rpx;" ></view>
+			<view class="popup-content">
+				<scroll-view scroll-y="true" style="max-height: 800rpx;">
+					<view class="tips-title">用户隐私保护指引</view>
+					<view style="height: 60rpx;"></view>
+					<view class="tips-common">本指引是“肿瘤营养管理与干预”公众号内服务开发者收集、使用和存储你的信息而制定。</view>
+					<view style="height: 50rpx;"></view>
+					<view class="tips-common">开发者收集的信息</view>
+					<view class="tips-common">根据法律规定，开发者仅收集实现肿瘤营养管理与干预功能所必要的信息。</view>
+					<view class="tips-common">• 开发者收集你的用户信息（微信昵称、头像、性别、地区），用于注册、登录服务系统。</view>
+					<view class="tips-common">• 开发者收集你的病例信息（姓名、性别、出生日期、所患疾病、所在城市、身高、体重、病例照片等），用于给您提供营养管理与干预服务、营养测评服务。</view>
+					<view style="height: 50rpx;"></view>
+					<view class="tips-common">开发者对信息的存储</view>
+					<view class="tips-common">存储地点：境内 </view>
+					<view class="tips-common">存储期限：项目停止运营后及时删除 </view>
+					<view style="height: 50rpx;"></view>
+					<view class="tips-common">信息的使用规则</view>
+					<view class="tips-common">开发者将会在本指引所涵盖的用途内使用收集的信息。</view>
+					<view class="tips-common">如开发者使用你的信息超出本指引目的或合理范围，会及时更新本指引，并告知您。</view>
+					<view style="height: 50rpx;"></view>
+					<view class="tips-common">信息对外提供</view>
+					<view class="tips-remind">使用肿瘤营养管理与干预服务，您必须同意授权开发者将您的信息（不限于用户信息和病例信息，也包括营养测评数据）展示给平台医生。平台上的医生有权查看您在平台上保存的所有资料，以给您提供相应的营养管理方案。</view>
+					<view style="height: 50rpx;"></view>
+					<view class="tips-common">开发者承诺</view>
+					<view class="tips-common">• 不会主动共享或转让你的信息至任何第三方，如存在确需共享或转让时，开发者应当直接或确认第三方征得你的明示同意。</view>
+					<view class="tips-common">• 不会对外公开披露你的信息，如必须公开披露时，开发者应当向你告知公开披露的目的、披露信息的类型及可能涉及的信息，并征得你的明示同意。</view>
+					<view style="height: 50rpx;"></view>
+					<view class="tips-common">若你认为开发者未遵守上述约定，或有其他的投诉建议、未成年人个人信息相关问题，可通过以下方式与开发者联系。</view>
+					<view class="tips-common">联系电话：400-8585-095</view>
+					<view style="height: 50rpx;"></view>
+					<view class="tips-common">更新日期：2020-12-02</view>
+					<view class="tips-common">生效日期：2020-12-02</view>
+				</scroll-view>
+				<view class="agree-btn" @click="agree">我已阅读并同意隐私保护指引内容</view>
+				<view class="disagree-btn" @click="disagree">不同意</view>
+				<view style="height: 30rpx;"></view>
+			</view>
+		</uni-popup>
+		<uni-popup ref="resultPop" type="bottom">
+			<view class="i-sex-content">
+				<text class="i-sex-title">疾病选择</text>
+				<scroll-view scroll-y="true" style="max-height: 750rpx;">
+					<view>
+						<view v-for="(item,index) in inllList" :key="index" :class="illness==item?'i-sex-item line active':'i-sex-item line'"
+						 @click="selectmicResult(item)">{{item}}</view>
+					</view>
+				</scroll-view>
+
+			</view>
+		</uni-popup>
+
+		<uni-popup ref="singleChoosePop" type="bottom">
+			<view class="i-sex-content">
+				<text class="i-sex-title">{{currentProject.name}}</text>
+				<scroll-view scroll-y="true" style="max-height: 750rpx;">
+					<view>
+						<view v-for="(item,index) in currentProject.detailList" :key="index" :class="item.choose==1?'i-sex-item line active':'i-sex-item line'"
+						 @click="selectSingle(index)">{{item.content}}</view>
+					</view>
+				</scroll-view>
+
+			</view>
+		</uni-popup>
+
+		<uni-popup ref="multipleChoosePop" type="bottom">
+			<view class="i-sex-content">
+				<view class="i-sex-title1">
+					{{currentProject.name}}
+					<view class="i-sex-title-close" @click="sure">关闭</view>
+					<view class="i-sex-title-sure" @click="sure">确认</view>
+
 				</view>
+				<scroll-view scroll-y="true" style="max-height: 750rpx;">
+					<view>
+						<view v-for="(item,index) in currentProject.detailList" :key="index" :class="item.choose==1?'i-sex-item line active':'i-sex-item line'"
+						 @click="selectMultiple(index)">
+							{{item.content}}
+							<image src="../../static/icon/icon_checkbox_selected.png" class="img" v-if="item.choose==1"></image>
+						</view>
+					</view>
+				</scroll-view>
+
+			</view>
 		</uni-popup>
 	</view>
 </template>
@@ -113,7 +192,10 @@
 	export default {
 
 		onLoad(props) {
+			if (!app.getCache("uid")) return;
+			this.getIllnessList();
 			this.type = props.type || 1;
+			this.formQrCode = props.formQrCode || 1;
 			http.get(http.urls.get_all_province).then((res) => {
 				this.areaList[0] = res.data;
 				if (this.areaList[0] && this.areaList[0].length > 0) {
@@ -144,8 +226,9 @@
 		},
 		data() {
 			return {
-				maskClick:false,
+				maskClick: false,
 				patientName: '',
+				phone: "",
 				patientGender: 0,
 				birthday: '',
 				cityId: '',
@@ -164,43 +247,163 @@
 
 				type: 1, //1表示点击更新信息进来，2表示用户未填写信息系统自动跳进来的
 				hasArea: false,
-				infoData:{},
+				infoData: {},
+				inllList: [],
+				projectList: [],
+				currentProject: {},
+				currentIndex: '',
+				formQrCode: '', //1表示患者扫描医生二维码后，点击公众号消息进入信息完善页 2从基础信息进入
 			}
 		},
-		onShow(){
+		onShow() {
+			if (!app.getCache("uid")) return;
 			this.getInfo();
 		},
 		methods: {
-			disagree(){
-			    // uni.redirectTo({
-			    // 	url:'patient-nutrition-manage'
-			    // });
+			selectmicResult(item) {
+				this.illness = item;
+				this.$refs.resultPop.close();
+			},
+			openSelectResult() {
+				this.$refs.resultPop.open();
+			},
+
+			//单选
+			openSingleChose(index) {
+				this.currentProject = this.projectList[index];
+				this.currentIndex = index;
+				this.$refs.singleChoosePop.open();
+			},
+			selectSingle(index) {
+				for (var i = 0; i < this.currentProject.detailList.length; i++) {
+					var detail = this.currentProject.detailList[i];
+					if (index == i) {
+						detail.choose = 1;
+						this.currentProject.choseContent = detail.content;
+						this.currentProject.choseId = detail.id;
+					} else {
+						detail.choose = 0;
+					}
+					this.currentProject.detailList[i] = detail;
+				}
+				this.projectList[this.currentIndex] = this.currentProject;
+				this.$refs.singleChoosePop.close();
+			},
+			//多选
+			multipleChose(index) {
+				this.currentProject = this.projectList[index];
+				this.currentIndex = index;
+				this.$refs.multipleChoosePop.open();
+			},
+			selectMultiple(index) {
+				var detail = this.currentProject.detailList[index];
+				if (detail.choose == 1) {
+					detail.choose = 0;
+				} else {
+					detail.choose = 1
+				}
+				this.currentProject.detailList[index] = detail;
+				this.projectList[this.currentIndex] = this.currentProject;
+
+				for (var i = 0; i < this.projectList.length; i++) {
+					var project = this.projectList[i];
+					if (project.type == 3) {
+						//多选
+						var ids = [];
+						var contents = [];
+						var choseContent = '';
+						for (var j = 0; j < project.detailList.length; j++) {
+							if (project.detailList[j].choose == 1) {
+								ids.push(project.detailList[j].id);
+								contents.push(project.detailList[j].content);
+								choseContent = choseContent + project.detailList[j].content + ','
+							}
+						}
+						choseContent = choseContent.substring(0, choseContent.length - 1);
+						project.ids = ids;
+						project.contents = contents;
+						project.choseContent = choseContent;
+					}
+					this.projectList[i] = project;
+				}
+
+			},
+			sure() {
+				this.$refs.multipleChoosePop.close();
+			},
+			disagree() {
+				// uni.redirectTo({
+				// 	url:'patient-nutrition-manage'
+				// });
 				app.tip('很抱歉，暂时无法为您提供服务，请关闭页面');
 			},
-			agree(){
+			agree() {
 				this.$refs.tipPopup.close();
 			},
-			showTipPopup(){
+			showTipPopup() {
 				this.$refs.tipPopup.open();
 			},
-			getInfo(){
-				app.patientBasicInfo({}).then(res =>{
-					if(res.status==1){
-						if(res.data.patientName && res.data.cityId && res.data.provinceId){
+			getIllnessList() {
+				app.getIllnessSetting().then(res => {
+					if (res.status == 1) {
+						this.inllList = res.data.illness;
+					}
+				});
+			},
+			getInfo() {
+				app.patientBasicInfo({}).then(res => {
+					if (res.status == 1) {
+						if (res.data) {
 							this.infoData = res.data;
 							this.patientName = this.infoData.patientName;
-							this.patientGender = this.infoData.patientGender == '男'?1:2;
+							this.phone = this.infoData.phone;
+							this.patientGender = this.infoData.patientGender == '男' ? 1 : 2;
 							this.cityId = this.infoData.cityId;
 							this.provinceId = this.infoData.provinceId;
 							this.illness = this.infoData.illness;
 							this.height = this.infoData.height;
 							this.weight = this.infoData.weight;
-							var year = this.infoData.birthday.split('年')[0];
-							var month = this.infoData.birthday.split('年')[1].split('月')[0];
-							var day =  this.infoData.birthday.split('年')[1].split('月')[1].split('日')[0];
-							this.birthday = year+'-'+month+'-'+day;
-						}else{
+							if (this.infoData.birthday) {
+								var year = this.infoData.birthday.split('年')[0];
+								var month = this.infoData.birthday.split('年')[1].split('月')[0];
+								var day = this.infoData.birthday.split('年')[1].split('月')[1].split('日')[0];
+								this.birthday = year + '-' + month + '-' + day;
+							}
+						} else {
 							this.showTipPopup();
+						}
+
+						this.projectList = res.data.projectList;
+						if (this.projectList) {
+							for (var i = 0; i < this.projectList.length; i++) {
+								var project = this.projectList[i];
+								if (project.type == 2) {
+									//单选
+									for (var j = 0; j < project.detailList.length; j++) {
+										if (project.detailList[j].choose == 1) {
+											project.choseId = project.detailList[j].id;
+											project.choseContent = project.detailList[j].content;
+										}
+									}
+								} else if (project.type == 3) {
+									//多选
+									var ids = [];
+									var contents = [];
+									var choseContent = '';
+									for (var j = 0; j < project.detailList.length; j++) {
+										if (project.detailList[j].choose == 1) {
+											ids.push(project.detailList[j].id);
+											contents.push(project.detailList[j].content);
+											choseContent = choseContent + project.detailList[j].content + ','
+										}
+									}
+									choseContent = choseContent.substring(0, choseContent.length - 1);
+									project.ids = ids;
+									project.contents = contents;
+									project.choseContent = choseContent;
+								}
+								this.projectList[i] = project;
+							}
 						}
 
 					}
@@ -276,12 +479,41 @@
 				});
 			},
 			submit() {
-				if (!this.patientName ||
-					this.patientGender == 0 || !this.birthday || !this.cityId || !this.provinceId || !this.illness ||
-					!this.weight || !this.height) {
-					app.tip('请输入完整信息');
-					return;
+				if (this.projectList) {
+					for (var i = 0; i < this.projectList.length; i++) {
+						var project = this.projectList[i];
+						if (project.type == 1) {
+							if (project.required == 1 && !project.detailList) {
+								app.tip('请输入必填信息')
+								return;
+							}
+
+						} else {
+							if (project.required == 1 && !project.choseContent) {
+								app.tip('请输入必填信息')
+								return;
+							}
+						}
+					}
 				}
+
+				if (this.formQrCode == 1) {
+					if (!this.patientName ||
+						!this.illness ||
+						!this.weight || !this.height || !this.phone) {
+						app.tip('请输入完整信息');
+						return;
+					}
+
+				} else {
+					if (!this.patientName ||
+						this.patientGender == 0 || !this.birthday || !this.cityId || !this.provinceId || !this.illness ||
+						!this.weight || !this.height || !this.phone) {
+						app.tip('请输入完整信息');
+						return;
+					}
+				}
+
 				if (this.imgList.length > 0) {
 					this.uploadImg();
 				} else {
@@ -318,24 +550,80 @@
 				}
 			},
 			submitRequest() {
-				app.savePatientInfo({
-					patientName: this.patientName,
-					patientGender: this.patientGender,
-					birthday: this.birthday,
-					cityId: this.cityId,
-					provinceId: this.provinceId,
-					illness: this.illness,
-					height: this.height,
-					weight: this.weight,
-					pathologyUrl: this.pathologyUrl
-				}).then(res => {
-					if (res.status == 1) {
-						uni.navigateTo({
-							url: 'patient-submit-sucess?type=' + this.type
-						});
+				var projectList = [];
+				if (this.projectList) {
+					for (var i = 0; i < this.projectList.length; i++) {
+						var project = this.projectList[i];
+						if (project.type == 1) {
+							if (project.detailList) {
+								projectList.push({
+									projectId: project.id,
+									answer: project.detailList
+								})
+							}
+						} else if (project.type == 2) {
+							if (project.choseContent) {
+								projectList.push({
+									projectId: project.id,
+									answer: project.choseId
+								})
+							}
+						} else {
+							if (project.choseContent) {
+								var ids = '';
+								for (var j = 0; j < project.ids.length; j++) {
+									ids = ids + project.ids[j] + ',';
+								}
+								ids = ids.substring(0, ids.length - 1);
+								projectList.push({
+									projectId: project.id,
+									answer: ids
+								})
+							}
 
+						}
 					}
-				});
+					projectList = JSON.stringify(projectList);
+				}
+				if (this.formQrCode == 1) {
+					app.savePatientInfo({
+						patientName: this.patientName,
+						phone: this.phone,
+						illness: this.illness,
+						height: this.height,
+						weight: this.weight,
+						detailList: projectList,
+					}).then(res => {
+						if (res.status == 1) {
+							uni.navigateTo({
+								url: 'patient-submit-sucess?type=' + this.type
+							});
+
+						}
+					});
+				} else {
+					app.savePatientInfo({
+						patientName: this.patientName,
+						phone: this.phone,
+						patientGender: this.patientGender,
+						birthday: this.birthday,
+						cityId: this.cityId,
+						provinceId: this.provinceId,
+						illness: this.illness,
+						height: this.height,
+						weight: this.weight,
+						pathologyUrl: this.pathologyUrl,
+						detailList: projectList,
+					}).then(res => {
+						if (res.status == 1) {
+							uni.navigateTo({
+								url: 'patient-submit-sucess?type=' + this.type
+							});
+
+						}
+					});
+				}
+
 			},
 			selectSex(type) {
 				if (type == 0) {
@@ -361,25 +649,58 @@
 		border-radius: 20rpx 20rpx 0rpx 0rpx;
 
 		.i-sex-title {
-			width: 100%;
 			color: #272727;
 			font-size: 32rpx;
 			font-weight: bold;
 			text-align: center;
 			padding-bottom: 20rpx;
-			// border-bottom: 1rpx solid #DDDDDD;
+
+		}
+
+		.i-sex-title1 {
+			color: #272727;
+			font-size: 32rpx;
+			//font-weight: bold;
+			text-align: center;
+			padding-bottom: 20rpx;
+			width: 100%;
+			position: relative;
+
+			.i-sex-title-close {
+				position: absolute;
+				left: 40rpx;
+				top: -10rpx;
+				font-size: 26rpx;
+				color: #999999;
+			}
+
+			.i-sex-title-sure {
+				position: absolute;
+				right: 40rpx;
+				top: -10rpx;
+				font-size: 26rpx;
+				color: #333333;
+			}
 		}
 
 		.i-sex-item {
-			width: 100%;
 			color: #272727;
 			font-size: 32rpx;
 			padding: 20rpx;
 			text-align: center;
+			position: relative;
+
+			.img {
+				position: absolute;
+				width: 26rpx;
+				height: 26rpx;
+				right: 80rpx;
+				top: 30rpx;
+			}
 		}
 
 		.line {
-			// border-bottom: 1rpx solid #DDDDDD;
+			border-bottom: 1rpx solid #DDDDDD;
 		}
 
 		.active {
@@ -424,7 +745,7 @@
 	.container {
 		.title {
 			color: #333333;
-			font-size: 15px;
+			font-size: 30rpx;
 			margin-left: 44rpx;
 			margin-right: 44rpx;
 			padding-top: 40rpx;
@@ -440,29 +761,41 @@
 			display: flex;
 			margin-left: 43rpx;
 			margin-right: 43rpx;
-			height: 100rpx;
+			// height: 100rpx;
 			border-bottom: 2rpx solid #EEEEEE;
 			position: relative;
 
 			.name-tips {
 				color: #333333;
+				font-size: 30rpx;
+				height: 100rpx;
+				line-height: 100rpx;
+				min-width: 130rpx;
+			}
+
+			.name-input {
+				flex: 1;
+				margin-left: 30rpx;
+				color: #333333;
+				font-size: 30rpx;
+				height: 100rpx;
+				line-height: 100rpx;
+			}
+
+			.name-novalue-input {
+				margin-left: 30rpx;
+				color: #b2b2b2;
 				font-size: 15px;
 				height: 100rpx;
 				line-height: 100rpx;
 			}
 
-			.name-input {
-				margin-left: 30rpx;
-				color: #333333;
-				font-size: 15px;
-				height: 100rpx;
-				line-height: 100rpx;
-			}
+
 
 			.right-tip {
 				position: absolute;
 				color: #333333;
-				font-size: 15px;
+				font-size: 30rpx;
 				right: 0;
 				top: 30rpx;
 			}
@@ -477,9 +810,10 @@
 
 			.sex-tips {
 				color: #333333;
-				font-size: 15px;
+				font-size: 30rpx;
 				height: 100rpx;
 				line-height: 100rpx;
+				min-width: 130rpx;
 			}
 
 			.sex-value {
@@ -497,7 +831,7 @@
 				margin-left: 30rpx;
 				padding-right: 0;
 				color: #333333;
-				font-size: 15px;
+				font-size: 30rpx;
 				height: 100rpx;
 				line-height: 100rpx;
 				// border: 1rpx solid #4CD964;
@@ -506,13 +840,13 @@
 
 		.pic-title {
 			color: #333333;
-			font-size: 15px;
+			font-size: 30rpx;
 			padding-left: 43rpx;
 			padding-top: 30rpx;
 		}
 
 		.pic-tip {
-			font-size: 14px;
+			font-size: 28rpx;
 			color: #999999;
 			padding-top: 20rpx;
 			padding-left: 40rpx;
@@ -569,45 +903,51 @@
 				background-color: #52A29E !important;
 				border-radius: 45rpx;
 				color: #FFFFFF;
-				font-size: 17px;
+				font-size: 34rpx;
 			}
 		}
-		.popup-content{
+
+		.popup-content {
 			background-color: #FFFFFF;
 			border-radius: 10px 10px 0px 0px;
-			font-size: 13px;
-			.tips-title{
+			font-size: 26rpx;
+
+			.tips-title {
 				margin-top: 60rpx;
 				text-align: center;
-				font-size: 17px;
+				font-size: 34rpx;
 				color: #333333;
 			}
-			.tips-common{
+
+			.tips-common {
 				margin-left: 50rpx;
 				margin-right: 50rpx;
 				color: #666666;
 			}
-			.tips-remind{
+
+			.tips-remind {
 				margin-left: 50rpx;
 				margin-right: 50rpx;
 				color: #EA132D;
 			}
-			.agree-btn{
+
+			.agree-btn {
 				text-align: center;
 				background-color: #59A29F;
 				color: #FFFFFF;
-				font-size: 15px;
+				font-size: 30rpx;
 				height: 90rpx;
 				line-height: 90rpx;
 				margin-top: 20rpx;
 				margin-left: 50rpx;
 				margin-right: 50rpx;
 			}
-			.disagree-btn{
+
+			.disagree-btn {
 				text-align: center;
 				background-color: #999999;
 				color: #FFFFFF;
-				font-size: 15px;
+				font-size: 30rpx;
 				height: 90rpx;
 				line-height: 90rpx;
 				margin-top: 30rpx;

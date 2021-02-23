@@ -62,7 +62,11 @@
 			}
 		},
 		onLoad(options){
-			this.id = options.id||1;
+			if(options.id){
+				this.id = options.id;
+			}else{
+				this.getSgaType();
+			}
 			this.$nextTick(()=>{
 				if(!app.getCache("zhiyin")) {this.$refs.popup.open();app.setCache("zhiyin",1);}
 			})
@@ -71,6 +75,13 @@
 			
 		},
 		methods: {
+			getSgaType(){
+			    app.getSgaType().then(res =>{
+					if(res.status == 1){
+						this.id = res.data.sgaType;
+					}
+				});	
+			},
 			chooseindex(index,index1){
 				this.chooseclass = this.chooselist[index].name;
 				if(this.chooseitem[index].choose == this.chooselist[index].list[index1]){
