@@ -303,11 +303,10 @@
 			this.$nextTick(() => {
 				this.judgeFirst();
 			})
-
+            this.refreshData();
 		},
 		onLoad() {
 			this.getDoctorInfo();
-			this.refreshData();
 			this.getShowInfo();
 		    this.getManageDepartment();
 		},
