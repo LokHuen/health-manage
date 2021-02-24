@@ -1,9 +1,18 @@
 <template>
 	<view class="container flexc">
-		<view class="flex head" @click="showQrCode">
-			<text>医生名片码</text>
-			<image style="width: 12rpx; height: 24rpx;" src="../../static/icon/more_icon.png"></image>
+
+
+		<view class="screen-box">
+			<view class="flex head" @click="showQrCode">
+				<text>医生名片码</text>
+				<image style="width: 12rpx; height: 24rpx;" src="../../static/icon/more_icon.png"></image>
+			</view>
+			<view class="all-patien-box" @click="patienScreen">
+				<view class="all-patien">{{orderBy==1?'按患者最近一次测评时间排序':'按患者和医生绑定的时间排序'}}</view>
+				<image class="all-arrow" src="../../static/icon/right_arrow.png" mode="widthFix"></image>
+			</view>
 		</view>
+
 		<view class="list-box" v-for="(item,index) in list">
 			<view class="name">
 				{{item.patientName}}
@@ -23,9 +32,20 @@
 			<view style="height: 40rpx;"></view>
 		</view>
 		<view class="no-data-tips" v-if="list.length == 0">暂无患者</view>
-		<uni-popup ref="qrPopup">
+		<uni-popup ref="qrPopup" @change="qrPopupChange">
 			<view>
 				<image style="width: 480rpx;height: 480rpx;" :src="qrCode"></image>
+			</view>
+		</uni-popup>
+
+		<uni-popup ref="popupPatient" type="bottom">
+			<!-- 选择患者 -->
+			<view class="white-background-patient">
+				<view class="first-item" @click="selecgtInfo(1)">按患者最近一次测评时间排序</view>
+				<view class="lines"></view>
+				<view class="second-item" @click="selecgtInfo(2)">按患者和医生绑定的时间排序</view>
+				<view class="liness"></view>
+				<view class="cancel" @click="closePatienScreen">取消</view>
 			</view>
 		</uni-popup>
 	</view>
@@ -44,23 +64,61 @@
 				dortorName: '',
 				doctorId: '',
 				list: [],
-				qrCode: ''
+				qrCode: '',
+				orderBy: 2, //排序方式（1测评时间排序 ，2绑定时间）
+				openQrCode: false
 			}
 		},
 		methods: {
 			showQrCode() {
-				this.$refs.qrPopup.open()
+				if (this.openQrCode) {
+					this.$refs.qrPopup.close()
+				} else {
+					this.$refs.qrPopup.open()
+				}
+			},
+			selecgtInfo(index) {
+				if (this.orderBy != index) {
+					this.orderBy = index;
+					this.getData();
+				}
+				this.closePatienScreen();
+			},
+			patienScreen() {
+				this.$refs.popupPatient.open();
+			},
+			closePatienScreen() {
+				this.$refs.popupPatient.close();
+			},
+			getData() {
+				app.getDoctorPatients({
+					bindDoctor: this.doctorId,
+					orderBy: this.orderBy
+				}).then((res) => {
+					this.list = res.data.list
+				})
+			},
+			qrPopupChange(e) {
+				console.log(e)
+				this.openQrCode = e.show
+			},
+			call(item) {
+				uni.makePhoneCall({
+					phoneNumber: item.phone, //仅为示例
+					success: (res) => {
+
+					},
+					fail: (res) => {
+						app.tip('调用失败');
+					}
+				});
 			}
 		},
 		onLoad(props) {
 			this.qrCode = props.qrCode
 			this.doctorId = props.doctorId
 			this.dortorName = props.dortorName
-			app.getDoctorPatients({
-				bindDoctor: this.doctorId
-			}).then((res) => {
-				this.list = res.data.list
-			})
+			this.getData()
 		}
 	}
 </script>
@@ -80,7 +138,7 @@
 	}
 
 	.container {
-		height: 100vh;
+		// height: 100vh;
 
 		.head {
 			font-weight: bold;
@@ -139,6 +197,72 @@
 				margin-top: 20rpx;
 				margin-left: 30rpx;
 				font-size: 26rpx;
+			}
+		}
+
+
+		.white-background-patient {
+			text-align: center;
+			background-color: #FFFFFF;
+			border-radius: 10px 10px 0px 0px;
+			color: #333333;
+			font-size: 15px;
+
+			.first-item {
+				height: 120rpx;
+				line-height: 120rpx;
+			}
+
+			.lines {
+				height: 2rpx;
+				margin-left: 200rpx;
+				margin-right: 200rpx;
+				background-color: #DCDCDC;
+			}
+
+			.second-item {
+				height: 128rpx;
+				line-height: 128rpx;
+			}
+
+			.liness {
+				height: 20rpx;
+				background-color: #F6F6F6;
+			}
+
+			.cancel {
+				height: 100rpx;
+				line-height: 100rpx;
+			}
+		}
+
+		.screen-box {
+			display: flex;
+			flex-direction: column;
+			// height: 100rpx;
+			color: #333333;
+			font-size: 15px;
+			background-color: #FFFFFF;
+			z-index: 999;
+			position: sticky;
+			top: 0;
+
+			.all-patien-box {
+				display: flex;
+				height: 100rpx;
+				align-items: center;
+				margin-left: 50rpx;
+
+				.all-patien {
+					line-height: 100rpx;
+				}
+
+				.all-arrow {
+					margin-left: 10rpx;
+					width: 27rpx;
+					height: 15rpx;
+				}
+
 			}
 		}
 	}

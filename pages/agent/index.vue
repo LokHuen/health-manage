@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<view class="welcome">{{'欢迎您，代理'+info.name}}</view>
+		<view class="welcome">{{'欢迎您，'+info.name}}</view>
 		<view class="flex numbox" @click="toOrder">
 			<view class="numitem">
 				<view class="number">{{info.orderNum||0}}</view>
