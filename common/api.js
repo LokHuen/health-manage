@@ -174,6 +174,14 @@ var api = {
 	//获取医生下的患者
 	getDoctorPatients:(data)=>{return rq("/wx/doctor/patientList",data,"GET");},
 
+	//医生管理的科室/病区内的医生列表
+	getManageDepartment:(data)=>{return rq("/wx/doctor/getManageDepartment",data,"GET");}, 
+	
+	//科室/病区里的医生列表——可将患者转给的医生
+	getDepartmentDoctors:(data)=>{return rq("/wx/doctor/getDepartmentDoctors",data,"GET");}, 
+	//将患者转给其他医生
+	changeBindDoctor:(data)=>{return rq("/captcha/changeBindDoctor",data,"POST");}, 
+
 }
 
 export {api};
