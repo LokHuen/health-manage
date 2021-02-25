@@ -6,7 +6,8 @@
 		   <view class="desc">{{item.doctorNum+' 医生'+' '+item.patientNum+' 患者'}}</view>
 	   </view>
 	   <view class="no-data-tips" v-if="list.length == 0">暂无数据</view>
-	   
+	   <!-- <view style="height: 1400rpx;background-color: #F5F6F6;" v-if="list.length == 0"></view> -->
+	   <view style="height: 10rpx;background-color: #F5F6F6;" v-if="list.length > 0"></view>
 	</view>
 </template>
 
