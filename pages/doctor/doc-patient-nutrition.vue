@@ -782,7 +782,7 @@
 					return;
 				}
 				if(app.getCache('uid')!=this.infoData.bindDoctor){
-					app.tip('您不是该患者所属医生');
+					app.tip('您不是该患者所属医生');return;
 				}
 				app.saveAdvice({id:this.adviceId,advice:this.advice,patientId:this.uid,creatorId:app.getCache('uid')}).then(res =>{
 					if(res.status ==1){
