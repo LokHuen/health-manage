@@ -923,7 +923,6 @@
 				app.memberReplyRecordList({
 					surveyId: this.testtype,
 					pageNo: 1,
-					pageSize: 3,
 					userId:this.uid
 				}).then(res => {
 					if (res.status == 1) {

@@ -845,7 +845,6 @@
 				app.memberReplyRecordList({
 					surveyId: this.surveyId,
 					pageNo: 1,
-					pageSize: 3
 				}).then(res => {
 
 					if (res.status == 1) {
