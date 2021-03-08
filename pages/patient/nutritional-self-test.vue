@@ -75,14 +75,37 @@
 					}
 				});	
 			},
+			judgeUserAuth() {
+				app.judgeUserAuth({}).then(res => {
+					if (res.status == 1) {
+						if (res.data.userType == 2) {
+							//如果是医生，就跳过去医生的营养管理页面
+							uni.redirectTo({
+								url: '../doctor/doctor-nutrition-manage'
+							});
+						} else {
+							if (res.data.perfect == true) {
+								this.getSgaType();
+							} else {
+								uni.redirectTo({
+									url: 'patient-improve-msg?type=2&formQrCode=1&selfTest=1'
+								});
+							}
+			
+						}
+					}
+				});
+			},
+			
 		},
 		onLoad(option){
 			if(option.id){
 				this.testtype = option.id;
 			}else{
-				this.getSgaType();
+				this.judgeUserAuth() ;								
 			}
-		}
+		},
+		
 	}
 	
 </script>

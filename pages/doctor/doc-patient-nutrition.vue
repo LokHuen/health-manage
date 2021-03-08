@@ -781,6 +781,9 @@
 					app.tip('请填写建议');
 					return;
 				}
+				if(app.getCache('uid')!=this.infoData.bindDoctor){
+					app.tip('您不是该患者所属医生');return;
+				}
 				app.saveAdvice({id:this.adviceId,advice:this.advice,patientId:this.uid,creatorId:app.getCache('uid')}).then(res =>{
 					if(res.status ==1){
 						app.tip('发送成功');
@@ -884,11 +887,8 @@
 					if (res.status == 1) {
 						this.infoData = res.data;
 					}
-					if(app.getCache('uid')==this.infoData.bindDoctor){
-						this.showAdvice = 1;
-					}else{
-						this.showAdvice = 0;
-					}
+					this.showAdvice = 1;
+					
 					//this.showAdvice = localStorage.getItem("uid")==this.infoData.bindDoctor;
 					this.infoData.protein = this.infoData.protein>0?this.infoData.protein:1.01;
 					this.infoData.fat = this.infoData.fat>0?this.infoData.fat:1.01;

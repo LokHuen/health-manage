@@ -196,6 +196,7 @@
 			this.getIllnessList();
 			this.type = props.type || 1;
 			this.formQrCode = props.formQrCode || 1;
+			this.selfTest = props.selfTest || 0;
 			http.get(http.urls.get_all_province).then((res) => {
 				this.areaList[0] = res.data;
 				if (this.areaList[0] && this.areaList[0].length > 0) {
@@ -253,6 +254,7 @@
 				currentProject: {},
 				currentIndex: '',
 				formQrCode: '', //1表示患者扫描医生二维码后，点击公众号消息进入信息完善页 2从基础信息进入
+				selfTest: '', //1表示从评估页面进来，完善信息后直接返回评估页面
 			}
 		},
 		onShow() {
@@ -595,10 +597,17 @@
 						detailList: projectList,
 					}).then(res => {
 						if (res.status == 1) {
-							uni.navigateTo({
-								url: 'patient-submit-sucess?type=' + this.type
-							});
-
+							if(this.selfTest==1){
+							    uni.navigateTo({
+							    	url: 'nutritional-self-test'
+							    });
+								
+							}else{
+							    uni.navigateTo({
+							    	url: 'patient-submit-sucess?type=' + this.type
+							    });
+							    	
+							}
 						}
 					});
 				} else {
