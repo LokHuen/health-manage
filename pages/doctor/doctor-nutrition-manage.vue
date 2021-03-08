@@ -1,6 +1,7 @@
 <template>
 	<!-- 医生营养管理界面 -->
 	<view class="container">
+		<image src="../../static/warnshow.jpg" style="width:100vw;" mode="widthFix" @click="towarnpage"></image>
 		<view class="top-box">
 
 			<view class="info-box">
@@ -296,7 +297,11 @@
 					uni.stopPullDownRefresh();
 				});
 			},
-
+			towarnpage(){
+				uni.navigateTo({
+					url:"/pages/doctor/warn"
+				})
+			},
 
 		},
 		onShow() {
