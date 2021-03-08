@@ -264,7 +264,7 @@
 				id: '',
 				searchHospital: '',
 				searchOption: '',
-				types: ['医生', '科室', '医院'],
+				types: ['医生']//['医生', '科室', '医院'],
 				type: 4,
 				hasArea: false,
 				cityId: '',
