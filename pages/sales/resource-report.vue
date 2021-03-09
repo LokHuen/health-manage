@@ -684,7 +684,6 @@
 				this.changeArea = 1;
 			},
 			submit() {
-
 				if (!this.hasArea) {
 					app.tip('请先填好报备资料');
 					return;
@@ -784,9 +783,13 @@
 						id: this.id
 					}
 				}
+				if(this.uploading) return;
+				this.uploading = true;
+				app.loading("提交中");
 				app.saveResource(
 					data
 				).then(res => {
+					app.loaded();this.uploading = false;
 					if (res.status == 1) {
 						this.$refs.sucesPpopup.open();
 					} else if (res.status == -103) {
@@ -800,7 +803,7 @@
 						this.errMsgInfo.isError = 1;
 						this.errMsgInfo.errorType = this.type;
 					}
-				})
+				}).catch(()=>{app.loaded();this.uploading = false;})
 
 
 			},
