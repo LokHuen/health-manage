@@ -1,5 +1,12 @@
 {
-	"pages": [{
+	"pages": [
+		{
+			"path": "pages/sales/data-center",
+			"style": {
+				"navigationBarTitleText": "跨平台数据中心"
+			}
+		},
+		{
 			"path": "pages/patient/patient-nutrition-manage",
 			"style": {
 				"navigationBarTitleText": "营养管理"
