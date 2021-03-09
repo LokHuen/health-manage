@@ -33,12 +33,6 @@
 				},
 			}
 		},
-		onLoad(options){
-			
-		},
-		onShow(){
-			
-		},
 		methods: {
 			saveinfo() {
 				for (let key in this.warn) {
@@ -53,16 +47,26 @@
 				app.salesregister(data).then(res => {
 					app.loaded();
 					app.setCache("salesToken",res.data.salesToken);
+					
+					app.setCache("isParent",res.data.isParent);//是否有下级
+					app.setCache("isOrgManage",res.data.isOrgManage);//是否有部门管理权限
+					app.setCache("isCrossPlatform",res.data.isCrossPlatform);//是否有权限跨平台查看统计数据
+					
+					
 					console.log(res.data.isAgent)
-					if(res.data.isAgent==1){
-						uni.reLaunch({
-							url: "/pages/agent/index",
-						})
-					}else{
-						uni.reLaunch({
-							url: "/pages/sales/index?isSales=1",
-						})
-					}
+					
+					uni.reLaunch({
+						url: "/pages/sales/index",
+					})
+					// if(res.data.isAgent==1){
+					// 	uni.reLaunch({
+					// 		url: "/pages/agent/index",
+					// 	})
+					// }else{
+					// 	uni.reLaunch({
+					// 		url: "/pages/sales/index?isSales=1",
+					// 	})
+					// }
 					
 				}).catch((res)=>{
 					app.tip(res);

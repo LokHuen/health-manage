@@ -30,13 +30,24 @@
 		data() {
 			return {
 				list: [],
-				pageNo: 1,
-				month: ''
+				params:{
+					pageNo: 1,
+					salesId:'',
+					month: '',
+					pageResource:1
+				}
+				
 			}
 		},
 		onLoad(props) {
+			if (props.salesId) {
+				this.params.salesId = props.salesId
+			}
 			if (props.month) {
-				this.month = props.month
+				this.params.month = props.month
+			}
+			if (props.pageResource) {
+				this.params.pageResource = props.pageResource
 			}
 			this.refreshData();
 		},
@@ -49,24 +60,21 @@
 		},
 		methods: {
 			refreshData() {
-				this.pageNo = 1;
+				this.params.pageNo = 1;
 				this.getListData();
 			},
 			loadMoreData() {
-				this.pageNo++;
+				this.params.pageNo++;
 				this.getListData();
 			},
 
 			getListData() {
-				app.agentOrderList({
-					pageNo: this.pageNo,
-					month: this.month
-				}).then(res => {
+				app.agentOrderList(this.params).then(res => {
 					if (res.status == 1) {
-						if (this.pageNo == 1) {
+						if (this.params.pageNo == 1) {
 							this.list = res.data.list;
 						} else {
-							if (res.data.pageCount >= this.pageNo) {
+							if (res.data.pageCount >= this.params.pageNo) {
 								this.list = this.list.concat(res.data.list);
 							}
 						}

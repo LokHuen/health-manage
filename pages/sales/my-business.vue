@@ -1,13 +1,13 @@
 <template>
 	<view class="container flexc">
-		<view class="flex numbox" @click="toOrder">
-			<view class="numitem">
-				<view class="number">{{info.orderNum||0}}</view>
-				<view>本月订单数</view>
+		<view class="flex head" @click="toOrder">
+			<view class="head-item flexc">
+				<text class="value">{{info.orderNum||0}}</text>
+				<text class="key">本月订单数</text>
 			</view>
-			<view class="numitem">
-				<view class="number">{{info.income||0}}</view>
-				<view>本月收益(元)</view>
+			<view class="head-item flexc">
+				<text class="value">{{info.income||0}}</text>
+				<text class="key">本月订单总金额（元）</text>
 			</view>
 		</view>
 		<view class="flexc">
@@ -15,7 +15,8 @@
 				<view class="item flex">
 					<text class="left-name">{{item}}</text>
 					<view class="flex">
-						<text v-if="index==2 ||index==3 ">{{index==2?(info.bindDoctorCount||0):(info.bindPatientCount||0)}}</text>
+						<text
+							v-if="index==2 ||index==3 ">{{index==2?(info.bindDoctorCount||0):(info.bindPatientCount||0)}}</text>
 						<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
 					</view>
 				</view>
@@ -25,19 +26,17 @@
 </template>
 
 <script>
+	
 	const app = getApp();
 	export default {
 
 		data() {
 			return {
-				list: ["按月统计订单数据", "名片码", "绑定的用户", "患者列表", "账户", "资源报备", "身份认证"],
+				list: ["按月统计订单数据", "名片码", "绑定的用户", "患者列表", "账户", "资源报备"],
 				info: {}
 			}
 		},
 		onLoad() {
-
-		},
-		onShow() {
 			this.getData();
 		},
 		methods: {
@@ -84,43 +83,11 @@
 					}
 				});
 			},
-			judgeDoctorAuthenticationStatus() {
-				app.sale_authentication({}).then(res => {
-					if (res.status == 1) {
-						let url = "/pages/sales/authentication/index";
-						if (res.data.status == -1) {
-							//认证失败
-							url = "/pages/sales/authentication/index";
-						} else if (res.data.status == 0) {
-							//未认证
-							url = "/pages/sales/authentication/index";
-						} else if (res.data.status == 1) {
-							//认证中
-							url = "/pages/sales/authentication/result";
-						} else if (res.data.status == 2) {
-							//已认证
-							url = "/pages/sales/authentication/detail";
-						}
-						uni.navigateTo({
-							url
-						})
-					}
-				});
-			},
-			cleartoken() {
-				localStorage.removeItem("token");
-				app.tip("退出成功");
-				setTimeout(() => {
-					uni.reLaunch({
-						url: "/pages/ageent/register"
-					})
-				}, 1000)
-			},
 			toOrder() {
 				let date = new Date()
 				let month = date.getFullYear() + '-' + (date.getMonth() + 1)
 				uni.navigateTo({
-					url: 'order-list?isSalesPage=1' + '&month=' + month
+					url: 'order-list?pageResource=1' + '&month=' + month
 				})
 			}
 		},
@@ -132,23 +99,23 @@
 	.container {
 		height: 100vh;
 		background-color: #F5F6F6;
-		overflow-y: auto;
 
-		.numbox {
+		.head {
 			padding: 60rpx 30rpx;
-			background: #fff;
+			background: #FFFFFF;
+			flex-wrap: nowrap;
 
-			.numitem {
-				width: 50%;
-				text-align: center;
+			.head-item {
+				flex: 1;
 				font-size: 30rpx;
-				box-sizing: border-box;
+				justify-content: center;
+				align-items: center;
 
 				&:nth-child(1) {
 					border-right: 2rpx solid #ddd;
 				}
 
-				.number {
+				.value {
 					font-size: 52rpx;
 					padding-bottom: 10rpx;
 					color: #4B8BE8;
@@ -156,20 +123,22 @@
 			}
 
 		}
-		
-		.item-outer{
+
+		.item-outer {
 			margin-top: 20rpx;
-			.item{
+
+			.item {
 				background-color: #FFFFFF;
 				height: 90rpx;
 				justify-content: space-between;
 				align-items: center;
 				padding: 0 50rpx;
+
 				.left-name {
 					font-size: 30rpx;
 					color: #333333;
 				}
-				
+
 				.right-arrow {
 					width: 15rpx;
 					height: 27rpx;

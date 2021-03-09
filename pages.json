@@ -88,9 +88,6 @@
 			}
 		},
 
-
-
-
 		{
 			"path": "pages/patient/patient-basic-information",
 			"style": {
@@ -130,6 +127,13 @@
 				"navigationBarTitleText": "我开展的业务"
 			}
 		},
+		{
+			"path": "pages/sales/by-organization",
+			"style": {
+				"navigationBarTitleText": "按组织架构查看业务情况"
+			}
+		},
+		
 		{
 			"path": "pages/agent/month-order-list",
 			"style": {
@@ -594,7 +598,7 @@
 
 		}
 
-	, {
+		, {
 			"path": "pages/diet/diet-catering",
 			"style": {
 				"navigationBarTitleText": "饮食配餐"
@@ -617,11 +621,9 @@
 			"style": {
 				"navigationBarTitleText": "医生的患者"
 			}
-		}
-	,{
-			"path" : "pages/diet/disease-type-detail",
-			"style" :
-			{
+		}, {
+			"path": "pages/diet/disease-type-detail",
+			"style": {
 				"navigationBarTitleText": "食谱"
 			}
 
