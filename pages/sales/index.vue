@@ -1,237 +1,153 @@
 <template>
-	<view class="container">
-		<view class="welcome">欢迎您，{{info.name}}</view>
-		<view class="flex numbox" @click="toOrder">
-			<view class="numitem">
-				<view class="number">{{info.orderNum||0}}</view>
-				<view>本月订单数</view>
-			</view>
-			<view class="numitem">
-				<view class="number">{{info.income||0}}</view>
-				<view>本月收益(元)</view>
-			</view>
+	<view class="container flexc">
+		<view class="head">
+			<text>欢迎您,张大大</text>
 		</view>
-		<view>
-			<view class="item-list flex" v-for="(item,index) in list" :key="index" @click="clickItem(index)">
-				<view class="left-name">{{item}}</view>
-				<view v-if="index==2 ||index==3 " style="padding-right:20rpx;">{{index==2?(info.bindDoctorCount||0):(info.bindPatientCount||0)}}</view>
-				<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
+		<view class="content flexc">
+			<view class="item flexc">
+				<view class="flex text-box" @click="toMybusiness">
+					<text class="item-text">我开展的业务</text>
+					<image src="../../static/icon/more_icon.png"></image>
+				</view>
+				<text class="item-subtext">我以业务员身份开展业务</text>
 			</view>
-		</view>
-		<view class="pagebottombt">
-			<view @click="cleartoken">退出登录</view>
+			<view class="item flexc">
+				<view class="flex text-box">
+					<text class="item-text">下属团队业务情况</text>
+					<image src="../../static/icon/more_icon.png"></image>
+				</view>
+				<text class="item-subtext">我的下级开展业务的情况</text>
+			</view>
+
+			<view class="item flexc">
+				<view class="flex text-box">
+					<text class="item-text">按组织架构查看业务情况 </text>
+					<image src="../../static/icon/more_icon.png"></image>
+				</view>
+			</view>
+			<view class="item flexc" style="margin-top: 30rpx;">
+				<view class="flex text-box">
+					<text class="item-text">跨平台数据中心</text>
+					<image src="../../static/icon/more_icon.png"></image>
+				</view>
+			</view>
+
+			<view class="auth-box flexc" style="margin-top: 30rpx;">
+				<view>
+					<view class="flex text-box border-bottom">
+						<text class="item-text">账户</text>
+						<image src="../../static/icon/more_icon.png"></image>
+					</view>
+				</view>
+				<view>
+					<view class="flex text-box border-bottom">
+						<text class="item-text">身份认证 </text>
+						<image src="../../static/icon/more_icon.png"></image>
+					</view>
+				</view>
+				<view>
+					<view class="flex text-box">
+						<text class="item-text">修改密码</text>
+						<image src="../../static/icon/more_icon.png"></image>
+					</view>
+				</view>
+			</view>
+			
+			<text class="login-out">退出登录</text>
+
 		</view>
 	</view>
 </template>
 
 <script>
-	const app = getApp();
-	export default {
-
-		data() {
-			return {
-				list: ["按月统计订单数据", "名片码", "绑定的用户", "患者列表", "账户", "资源报备", "身份认证", "修改密码"],
-				info: {}
+	export default{
+		data(){
+			return{
+				
 			}
 		},
-		onLoad() {
-			if (!app.getCache("salesToken")) uni.reLaunch({
-				url: "/pages/sales/register"
-			})
-
-			this.getIdentity();
-		},
-		onShow() {
-			this.getData();
-		},
-		methods: {
-			getIdentity() {
-				app.getIdentity().then(res => {
-					if (res.status == 1) {
-						if (res.data.isAgent == 1) {
-							uni.reLaunch({
-								url: '/pages/agent/index'
-							})
-						} else {
-							this.getData();
-						}
-					}
-				});
-			},
-			clickItem(index) {
-				if (index == 0) {
-					uni.navigateTo({
-						url: 'month-order-list'
-					})
-				} else if (index == 1) {
-					uni.navigateTo({
-						url: 'sales-business-card?id=' + app.getCache('uid')
-					});
-				} else if (index == 2) {
-					uni.navigateTo({
-						url: 'user'
-					});
-				} else if (index == 4) {
-					uni.navigateTo({
-						url: 'sales-account-list'
-					});
-				} else if (index == 7) {
-					uni.navigateTo({
-						url: 'change-password'
-					});
-				} else if (index == 5) {
-					//资源报备
-					uni.navigateTo({
-						url: 'resource-report-list'
-					});
-				} else if (index == 3) {
-					//患者列表
-					// app.tip('功能暂未开放');
-					// return;
-					uni.navigateTo({
-						url: 'patient-list'
-					});
-				} else {
-					//身份认真
-					this.judgeDoctorAuthenticationStatus();
-				}
-			},
-			getData() {
-				//
-				app.saleshomepage({}).then(res => {
-					console.log(res);
-					if (res.status == 1) {
-						this.info = res.data;
-					}
-				});
-			},
-			judgeDoctorAuthenticationStatus() {
-				app.sale_authentication({}).then(res => {
-					if (res.status == 1) {
-						let url = "/pages/sales/authentication/index";
-						if (res.data.status == -1) {
-							//认证失败
-							url = "/pages/sales/authentication/index";
-						} else if (res.data.status == 0) {
-							//未认证
-							url = "/pages/sales/authentication/index";
-						} else if (res.data.status == 1) {
-							//认证中
-							url = "/pages/sales/authentication/result";
-						} else if (res.data.status == 2) {
-							//已认证
-							url = "/pages/sales/authentication/detail";
-						}
-						uni.navigateTo({
-							url
-						})
-					}
-				});
-			},
-			cleartoken() {
-				localStorage.removeItem("token");
-				app.tip("退出成功");
-				setTimeout(() => {
-					uni.reLaunch({
-						url: "/pages/sales/register?isSales=1"
-					})
-				}, 1000)
-			},
-			toOrder() {
-				let date = new Date()
-				let month = date.getFullYear() + '-' + (date.getMonth() + 1)
+		methods:{
+			toMybusiness(){
 				uni.navigateTo({
-					url: 'order-list?'+'&month='+month
+					url:'my-business'
 				})
 			}
-
-		},
-
+		}
 	}
 </script>
 
-<style lang="scss">
-	.container {
-		height: 100vh;
-		background-color: #F5F6F6;
-		overflow-y: auto;
+<style scoped lang="scss">
+	page {
+		background-color: $uni-bg-color-grey;
+	}
 
-		.welcome {
-			line-height: 110rpx;
-			padding-left: 50rpx;
+	@mixin item-box() {
+		padding: 0 50rpx;
+		justify-content: space-between;
+		align-items: center;
+		height: 88rpx;
+		background-color: #FFFFFF;
+
+		.text {
+			color: #333333;
+			font-size: 30rpx;
 		}
 
-		.numbox {
-			padding: 60rpx 30rpx;
-			background: #fff;
-
-			.numitem {
-				width: 50%;
-				text-align: center;
-				font-size: 30rpx;
-				box-sizing: border-box;
-
-				&:nth-child(1) {
-					border-right: 2rpx solid #ddd;
-				}
-
-				.number {
-					font-size: 52rpx;
-					padding-bottom: 10rpx;
-					color: #4B8BE8;
-				}
-			}
-
-		}
-
-		.item-list {
-			background-color: #FFFFFF;
-			height: 108rpx;
-			margin-top: 10rpx;
-			position: relative;
-			padding-right: 40rpx;
-
-			.left-name {
-				height: 106rpx;
-				flex: 1;
-				line-height: 106rpx;
-				font-size: 32rpx;
-				color: #333333;
-				padding-left: 60rpx;
-			}
-
-			.right-arrow {
-				// position: absolute;
-				// right: 60rpx;
-				width: 18rpx;
-				// height: 26rpx;
-				// top: 40rpx;
-
-			}
-
-			.line {
-				height: 6rpx;
-				background-color: #F5F6F6;
-			}
-		}
-
-		.bottom {
-			background-color: #F5F6F6;
-			height: 400px;
+		image {
+			width: 15rpx;
+			height: 27rpx;
 		}
 	}
 
-	.pagebottombt {
-		padding: 120rpx 0 100rpx;
+	.container {
+		.head {
+			color: #333333;
+			font-size: 32rpx;
 
-		view {
-			background: #4B8BE8;
-			color: #fff;
-			text-align: center;
-			font-size: 34rpx;
+			text {
+				display: inline-block;
+				padding: 36rpx 0 40rpx 50rpx;
+			}
+		}
+
+		.item {
+			.text-box {
+				@include item-box;
+			}
+
+			.item-subtext {
+				padding-left: 50rpx;
+				color: #999999;
+				font-size: 26rpx;
+				height: 84rpx;
+				padding-top: 20rpx;
+			}
+		}
+
+		.auth-box {
+			view {
+				padding: 0 50rpx;
+				background-color: #FFFFFF;
+				.text-box {
+					@include item-box;
+					padding: 0 0;
+				}
+			}
+
+			.border-bottom {
+				border-bottom: 1rpx solid #EEEEEE;
+			}
+		}
+		.login-out{
+			margin: 0 auto;
+			width: 628rpx;
+			height: 88rpx;
 			line-height: 88rpx;
+			text-align: center;
+			background-color: #4789EB;
 			border-radius: 45rpx;
-			margin: 0 60rpx 0 60rpx;
+			color: #FFFFFF;
+			margin-top: 80rpx;
 		}
 	}
 </style>

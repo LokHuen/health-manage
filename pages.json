@@ -118,6 +118,12 @@
 			}
 		},
 		{
+			"path": "pages/sales/my-business",
+			"style": {
+				"navigationBarTitleText": "我开展的业务"
+			}
+		},
+		{
 			"path": "pages/agent/month-order-list",
 			"style": {
 				"navigationBarTitleText": "按月统计订单数据"
