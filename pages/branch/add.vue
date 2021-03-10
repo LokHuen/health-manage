@@ -21,7 +21,7 @@
 		<view class="button-box">
 			<button type="default" class="button" @click="submit">保存</button>
 		</view>
-		
+
 		<uni-popup type="bottom" ref="tipPopup" :maskClick="false">
 			<view class="popup-content">
 				<view class="frametitle">
@@ -30,8 +30,7 @@
 				<view>
 					<view>您创建的帐号可以用于登录电脑端患者管理系统，使用该帐号登录系统的人可以进行但不限于以下操作：</view>
 					<view>1、查看您名下所有的患者及患者详细资料；</view>
-					<view>2、可以使用您的名义给患者发送医嘱；</view>
-					<view>3、将您名下的患者转移给同科室的其他医生。</view>
+					<view>2、将您名下的患者转移给同科室的其他医生。</view>
 					<view>如您同意授权使用该帐号登录系统的用户行使上述权利，请点击同意按钮继续创建帐号。</view>
 				</view>
 				<view class="flex ct" style="padding-top:40rpx;">
@@ -63,7 +62,7 @@
 			}
 		},
 		onLoad(props) {
-			
+
 		},
 		onShow() {
 			this.form={
@@ -80,7 +79,7 @@
 		methods: {
 			inputcheck(val,name){
 				console.log(val,name)
-				
+
 			},
 			getinfo(id) {
 				app.accountget({
@@ -104,7 +103,7 @@
 					app.tip('用户名请输入4到10个字母或数字');
 					return;
 				}
-				
+
 				let nowpasswd = this.form.passwd.replace(/[^0-9a-zA-Z]/g, '');
 				if(nowpasswd!=this.form.passwd){
 					app.tip('密码请输入6到14个字母或数字');this.form.passwd=nowpasswd;
