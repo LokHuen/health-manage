@@ -139,7 +139,7 @@ var api = {
 	getIllnessSetting:(data)=>{return rq("/wx/patient/getIllnessSetting",data,"GET");},
 	
 	//代理员
-	//代理员首页
+	//下属团队（代理渠道）业务情况
 	agentInfo:(data)=>{return rq("/wx/sales/agent/agentInfo",data,"GET");},
 	//订单列表
 	agentOrderList:(data)=>{return rq("/wx/sales/agent/orderPage",data,"POST");},
@@ -180,10 +180,36 @@ var api = {
 	//科室/病区里的医生列表——可将患者转给的医生
 	getDepartmentDoctors:(data)=>{return rq("/wx/doctor/getDepartmentDoctors",data,"GET");}, 
 	//将患者转给其他医生
+	changeBindDoctor: (data) => {
+		return rq("/captcha/changeBindDoctor", data, "POST");
+	},
+
+
+	//业务员2.0
+	// 查询组织部门架构
+	getSalesManOrg: (data) => {
+		return rq("/wx/salesman/org/getSalesManOrg", data, "GET");
+	},
+	
+	//组织架构查看业务情况
+	getOrgInfo: (data) => {
+		return rq("/wx/salesman/org/orgInfo", data, "GET");
+	},
+	//获取团队成员人数
+	getOrgMembers: (data) => {
+		return rq("/wx/salesman/org/getOrgInfo", data, "GET");
+	},
+	
+	getOrgMembers: (data) => {
+		return rq("/wx/salesman/org/getOrgInfo", data, "GET");
+	},
 	changeBindDoctor:(data)=>{return rq("/captcha/changeBindDoctor",data,"POST");}, 
 	
 	//跨平台数据 统计
     platformInfo:(data)=>{return rq("/wx/commodity/platform/info",data,"GET");}, 
+	
+	
+
 }
 
 export {api};

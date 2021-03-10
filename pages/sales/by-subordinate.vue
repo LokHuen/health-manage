@@ -1,13 +1,6 @@
 <template>
 	<view class="container flexc">
 		<view class="flexc head">
-			<view class="organization-box flex">
-				<text class="name">{{orgName}}</text>
-				<view class="toggle-box flex" @click="toggleOrganize(true)">
-					<text>切换部门</text>
-					<image class="down-arrow" src="../../static/icon/right_arrow.png"></image>
-				</view>
-			</view>
 			<view class="flexc order-count-box">
 				<view class="content flex" @click="toOrder">
 					<view class="head-item flexc">
@@ -27,10 +20,11 @@
 				<view class="item flex">
 					<text class="left-name">团队成员</text>
 					<view class="flex">
-						<text>{{info.teamNum}}</text>
+						<text>{{info.salesNum}}</text>
 						<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
 					</view>
 				</view>
+				<text class="item-subtext">统计数据包括直属和所有间接下级</text>
 			</view>
 			<view class="item-outer" @click="toMonthOrderList">
 				<view class="item flex">
@@ -42,15 +36,6 @@
 				</view>
 			</view>
 		</view>
-
-		<uni-popup ref="origanzePopup" type="bottom">
-			<view class="origanzePopup flexc">
-				<view class="head flex">
-					<image src="../../static/icon_close.png" @click="toggleOrganize(false)"></image>
-				</view>
-				<tki-tree :range="list" rangeKey="name" selectParent @treeItemSelect="treeItemSelect" />
-			</view>
-		</uni-popup>
 	</view>
 </template>
 
@@ -65,60 +50,13 @@
 		},
 		data() {
 			return {
-				orgName: '',
-				orgId: '',
-				teamNum:0,
-				organizeList: [],
-				info: {teamNum:0},
-				list: [{
-					id: 1,
-					name: '题库',
-					children: [{
-						id: 11,
-						name: '语文',
-						children: [{
-							id: 111,
-							name: '高一卷',
-						}, {
-							id: 112,
-							name: '高二卷',
-						}]
-					}, {
-						id: 12,
-						name: '数学',
-					}]
-				}, {
-					id: 2,
-					name: '高考',
-					children: [{
-						id: 21,
-						name: '高考1',
-					}, {
-						id: 22,
-						name: '高考2',
-					}, {
-						id: 23,
-						name: '高考3',
-					}, ]
-				}, {
-					id: 3,
-					name: '课程'
-				}, {
-					id: 4,
-					name: '论文',
-					children: [{
-						id: 41,
-						name: '论文分享',
-					}]
-				}]
+				info: {},
 			}
 		},
 		onLoad(props) {
 			this.orgName = props.orgName
 			this.orgId = props.orgId
-			this.getSalesManOrg()
-			this.getOrgInfo(this.orgId)
-			this.getOrgMembers()
+			this.getAgentInfo()
 		},
 		methods: {
 			toMonthOrderList() {
@@ -156,24 +94,9 @@
 						'&pageResource=3'
 				})
 			},
-			toggleOrganize(open) {
-				if (open) {
-					this.$refs.origanzePopup.open()
-				} else {
-					this.$refs.origanzePopup.close()
-				}
-			},
-			treeItemSelect(item) {
-				console.log(item)
-			},
-			getSalesManOrg() {
-				app.getSalesManOrg({orgId:this.orgId}).then((res) => {
-					this.organizeList = res.data
-				})
-			},
-			getOrgMembers(){
-				app.getOrgMembers({orgId:this.orgId}).then((res) => {
-					this.info.teamNum = res.data.teamNum
+			getAgentInfo() {
+				app.agentInfo({}).then((res) => {
+					this.info = res.data
 				})
 			}
 		},
@@ -274,6 +197,15 @@
 		.item-outer {
 			margin-top: 20rpx;
 
+			.item-subtext {
+				padding-left: 50rpx;
+				color: #999999;
+				font-size: 26rpx;
+				height: 84rpx;
+				line-height: 84rpx;
+				padding-top: 20rpx;
+			}
+
 			.item {
 				background-color: #FFFFFF;
 				height: 90rpx;
@@ -292,6 +224,7 @@
 					margin-left: 20rpx;
 				}
 			}
+
 		}
 	}
 </style>

@@ -1,17 +1,21 @@
 <template>
 	<view class="container flexc">
-		<view class="flex head" @click="toOrder">
-			<view class="head-item flexc">
-				<text class="value">{{info.orderNum||0}}</text>
-				<text class="key">本月订单数</text>
-			</view>
-			<view class="head-item flexc">
-				<text class="value">{{info.income||0}}</text>
-				<text class="key">本月订单总金额（元）</text>
+		<view class="head flexc">
+			<text class="sales-name" v-if="sales.saleId">{{sales.salesName}}</text>
+			<view class="flex head-data" @click="toOrder">
+				<view class="head-item flexc">
+					<text class="value">{{info.orderNum||0}}</text>
+					<text class="key">本月订单数</text>
+				</view>
+				<view class="head-item flexc">
+					<text class="value">{{info.income||0}}</text>
+					<text class="key">本月订单总金额（元）</text>
+				</view>
 			</view>
 		</view>
+
 		<view class="flexc">
-			<view class="item-outer" v-for="(item,index) in list" :key="index" @click="clickItem(index)">
+			<view class="item-outer" v-for="(item,index) in list" :key="index" @click="clickItem(index)" v-if="item">
 				<view class="item flex">
 					<text class="left-name">{{item}}</text>
 					<view class="flex">
@@ -26,27 +30,33 @@
 </template>
 
 <script>
-	
 	const app = getApp();
 	export default {
 
 		data() {
+			let that = this
 			return {
-				list: ["按月统计订单数据", "名片码", "绑定的用户", "患者列表", "账户", "资源报备"],
-				info: {}
+				sales: {
+					salesId: '',
+					salesName: ''
+				},
+				info: {},
 			}
 		},
 		onLoad() {
 			this.getData();
 		},
+		computed: {
+			list: function() {
+				return ["按月统计订单数据", this.sales.salesId ? "名片码" : '', "绑定的用户", "患者列表", "资源报备"]
+			}
+		},
 		methods: {
 			clickItem(index) {
 				if (index == 0) {
-					//订单
 					uni.navigateTo({
 						url: 'month-order-list?isAgent=1&isSalesPage=1'
 					})
-
 				} else if (index == 1) {
 					uni.navigateTo({
 						url: '../sales/sales-business-card?id=' + app.getCache('uid')
@@ -56,27 +66,17 @@
 						url: '../sales/user'
 					});
 				} else if (index == 3) {
-					//患者列表
 					uni.navigateTo({
 						url: '../sales/patient-list'
 					})
-
-				} else if (index == 6) {
-					this.judgeDoctorAuthenticationStatus();
 				} else if (index == 4) {
-					uni.navigateTo({
-						url: '../sales/sales-account-list'
-					});
-				} else if (index == 5) {
-					//资源报备
 					uni.navigateTo({
 						url: '../sales/resource-report-list'
 					});
-
 				}
 			},
 			getData() {
-				app.saleshomepage({}).then(res => {
+				app.saleshomepage({salesManId:this.sales.salesId}).then(res => {
 					console.log(res);
 					if (res.status == 1) {
 						this.info = res.data;
@@ -101,28 +101,37 @@
 		background-color: #F5F6F6;
 
 		.head {
-			padding: 60rpx 30rpx;
-			background: #FFFFFF;
-			flex-wrap: nowrap;
-
-			.head-item {
-				flex: 1;
-				font-size: 30rpx;
-				justify-content: center;
-				align-items: center;
-
-				&:nth-child(1) {
-					border-right: 2rpx solid #ddd;
-				}
-
-				.value {
-					font-size: 52rpx;
-					padding-bottom: 10rpx;
-					color: #4B8BE8;
-				}
+			.sales-name {
+				color: #333333;
+				font-size: 32rpx;
+				padding: 36rpx 0 40rpx 50rpx;
 			}
 
+			.head-data {
+
+				padding: 60rpx 30rpx;
+				background: #FFFFFF;
+				flex-wrap: nowrap;
+
+				.head-item {
+					flex: 1;
+					font-size: 30rpx;
+					justify-content: center;
+					align-items: center;
+
+					&:nth-child(1) {
+						border-right: 2rpx solid #ddd;
+					}
+
+					.value {
+						font-size: 52rpx;
+						padding-bottom: 10rpx;
+						color: #4B8BE8;
+					}
+				}
+			}
 		}
+
 
 		.item-outer {
 			margin-top: 20rpx;

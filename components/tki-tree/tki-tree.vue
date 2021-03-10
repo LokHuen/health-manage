@@ -21,13 +21,17 @@
 					<view @tap.stop="_treeItemSelect(item, index)" class="flex" style="flex: 1;">
 						<text style="flex: 1;text-align: left;">{{item.name}}</text>
 						<view class="tki-tree-check" @tap.stop="_treeItemSelect(item, index)"
-							v-if="selectParent?true:item.lastRank">
-							<view  v-if="item.checked">
-								<image style="width: 26rpx;height: 20rpx;" src="../../static/icon/icon_selected.png"></image>
+							v-if="selectParent&&isCheck?true:item.lastRank">
+							<view>
+								<image style="width: 26rpx;height: 20rpx;" src="../../static/icon/icon_selected.png" v-if="item.checked&&isCheck">
+								</image>
+								<text v-if="!isCheck" style="flex: 1;text-align: right;"
+									@tap.stop="_treeItemSelect(item, index)">888人
+								</text>
 							</view>
-							
 						</view>
 					</view>
+
 				</view>
 			</block>
 		</scroll-view>
@@ -94,7 +98,11 @@
 			},
 			border: { // 是否有分割线
 				type: Boolean,
-				default: false
+				default: true
+			},
+			isCheck: { //
+				type: Boolean,
+				default: true
 			},
 		},
 		data() {
@@ -230,9 +238,11 @@
 				// console.log(this.treeList)
 			},
 			_treeItemSelect(item, index) {
+				// console.log(JSON.stringify(this.treeList))
 				this.treeList[index].checked = !this.treeList[index].checked
 				this._fixMultiple(index)
-				this.$emit('treeItemSelect',item)
+				this.$emit('treeItemSelect', item)
+				
 			},
 			// 处理单选多选
 			_fixMultiple(index) {

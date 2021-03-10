@@ -139,6 +139,18 @@
 				"navigationBarTitleText": "按组织架构查看业务情况"
 			}
 		},
+		{
+			"path": "pages/sales/organization-chart",
+			"style": {
+				"navigationBarTitleText": "按组织架构"
+			}
+		},
+		{
+			"path": "pages/sales/by-subordinate",
+			"style": {
+				"navigationBarTitleText": "下属团队业务情况"
+			}
+		},
 		
 		{
 			"path": "pages/agent/month-order-list",

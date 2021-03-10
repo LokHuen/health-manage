@@ -11,8 +11,7 @@
 				</view>
 				<text class="item-subtext">我以业务员身份开展业务</text>
 			</view>
-
-			<view class="item flexc" v-if="user.isParent==1">
+			<view class="item flexc" v-if="user.isParent==1" @click="toSubordinate">
 
 				<view class="flex text-box">
 					<text class="item-text">下属团队业务情况</text>
@@ -95,7 +94,12 @@
 					url:'my-business'
 				})
 			},
-			toDataCenter(){
+			toSubordinate(){
+				uni.navigateTo({
+					url:'by-subordinate'
+				})
+			},
+			toByorganization() {
 				uni.navigateTo({
 					url:'data-center'
 					

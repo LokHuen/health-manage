@@ -3,7 +3,8 @@
 		<view style="height: 10rpx; background-color: #F5F6F6;"></view>
 		<view class="list-box" v-for="(item,index) in list">
 			<view style="height: 10rpx;"></view>
-			<view class="common">{{'订单号:'+item.order_number}} <text style="margin-left: 28rpx; color: #4B8BE8;" v-if="item.rePurchase">复购</text></view>
+			<view class="common">{{'订单号:'+item.order_number}} <text style="margin-left: 28rpx; color: #4B8BE8;"
+					v-if="item.rePurchase">复购</text></view>
 			<view class="common">{{'商品名称:'+item.commodity}}</view>
 			<view class="common">{{'下单时间:'+item.create_time}}</view>
 			<view class="common">{{'实付款:'+item.pay_amount+'元'}}</view>
@@ -30,18 +31,22 @@
 		data() {
 			return {
 				list: [],
-				params:{
+				params: {
 					pageNo: 1,
-					salesId:'',
+					salesId: '',
+					deptId: '',
 					month: '',
-					pageResource:1
+					pageResource: ''
 				}
-				
+
 			}
 		},
 		onLoad(props) {
 			if (props.salesId) {
 				this.params.salesId = props.salesId
+			}
+			if (props.orgId) {
+				this.params.deptId = props.orgId
 			}
 			if (props.month) {
 				this.params.month = props.month
