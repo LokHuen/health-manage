@@ -98,9 +98,16 @@
 			toDataCenter(){
 				uni.navigateTo({
 					url:'data-center'
-					//url: 'by-organization?orgId='+this.user.orgId+'&orgName='+this.user.orgName
+					
 				})
 			},
+			toByorganization(){
+				uni.navigateTo({
+					url: 'by-organization?orgId='+this.user.orgId+'&orgName='+this.user.orgName
+					
+				})
+				
+			}
 		}
 	}
 </script>
