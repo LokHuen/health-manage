@@ -3,27 +3,15 @@
 		<!-- 总医生数 -->
 		<view class="item-box flex">
 			<view class="item-left">
-				<view class="item-number">215</view>
+				<view class="item-number">{{totaldoctorNum||0}}</view>
 				<view class="item-title">总医生数</view>
 			</view>
 			<view class="item-right">
-				<view class="item-right-detail flex" style="margin-top: 0rpx;">       
-					<view class="each1">维新生物</view>
-					<view class="each">200</view>
+				<view class="item-right-detail flex" v-for="(item,index) in doctorList" :key="index">       
+					<view class="each1">{{item.channelValue}}</view>
+					<view class="each">{{item.doctorNum||0}}</view>
 					<view class="each1">本月新增</view>
-					<view class="each">18</view>
-				</view>
-				<view class="item-right-detail flex">
-                    <view class="each1">健康随我行</view>
-					<view class="each">10</view>
-					<view class="each1">本月新增</view>
-					<view class="each">18</view>
-				</view>
-				<view class="item-right-detail flex">
-					<view class="each1">海吉健康</view>
-					<view class="each">5</view>
-					<view class="each1">本月新增</view>
-					<view class="each">18</view>	
+					<view class="each">{{item.monthdoctorNum||0}}</view>
 				</view>
 				
 			</view>
@@ -33,28 +21,17 @@
 		<!-- 总患者数 -->
 		<view class="item-box flex">
 			<view class="item-left">
-				<view class="item-number">215</view>
+				<view class="item-number">{{totalpatientNum||0}}</view>
 				<view class="item-title">总患者数</view>
 			</view>
 			<view class="item-right">
-				<view class="item-right-detail flex" style="margin-top: 0rpx;">       
-					<view class="each1">维新生物</view>
-					<view class="each">200</view>
+				<view class="item-right-detail flex" v-for="(item,index) in patientList" :key ="index">       
+					<view class="each1">{{item.channelValue}}</view>
+					<view class="each">{{item.patientNum||0}}</view>
 					<view class="each1">本月新增</view>
-					<view class="each">18</view>
+					<view class="each">{{item.monthpatientNum||0}}</view>
 				</view>
-				<view class="item-right-detail flex">
-		            <view class="each1">健康随我行</view>
-					<view class="each">10</view>
-					<view class="each1">本月新增</view>
-					<view class="each">18</view>
-				</view>
-				<view class="item-right-detail flex">
-					<view class="each1">海吉健康</view>
-					<view class="each">5</view>
-					<view class="each1">本月新增</view>
-					<view class="each">18</view>	
-				</view>
+				
 				
 			</view>
 			
@@ -64,28 +41,17 @@
 		<view style="background-color: #FFFFFF;">
 			<view class="item-box flex" style="height: auto;padding-top: 60rpx;">
 				<view class="item-left">
-					<view class="item-number">215</view>
+					<view class="item-number">{{totalorderNum||0}}</view>
 					<view class="item-title">总订单数</view>
 				</view>
 				<view class="item-right">
-					<view class="item-right-detail flex" style="margin-top: 0rpx;">       
-						<view class="each1">维新生物</view>
-						<view class="each">200</view>
+					<view class="item-right-detail flex" v-for="(item,index) in orderList" :key ="index">       
+						<view class="each1">{{item.channelValue}}</view>
+						<view class="each">{{item.orderNum||0}}</view>
 						<view class="each1">本月新增</view>
-						<view class="each">18</view>
+						<view class="each">{{item.monthorderNum||0}}</view>
 					</view>
-					<view class="item-right-detail flex">
-			            <view class="each1">健康随我行</view>
-						<view class="each">10</view>
-						<view class="each1">本月新增</view>
-						<view class="each">18</view>
-					</view>
-					<view class="item-right-detail flex">
-						<view class="each1">海吉健康</view>
-						<view class="each">5</view>
-						<view class="each1">本月新增</view>
-						<view class="each">18</view>	
-					</view>
+					
 					
 				</view>
 				
@@ -95,33 +61,22 @@
 			
 			
 			<!-- item -->
-			<view style="margin-left: 50rpx;margin-right: 50rpx;background-color: #FFFFFF;">
+			<view style="margin-left: 50rpx;margin-right: 50rpx;background-color: #FFFFFF;" v-for="(item,index) in commodityOrderList" :key="index">
 				<view class="item-box" style="background-color: #F6F6F6;padding-bottom: 60rpx;">
-					<view style="font-size: 28rpx;color: rgba(16, 16, 16, 100); text-align: left; margin-left: 50rpx; padding-top: 50rpx;">益爱宁</view>
+					<view style="font-size: 28rpx;color: rgba(16, 16, 16, 100); text-align: left; margin-left: 50rpx; padding-top: 50rpx;">{{item.commodityPlatformName}}</view>
 					<view class="flex" style="margin-top: 40rpx;">
 						<view class="item-left" style="width: 180rpx;">
-							<view class="item-number">215</view>
+							<view class="item-number">{{item.totalOrderCount||0}}</view>
 							<view class="item-title">总订单数</view>
 						</view>
 						<view class="item-right" style="margin-left: 20rpx;margin-right: 20rpx;">
-							<view class="item-right-detail flex" style="margin-top: 0rpx;">       
-								<view class="each1">维新生物</view>
-								<view class="each">200</view>
+							<view class="item-right-detail flex" v-for="(detailItem,detailIndex) in item.commodityList">       
+								<view class="each1">{{detailItem.channelValue}}</view>
+								<view class="each">{{detailItem.orderCount||0}}</view>
 								<view class="each1">本月新增</view>
-								<view class="each">18</view>
+								<view class="each">{{detailItem.monthOrderCount||0}}</view>
 							</view>
-							<view class="item-right-detail flex">
-						        <view class="each1">健康随我行</view>
-								<view class="each">10</view>
-								<view class="each1">本月新增</view>
-								<view class="each">18</view>
-							</view>
-							<view class="item-right-detail flex">
-								<view class="each1">海吉健康</view>
-								<view class="each">5</view>
-								<view class="each1">本月新增</view>
-								<view class="each">18</view>	
-							</view>
+							
 							
 						</view>
 					</view>
@@ -129,40 +84,6 @@
 				</view>
 			</view>
 			
-			<!-- item -->
-			<view style="margin-left: 50rpx;margin-right: 50rpx;background-color: #FFFFFF;">
-				<view class="item-box" style="background-color: #F6F6F6;padding-bottom: 60rpx;">
-					<view style="font-size: 28rpx;color: rgba(16, 16, 16, 100); text-align: left; margin-left: 50rpx; padding-top: 50rpx;">陆点壹</view>
-					<view class="flex" style="margin-top: 40rpx;">
-						<view class="item-left" style="width: 180rpx;">
-							<view class="item-number">215</view>
-							<view class="item-title">总订单数</view>
-						</view>
-						<view class="item-right" style="margin-left: 20rpx;margin-right: 20rpx;">
-							<view class="item-right-detail flex" style="margin-top: 0rpx;">       
-								<view class="each1">维新生物</view>
-								<view class="each">200</view>
-								<view class="each1">本月新增</view>
-								<view class="each">18</view>
-							</view>
-							<view class="item-right-detail flex">
-						        <view class="each1">健康随我行</view>
-								<view class="each">10</view>
-								<view class="each1">本月新增</view>
-								<view class="each">18</view>
-							</view>
-							<view class="item-right-detail flex">
-								<view class="each1">海吉健康</view>
-								<view class="each">5</view>
-								<view class="each1">本月新增</view>
-								<view class="each">18</view>	
-							</view>
-							
-						</view>
-					</view>
-					
-				</view>
-			</view>
 			 <view style="height: 60rpx;"></view> 
 			
 		</view>
@@ -173,15 +94,40 @@
 </template>
 
 <script>
+	const app = getApp();
 	export default{
 		data(){
 			return{
+				doctorList:[],
+				totaldoctorNum:'',
+				// commodityList:[],
+				// totalOrderCount:'',
+				commodityOrderList:[],
+				patientList:[],
+				totalpatientNum:'',
+				orderList:[],
+				totalorderNum:''
 				
 			}
 		},
 		methods:{
-			
-		}
+			getData(){
+				app.platformInfo().then(res =>{
+					if(res.status == 1){
+						this.doctorList = res.data.doctor.doctorList;
+						this.totaldoctorNum = res.data.doctor.totaldoctorNum;
+						this.commodityOrderList = res.data.commodityOrderList;
+						this.patientList = res.data.patient.patientList;
+						this.totalpatientNum = res.data.patient.totalpatientNum;
+						this.orderList = res.data.order.orderList;
+						this.totalorderNum = res.data.order.totalorderNum;
+					}
+				});
+			}
+		},
+		onLoad(){
+			this.getData();
+		},
 	}
 </script>
 
@@ -220,6 +166,9 @@
 				//background-color: #4CD964;
 				.item-right-detail{
 					margin-top: 15rpx;
+					&:nth-child(0){
+						margin-top: 0rpx;
+					}
 					.each1{
 						width: 30%;
 					}

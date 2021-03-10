@@ -51,7 +51,9 @@
 					app.setCache("isParent",res.data.isParent);//是否有下级
 					app.setCache("isOrgManage",res.data.isOrgManage);//是否有部门管理权限
 					app.setCache("isCrossPlatform",res.data.isCrossPlatform);//是否有权限跨平台查看统计数据
-					
+					// app.setCache('orgName',res.data.orgName);//部门名称
+					// app.setCache('name',res.data.name);//业务名称
+					// app.setCache('orgId',res.data.orgId);//业务名称
 					
 					console.log(res.data.isAgent)
 					
