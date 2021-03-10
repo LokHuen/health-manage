@@ -21,7 +21,25 @@
 		<view class="button-box">
 			<button type="default" class="button" @click="submit">保存</button>
 		</view>
-
+		
+		<uni-popup type="bottom" ref="tipPopup" :maskClick="false">
+			<view class="popup-content">
+				<view class="frametitle">
+					创建帐号前，请您仔细阅读以下内容
+				</view>
+				<view>
+					<view>您创建的帐号可以用于登录电脑端患者管理系统，使用该帐号登录系统的人可以进行但不限于以下操作：</view>
+					<view>1、查看您名下所有的患者及患者详细资料；</view>
+					<view>2、可以使用您的名义给患者发送医嘱；</view>
+					<view>3、将您名下的患者转移给同科室的其他医生。</view>
+					<view>如您同意授权使用该帐号登录系统的用户行使上述权利，请点击同意按钮继续创建帐号。</view>
+				</view>
+				<view class="flex ct" style="padding-top:40rpx;">
+					<view class="pagebottombt" @click="agreeaction(1)">同意授权</view>
+					<view class="pagebottombt btdisagree"  @click="agreeaction()">不同意</view>
+				</view>
+			</view>
+		</uni-popup>
 
 	</view>
 
@@ -55,6 +73,9 @@
 			};
 			this.id = this.$route.query.id;
 			if (this.id) this.getinfo(this.id);
+		},
+		mounted(){
+			if(!this.id) this.$refs.tipPopup.open();
 		},
 		methods: {
 			inputcheck(val,name){
@@ -112,13 +133,27 @@
 					this.commiting = false;
 				});
 			},
-
+			agreeaction(type){
+				if(type){
+					this.$refs.tipPopup.close();
+				}else{
+					uni.navigateBack({});
+				}
+			},
 		},
 
 	}
 </script>
 
 <style lang="scss">
+	.popup-content{
+		background-color: #FFFFFF;
+		border-radius: 10px 10px 0px 0px;
+		font-size: 32rpx;padding:50rpx;box-sizing: border-box;
+		.frametitle{padding-bottom:50rpx;font-weight:bold;text-align:center;font-size:36rpx;}
+		.pagebottombt{width:40%;color:#fff;text-align:center;font-size: 34rpx;line-height:80rpx;background: #52A29E;border-radius: 45rpx;}
+		.btdisagree{background:#aaa;margin-left:10%;}
+	}
 	.container {
 		margin-left: 30rpx;
 		font-size: 32rpx;
