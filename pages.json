@@ -1,6 +1,12 @@
 {
 	"pages": [
 		{
+			"path": "pages/sales/team-member",
+			"style": {
+				"navigationBarTitleText": "团队成员"
+			}
+		},
+		{
 			"path": "pages/sales/data-center",
 			"style": {
 				"navigationBarTitleText": "跨平台数据中心"
