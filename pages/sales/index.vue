@@ -1,7 +1,7 @@
 <template>
 	<view class="container flexc">
 		<view class="head">
-			<text>欢迎您,张大大</text>
+			<text>欢迎您,{{user.name}}</text>
 		</view>
 		<view class="content flexc">
 			<view class="item flexc">
@@ -11,21 +11,24 @@
 				</view>
 				<text class="item-subtext">我以业务员身份开展业务</text>
 			</view>
-			<view class="item flexc">
+
+			<view class="item flexc" v-if="user.isParent==1">
+
 				<view class="flex text-box">
 					<text class="item-text">下属团队业务情况</text>
 					<image src="../../static/icon/more_icon.png"></image>
 				</view>
 				<text class="item-subtext">我的下级开展业务的情况</text>
 			</view>
-
-			<view class="item flexc">
+			
+			<view class="item flexc" @click="toByorganization" v-if="user.isOrgManage">
 				<view class="flex text-box">
 					<text class="item-text">按组织架构查看业务情况 </text>
 					<image src="../../static/icon/more_icon.png"></image>
 				</view>
 			</view>
-			<view class="item flexc" style="margin-top: 30rpx;">
+
+			<view class="item flexc" style="margin-top: 30rpx;" v-if="user.isCrossPlatform">
 				<view class="flex text-box" @click="toDataCenter">
 					<text class="item-text">跨平台数据中心</text>
 					<image src="../../static/icon/more_icon.png"></image>
@@ -60,14 +63,34 @@
 </template>
 
 <script>
-	export default{
-		data(){
-			return{
-				
+
+	const app = getApp()
+	export default {
+		data() {
+			return {
+				user: {
+					name: '',
+					isParent: 0,
+					isOrgManage: 0,
+					orgId: '',
+					orgName: '',
+					isCrossPlatform: 0,
+				},
+				info: {}
+
 			}
 		},
-		methods:{
-			toMybusiness(){
+		onLoad() {
+			this.user.isParent = app.getCache('isParent')
+			this.user.isOrgManage = app.getCache('isOrgManage')
+			this.user.isCrossPlatform = app.getCache('isCrossPlatform')
+			this.user.name = app.getCache('name')
+			this.user.orgId = app.getCache('orgId')
+			this.user.orgName = app.getCache('orgName')
+			console.log(this.user)
+		},
+		methods: {
+			toMybusiness() {
 				uni.navigateTo({
 					url:'my-business'
 				})
@@ -75,6 +98,7 @@
 			toDataCenter(){
 				uni.navigateTo({
 					url:'data-center'
+					//url: 'by-organization?orgId='+this.user.orgId+'&orgName='+this.user.orgName
 				})
 			},
 		}

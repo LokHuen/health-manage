@@ -2,8 +2,8 @@
 	<view class="container flexc">
 		<view class="flexc head">
 			<view class="organization-box flex">
-				<text class="name">维新总部</text>
-				<view class="toggle-box flex" @click="toggleOrganize">
+				<text class="name">{{orgName}}</text>
+				<view class="toggle-box flex" @click="toggleOrganize(true)">
 					<text>切换部门</text>
 					<image class="down-arrow" src="../../static/icon/right_arrow.png"></image>
 				</view>
@@ -44,33 +44,80 @@
 		</view>
 
 		<uni-popup ref="origanzePopup" type="bottom">
-			<view class="origanzePopup">
-				<text>hah</text>
-				<!-- <mix-tree :list="list" @treeItemClick="treeItemClick" style="border: 1px solid #007AFF;"></mix-tree> -->
-				<text>222</text>
+			<view class="origanzePopup flexc">
+				<view class="head flex">
+					<image src="../../static/icon_close.png" @click="toggleOrganize(false)"></image>
+				</view>
+				<tki-tree  :range="list" rangeKey="name" confirmColor="#4e8af7" selectParent @treeItemSelect="treeItemSelect"/>
 			</view>
 		</uni-popup>
 	</view>
 </template>
 
 <script>
-	// import mixTree from '@/components/mix-tree/mix-tree';
+	import tkiTree from "@/components/tki-tree/tki-tree.vue"
 
 	const app = getApp();
 
 	export default {
 		components: {
+			tkiTree
 		},
 		data() {
 			return {
+				orgName: '',
+				orgId: '',
 				organizeList: [],
 				info: {},
-				list: []
+				list: [{
+					id: 1,
+					name: '题库',
+					children: [{
+						id: 11,
+						name: '语文',
+						children: [{
+							id: 111,
+							name: '高一卷',
+						}, {
+							id: 112,
+							name: '高二卷',
+						}]
+					}, {
+						id: 12,
+						name: '数学',
+					}]
+				}, {
+					id: 2,
+					name: '高考',
+					children: [{
+						id: 21,
+						name: '高考1',
+					}, {
+						id: 22,
+						name: '高考2',
+					}, {
+						id: 23,
+						name: '高考3',
+					}, ]
+				}, {
+					id: 3,
+					name: '课程'
+				}, {
+					id: 4,
+					name: '论文',
+					children: [{
+						id: 41,
+						name: '论文分享',
+					}]
+				}]
 			}
 		},
-		onLoad() {
+		onLoad(props) {
+			this.orgName = props.orgName
+			this.orgId = props.orgId
 			this.getSalesManOrg()
 			this.getData();
+			// console.log(JSON.stringify(this.list))
 		},
 		methods: {
 
@@ -125,8 +172,17 @@
 				})
 			},
 
-			toggleOrganize() {
-				this.$refs.origanzePopup.open()
+			toggleOrganize(open) {
+				if(open){
+					this.$refs.origanzePopup.open()
+				}else{
+					this.$refs.origanzePopup.close()
+				}
+				
+			},
+			
+			treeItemSelect(item){
+				console.log(item)
 			},
 
 
@@ -147,6 +203,15 @@
 		background-color: #F5F6F6;
 
 		.origanzePopup {
+			padding: 60rpx;
+			.head{
+				justify-content: flex-end;
+				image{
+					width: 24rpx;
+					height: 24rpx;
+				}
+				margin-bottom: 30rpx;
+			}
 			text-align: center;
 			height: 655rpx;
 			background-color: #FFFFFF;
