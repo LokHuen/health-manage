@@ -3,12 +3,12 @@
 	<view class="container">
 		<view class="list-box" v-for="(item,index) in list" :key="index">
 			<view class="name">{{item.name}}</view>
-			<view :class="item.team==0?'item-box':'item-box team'">
+			<view :class="item.isParent==0?'item-box':'item-box team'">
 				个人业务情况
 				<image src="../../static/right.png" mode="widthFix" class="right"></image>
 			</view>
 
-			<view class="item-box" v-if="item.team==1">
+			<view class="item-box" v-if="item.isParent==1">
 				下属团队业务情况
 				<image src="../../static/right.png" mode="widthFix" class="right"></image>
 			</view>
@@ -69,7 +69,7 @@
 				font-size: 26rpx;
 				font-family: PingFang SC;
 				font-weight: 400;
-				color: #666666;
+				color: #719CAA;
 				line-height: 90rpx;
 				padding-left: 50rpx;
 				position: relative;
