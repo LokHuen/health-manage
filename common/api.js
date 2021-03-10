@@ -195,14 +195,17 @@ var api = {
 	getOrgInfo: (data) => {
 		return rq("/wx/salesman/org/orgInfo", data, "GET");
 	},
+	
 	//获取团队成员人数
 	getOrgMembers: (data) => {
 		return rq("/wx/salesman/org/getOrgInfo", data, "GET");
 	},
 	
-	getOrgMembers: (data) => {
-		return rq("/wx/salesman/org/getOrgInfo", data, "GET");
+	//团队成员列表
+	getTeamMembers: (data) => {
+		return rq("/wx/salesman/getDirectSub", data, "GET");
 	},
+	
 	changeBindDoctor:(data)=>{return rq("/captcha/changeBindDoctor",data,"POST");}, 
 	
 	//跨平台数据 统计

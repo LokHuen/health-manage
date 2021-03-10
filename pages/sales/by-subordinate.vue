@@ -16,8 +16,8 @@
 			</view>
 		</view>
 		<view class="flexc">
-			<view class="item-outer" @click="toOrganize">
-				<view class="item flex">
+			<view class="item-outer">
+				<view class="item flex" @click="toTeamMember">
 					<text class="left-name">团队成员</text>
 					<view class="flex">
 						<text>{{info.salesNum}}</text>
@@ -54,8 +54,6 @@
 			}
 		},
 		onLoad(props) {
-			this.orgName = props.orgName
-			this.orgId = props.orgId
 			this.getAgentInfo()
 		},
 		methods: {
@@ -64,17 +62,10 @@
 					url: 'month-order-list?pageResource=3' + '&orgId=+' + this.orgId
 				})
 			},
-			toOrganize() {
-				let hasOrganize = 1
-				if (hasOrganize) {
-					uni.navigateTo({
-						url: 'organization-chart'
-					})
-				} else {
-					uni.navigateTo({
-						url: 'sales-team?orgId=' + this.orgId
-					})
-				}
+			toTeamMember() {
+				uni.navigateTo({
+					url: 'team-member?'
+				})
 
 			},
 			getOrgInfo(deptId = this.this.orgId) {

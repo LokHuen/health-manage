@@ -1,6 +1,5 @@
 {
-	"pages": [
-		{
+	"pages": [{
 			"path": "pages/sales/team-member",
 			"style": {
 				"navigationBarTitleText": "团队成员"
@@ -151,7 +150,7 @@
 				"navigationBarTitleText": "下属团队业务情况"
 			}
 		},
-		
+
 		{
 			"path": "pages/agent/month-order-list",
 			"style": {
@@ -167,6 +166,13 @@
 		},
 		{
 			"path": "pages/agent/team-member-list",
+			"style": {
+				"navigationBarTitleText": "团队成员"
+			},
+			"enablePullDownRefresh": true
+		},
+		{
+			"path": "pages/sales/team-member",
 			"style": {
 				"navigationBarTitleText": "团队成员"
 			},
