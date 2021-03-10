@@ -56,8 +56,8 @@
 				</view>
 				
 			</view>
-			<view class="tip">订单统计范围：3个小程序上客户已付款的所有商品订单数据</view>
-			<view class="order-tip">按商品统计订单数（3个小程序合计）</view>
+			<view class="tip">订单统计范围：{{doctorList.length}}个小程序上客户已付款的所有商品订单数据</view>
+			<view class="order-tip">按商品统计订单数（{{doctorList.length}}个小程序合计）</view>
 			
 			
 			<!-- item -->
@@ -100,8 +100,6 @@
 			return{
 				doctorList:[],
 				totaldoctorNum:'',
-				// commodityList:[],
-				// totalOrderCount:'',
 				commodityOrderList:[],
 				patientList:[],
 				totalpatientNum:'',
