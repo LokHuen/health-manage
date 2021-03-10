@@ -1,7 +1,7 @@
 <template>
 	<view class="container flexc">
 		<view class="head">
-			<text>欢迎您,{{info.name}}</text>
+			<text>欢迎您,{{user.name}}</text>
 		</view>
 		<view class="content flexc">
 			<view class="item flexc">
@@ -11,7 +11,7 @@
 				</view>
 				<text class="item-subtext">我以业务员身份开展业务</text>
 			</view>
-			<view class="item flexc" v-if="isParent==1">
+			<view class="item flexc" v-if="user.isParent==1">
 				<view class="flex text-box">
 					<text class="item-text">下属团队业务情况</text>
 					<image src="../../static/icon/more_icon.png"></image>
@@ -19,13 +19,13 @@
 				<text class="item-subtext">我的下级开展业务的情况</text>
 			</view>
 
-			<view class="item flexc" @click="toByorganization"  v-if="isOrgManage">
+			<view class="item flexc" @click="toByorganization" v-if="user.isOrgManage">
 				<view class="flex text-box">
 					<text class="item-text">按组织架构查看业务情况 </text>
 					<image src="../../static/icon/more_icon.png"></image>
 				</view>
 			</view>
-			<view class="item flexc" style="margin-top: 30rpx;" v-if="isCrossPlatform">
+			<view class="item flexc" style="margin-top: 30rpx;" v-if="user.isCrossPlatform">
 				<view class="flex text-box">
 					<text class="item-text">跨平台数据中心</text>
 					<image src="../../static/icon/more_icon.png"></image>
@@ -64,17 +64,26 @@
 	export default {
 		data() {
 			return {
-				isParent: 0,
-				isOrgManage: 0,
-				isCrossPlatform: 0,
-				info:{}
-				
+				user: {
+					name: '',
+					isParent: 0,
+					isOrgManage: 0,
+					orgId: '',
+					orgName: '',
+					isCrossPlatform: 0,
+				},
+				info: {}
+
 			}
 		},
 		onLoad() {
-			this.isParent = app.getCache('isParent')
-			this.isOrgManage = app.getCache('isOrgManage')
-			this.isCrossPlatform = app.getCache('isCrossPlatform')
+			this.user.isParent = app.getCache('isParent')
+			this.user.isOrgManage = app.getCache('isOrgManage')
+			this.user.isCrossPlatform = app.getCache('isCrossPlatform')
+			this.user.name = app.getCache('name')
+			this.user.orgId = app.getCache('orgId')
+			this.user.orgName = app.getCache('orgName')
+			console.log(this.user)
 		},
 		methods: {
 			toMybusiness() {
@@ -84,7 +93,7 @@
 			},
 			toByorganization() {
 				uni.navigateTo({
-					url: 'by-organization'
+					url: 'by-organization?orgId='+this.user.orgId+'&orgName='+this.user.orgName
 				})
 			},
 			toAccount() {

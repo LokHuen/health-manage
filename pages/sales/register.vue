@@ -51,12 +51,14 @@
 					app.setCache("isParent",res.data.isParent);//是否有下级
 					app.setCache("isOrgManage",res.data.isOrgManage);//是否有部门管理权限
 					app.setCache("isCrossPlatform",res.data.isCrossPlatform);//是否有权限跨平台查看统计数据
+					app.setCache("orgName",res.data.orgName);
+					app.setCache("name",res.data.name);
+					app.setCache("orgId",res.data.orgId);
 					
-					
-					console.log(res.data.isAgent)
+					// console.log(res.data.isAgent)
 					
 					uni.reLaunch({
-						url: "/pages/sales/index",
+						url: "/pages/sales/index?isSales=1",
 					})
 					// if(res.data.isAgent==1){
 					// 	uni.reLaunch({
