@@ -1,5 +1,13 @@
 {
-	"pages": [{
+	"pages": [
+		
+		{
+			"path": "pages/sales/team-business",
+			"style": {
+				"navigationBarTitleText": "团队业务情况"
+			}
+		},
+		{
 			"path": "pages/sales/team-member",
 			"style": {
 				"navigationBarTitleText": "团队成员"
