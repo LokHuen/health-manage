@@ -36,7 +36,6 @@
 				})
 			},
 			toBusiness(item) {
-				console.log(item)
 				uni.navigateTo({
 					url: 'sales-business?salesId=' + item.id+'&salesName='+item.name
 				})

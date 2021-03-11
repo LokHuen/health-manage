@@ -22,7 +22,6 @@
 				params: {
 					orgId: '',
 				}
-
 			}
 		},
 		onLoad(props) {
@@ -32,12 +31,15 @@
 			if (props.orgName) {
 				this.orgName = props.orgName
 			}
-			uni.setNavigationBarTitle({
-				title: this.orgName
-			})
 
-			// console.log(this.orgName)
 			this.refreshData();
+		},
+		onReady() {
+			if (this.orgName) {
+				uni.setNavigationBarTitle({
+					title: this.orgName
+				})
+			}
 		},
 
 		onPullDownRefresh() {
@@ -61,7 +63,7 @@
 			selectItem(item) {
 				console.log(item.name)
 				uni.navigateTo({
-					url: 'sales-business?salesId='+item.id+'&salesName='+item.name
+					url: 'sales-business?salesId=' + item.id + '&salesName=' + item.name
 				})
 			}
 
