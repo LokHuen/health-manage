@@ -55,7 +55,6 @@
 					app.setCache("orgId",res.data.orgId);//业务id
 					app.setCache("orgName",res.data.orgName);//部门名称
 					
-					
 					uni.reLaunch({
 						url: "/pages/sales/index",
 					})

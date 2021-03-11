@@ -37,19 +37,19 @@
 			</view>
 
 			<view class="auth-box flexc" style="margin-top: 30rpx;">
-				<view>
+				<view @click="toAccount">
 					<view class="flex text-box border-bottom">
 						<text class="item-text">账户</text>
 						<image src="../../static/icon/more_icon.png"></image>
 					</view>
 				</view>
-				<view>
+				<view @click="judgeDoctorAuthenticationStatus">
 					<view class="flex text-box border-bottom">
 						<text class="item-text">身份认证 </text>
 						<image src="../../static/icon/more_icon.png"></image>
 					</view>
 				</view>
-				<view>
+				<view @click="toModifyPsw">
 					<view class="flex text-box">
 						<text class="item-text">修改密码</text>
 						<image src="../../static/icon/more_icon.png"></image>
@@ -57,7 +57,7 @@
 				</view>
 			</view>
 			
-			<text class="login-out">退出登录</text>
+			<text class="login-out" @click="logOut">退出登录</text>
 
 		</view>
 	</view>
@@ -88,7 +88,7 @@
 			this.user.name = app.getCache('name')
 			this.user.orgId = app.getCache('orgId')
 			this.user.orgName = app.getCache('orgName')
-			console.log(this.user)
+			// console.log(this.user)
 		},
 		methods: {
 			toMybusiness() {
@@ -112,13 +112,61 @@
 					url: 'by-organization?orgId='+this.user.orgId+'&orgName='+this.user.orgName
 					
 				})
-				
 			},
 			toDataCenter(){
 				uni.navigateTo({
 					url:'data-center'
 					
 				})
+			},
+			toModifyPsw(){
+				uni.navigateTo({
+					url: '../sales/change-password'
+				});
+			},
+			toAccount(){
+				uni.navigateTo({
+					url: 'sales-account-list'
+				});
+			},
+			judgeDoctorAuthenticationStatus() {
+				app.sale_authentication({}).then(res => {
+					if (res.status == 1) {
+						let url = "/pages/sales/authentication/index";
+						if (res.data.status == -1) {
+							//认证失败
+							url = "/pages/sales/authentication/index";
+						} else if (res.data.status == 0) {
+							//未认证
+							url = "/pages/sales/authentication/index";
+						} else if (res.data.status == 1) {
+							//认证中
+							url = "/pages/sales/authentication/result";
+						} else if (res.data.status == 2) {
+							//已认证
+							url = "/pages/sales/authentication/detail";
+						}
+						uni.navigateTo({
+							url
+						})
+					}
+				});
+			},
+			logOut(){
+				// localStorage.removeItem("token");
+				localStorage.removeItem("salesToken");
+				localStorage.removeItem("isParent");//是否有下级
+				localStorage.removeItem("isOrgManage");//是否有部门管理权限
+				localStorage.removeItem("isCrossPlatform");//是否有权限跨平台查看统计数据
+				localStorage.removeItem("name");//业务员名称
+				localStorage.removeItem("orgId");//业务id
+				localStorage.removeItem("orgName");//部门名称
+				app.tip("退出成功");
+				setTimeout(() => {
+					uni.reLaunch({
+						url: "/pages/sales/register"
+					})
+				}, 1000)
 			}
 		}
 	}
