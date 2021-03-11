@@ -4,6 +4,7 @@
 			<text>欢迎您,{{user.name}}</text>
 		</view>
 		<view class="content flexc">
+			
 			<view class="item flexc">
 				<view class="flex text-box" @click="toMybusiness">
 					<text class="item-text">我开展的业务</text>
@@ -11,6 +12,7 @@
 				</view>
 				<text class="item-subtext">我以业务员身份开展业务</text>
 			</view>
+			
 			<view class="item flexc" v-if="user.isParent==1" @click="toSubordinate">
 
 				<view class="flex text-box">
@@ -68,7 +70,7 @@
 		data() {
 			return {
 				user: {
-					name: '',
+					name:'',
 					isParent: 0,
 					isOrgManage: 0,
 					orgId: '',
@@ -91,7 +93,7 @@
 		methods: {
 			toMybusiness() {
 				uni.navigateTo({
-					url:'my-business'
+					url:'sales-business'
 				})
 			},
 			toSubordinate(){
@@ -111,6 +113,12 @@
 					
 				})
 				
+			},
+			toDataCenter(){
+				uni.navigateTo({
+					url:'data-center'
+					
+				})
 			}
 		}
 	}

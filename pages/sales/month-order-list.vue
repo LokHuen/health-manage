@@ -31,7 +31,7 @@
 				params: {
 					pageNo: 1,
 					salesId: '',
-					deptId:'',
+					//deptId:'',
 					pageResource: 1
 				},
 				info: {pageCount:1}
@@ -87,9 +87,16 @@
 					month = month.replace('年', '-').replace('月', '')
 				}
 				console.log(month)
-				uni.navigateTo({
-					url: 'order-list?month=' + month+'&pageResource='+this.params.pageResource+'&orgId='+this.params.deptId
-				})
+				if(this.params.deptId){
+					uni.navigateTo({
+						url: 'order-list?month=' + month+'&pageResource='+this.params.pageResource+'&orgId='+this.params.deptId
+					})
+				}else{
+					uni.navigateTo({
+						url: 'order-list?month=' + month+'&pageResource='+this.params.pageResource
+					})
+				}
+				
 			}
 		},
 	}

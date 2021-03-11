@@ -27,7 +27,7 @@
 			<view style="height: 40rpx;"></view>
 		</view>
 		<view class="no-data-tips" v-if="list.length == 0">暂无数据</view>
-		<view style="height: 30rpx;"></view>
+		<!-- <view style="height: 30rpx;"></view> -->
 
 		<uni-popup ref="popupPatient" type="bottom">
 			<!-- 选择患者 -->
@@ -139,6 +139,9 @@
 </script>
 
 <style lang="scss">
+	page{
+		background-color:$uni-defautt-bg-color ;
+	}
 	.container {
 		// height: 100vh;
 		background-color: #F5F6F6;

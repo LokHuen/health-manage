@@ -8,7 +8,7 @@
 				<image src="../../static/right.png" mode="widthFix" class="right"></image>
 			</view>
 
-			<view class="item-box" v-if="item.isParent==1" @click="toTeamBusiness">
+			<view class="item-box" v-if="item.isParent==1" @click="toTeamBusiness(item)">
 				下属团队业务情况
 				<image src="../../static/right.png" mode="widthFix" class="right"></image>
 			</view>
@@ -23,12 +23,15 @@
 	export default {
 		data() {
 			return {
-				list: []
+				list: [],
+				salesId:''
 			}
 		},
 		methods: {
 			getTeamMembers() {
-				app.getTeamMembers().then((res) => {
+				app.getTeamMembers({
+					salesId:this.salesId
+					}).then((res) => {
 					this.list = res.data
 				})
 			},
@@ -37,13 +40,16 @@
 					url: 'sales-business?salesId=' + salesId
 				})
 			},
-			toTeamBusiness(salesId) {
+			toTeamBusiness(item) {
 				uni.navigateTo({
-					url: 'team-business?salesId=' + salesId
+					url: 'team-business?salesId=' + item.id+'&name='+item.name
 				})
 			}
 		},
-		onLoad() {
+		onLoad(props) {
+			if(props.salesId){
+				this.salesId = props.salesId;
+			}
 			this.getTeamMembers()
 		}
 	}

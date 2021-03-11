@@ -1,7 +1,7 @@
 <template>
 	<view class="container flexc">
 		<view class="" style="padding-top: 30rpx;padding-left: 50rpx;padding-bottom: 20rpx;">
-			张晓敏
+			{{name}}
 		</view>
 		<view class="flexc head">
 			<view class="flexc order-count-box">
@@ -43,42 +43,39 @@
 </template>
 
 <script>
-
+	import tkiTree from "@/components/tki-tree/tki-tree.vue"
 	const app = getApp();
 
 	export default {
+		components: {
+			tkiTree
+		},
 		data() {
 			return {
-				salesId:'',
 				info: {},
+				name:'',
+				salesId:''
 			}
 		},
 		onLoad(props) {
 			if(props.salesId){
-				this.sales.salesId = props.salesId
+				this.salesId = props.salesId;
+				this.name  = props.name;
 			}
+			
 			this.getAgentInfo()
 		},
 		methods: {
 			toMonthOrderList() {
 				uni.navigateTo({
-					url: 'month-order-list?pageResource=3' + '&orgId=+' + this.orgId
+					url: 'month-order-list?pageResource=2' + '&salesId=+' + this.salesId
 				})
 			},
 			toTeamMember() {
 				uni.navigateTo({
-					url: 'team-member?'
+					url: 'team-member?salesId='+this.salesId
 				})
 
-			},
-			getOrgInfo(deptId = this.this.orgId) {
-				app.getOrgInfo({
-					deptId: deptId
-				}).then(res => {
-					if (res.status == 1) {
-						this.info = res.data;
-					}
-				});
 			},
 			toOrder() {
 				let date = new Date()
@@ -89,7 +86,7 @@
 				})
 			},
 			getAgentInfo() {
-				app.agentInfo({salesId:this.salesId}).then((res) => {
+				app.agentInfo({agentId:this.salesId}).then((res) => {
 					this.info = res.data
 				})
 			}

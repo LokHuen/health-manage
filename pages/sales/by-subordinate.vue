@@ -51,6 +51,7 @@
 		data() {
 			return {
 				info: {},
+				orgId:app.getCache('orgId'),
 			}
 		},
 		onLoad(props) {
@@ -59,7 +60,7 @@
 		methods: {
 			toMonthOrderList() {
 				uni.navigateTo({
-					url: 'month-order-list?pageResource=3' + '&orgId=+' + this.orgId
+					url: 'month-order-list?pageResource=2' 
 				})
 			},
 			toTeamMember() {
@@ -68,15 +69,7 @@
 				})
 
 			},
-			getOrgInfo(deptId = this.this.orgId) {
-				app.getOrgInfo({
-					deptId: deptId
-				}).then(res => {
-					if (res.status == 1) {
-						this.info = res.data;
-					}
-				});
-			},
+
 			toOrder() {
 				let date = new Date()
 				let month = date.getFullYear() + '-' + (date.getMonth() + 1)
