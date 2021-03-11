@@ -3,7 +3,7 @@
 	<view class="container">
 		<view class="list-box" v-for="(item,index) in list" :key="index">
 			<view class="name">{{item.name}}</view>
-			<view :class="item.isParent==0?'item-box':'item-box team'" @click="toBusiness(item.id)">
+			<view :class="item.isParent==0?'item-box':'item-box team'" @click="toBusiness(item)">
 				个人业务情况
 				<image src="../../static/right.png" mode="widthFix" class="right"></image>
 			</view>
@@ -35,9 +35,10 @@
 					this.list = res.data
 				})
 			},
-			toBusiness(salesId) {
+			toBusiness(item) {
+				console.log(item)
 				uni.navigateTo({
-					url: 'sales-business?salesId=' + salesId
+					url: 'sales-business?salesId=' + item.id+'&salesName='+item.name
 				})
 			},
 			toTeamBusiness(item) {
@@ -103,8 +104,6 @@
 				border-bottom: 2rpx solid #EEEEEE;
 				;
 			}
-
-
 
 		}
 

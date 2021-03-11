@@ -59,6 +59,7 @@
 				});
 			},
 			selectItem(item) {
+				console.log(item.name)
 				uni.navigateTo({
 					url: 'sales-business?salesId='+item.id+'&salesName='+item.name
 				})

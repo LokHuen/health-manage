@@ -1,7 +1,7 @@
 <template>
 	<view class="container flexc">
 		<view class="head flexc">
-			<text class="sales-name" v-if="sales.saleId">{{sales.salesName}}</text>
+			<text class="sales-name" v-if="sales.salesName">{{sales.salesName}}</text>
 			<view class="flex head-data" @click="toOrder">
 				<view class="head-item flexc">
 					<text class="value">{{info.orderNum||0}}</text>
@@ -9,7 +9,7 @@
 				</view>
 				<view class="head-item flexc">
 					<text class="value">{{info.income||0}}</text>
-					<text class="key">本月订单总金额（元）</text>
+					<text class="key">本月订单总金额（元）{{sales.salesName}}</text>
 				</view>
 			</view>
 		</view>
@@ -44,10 +44,18 @@
 			}
 		},
 		onLoad(props) {
-			if(props.salesId){
+			if (props.salesId) {
 				this.sales.salesId = props.salesId
 			}
+			this.sales.salesName = props.salesName
 			this.getData();
+		},
+		onReady() {
+			if (this.sales.salesId) {
+				uni.setNavigationBarTitle({
+					title: '个人业务情况'
+				})
+			}
 		},
 		computed: {
 			list: function() {
@@ -58,35 +66,31 @@
 			clickItem(index) {
 				if (index == 0) {
 					uni.navigateTo({
-						url: 'month-order-list?isAgent=1&isSalesPage=1'
+						url: 'month-order-list?pageResource=1' + '&salesId=' + this.sales.salesId
 					})
 				} else if (index == 1) {
 					uni.navigateTo({
-						url: '../sales/sales-business-card?id=' + app.getCache('uid')
+						url: '../sales/sales-business-card?id=' + this.sales.salesId ? this.sales.salesId : app
+							.getCache('uid')
 					});
 				} else if (index == 2) {
 					uni.navigateTo({
-						url: '../sales/user?salesManId='+this.sales.salesId
+						url: '../sales/user?salesManId=' + this.sales.salesId
 					});
 				} else if (index == 3) {
 					uni.navigateTo({
-						url: '../sales/patient-list?salesManId='+this.sales.salesId
+						url: '../sales/patient-list?salesManId=' + this.sales.salesId
 					})
 				} else if (index == 4) {
-					if(this.sales.salesId){
-						uni.navigateTo({
-							url: '../sales/resource-report-list?salesId='+this.sales.salesId
-						});
-					}else{
-						uni.navigateTo({
-							url: '../sales/resource-report-list'
-						});
-					}
-					
+					uni.navigateTo({
+						url: '../sales/resource-report-list?salesId=' + this.sales.salesId
+					});
 				}
 			},
 			getData() {
-				app.saleshomepage({salesManId:this.sales.salesId}).then(res => {
+				app.saleshomepage({
+					salesManId: this.sales.salesId
+				}).then(res => {
 					console.log(res);
 					if (res.status == 1) {
 						this.info = res.data;

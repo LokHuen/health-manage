@@ -22,8 +22,8 @@
 			<view class="remove" @click="remove(index)" v-if="!params.salesId">移除</view>
 		</view>
 		<view class="no-data-tips" v-if="list.length == 0">暂无数据</view>
-		<view style="height: 900rpx;" v-if="list.length <4"></view>
-		<view style="height: 200rpx;"></view>
+		<!-- <view style="height: 900rpx;" v-if="list.length <4"></view>
+		<view style="height: 200rpx;"></view> -->
 
 
 		<view class="button-box" v-if="!params.salesId">
@@ -112,8 +112,13 @@
 </script>
 
 <style lang="scss">
+	page {
+		background-color: $uni-defautt-bg-color;
+	}
+
 	.container {
-		background-color: #F5F6F6;
+		// background-color: #F5F6F6;
+		height: 1100vh;
 
 		.no-data-tips {
 			margin-top: 100rpx;
