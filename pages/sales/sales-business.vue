@@ -73,9 +73,16 @@
 						url: '../sales/patient-list'
 					})
 				} else if (index == 4) {
-					uni.navigateTo({
-						url: '../sales/resource-report-list'
-					});
+					if(this.sales.salesId){
+						uni.navigateTo({
+							url: '../sales/resource-report-list?salesId='+this.sales.salesId
+						});
+					}else{
+						uni.navigateTo({
+							url: '../sales/resource-report-list'
+						});
+					}
+					
 				}
 			},
 			getData() {
