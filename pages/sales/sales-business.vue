@@ -43,12 +43,15 @@
 				info: {},
 			}
 		},
-		onLoad() {
+		onLoad(props) {
+			if(props.salesId){
+				this.sales.salesId = props.salesId
+			}
 			this.getData();
 		},
 		computed: {
 			list: function() {
-				return ["按月统计订单数据", this.sales.salesId ? "名片码" : '', "绑定的用户", "患者列表", "资源报备"]
+				return ["按月统计订单数据", this.sales.salesId ? "" : '名片码', "绑定的用户", "患者列表", "资源报备"]
 			}
 		},
 		methods: {

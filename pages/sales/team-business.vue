@@ -43,20 +43,20 @@
 </template>
 
 <script>
-	import tkiTree from "@/components/tki-tree/tki-tree.vue"
 
 	const app = getApp();
 
 	export default {
-		components: {
-			tkiTree
-		},
 		data() {
 			return {
+				salesId:'',
 				info: {},
 			}
 		},
 		onLoad(props) {
+			if(props.salesId){
+				this.sales.salesId = props.salesId
+			}
 			this.getAgentInfo()
 		},
 		methods: {
@@ -89,7 +89,7 @@
 				})
 			},
 			getAgentInfo() {
-				app.agentInfo({}).then((res) => {
+				app.agentInfo({salesId:this.salesId}).then((res) => {
 					this.info = res.data
 				})
 			}

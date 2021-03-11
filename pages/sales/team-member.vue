@@ -3,12 +3,12 @@
 	<view class="container">
 		<view class="list-box" v-for="(item,index) in list" :key="index">
 			<view class="name">{{item.name}}</view>
-			<view :class="item.isParent==0?'item-box':'item-box team'">
+			<view :class="item.isParent==0?'item-box':'item-box team'" @click="toBusiness(item.id)">
 				个人业务情况
 				<image src="../../static/right.png" mode="widthFix" class="right"></image>
 			</view>
 
-			<view class="item-box" v-if="item.isParent==1">
+			<view class="item-box" v-if="item.isParent==1" @click="toTeamBusiness">
 				下属团队业务情况
 				<image src="../../static/right.png" mode="widthFix" class="right"></image>
 			</view>
@@ -30,6 +30,16 @@
 			getTeamMembers() {
 				app.getTeamMembers().then((res) => {
 					this.list = res.data
+				})
+			},
+			toBusiness(salesId) {
+				uni.navigateTo({
+					url: 'sales-business?salesId=' + salesId
+				})
+			},
+			toTeamBusiness(salesId) {
+				uni.navigateTo({
+					url: 'team-business?salesId=' + salesId
 				})
 			}
 		},

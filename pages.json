@@ -135,7 +135,7 @@
 			}
 		},
 		{
-			"path": "pages/sales/my-business",
+			"path": "pages/sales/sales-business",
 			"style": {
 				"navigationBarTitleText": "我开展的业务"
 			}
