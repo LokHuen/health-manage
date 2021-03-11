@@ -66,11 +66,11 @@
 					});
 				} else if (index == 2) {
 					uni.navigateTo({
-						url: '../sales/user'
+						url: '../sales/user?salesManId='+this.sales.salesId
 					});
 				} else if (index == 3) {
 					uni.navigateTo({
-						url: '../sales/patient-list'
+						url: '../sales/patient-list?salesManId='+this.sales.salesId
 					})
 				} else if (index == 4) {
 					if(this.sales.salesId){

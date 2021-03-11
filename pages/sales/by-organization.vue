@@ -27,7 +27,7 @@
 				<view class="item flex">
 					<text class="left-name">团队成员</text>
 					<view class="flex">
-						<text>{{info.teamNum}}</text>
+						<text>{{info.teamNum||0}}</text>
 						<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
 					</view>
 				</view>
@@ -48,7 +48,7 @@
 				<view class="head flex">
 					<image src="../../static/icon_close.png" @click="toggleOrganize(false)"></image>
 				</view>
-				<tki-tree :range="list" rangeKey="name" selectParent @treeItemSelect="treeItemSelect" />
+				<tki-tree :range="organizeList" rangeKey="name" selectParent @treeItemSelect="treeItemSelect" />
 			</view>
 		</uni-popup>
 	</view>
@@ -67,50 +67,8 @@
 			return {
 				orgName: '',
 				orgId: '',
-				teamNum:0,
 				organizeList: [],
 				info: {teamNum:0},
-				list: [{
-					id: 1,
-					name: '题库',
-					children: [{
-						id: 11,
-						name: '语文',
-						children: [{
-							id: 111,
-							name: '高一卷',
-						}, {
-							id: 112,
-							name: '高二卷',
-						}]
-					}, {
-						id: 12,
-						name: '数学',
-					}]
-				}, {
-					id: 2,
-					name: '高考',
-					children: [{
-						id: 21,
-						name: '高考1',
-					}, {
-						id: 22,
-						name: '高考2',
-					}, {
-						id: 23,
-						name: '高考3',
-					}, ]
-				}, {
-					id: 3,
-					name: '课程'
-				}, {
-					id: 4,
-					name: '论文',
-					children: [{
-						id: 41,
-						name: '论文分享',
-					}]
-				}]
 			}
 		},
 		onLoad(props) {
@@ -130,7 +88,7 @@
 				let hasOrganize = 1
 				if (hasOrganize) {
 					uni.navigateTo({
-						url: 'organization-chart'
+						url: 'organization-chart?orgId=' + this.orgId+'&orgName='+this.orgName
 					})
 				} else {
 					uni.navigateTo({
@@ -144,7 +102,8 @@
 					deptId: deptId
 				}).then(res => {
 					if (res.status == 1) {
-						this.info = res.data;
+						this.info.orderNum = res.data.orderNum;
+						this.info.orderMoney = res.data.orderMoney
 					}
 				});
 			},
@@ -164,7 +123,13 @@
 				}
 			},
 			treeItemSelect(item) {
-				console.log(item)
+				this.orgId = item.id
+				this.orgName = item.name
+				this.getOrgInfo(this.orgId)
+				this.getOrgMembers()
+				this.toggleOrganize(false)
+				console.log('by-org')
+				// console.log(item)
 			},
 			getSalesManOrg() {
 				app.getSalesManOrg({orgId:this.orgId}).then((res) => {

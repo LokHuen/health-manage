@@ -7,10 +7,10 @@
 					zIndex: item.rank*-1 +50
 				}]" :class="{
 					border: border === true,
-					show: item.show,
+					show: item.show||(item.rank==1),
 					last: item.lastRank,
-					showchild: item.showChild,
-					open: item.open,
+					showchild: item.showChild||(item.rank==1),
+					open: item.open||(item.rank==0),
 				}">
 
 					<view class="flex">
@@ -21,12 +21,13 @@
 					<view @tap.stop="_treeItemSelect(item, index)" class="flex" style="flex: 1;">
 						<text style="flex: 1;text-align: left;">{{item.name}}</text>
 						<view class="tki-tree-check" @tap.stop="_treeItemSelect(item, index)"
-							v-if="selectParent&&isCheck?true:item.lastRank">
+							v-if="selectParent?true:item.lastRank">
 							<view>
-								<image style="width: 26rpx;height: 20rpx;" src="../../static/icon/icon_selected.png" v-if="item.checked&&isCheck">
+								<image style="width: 26rpx;height: 20rpx;" src="../../static/icon/icon_selected.png"
+									v-if="item.checked&&isCheck">
 								</image>
 								<text v-if="!isCheck" style="flex: 1;text-align: right;"
-									@tap.stop="_treeItemSelect(item, index)">888人
+									@tap.stop="_treeItemSelect(item, index)">{{item.source.directSub}}人
 								</text>
 							</view>
 						</view>
@@ -184,6 +185,7 @@
 			},
 			// 点击
 			_treeItemTap(item, index) {
+				if (item.rank == 0) return
 				if (item.lastRank === true) {
 					//点击最后一级时触发事件
 					this.treeList[index].checked = !this.treeList[index].checked
@@ -242,7 +244,7 @@
 				this.treeList[index].checked = !this.treeList[index].checked
 				this._fixMultiple(index)
 				this.$emit('treeItemSelect', item)
-				
+
 			},
 			// 处理单选多选
 			_fixMultiple(index) {

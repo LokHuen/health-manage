@@ -211,6 +211,9 @@ var api = {
 	//跨平台数据 统计
     platformInfo:(data)=>{return rq("/wx/commodity/platform/info",data,"GET");}, 
 	
+	//根据部门查询团队成员
+	getSalesList:(data)=>{return rq("/wx/salesman/org/getSalesList",data,"GET");},
+	
 	
 
 }

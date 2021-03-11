@@ -26,36 +26,25 @@
 				baseUrl: app.globalData.baseUrl,
 				imgUrl: app.globalData.imageUrl,
 				list: [],
-				page: 1,
 				pageCount: 1,
-				salesManId: ''
+				params:{
+					page: 1,
+					salesManId: ''
+				}
 			}
 		},
 		onLoad(options) {
-			this.salesManId = options.salesManId;
-			//salesManId 代理员的的团队成员详情传过来的
+			this.params.salesManId = options.salesManId;
 			this.init();
 		},
-		onShow() {
-
-		},
+		
 		methods: {
 			init() {
-				if (this.page > this.pageCount) return;
-				let data = {
-					pageNo: this.page,
-				}
-				if (this.salesManId) {
-					data = {
-						salesManId: this.salesManId,
-						...data
-					}
-
-				}
-				app.salesuserlist(data).then(res => {
+				if (this.params.page > this.pageCount) return;
+				app.salesuserlist(this.params).then(res => {
 					this.pageCount = res.data.pageCount;
-					this.list = this.page == 1 ? res.data : this.list.concat(res.data);
-					if (res.data.length > 0) this.page++;
+					this.list = this.params.page == 1 ? res.data : this.list.concat(res.data);
+					if (res.data.length > 0) this.params.page++;
 				});
 			},
 			toDoctor(item) {
@@ -69,9 +58,6 @@
 					urls: [item.qrCode],
 				})
 			},
-		},
-		onReachBottom() {
-			// this.init();
 		},
 	}
 </script>
