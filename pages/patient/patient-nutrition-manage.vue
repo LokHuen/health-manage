@@ -1,6 +1,7 @@
 <template>
 	<!-- 患者营养管理界面 -->
 	<view class="container">
+		<image src="../../static/warnshow.jpg" style="width:100vw;display:block;" mode="widthFix" @click="towarnpage"></image>
 		<view style="position: fixed;top:0;left:0;bottom:0;right:0;z-index:999;background:#fff;" v-show="!infoData.patientName"></view>
 		<view class="info-box">
 			<image :src="infoData.portrait" mode="scaleToFill" class="avator"></image>
@@ -1038,14 +1039,18 @@
 					url: src
 				})
 			},
+			towarnpage(){
+				uni.navigateTo({
+					url:"/pages/doctor/warn"
+				})
+			},
 		},
 		onShow() {
 			if (app.getCache('uid')) {
 				this.judgeUserAuth();
 			}
 		},
-
-
+		
 	}
 </script>
 
