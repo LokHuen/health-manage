@@ -21,7 +21,8 @@
 			</view>
 			<view class="desc">{{'医生名字：'+item.docotorName+' ('+item.hospital+' '+item.department+')'}}</view>
 			<view class="desc" v-if="item.surveyResult">{{'最近一次测评结果：'+item.surveyResult}}
-				{{item.surveyId==1?(' ('+item.surveyScore+'分)'):""}}</view>
+				{{item.surveyId==1?(' ('+item.surveyScore+'分)'):""}}
+			</view>
 			<view class="desc" v-if="item.lastSurveyTime">{{'最近一次测评时间：'+item.lastSurveyTime}}</view>
 			<view class="desc" v-if="!item.surveyResult">暂无营养评估记录</view>
 			<view class="desc">{{'订单数：'+item.orderCount+(item.orderTime?(' ('+'最近一次下单时间：'+item.orderTime+')'):'')}}
@@ -58,7 +59,8 @@
 					orderBy: 2, // 	//排序方式（1测评时间排序 ，2绑定时间））
 					pageNo: 1,
 					salesManId: ''
-				}
+				},
+				pageCount: 1
 			}
 		},
 		onLoad(props) {
@@ -85,16 +87,19 @@
 				this.getListData();
 			},
 			loadMoreData() {
-				this.params.pageNo++;
-				this.getListData();
+				if (this.pageCount > this.params.pageNo) {
+					this.params.pageNo++;
+					this.getListData();
+				}
 			},
 			getListData() {
 				app.salesmanPatientList(this.params).then(res => {
 					if (res.status == 1) {
+						this.pageCount = res.data.pageCount
 						if (this.params.pageNo == 1) {
 							this.list = res.data.list;
 						} else {
-							if (res.data.pageCount >= this.params.pageNo) {
+							if (this.pageCount >= this.params.pageNo) {
 								this.list = this.list.concat(res.data.list);
 							}
 						}

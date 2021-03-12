@@ -19,7 +19,7 @@
 				"navigationBarTitleText": "团队成员"
 			}
 		},
-		
+
 		{
 			"path": "pages/patient/patient-nutrition-manage",
 			"style": {
@@ -660,7 +660,8 @@
 			"path": "pages/doctor/doctor-patient-list",
 			"style": {
 				"navigationBarTitleText": "医生的患者"
-			}
+			},
+			"enablePullDownRefresh": true
 		}, {
 			"path": "pages/diet/disease-type-detail",
 			"style": {

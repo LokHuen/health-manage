@@ -4,7 +4,7 @@
 			<text>欢迎您,{{user.name}}</text>
 		</view>
 		<view class="content flexc">
-			
+
 			<view class="item flexc">
 				<view class="flex text-box" @click="toMybusiness">
 					<text class="item-text">我开展的业务</text>
@@ -12,26 +12,25 @@
 				</view>
 				<text class="item-subtext">我以业务员身份开展业务</text>
 			</view>
-			
-			<view class="item flexc" v-if="user.isParent==1" @click="toSubordinate">
 
+			<view class="item flexc" v-if="user.isParent==1" @click="toSubordinate">
 				<view class="flex text-box">
 					<text class="item-text">下属团队业务情况</text>
 					<image src="../../static/icon/more_icon.png"></image>
 				</view>
 				<text class="item-subtext">我的下级开展业务的情况</text>
 			</view>
-			
-			<view class="item flexc" @click="toByorganization" v-if="user.isOrgManage">
+
+			<view class="item flexc" @click="toByorganization" v-if="user.isOrgManage==1">
 				<view class="flex text-box">
 					<text class="item-text">按组织架构查看业务情况 </text>
 					<image src="../../static/icon/more_icon.png"></image>
 				</view>
 			</view>
 
-			<view class="item flexc" style="margin-top: 30rpx;" v-if="user.isCrossPlatform">
+			<view class="item flexc" style="margin-top: 30rpx;" v-if="user.isCrossPlatform==1">
 				<view class="flex text-box" @click="toDataCenter">
-					<text class="item-text">跨平台数据中心</text>
+					<text class="item-text">跨渠道数据中心</text>
 					<image src="../../static/icon/more_icon.png"></image>
 				</view>
 			</view>
@@ -45,7 +44,7 @@
 				</view>
 				<view @click="judgeDoctorAuthenticationStatus">
 					<view class="flex text-box border-bottom">
-						<text class="item-text">身份认证 </text>
+						<text class="item-text">身份认证</text>
 						<image src="../../static/icon/more_icon.png"></image>
 					</view>
 				</view>
@@ -56,21 +55,18 @@
 					</view>
 				</view>
 			</view>
-			
 			<text class="login-out" @click="logOut">退出登录</text>
-
 		</view>
 	</view>
 </template>
 
 <script>
-
 	const app = getApp()
 	export default {
 		data() {
 			return {
 				user: {
-					name:'',
+					name: '',
 					isParent: 0,
 					isOrgManage: 0,
 					orgId: '',
@@ -88,43 +84,43 @@
 			this.user.name = app.getCache('name')
 			this.user.orgId = app.getCache('orgId')
 			this.user.orgName = app.getCache('orgName')
-			// console.log(this.user)
+			console.log(this.user)
 		},
 		methods: {
 			toMybusiness() {
 				uni.navigateTo({
-					url:'sales-business'
+					url: 'sales-business'
 				})
 			},
-			toSubordinate(){
+			toSubordinate() {
 				uni.navigateTo({
-					url:'by-subordinate'
+					url: 'by-subordinate'
 				})
 			},
 			toByorganization() {
 				uni.navigateTo({
-					url:'data-center'
-					
+					url: 'data-center'
+
 				})
 			},
-			toByorganization(){
+			toByorganization() {
 				uni.navigateTo({
-					url: 'by-organization?orgId='+this.user.orgId+'&orgName='+this.user.orgName
-					
+					url: 'by-organization?orgId=' + this.user.orgId + '&orgName=' + this.user.orgName
+
 				})
 			},
-			toDataCenter(){
+			toDataCenter() {
 				uni.navigateTo({
-					url:'data-center'
-					
+					url: 'data-center'
+
 				})
 			},
-			toModifyPsw(){
+			toModifyPsw() {
 				uni.navigateTo({
 					url: '../sales/change-password'
 				});
 			},
-			toAccount(){
+			toAccount() {
 				uni.navigateTo({
 					url: 'sales-account-list'
 				});
@@ -152,15 +148,15 @@
 					}
 				});
 			},
-			logOut(){
+			logOut() {
 				// localStorage.removeItem("token");
 				localStorage.removeItem("salesToken");
-				localStorage.removeItem("isParent");//是否有下级
-				localStorage.removeItem("isOrgManage");//是否有部门管理权限
-				localStorage.removeItem("isCrossPlatform");//是否有权限跨平台查看统计数据
-				localStorage.removeItem("name");//业务员名称
-				localStorage.removeItem("orgId");//业务id
-				localStorage.removeItem("orgName");//部门名称
+				localStorage.removeItem("isParent"); //是否有下级
+				localStorage.removeItem("isOrgManage"); //是否有部门管理权限
+				localStorage.removeItem("isCrossPlatform"); //是否有权限跨平台查看统计数据
+				localStorage.removeItem("name"); //业务员名称
+				localStorage.removeItem("orgId"); //业务id
+				localStorage.removeItem("orgName"); //部门名称
 				app.tip("退出成功");
 				setTimeout(() => {
 					uni.reLaunch({
@@ -224,6 +220,7 @@
 			view {
 				padding: 0 50rpx;
 				background-color: #FFFFFF;
+
 				.text-box {
 					@include item-box;
 					padding: 0 0;
@@ -234,7 +231,8 @@
 				border-bottom: 1rpx solid #EEEEEE;
 			}
 		}
-		.login-out{
+
+		.login-out {
 			margin: 0 auto;
 			width: 628rpx;
 			height: 88rpx;

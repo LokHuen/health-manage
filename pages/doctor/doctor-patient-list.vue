@@ -8,7 +8,7 @@
 				<image style="width: 12rpx; height: 24rpx;" src="../../static/icon/more_icon.png"></image>
 			</view>
 			<view class="all-patien-box" @click="patienScreen">
-				<view class="all-patien">{{orderBy==1?'按患者最近一次测评时间排序':'按患者和医生绑定的时间排序'}}</view>
+				<view class="all-patien">{{params.orderBy==1?'按患者最近一次测评时间排序':'按患者和医生绑定的时间排序'}}</view>
 				<image class="all-arrow" src="../../static/icon/right_arrow.png" mode="widthFix"></image>
 			</view>
 		</view>
@@ -21,12 +21,17 @@
 					<view class="photo-tip">电话联系</view>
 				</view>
 			</view>
-			<view class="desc">{{(item.patientGender || item.age || item.illness)?((item.patientGender==1?('男 '):'女 ')+(item.age?(item.age+' '):'')+(item.illness?item.illness:'')):'患者未完善资料'}}</view>
+			<view class="desc">
+				{{(item.patientGender || item.age || item.illness)?((item.patientGender==1?('男 '):'女 ')+(item.age?(item.age+' '):'')+(item.illness?item.illness:'')):'患者未完善资料'}}
+			</view>
 			<view class="desc">{{'医生名字：'+item.docotorName+' ('+item.hospital+' '+item.department+')'}}</view>
-			<view class="desc" v-if="item.surveyResult && item.surveyScore">{{'最近一次测评结果：'+item.surveyResult+' ('+item.surveyScore+'分)'}}</view>
+			<view class="desc" v-if="item.surveyResult && item.surveyScore">
+				{{'最近一次测评结果：'+item.surveyResult+' ('+item.surveyScore+'分)'}}
+			</view>
 			<view class="desc" v-if="item.lastSurveyTime">{{'最近一次测评时间：'+item.lastSurveyTime}}</view>
 			<view class="desc" v-if="!item.surveyResult">暂无营养评估记录</view>
-			<view class="desc">{{'订单数：'+item.orderCount+(item.orderTime?(' ('+'最近一次下单时间：'+item.orderTime+')'):'')}}</view>
+			<view class="desc">{{'订单数：'+item.orderCount+(item.orderTime?(' ('+'最近一次下单时间：'+item.orderTime+')'):'')}}
+			</view>
 			<view style="height: 20rpx;"></view>
 			<view class="desc">{{'和医生绑定时间：'+item.bindTime}}</view>
 			<view style="height: 40rpx;"></view>
@@ -62,11 +67,16 @@
 		data() {
 			return {
 				dortorName: '',
-				doctorId: '',
 				list: [],
 				qrCode: '',
-				orderBy: 2, //排序方式（1测评时间排序 ，2绑定时间）
-				openQrCode: false
+				//排序方式（1测评时间排序 ，2绑定时间）
+				openQrCode: false,
+				params: {
+					bindDoctor: '',
+					orderBy: 2,
+					pageNo:1
+				},
+				pageCount: 1
 			}
 		},
 		methods: {
@@ -78,9 +88,9 @@
 				}
 			},
 			selecgtInfo(index) {
-				if (this.orderBy != index) {
-					this.orderBy = index;
-					this.getData();
+				if (this.params.orderBy != index) {
+					this.params.orderBy = index;
+					this.getListData();
 				}
 				this.closePatienScreen();
 			},
@@ -90,16 +100,27 @@
 			closePatienScreen() {
 				this.$refs.popupPatient.close();
 			},
-			getData() {
-				app.getDoctorPatients({
-					bindDoctor: this.doctorId,
-					orderBy: this.orderBy
-				}).then((res) => {
-					this.list = res.data.list
+			getListData() {
+				app.getDoctorPatients(this.params).then((res) => {
+					if (res.status == 1) {
+						this.pageCount = res.data.pageCount
+						if (this.params.pageNo == 1) {
+							this.list = res.data.list;
+						} else {
+							if (this.pageCount >= this.params.pageNo) {
+								this.list = this.list.concat(res.data.list);
+							}
+						}
+					}
+					uni.stopPullDownRefresh();
 				})
 			},
+			refreshData() {
+				this.params.pageNo = 1;
+				this.getListData();
+			},
 			qrPopupChange(e) {
-				console.log(e)
+				// console.log(e)
 				this.openQrCode = e.show
 			},
 			call(item) {
@@ -112,13 +133,25 @@
 						app.tip('调用失败');
 					}
 				});
-			}
+			},
+			onPullDownRefresh() {
+				this.refreshData();
+			},
+			onReachBottom() {
+				this.loadMoreData();
+			},
+			loadMoreData() {
+				if (this.pageCount > this.params.pageNo) {
+					this.params.pageNo++;
+					this.getListData();
+				}
+			},
 		},
 		onLoad(props) {
 			this.qrCode = props.qrCode
-			this.doctorId = props.doctorId
+			this.params.bindDoctor = props.doctorId
 			this.dortorName = props.dortorName
-			this.getData()
+			this.getListData()
 		}
 	}
 </script>

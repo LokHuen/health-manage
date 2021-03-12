@@ -9,7 +9,7 @@
 				</view>
 				<view class="head-item flexc">
 					<text class="value">{{info.income||0}}</text>
-					<text class="key">本月订单总金额（元）{{sales.salesName}}</text>
+					<text class="key">本月收益（元）</text>
 				</view>
 			</view>
 		</view>
@@ -69,9 +69,9 @@
 						url: 'month-order-list?pageResource=1' + '&salesId=' + this.sales.salesId
 					})
 				} else if (index == 1) {
+					console.log(11)
 					uni.navigateTo({
-						url: '../sales/sales-business-card?id=' + this.sales.salesId ? this.sales.salesId : app
-							.getCache('uid')
+						url:'sales-business-card?id='+(this.sales.salesId ? this.sales.salesId : app.getCache('uid'))
 					});
 				} else if (index == 2) {
 					uni.navigateTo({
@@ -91,7 +91,7 @@
 				app.saleshomepage({
 					salesManId: this.sales.salesId
 				}).then(res => {
-					console.log(res);
+					// console.log(res);
 					if (res.status == 1) {
 						this.info = res.data;
 					}

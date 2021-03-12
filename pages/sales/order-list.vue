@@ -60,7 +60,6 @@
 			this.refreshData();
 		},
 		onReachBottom() {
-			console.log(12)
 			this.loadMoreData();
 		},
 		methods: {
