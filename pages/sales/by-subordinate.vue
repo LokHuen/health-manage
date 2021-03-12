@@ -9,7 +9,7 @@
 					</view>
 					<view class="head-item flexc">
 						<text class="value">{{info.orderMoney||0}}</text>
-						<text class="key">本月订单总金额（元）</text>
+						<text class="key">本月收益（元）</text>
 					</view>
 				</view>
 				<text class="tip">统计范围：客户已付款订单</text>
@@ -50,32 +50,34 @@
 		},
 		data() {
 			return {
+				salesId:'',
 				info: {},
-				orgId:app.getCache('orgId'),
 			}
 		},
 		onLoad(props) {
+			if(props.salesId){
+				this.salesId = props.salesId
+			}
 			this.getAgentInfo()
 		},
 		methods: {
 			toMonthOrderList() {
 				uni.navigateTo({
-					url: 'month-order-list?pageResource=2' 
+					url: 'month-order-list?pageResource=2'+'&salesId='+this.salesId
 				})
 			},
 			toTeamMember() {
 				uni.navigateTo({
-					url: 'team-member?'
+					url: 'team-member'
 				})
-
 			},
 
 			toOrder() {
 				let date = new Date()
 				let month = date.getFullYear() + '-' + (date.getMonth() + 1)
 				uni.navigateTo({
-					url: 'order-list?isSalesPage=1' + '&month=' + month + '&orgId=' + this.orgId +
-						'&pageResource=3'
+					url: 'order-list?' + '&month=' + month+
+						'&pageResource=2'+'&salesId='+this.salesId
 				})
 			},
 			getAgentInfo() {

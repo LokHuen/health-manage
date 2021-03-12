@@ -103,7 +103,7 @@
 				let date = new Date()
 				let month = date.getFullYear() + '-' + (date.getMonth() + 1)
 				uni.navigateTo({
-					url: 'order-list?pageResource=1' + '&month=' + month
+					url: 'order-list?pageResource=1' + '&month=' + month+'&salesId='+this.sales.salesId
 				})
 			}
 		},

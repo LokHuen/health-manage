@@ -1,7 +1,7 @@
 <template>
 	<view class="container flexc">
 		<view class="" style="padding-top: 30rpx;padding-left: 50rpx;padding-bottom: 20rpx;">
-			{{name}}
+			{{name}}的团队
 		</view>
 		<view class="flexc head">
 			<view class="flexc order-count-box">
@@ -53,27 +53,27 @@
 		data() {
 			return {
 				info: {},
-				name:'',
-				salesId:''
+				name: '',
+				salesId: ''
 			}
 		},
 		onLoad(props) {
-			if(props.salesId){
+			if (props.salesId) {
 				this.salesId = props.salesId;
-				this.name  = props.name;
+				this.name = props.name;
 			}
-			
+
 			this.getAgentInfo()
 		},
 		methods: {
 			toMonthOrderList() {
 				uni.navigateTo({
-					url: 'month-order-list?pageResource=2' + '&salesId=+' + this.salesId
+					url: 'month-order-list?pageResource=2' + '&salesId=' + this.salesId
 				})
 			},
 			toTeamMember() {
 				uni.navigateTo({
-					url: 'team-member?salesId='+this.salesId
+					url: 'team-member?salesId=' + this.salesId
 				})
 
 			},
@@ -81,12 +81,14 @@
 				let date = new Date()
 				let month = date.getFullYear() + '-' + (date.getMonth() + 1)
 				uni.navigateTo({
-					url: 'order-list?isSalesPage=1' + '&month=' + month + '&orgId=' + this.orgId +
-						'&pageResource=3'
+					url: 'order-list?month=' + month +
+						'&pageResource=2'+'&salesId='+this.salesId
 				})
 			},
 			getAgentInfo() {
-				app.agentInfo({agentId:this.salesId}).then((res) => {
+				app.agentInfo({
+					agentId: this.salesId
+				}).then((res) => {
 					this.info = res.data
 				})
 			}

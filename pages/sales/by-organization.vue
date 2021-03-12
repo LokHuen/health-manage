@@ -27,7 +27,7 @@
 				<view class="item flex">
 					<text class="left-name">团队成员</text>
 					<view class="flex">
-						<text>{{info.teamNum||0}}</text>
+						<text>{{teamNum||0}}</text>
 						<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
 					</view>
 				</view>
@@ -68,12 +68,15 @@
 				orgName: '',
 				orgId: '',
 				organizeList: [],
-				info: {teamNum:0},
+				info: {},
+				teamNum: 0
 			}
 		},
 		onLoad(props) {
+			if (props.orgId) {
+				this.orgId = props.orgId
+			}
 			this.orgName = props.orgName
-			this.orgId = props.orgId
 			this.getSalesManOrg()
 			this.getOrgInfo(this.orgId)
 			this.getOrgMembers()
@@ -88,7 +91,7 @@
 				let hasOrganize = 1
 				if (hasOrganize) {
 					uni.navigateTo({
-						url: 'organization-chart?orgId=' + this.orgId+'&orgName='+this.orgName
+						url: 'organization-chart?orgId=' + this.orgId + '&orgName=' + this.orgName
 					})
 				} else {
 					uni.navigateTo({
@@ -102,16 +105,22 @@
 					deptId: deptId
 				}).then(res => {
 					if (res.status == 1) {
-						this.info.orderNum = res.data.orderNum;
-						this.info.orderMoney = res.data.orderMoney
+						this.info = res.data
 					}
 				});
+			},
+			getOrgMembers() {
+				app.getOrgMembers({
+					orgId: this.orgId
+				}).then((res) => {
+					this.teamNum = res.data.teamNum
+				})
 			},
 			toOrder() {
 				let date = new Date()
 				let month = date.getFullYear() + '-' + (date.getMonth() + 1)
 				uni.navigateTo({
-					url: 'order-list?isSalesPage=1' + '&month=' + month + '&orgId=' + this.orgId +
+					url: 'order-list?month=' + month + '&orgId=' + this.orgId +
 						'&pageResource=3'
 				})
 			},
@@ -128,19 +137,15 @@
 				this.getOrgInfo(this.orgId)
 				this.getOrgMembers()
 				this.toggleOrganize(false)
-				console.log('by-org')
-				// console.log(item)
 			},
 			getSalesManOrg() {
-				app.getSalesManOrg({orgId:this.orgId}).then((res) => {
+				app.getSalesManOrg({
+					orgId: this.orgId
+				}).then((res) => {
 					this.organizeList = res.data
 				})
 			},
-			getOrgMembers(){
-				app.getOrgMembers({orgId:this.orgId}).then((res) => {
-					this.info.teamNum = res.data.teamNum
-				})
-			}
+
 		},
 
 	}

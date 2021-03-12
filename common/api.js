@@ -142,7 +142,7 @@ var api = {
 	//下属团队（代理渠道）业务情况
 	agentInfo:(data)=>{return rq("/wx/sales/agent/agentInfo",data,"GET");},
 	//订单列表
-	agentOrderList:(data)=>{return rq("/wx/sales/agent/orderPage",data,"POST");},
+	agentOrderList:(data)=>{return rq("/wx/sales/agent/orderPage",data,"GET");},
 	//按月统计订单数据
 	agentOrderStatsList:(data)=>{return rq("/wx/sales/agent/orderStatsList",data,"GET");},
 	//团队列表（分页）

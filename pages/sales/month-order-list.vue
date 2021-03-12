@@ -31,10 +31,12 @@
 				params: {
 					pageNo: 1,
 					salesId: '',
-					//deptId:'',
+					deptId: '',
 					pageResource: 1
 				},
-				info: {pageCount:1}
+				info: {
+					pageCount: 1
+				}
 			}
 		},
 		onLoad(props) {
@@ -61,7 +63,7 @@
 				this.getListData();
 			},
 			loadMoreData() {
-				if(this.info.pageCount>this.params.pageNo){
+				if (this.info.pageCount > this.params.pageNo) {
 					this.params.pageNo++;
 					this.getListData();
 				}
@@ -86,17 +88,10 @@
 				if (month) {
 					month = month.replace('年', '-').replace('月', '')
 				}
-				console.log(month)
-				if(this.params.deptId){
-					uni.navigateTo({
-						url: 'order-list?month=' + month+'&pageResource='+this.params.pageResource+'&orgId='+this.params.deptId
-					})
-				}else{
-					uni.navigateTo({
-						url: 'order-list?month=' + month+'&pageResource='+this.params.pageResource
-					})
-				}
-				
+				uni.navigateTo({
+					url: 'order-list?month=' + month + '&pageResource=' + this.params.pageResource + '&salesId=' +
+						this.params.salesId + '&orgId=' + this.params.deptId
+				})
 			}
 		},
 	}
