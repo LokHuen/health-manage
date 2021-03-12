@@ -15,6 +15,7 @@
 			</view>
 		</view>
 
+
 		<view class="flexc">
 			<view class="item-outer" v-for="(item,index) in list" :key="index" @click="clickItem(index)" v-if="item">
 				<view class="item flex">
