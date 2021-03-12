@@ -43,14 +43,29 @@
 			</view>
 		</view>
 
-		<uni-popup ref="origanzePopup" type="bottom">
+		<!-- 	<uni-popup ref="origanzePopup" type="bottom">
 			<view class="origanzePopup flexc">
 				<view class="head flex">
 					<image src="../../static/icon_close.png" @click="toggleOrganize(false)"></image>
 				</view>
 				<tki-tree :range="organizeList" rangeKey="name" selectParent @treeItemSelect="treeItemSelect" />
 			</view>
-		</uni-popup>
+		</uni-popup> -->
+
+		<view class="mask flexc"
+			style="position: absolute;top: 0;right: 0;bottom: 0;left: 0; background-color: #333333; justify-content: flex-end; background-color: rgba(60,60,60,0.8);"
+			v-show="isShow">
+
+			<view class="origanzePopup flexc">
+				<view class="head flex">
+					<image src="../../static/icon_close.png" @click="toggleOrganize(false)"></image>
+				</view>
+				<scroll-view scroll-y>
+					<tki-tree :range="organizeList" rangeKey="name" selectParent @treeItemSelect="treeItemSelect" />
+				</scroll-view>
+			</view>
+
+		</view>
 	</view>
 </template>
 
@@ -69,7 +84,8 @@
 				orgId: '',
 				organizeList: [],
 				info: {},
-				teamNum: 0
+				teamNum: 0,
+				isShow: 0
 			}
 		},
 		onLoad(props) {
@@ -124,11 +140,16 @@
 						'&pageResource=3'
 				})
 			},
-			toggleOrganize(open) {
-				if (open) {
-					this.$refs.origanzePopup.open()
+			toggleOrganize(show) {
+				// this.isShow=show
+				if (show) {
+					// this.$refs.origanzePopup.open()
+					this.isShow = show
 				} else {
-					this.$refs.origanzePopup.close()
+					setTimeout(() => {
+						this.isShow = show
+					}, 200)
+					// this.$refs.origanzePopup.close()
 				}
 			},
 			treeItemSelect(item) {
@@ -155,8 +176,12 @@
 	.container {
 		height: 100vh;
 		background-color: #F5F6F6;
+		position: relative;
+
+
 
 		.origanzePopup {
+			background-color: #FFFFFF;
 			padding: 60rpx;
 
 			.head {
@@ -170,8 +195,12 @@
 				margin-bottom: 30rpx;
 			}
 
+			scroll-view {
+				height: 640rpx;
+				background-color: #FFFFFF;
+			}
+
 			text-align: center;
-			height: 655rpx;
 			background-color: #FFFFFF;
 			border-radius: 10px 10px 0px 0px;
 			color: #333333;
