@@ -1,5 +1,26 @@
 {
-	"pages": [{
+	"pages": [
+
+		{
+			"path": "pages/sales/data-center",
+			"style": {
+				"navigationBarTitleText": "跨渠道数据中心"
+			}
+		},
+		{
+			"path": "pages/sales/team-business",
+			"style": {
+				"navigationBarTitleText": "团队业务情况"
+			}
+		},
+		{
+			"path": "pages/sales/team-member",
+			"style": {
+				"navigationBarTitleText": "团队成员"
+			}
+		},
+
+		{
 			"path": "pages/patient/patient-nutrition-manage",
 			"style": {
 				"navigationBarTitleText": "营养管理"
@@ -81,9 +102,6 @@
 			}
 		},
 
-
-
-
 		{
 			"path": "pages/patient/patient-basic-information",
 			"style": {
@@ -118,6 +136,31 @@
 			}
 		},
 		{
+			"path": "pages/sales/sales-business",
+			"style": {
+				"navigationBarTitleText": "我开展的业务"
+			}
+		},
+		{
+			"path": "pages/sales/by-organization",
+			"style": {
+				"navigationBarTitleText": "按组织架构查看业务情况"
+			}
+		},
+		{
+			"path": "pages/sales/organization-chart",
+			"style": {
+				"navigationBarTitleText": "按组织架构"
+			}
+		},
+		{
+			"path": "pages/sales/by-subordinate",
+			"style": {
+				"navigationBarTitleText": "下属团队业务情况"
+			}
+		},
+
+		{
 			"path": "pages/agent/month-order-list",
 			"style": {
 				"navigationBarTitleText": "按月统计订单数据"
@@ -132,6 +175,20 @@
 		},
 		{
 			"path": "pages/agent/team-member-list",
+			"style": {
+				"navigationBarTitleText": "团队成员"
+			},
+			"enablePullDownRefresh": true
+		},
+		{
+			"path": "pages/sales/team-member-list",
+			"style": {
+				"navigationBarTitleText": "团队成员"
+			},
+			"enablePullDownRefresh": true
+		},
+		{
+			"path": "pages/sales/team-member",
 			"style": {
 				"navigationBarTitleText": "团队成员"
 			},
@@ -581,7 +638,7 @@
 
 		}
 
-	, {
+		, {
 			"path": "pages/diet/diet-catering",
 			"style": {
 				"navigationBarTitleText": "饮食配餐"
@@ -603,12 +660,11 @@
 			"path": "pages/doctor/doctor-patient-list",
 			"style": {
 				"navigationBarTitleText": "医生的患者"
-			}
-		}
-	,{
-			"path" : "pages/diet/disease-type-detail",
-			"style" :
-			{
+			},
+			"enablePullDownRefresh": true
+		}, {
+			"path": "pages/diet/disease-type-detail",
+			"style": {
 				"navigationBarTitleText": "食谱"
 			}
 

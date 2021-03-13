@@ -33,12 +33,6 @@
 				},
 			}
 		},
-		onLoad(options){
-			
-		},
-		onShow(){
-			
-		},
 		methods: {
 			saveinfo() {
 				for (let key in this.warn) {
@@ -53,17 +47,17 @@
 				app.salesregister(data).then(res => {
 					app.loaded();
 					app.setCache("salesToken",res.data.salesToken);
-					console.log(res.data.isAgent)
-					if(res.data.isAgent==1){
-						uni.reLaunch({
-							url: "/pages/agent/index",
-						})
-					}else{
-						uni.reLaunch({
-							url: "/pages/sales/index?isSales=1",
-						})
-					}
 					
+					app.setCache("isParent",res.data.isParent);//是否有下级
+					app.setCache("isOrgManage",res.data.isOrgManage);//是否有部门管理权限
+					app.setCache("isCrossPlatform",res.data.isCrossPlatform);//是否有权限跨平台查看统计数据
+					app.setCache("name",res.data.name);//业务员名称
+					app.setCache("orgId",res.data.orgId);//业务id
+					app.setCache("orgName",res.data.orgName);//部门名称
+					
+					uni.reLaunch({
+						url: "/pages/sales/index",
+					})
 				}).catch((res)=>{
 					app.tip(res);
 				})

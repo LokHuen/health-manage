@@ -3,7 +3,8 @@
 		<view style="height: 10rpx; background-color: #F5F6F6;"></view>
 		<view class="list-box" v-for="(item,index) in list">
 			<view style="height: 10rpx;"></view>
-			<view class="common">{{'订单号:'+item.order_number}} <text style="margin-left: 28rpx; color: #4B8BE8;" v-if="item.rePurchase">复购</text></view>
+			<view class="common">{{'订单号:'+item.order_number}} <text style="margin-left: 28rpx; color: #4B8BE8;"
+					v-if="item.rePurchase">复购</text></view>
 			<view class="common">{{'商品名称:'+item.commodity}}</view>
 			<view class="common">{{'下单时间:'+item.create_time}}</view>
 			<view class="common">{{'实付款:'+item.pay_amount+'元'}}</view>
@@ -30,13 +31,28 @@
 		data() {
 			return {
 				list: [],
-				pageNo: 1,
-				month: ''
+				params: {
+					pageNo: 1,
+					salesId: '',
+					deptId: '',
+					month: '',
+					pageResource: ''
+				}
+
 			}
 		},
 		onLoad(props) {
+			if (props.salesId) {
+				this.params.salesId = props.salesId
+			}
+			if (props.orgId) {
+				this.params.deptId = props.orgId
+			}
 			if (props.month) {
-				this.month = props.month
+				this.params.month = props.month
+			}
+			if (props.pageResource) {
+				this.params.pageResource = props.pageResource
 			}
 			this.refreshData();
 		},
@@ -44,29 +60,25 @@
 			this.refreshData();
 		},
 		onReachBottom() {
-			console.log(12)
 			this.loadMoreData();
 		},
 		methods: {
 			refreshData() {
-				this.pageNo = 1;
+				this.params.pageNo = 1;
 				this.getListData();
 			},
 			loadMoreData() {
-				this.pageNo++;
+				this.params.pageNo++;
 				this.getListData();
 			},
 
 			getListData() {
-				app.agentOrderList({
-					pageNo: this.pageNo,
-					month: this.month
-				}).then(res => {
+				app.agentOrderList(this.params).then(res => {
 					if (res.status == 1) {
-						if (this.pageNo == 1) {
+						if (this.params.pageNo == 1) {
 							this.list = res.data.list;
 						} else {
-							if (res.data.pageCount >= this.pageNo) {
+							if (res.data.pageCount >= this.params.pageNo) {
 								this.list = this.list.concat(res.data.list);
 							}
 						}

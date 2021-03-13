@@ -1,108 +1,128 @@
 <template>
-	<view class="container">
-		<view class="welcome">欢迎您，{{info.name}}</view>
-		<view class="flex numbox" @click="toOrder">
-			<view class="numitem">
-				<view class="number">{{info.orderNum||0}}</view>
-				<view>本月订单数</view>
-			</view>
-			<view class="numitem">
-				<view class="number">{{info.income||0}}</view>
-				<view>本月收益(元)</view>
-			</view>
+	<view class="container flexc">
+		<view class="head">
+			<text>欢迎您,{{user.name}}</text>
 		</view>
-		<view>
-			<view class="item-list flex" v-for="(item,index) in list" :key="index" @click="clickItem(index)">
-				<view class="left-name">{{item}}</view>
-				<view v-if="index==2 ||index==3 " style="padding-right:20rpx;">{{index==2?(info.bindDoctorCount||0):(info.bindPatientCount||0)}}</view>
-				<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
+		<view class="content flexc">
+
+			<view class="item flexc">
+				<view class="flex text-box" @click="toMybusiness">
+					<text class="item-text">我开展的业务</text>
+					<image src="../../static/icon/more_icon.png"></image>
+				</view>
+				<text class="item-subtext">我以业务员身份开展业务</text>
 			</view>
-		</view>
-		<view class="pagebottombt">
-			<view @click="cleartoken">退出登录</view>
+
+			<view class="item flexc" v-if="user.isParent==1" @click="toSubordinate">
+				<view class="flex text-box">
+					<text class="item-text">下属团队业务情况</text>
+					<image src="../../static/icon/more_icon.png"></image>
+				</view>
+				<text class="item-subtext">我的下级开展业务的情况</text>
+			</view>
+
+			<view class="item flexc" @click="toByorganization" v-if="user.isOrgManage==1">
+				<view class="flex text-box">
+					<text class="item-text">按组织架构查看业务情况 </text>
+					<image src="../../static/icon/more_icon.png"></image>
+				</view>
+			</view>
+
+			<view class="item flexc" style="margin-top: 30rpx;" v-if="user.isCrossPlatform==1">
+				<view class="flex text-box" @click="toDataCenter">
+					<text class="item-text">跨渠道数据中心</text>
+					<image src="../../static/icon/more_icon.png"></image>
+				</view>
+			</view>
+
+			<view class="auth-box flexc" style="margin-top: 30rpx;">
+				<view @click="toAccount">
+					<view class="flex text-box border-bottom">
+						<text class="item-text">账户</text>
+						<image src="../../static/icon/more_icon.png"></image>
+					</view>
+				</view>
+				<view @click="judgeDoctorAuthenticationStatus">
+					<view class="flex text-box border-bottom">
+						<text class="item-text">身份认证</text>
+						<image src="../../static/icon/more_icon.png"></image>
+					</view>
+				</view>
+				<view @click="toModifyPsw">
+					<view class="flex text-box">
+						<text class="item-text">修改密码</text>
+						<image src="../../static/icon/more_icon.png"></image>
+					</view>
+				</view>
+			</view>
+			<text class="login-out" @click="logOut">退出登录</text>
 		</view>
 	</view>
 </template>
 
 <script>
-	const app = getApp();
+	const app = getApp()
 	export default {
-
 		data() {
 			return {
-				list: ["按月统计订单数据", "名片码", "绑定的用户", "患者列表", "账户", "资源报备", "身份认证", "修改密码"],
+				user: {
+					name: '',
+					isParent: 0,
+					isOrgManage: 0,
+					orgId: '',
+					orgName: '',
+					isCrossPlatform: 0,
+				},
 				info: {}
+
 			}
 		},
 		onLoad() {
-			if (!app.getCache("salesToken")) uni.reLaunch({
-				url: "/pages/sales/register"
-			})
-
-			this.getIdentity();
-		},
-		onShow() {
-			this.getData();
+			this.user.isParent = app.getCache('isParent')
+			this.user.isOrgManage = app.getCache('isOrgManage')
+			this.user.isCrossPlatform = app.getCache('isCrossPlatform')
+			this.user.name = app.getCache('name')
+			this.user.orgId = app.getCache('orgId')
+			this.user.orgName = app.getCache('orgName')
+			console.log(this.user)
 		},
 		methods: {
-			getIdentity() {
-				app.getIdentity().then(res => {
-					if (res.status == 1) {
-						if (res.data.isAgent == 1) {
-							uni.reLaunch({
-								url: '/pages/agent/index'
-							})
-						} else {
-							this.getData();
-						}
-					}
+			toMybusiness() {
+				uni.navigateTo({
+					url: 'sales-business'
+				})
+			},
+			toSubordinate() {
+				uni.navigateTo({
+					url: 'by-subordinate'
+				})
+			},
+			toByorganization() {
+				uni.navigateTo({
+					url: 'data-center'
+
+				})
+			},
+			toByorganization() {
+				uni.navigateTo({
+					url: 'by-organization?orgId=' + this.user.orgId + '&orgName=' + this.user.orgName
+
+				})
+			},
+			toDataCenter() {
+				uni.navigateTo({
+					url: 'data-center'
+
+				})
+			},
+			toModifyPsw() {
+				uni.navigateTo({
+					url: '../sales/change-password'
 				});
 			},
-			clickItem(index) {
-				if (index == 0) {
-					uni.navigateTo({
-						url: 'month-order-list'
-					})
-				} else if (index == 1) {
-					uni.navigateTo({
-						url: 'sales-business-card?id=' + app.getCache('uid')
-					});
-				} else if (index == 2) {
-					uni.navigateTo({
-						url: 'user'
-					});
-				} else if (index == 4) {
-					uni.navigateTo({
-						url: 'sales-account-list'
-					});
-				} else if (index == 7) {
-					uni.navigateTo({
-						url: 'change-password'
-					});
-				} else if (index == 5) {
-					//资源报备
-					uni.navigateTo({
-						url: 'resource-report-list'
-					});
-				} else if (index == 3) {
-					//患者列表
-					// app.tip('功能暂未开放');
-					// return;
-					uni.navigateTo({
-						url: 'patient-list'
-					});
-				} else {
-					//身份认真
-					this.judgeDoctorAuthenticationStatus();
-				}
-			},
-			getData() {
-				//
-				app.saleshomepage({}).then(res => {
-					console.log(res);
-					if (res.status == 1) {
-						this.info = res.data;
-					}
+			toAccount() {
+				uni.navigateTo({
+					url: 'sales-account-list'
 				});
 			},
 			judgeDoctorAuthenticationStatus() {
@@ -128,110 +148,100 @@
 					}
 				});
 			},
-			cleartoken() {
-				localStorage.removeItem("token");
+			logOut() {
+				// localStorage.removeItem("token");
+				localStorage.removeItem("salesToken");
+				localStorage.removeItem("isParent"); //是否有下级
+				localStorage.removeItem("isOrgManage"); //是否有部门管理权限
+				localStorage.removeItem("isCrossPlatform"); //是否有权限跨平台查看统计数据
+				localStorage.removeItem("name"); //业务员名称
+				localStorage.removeItem("orgId"); //业务id
+				localStorage.removeItem("orgName"); //部门名称
 				app.tip("退出成功");
 				setTimeout(() => {
 					uni.reLaunch({
-						url: "/pages/sales/register?isSales=1"
+						url: "/pages/sales/register"
 					})
 				}, 1000)
-			},
-			toOrder() {
-				let date = new Date()
-				let month = date.getFullYear() + '-' + (date.getMonth() + 1)
-				uni.navigateTo({
-					url: 'order-list?'+'&month='+month
-				})
 			}
-
-		},
-
+		}
 	}
 </script>
 
-<style lang="scss">
-	.container {
-		height: 100vh;
-		background-color: #F5F6F6;
-		overflow-y: auto;
+<style scoped lang="scss">
+	page {
+		background-color: $uni-bg-color-grey;
+	}
 
-		.welcome {
-			line-height: 110rpx;
-			padding-left: 50rpx;
+	@mixin item-box() {
+		padding: 0 50rpx;
+		justify-content: space-between;
+		align-items: center;
+		height: 88rpx;
+		background-color: #FFFFFF;
+
+		.text {
+			color: #333333;
+			font-size: 30rpx;
 		}
 
-		.numbox {
-			padding: 60rpx 30rpx;
-			background: #fff;
-
-			.numitem {
-				width: 50%;
-				text-align: center;
-				font-size: 30rpx;
-				box-sizing: border-box;
-
-				&:nth-child(1) {
-					border-right: 2rpx solid #ddd;
-				}
-
-				.number {
-					font-size: 52rpx;
-					padding-bottom: 10rpx;
-					color: #4B8BE8;
-				}
-			}
-
-		}
-
-		.item-list {
-			background-color: #FFFFFF;
-			height: 108rpx;
-			margin-top: 10rpx;
-			position: relative;
-			padding-right: 40rpx;
-
-			.left-name {
-				height: 106rpx;
-				flex: 1;
-				line-height: 106rpx;
-				font-size: 32rpx;
-				color: #333333;
-				padding-left: 60rpx;
-			}
-
-			.right-arrow {
-				// position: absolute;
-				// right: 60rpx;
-				width: 18rpx;
-				// height: 26rpx;
-				// top: 40rpx;
-
-			}
-
-			.line {
-				height: 6rpx;
-				background-color: #F5F6F6;
-			}
-		}
-
-		.bottom {
-			background-color: #F5F6F6;
-			height: 400px;
+		image {
+			width: 15rpx;
+			height: 27rpx;
 		}
 	}
 
-	.pagebottombt {
-		padding: 120rpx 0 100rpx;
+	.container {
+		.head {
+			color: #333333;
+			font-size: 32rpx;
 
-		view {
-			background: #4B8BE8;
-			color: #fff;
-			text-align: center;
-			font-size: 34rpx;
+			text {
+				display: inline-block;
+				padding: 36rpx 0 40rpx 50rpx;
+			}
+		}
+
+		.item {
+			.text-box {
+				@include item-box;
+			}
+
+			.item-subtext {
+				padding-left: 50rpx;
+				color: #999999;
+				font-size: 26rpx;
+				height: 84rpx;
+				padding-top: 20rpx;
+			}
+		}
+
+		.auth-box {
+			view {
+				padding: 0 50rpx;
+				background-color: #FFFFFF;
+
+				.text-box {
+					@include item-box;
+					padding: 0 0;
+				}
+			}
+
+			.border-bottom {
+				border-bottom: 1rpx solid #EEEEEE;
+			}
+		}
+
+		.login-out {
+			margin: 0 auto;
+			width: 628rpx;
+			height: 88rpx;
 			line-height: 88rpx;
+			text-align: center;
+			background-color: #4789EB;
 			border-radius: 45rpx;
-			margin: 0 60rpx 0 60rpx;
+			color: #FFFFFF;
+			margin-top: 80rpx;
 		}
 	}
 </style>

@@ -7,9 +7,7 @@
 			baseUrl: "http://weixinapi-test.cvddr.com",
 			imageUrl: "https://bgjdapi-test.ttxyw.cn/upload/mini",
 			mydata: 1,
-			// AppID:"wx152a400c7aa92a9e",
-			// AppSecret:"05ba4e0d30666a44d2c5be39fabf759d",
-			isSales:false,
+			isSales:true,
 		},
 		onLaunch: function(option) {
 
