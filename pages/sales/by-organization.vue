@@ -58,6 +58,7 @@
 
 			<view class="origanzePopup flexc">
 				<view class="head flex">
+					<text class="tip">点击三角图标展开或关闭，点击文字选中</text>
 					<image src="../../static/icon_close.png" @click="toggleOrganize(false)"></image>
 				</view>
 				<scroll-view scroll-y>
@@ -185,8 +186,11 @@
 			padding: 60rpx;
 
 			.head {
-				justify-content: flex-end;
-
+				justify-content: space-between;
+				.tip{
+					color: #999999;
+					font-size: 28rpx;
+				}
 				image {
 					width: 24rpx;
 					height: 24rpx;
