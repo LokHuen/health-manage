@@ -345,7 +345,7 @@
 		{
 			"path": "pages/sales/register",
 			"style": {
-				"navigationBarTitleText": "业务员登录"
+				"navigationBarTitleText": ""
 			}
 		},
 		{
