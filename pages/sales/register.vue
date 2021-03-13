@@ -56,7 +56,7 @@
 					app.setCache("orgName",res.data.orgName);//部门名称
 					
 					uni.reLaunch({
-						url: "/pages/sales/index",
+						url: "/pages/sales/index?isSales=1",
 					})
 				}).catch((res)=>{
 					app.tip(res);
