@@ -61,7 +61,7 @@
 		},
 		computed: {
 			list: function() {
-				return ["按月统计订单数据", this.sales.salesId ? "" : '名片码', "绑定的医生", "患者列表", "资源报备"]
+				return ["按月统计订单数据", this.sales.salesId ? "" : '名片码', "医生列表", "患者列表", "资源报备"]
 			}
 		},
 		methods: {
