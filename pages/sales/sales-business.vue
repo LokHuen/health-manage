@@ -9,7 +9,7 @@
 				</view>
 				<view class="head-item flexc">
 					<text class="value">{{info.income||0}}</text>
-					<text class="key">本月订单总金额（元）</text>
+					<text class="key">本月收益（元）</text>
 				</view>
 				
 			</view>

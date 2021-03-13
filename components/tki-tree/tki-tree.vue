@@ -7,10 +7,10 @@
 					zIndex: item.rank*-1 +50
 				}]" :class="{
 					border: border === true,
-					show: item.show||(item.rank==1),
+					show: item.show,
 					last: item.lastRank,
-					showchild: item.showChild||(item.rank==1),
-					 open: item.open||(item.rank==0),
+					showchild: item.showChild,
+					 open: item.open,
 				}">
 
 					<view class="flex">
@@ -186,7 +186,7 @@
 			},
 			// 点击
 			_treeItemTap(item, index) {
-				if (item.rank == 0) return
+				// if (item.rank == 0) return
 				if (item.lastRank === true) {
 					//点击最后一级时触发事件
 					this.treeList[index].checked = !this.treeList[index].checked
