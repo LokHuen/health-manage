@@ -3,13 +3,13 @@
 		<view class="pagebackground"></view>
 		<view>
 			<view class="flex userlist" v-for="(item,index) in list" :key="index" @click="toDoctor(item)">
-				<image :src="item.wx_portrait" mode="aspectFill" class="userhead"></image>
+				<image :src="item.portrait" mode="aspectFill" class="userhead"></image>
 				<view style="flex:1;">
-					<view class="username">{{item.doctor_name}}</view>
-					<view class="userinfo">{{item.hospital}}</view>
+					<view class="username">{{item.doctorName+item.technicalTitle}}</view>
+					<view class="userinfo">{{item.hospital+item.department}}</view>
 				</view>
 				<view class="flex usernum">
-					<text>{{item.bind_patient||0}}</text>患者
+					<text>{{item.count||0}}</text>患者
 				</view>
 			</view>
 		</view>

@@ -83,7 +83,9 @@ var api = {
 
 
 	//业务员
-	salesuserlist:(data)=>{return rq("/wx/salesman/bindUserList",data,"GET");}, //绑定的用户
+	//salesuserlist:(data)=>{return rq("/wx/salesman/bindUserList",data,"GET");}, //绑定的用户
+	   
+	 salesuserlist:(data)=>{return rq("/wx/salesman/getBindDoctor",data,"GET");}, //绑定的用户
 	salesregister:(data)=>{return rq("/wx/salesman/login",data,"POST");}, //登录
 	//保存当前用户的身份认证
 	sale_saveAuthentication:(data)=>{return rq("/wx/sales/auth/save",data,"POST");},
