@@ -1,5 +1,8 @@
 <template>
 	<view class="container flexc">
+		<view>
+			<image src="../../static/warnshow.jpg" style="width:100vw;display:block;" mode="widthFix" @click="towarnpage"></image>
+		</view>
 		<view class="head">
 			<text>欢迎您,{{user.name}}</text>
 		</view>
@@ -163,7 +166,12 @@
 						url: "/pages/sales/register?isSales=1"
 					})
 				}, 1000)
-			}
+			},
+			towarnpage(){
+				uni.navigateTo({
+					url:"/pages/doctor/warn"
+				})
+			},
 		}
 	}
 </script>
