@@ -10,7 +10,7 @@
 					show: item.show,
 					last: item.lastRank,
 					showchild: item.showChild,
-					 open: item.open,
+					open: item.open,
 				}">
 
 					<view class="flex">
@@ -141,11 +141,10 @@
 						source: item,
 						parentId, // 父级id数组
 						parents, // 父级id数组
-						rank, // 层级
-						showChild: true, //子级是否显示
-						open: true, //是否打开
-						//show: rank === 0, // 自身是否显示
-						show:true,
+						rank, // 层级K
+						showChild: rank === 0, //子级是否显示
+						open: rank === 0, //是否打开
+						show: rank === 0||rank===1, // 自身是否显示
 						hideArr: [],
 						orChecked: item.checked ? item.checked : false,
 						checked: item.checked ? item.checked : false,

@@ -1,17 +1,22 @@
 <template>
 	<view class="contentbox">
-		<view class="bigtitle">欢迎登录业务管理系统</view>
-		<view class="flex linebox">
-			<view class="lefttext flex"><image src="../../static/sales/user.png" mode="widthFix"></image>帐号</view>
-			<input class="rightarea" v-model="form.username" maxlength="20" placeholder="请输入" />
+		<view>
+			<image src="../../static/warnshow.jpg" style="width:100vw;display:block;" mode="widthFix" @click="towarnpage"></image>
 		</view>
-		<view class="flex linebox">
-			<view class="lefttext flex"><image src="../../static/sales/lock.png" mode="widthFix"></image>密码</view>
-			<input class="rightarea" password="true" v-model="form.password" maxlength="20" placeholder="请输入" />
-		</view>
-	
-		<view class="pagebottombt">
-			<view @click="saveinfo">登 录</view>
+		<view style="padding: 0 60rpx;">
+			<view class="bigtitle">欢迎登录业务管理系统</view>
+			<view class="flex linebox">
+				<view class="lefttext flex"><image src="../../static/sales/user.png" mode="widthFix"></image>帐号</view>
+				<input class="rightarea" v-model="form.username" maxlength="20" placeholder="请输入" />
+			</view>
+			<view class="flex linebox">
+				<view class="lefttext flex"><image src="../../static/sales/lock.png" mode="widthFix"></image>密码</view>
+				<input class="rightarea" password="true" v-model="form.password" maxlength="20" placeholder="请输入" />
+			</view>
+				
+			<view class="pagebottombt">
+				<view @click="saveinfo">登 录</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -62,13 +67,17 @@
 					app.tip(res);
 				})
 			},
+			towarnpage(){
+				uni.navigateTo({
+					url:"/pages/doctor/warn"
+				})
+			},
 		}
 	}
 </script>
 
 <style lang="scss">
 	.contentbox {
-		padding: 0 60rpx;
 		.bigtitle{
 			font-size: 44rpx;padding:56rpx 0 80rpx;
 			font-weight: 600;
