@@ -148,7 +148,7 @@
 			},
 		},
 		onLoad(props) {
-			this.qrCode = props.qrCode
+			this.qrCode = app.globalData.baseUrl+props.qrCode
 			this.params.bindDoctor = props.doctorId
 			this.dortorName = props.dortorName
 			this.getListData()

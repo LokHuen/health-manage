@@ -49,7 +49,7 @@
 			},
 			toDoctor(item) {
 				uni.navigateTo({
-					url: '../doctor/doctor-patient-list?doctorId=' + item.id+'&dortorName='+item.doctor_name+'&qrCode='+item.qrCode
+					url: '../doctor/doctor-patient-list?doctorId=' + item.id+'&dortorName='+item.doctorName+'&qrCode='+item.qrCode
 				})
 			},
 			showcode(item) {

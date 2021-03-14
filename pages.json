@@ -1,6 +1,11 @@
 {
 	"pages": [
-
+        {
+			"path": "pages/doctor/warn",
+			"style": {
+				"navigationBarTitleText": "详情"
+			}
+		},
 		{
 			"path": "pages/sales/data-center",
 			"style": {
@@ -31,12 +36,6 @@
 			"path": "pages/agent/index",
 			"style": {
 				"navigationBarTitleText": "业务管理中心"
-			}
-		},
-		{
-			"path": "pages/doctor/warn",
-			"style": {
-				"navigationBarTitleText": "详情"
 			}
 		},
 		{

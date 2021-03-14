@@ -71,9 +71,9 @@
 						url: 'month-order-list?pageResource=1' + '&salesId=' + this.sales.salesId
 					})
 				} else if (index == 1) {
+					let sid=this.sales.salesId ? this.sales.salesId : app.getCache('uid')
 					uni.navigateTo({
-						url: '../sales/sales-business-card?id=' + this.sales.salesId ? this.sales.salesId : app
-							.getCache('uid')
+						url: 'sales-business-card?id=' + sid
 					});
 				} else if (index == 2) {
 					uni.navigateTo({
