@@ -1,5 +1,7 @@
 <template>
 	<view class="container flexc">
+		<view class="warn">点击三角图标展开或关闭，点击文字选中</view>
+		
 		<tki-tree :range="organizeList" rangeKey="name" selectParent @treeItemSelect="treeItemSelect"
 			:isCheck="false" />
 	</view>
@@ -48,4 +50,5 @@
 		height: 100vh;
 		padding: 0 60rpx;
 	}
+	.warn{font-size: 28rpx;color:#888;padding:20rpx 0;}
 </style>

@@ -31,11 +31,14 @@
 .tki-tree-item.last:before {
 	opacity: 0;
 }
-
+.imgbox{
+	padding-left: 40rpx;
+	margin-left: -40rpx;
+}
 .tki-tree-icon {
 	width: 26rpx;
 	height: 26rpx;
-	margin-right: 10rpx;
+	padding: 16rpx 12rpx 16rpx 6rpx;
 	
 }
 

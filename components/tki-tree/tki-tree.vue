@@ -13,10 +13,10 @@
 					open: item.open,
 				}">
 
-					<view class="flex">
+					<view class="flex imgbox" @tap.stop="_treeItemTap(item, index)">
 						<image class="tki-tree-icon"
 							:src="item.lastRank ? lastIcon : item.showChild ? currentIcon : defaultIcon"
-							@tap.stop="_treeItemTap(item, index)"></image>
+							></image>
 					</view>
 					<view @tap.stop="_treeItemSelect(item, index)" class="flex" style="flex: 1;">
 						<text style="flex: 1;text-align: left;">{{item.name}}</text>
@@ -27,7 +27,7 @@
 									v-if="item.checked&&isCheck">
 								</image>
 								<text v-if="!isCheck" style="flex: 1;text-align: right;"
-									@tap.stop="_treeItemSelect(item, index)">{{item.source.directSub}}人
+									@tap.stop="_treeItemSelect(item, index)">{{item.source.teamNum}}人
 								</text>
 							</view>
 						</view>

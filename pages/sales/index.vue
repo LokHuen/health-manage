@@ -6,7 +6,7 @@
 		<view class="head">
 			<text>欢迎您,{{user.name}}</text>
 		</view>
-		<view class="content flexc">
+		<view class="content flexc" style="padding-bottom:20px;">
 
 			<view class="item flexc">
 				<view class="flex text-box" @click="toMybusiness">
