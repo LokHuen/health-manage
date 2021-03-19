@@ -4,7 +4,7 @@
 	} from "common/api";
 	export default {
 		globalData: {
-			baseUrl: "http://weixinapi.cvddr-test.com",
+			baseUrl: "http://weixinapi-test.cvddr.com",
 			imageUrl: "https://bgjdapi-test.ttxyw.cn/upload/mini",
 			mydata: 1,
 			isSales:false,

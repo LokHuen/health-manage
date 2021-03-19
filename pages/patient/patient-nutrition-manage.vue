@@ -1556,7 +1556,7 @@
 			margin-top: 40rpx;
 			margin-right: 40rpx;
 			margin-left: 40rpx;
-			box-shadow: 1px 1px 5px #999999;
+			// box-shadow: 1px 1px 5px #999999;
 			color: #333333;
 			text-align: center;
 
