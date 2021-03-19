@@ -1486,6 +1486,7 @@
 
 		.health-msg-box {
 			margin: 0 40rpx 30rpx;
+			margin-top: 40rpx;
 			box-shadow: 1px 1px 5px #999999;
 
 			&.other {
@@ -1553,7 +1554,7 @@
 		}
 
 		.record-chart-box {
-			margin-top: 40rpx;
+			// margin-top: 40rpx;
 			margin-right: 40rpx;
 			margin-left: 40rpx;
 			// box-shadow: 1px 1px 5px #999999;
@@ -1570,7 +1571,6 @@
 				font-size: 12px;
 				margin-top: 19rpx;
 			}
-
 		}
 
 		.last-one {
