@@ -24,7 +24,54 @@
 				</view>
 			</view>
 		</view>
-		<view class="health-msg-box" v-if="infoData.weight || infoData.standardWeight">
+		
+		
+		<view class="record-chart-box" v-if="(hasLoadLindData==0)||(lineData.categories.length>0 &&hasLoadLindData ==1)">
+			<view class="record-chart-title">{{testtype==1?"PG-":""}}SGA营养状况评估</view>
+			<view v-show="testtype==1" class="record-chart-subtitle">分值越小，营养状况越好</view>
+		
+			<!-- 折线Line纯数字-->
+			<!-- <view class="line-chart-box">
+				<line-chart class="line-chart" ref="lineData" canvasId="index_line_2" :dataAs="lineData" :splitNumber="splitNumber" />
+			</view> -->
+			<div id="echarts" class="echarts"></div>
+			<view style="font-size:24rpx;padding:0 0 30rpx 40rpx;text-align:left;">
+				<view v-show="testtype==1">
+			<view ><text class="centerwh"><text class="smallblockleft color1"></text>0~1:无营养不良</text><text class="smallblockleft color2"></text>2~3:可疑营养不良 </view>
+			<view ><text class="centerwh"><text class="smallblockleft color3"></text>4~8:中度营养不良</text><text class="smallblockleft color4"></text>>=9:重度营养不良</view>
+				</view>
+				<view v-show="testtype==2">
+					<text class="centerwh1"><text class="smallblockleft color1" style="background-color:#a8cd97;"></text>营养良好</text>
+					<text class="centerwh1"><text class="smallblockleft color2"></text>轻-中度营养不良</text>
+					<text class="centerwh1"><text class="smallblockleft color3"></text>重度营养不良</text>
+				</view>
+			</view>
+		</view>
+		
+		<view class="last-one" v-if="latelyData.result">最近一次评价</view>
+		
+		<view class="listContent" v-if="latelyData.result">
+			<view class="health-list-item" @click="toanswerlist(latelyData)">
+				<view class="health-list-item-avatar-content">
+					<image class="health-list-item-avatar" :src="latelyData.result=='营养良好'?'../../static/icon/smile.png':'../../static/icon/cry_icon.png'"></image>
+				</view>
+				<view class="health-list-item-content">
+					<view class="health-list-item-title">{{latelyData.result}}</view>
+					<view class="health-list-item-detail">{{latelyData.phase}}</view>
+					<view class="health-list-item-time">{{'测评时间：'+latelyData.completeTime}}</view>
+					<view class="line" v-if="showDetail"></view>
+					<view class="advice-content">
+						<rich-text :nodes="latelyData.content" v-if="showDetail"></rich-text>
+					</view>
+		
+				</view>
+				<image class="health-list-item-arrow" :src="showDetail?'../../static/icon/right_arrow_top.png':'../../static/icon/right_arrow.png'"
+				 mode="widthFix" @click.stop="showDetailMessage" v-show="false"></image>
+			</view>
+		</view>
+		
+		
+		<view class="health-msg-box" v-if="infoData.weight || infoData.standardWeight" style="margin-top: 40rpx;">
 			<view class="health-list-box">
 				<view class="health-list-item">
 					<view class="top-title">当前体重</view>
@@ -111,7 +158,6 @@
 				</view>
 				
 			</view>
-			
 		</view>
 		<view v-if="dayindex!=0">
 			
@@ -146,49 +192,7 @@
 			<view style="height:10rpx;"></view>
 		</view>
 
-		<view class="record-chart-box" v-if="(hasLoadLindData==0)||(lineData.categories.length>0 &&hasLoadLindData ==1)">
-			<view class="record-chart-title">{{testtype==1?"PG-":""}}SGA营养状况评估</view>
-			<view v-show="testtype==1" class="record-chart-subtitle">分值越小，营养状况越好</view>
-
-			<!-- 折线Line纯数字-->
-			<!-- <view class="line-chart-box">
-				<line-chart class="line-chart" ref="lineData" canvasId="index_line_2" :dataAs="lineData" :splitNumber="splitNumber" />
-			</view> -->
-			<div id="echarts" class="echarts"></div>
-			<view style="font-size:24rpx;padding:0 0 30rpx 40rpx;text-align:left;">
-				<view v-show="testtype==1">
-			<view ><text class="centerwh"><text class="smallblockleft color1"></text>0~1:无营养不良</text><text class="smallblockleft color2"></text>2~3:可疑营养不良 </view>
-			<view ><text class="centerwh"><text class="smallblockleft color3"></text>4~8:中度营养不良</text><text class="smallblockleft color4"></text>>=9:重度营养不良</view>
-				</view>
-				<view v-show="testtype==2">
-					<text class="centerwh1"><text class="smallblockleft color1" style="background-color:#a8cd97;"></text>营养良好</text>
-					<text class="centerwh1"><text class="smallblockleft color2"></text>轻-中度营养不良</text>
-					<text class="centerwh1"><text class="smallblockleft color3"></text>重度营养不良</text>
-				</view>
-			</view>
-		</view>
-
-		<view class="last-one" v-if="latelyData.result">最近一次评价</view>
-
-		<view class="listContent" v-if="latelyData.result">
-			<view class="health-list-item" @click="toanswerlist(latelyData)">
-				<view class="health-list-item-avatar-content">
-					<image class="health-list-item-avatar" :src="latelyData.result=='营养良好'?'../../static/icon/smile.png':'../../static/icon/cry_icon.png'"></image>
-				</view>
-				<view class="health-list-item-content">
-					<view class="health-list-item-title">{{latelyData.result}}</view>
-					<view class="health-list-item-detail">{{latelyData.phase}}</view>
-					<view class="health-list-item-time">{{'测评时间：'+latelyData.completeTime}}</view>
-					<view class="line" v-if="showDetail"></view>
-					<view class="advice-content">
-						<rich-text :nodes="latelyData.content" v-if="showDetail"></rich-text>
-					</view>
-
-				</view>
-				<image class="health-list-item-arrow" :src="showDetail?'../../static/icon/right_arrow_top.png':'../../static/icon/right_arrow.png'"
-				 mode="widthFix" @click.stop="showDetailMessage" v-show="false"></image>
-			</view>
-		</view>
+		
 
 		<view class="button-box">
 			<button type="default" class="button" @click="beginTest" v-show="showAdvice==1">医 嘱</button>
@@ -1400,10 +1404,10 @@
 		}
 
 		.record-chart-box {
-			margin-top: 40rpx;
+			// margin-top: 40rpx;
 			margin-right: 40rpx;
 			margin-left: 40rpx;
-			box-shadow: 1px 1px 5px #999999;
+			// box-shadow: 1px 1px 5px #999999;
 			color: #333333;
 			text-align: center;
 
@@ -1417,12 +1421,11 @@
 				font-size: 12px;
 				margin-top: 19rpx;
 			}
-
 		}
 
 		.last-one {
 			color: #333333;
-			font-size: 15px;
+			font-size: 14px;
 			margin-left: 50rpx;
 			margin-top: 60rpx;
 		}
