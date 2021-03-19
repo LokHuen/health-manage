@@ -590,6 +590,7 @@
 				if (this.formQrCode == 1) {
 					app.savePatientInfo({
 						patientName: this.patientName,
+						patientGender: this.patientGender,
 						phone: this.phone,
 						illness: this.illness,
 						height: this.height,
