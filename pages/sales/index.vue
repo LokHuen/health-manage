@@ -50,7 +50,7 @@
 				</view>
 			</view>
 			
-			<view class="item flexc" style="margin-top: 30rpx;" v-if="user.isCrossPlatform==1">
+			<view class="item flexc" style="margin-top: 30rpx;">
 				<view class="flex text-box" @click="toDatabase">
                      <view class="flex">
                      	<text >资料库</text>
