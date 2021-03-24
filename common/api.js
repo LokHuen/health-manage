@@ -412,8 +412,13 @@ var api = {
 		return rq("/wx/user/message/list", data, "GET");
 	},
 	
-	
-
+	//========新加
+	//资料库目录
+	fileFindDir:(data)=>{return rq("/wx/doc/file/findDir",data,"GET");}, 
+	//文件分页列表
+	fileList:(data)=>{return rq("/wx/doc/file/findPage",data,"GET");}, 
+	//发送邮件
+	sendMail:(data)=>{return rq("/wx/doc/file/sendMail",data,"GET");}, 
 
 }
 
