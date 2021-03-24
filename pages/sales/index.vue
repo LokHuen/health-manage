@@ -37,6 +37,19 @@
 					<image src="../../static/icon/more_icon.png"></image>
 				</view>
 			</view>
+			
+			<view class="item flexc" style="margin-top: 30rpx;" v-if="user.isCrossPlatform==1">
+				<view class="flex text-box" @click="toDatabase">
+                     <view class="flex">
+                     	<text >资料库</text>
+						<view class="new" v-show="showNew">
+							new
+						</view>
+                     </view>
+					
+					<image src="../../static/icon/more_icon.png"></image>
+				</view>
+			</view>
 
 			<view class="auth-box flexc" style="margin-top: 30rpx;">
 				<view @click="toAccount">
@@ -76,7 +89,8 @@
 					orgName: '',
 					isCrossPlatform: 0,
 				},
-				info: {}
+				info: {},
+				showNew:true
 
 			}
 		},
@@ -89,7 +103,15 @@
 			this.user.orgName = app.getCache('orgName')
 			console.log(this.user)
 		},
+		onShow() {
+		    this.judgeNew();	
+		},
 		methods: {
+			judgeNew(){
+				if(app.getCache('dataBase')==1){
+				   this.showNew = false;
+				}
+			},
 			toMybusiness() {
 				uni.navigateTo({
 					url: 'sales-business'
@@ -116,6 +138,12 @@
 				uni.navigateTo({
 					url: 'data-center'
 
+				})
+			},
+			toDatabase(){
+				app.setCache('dataBase',1);
+				uni.navigateTo({
+					url:'database'
 				})
 			},
 			toModifyPsw() {
@@ -200,6 +228,18 @@
 	}
 
 	.container {
+		.new{
+			margin-left: 30rpx;
+            height: 30rpx;
+			line-height: 28rpx;
+			margin-top: 10rpx;
+			font-size: 25rpx;
+			width: 55rpx;
+			text-align: center;
+			color: #FFFFFF;
+			background-color: rgba(191, 9, 9, 100);
+			border-radius: 5rpx;
+		}
 		.head {
 			color: #333333;
 			font-size: 32rpx;

@@ -1,10 +1,32 @@
 {
 	"pages": [
+		
+		
         {
 			"path": "pages/doctor/warn",
 			"style": {
 				"navigationBarTitleText": "详情"
 			}
+		},
+		{
+			"path": "pages/sales/file-detail",
+			"style": {
+				"navigationBarTitleText": "详情"
+			}
+		},
+		{
+			"path": "pages/sales/file-list",
+			"style": {
+				"navigationBarTitleText": "产品资料"
+			},
+			"enablePullDownRefresh": true
+		},
+		{
+			"path": "pages/sales/database",
+			"style": {
+				"navigationBarTitleText": "资料库"
+			},
+			"enablePullDownRefresh": true
 		},
 		{
 			"path": "pages/sales/data-center",
