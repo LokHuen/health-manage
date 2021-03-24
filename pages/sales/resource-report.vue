@@ -438,13 +438,10 @@
 								for (var i = 0; i < res.data.list.length; i++) {
 									if (res.data.list[i].id == this.detailInfo.hospitalId) {
 										this.chooseHospital = res.data.list[i];
-
 										break;
 									}
 								}
-
 							}
-
 						})
 
 
@@ -835,6 +832,7 @@
 				this.technical = '';
 				//如果是继续添加，要把之前传进来的id置空
 				this.id = '';
+				this.monthlyPotentialPatient=0
 				this.$refs.sucesPpopup.close();
 
 			},

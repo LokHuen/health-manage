@@ -39,7 +39,7 @@
 					</view>
 					<view class="flexc right">
 						<text class="report-time">{{item.create_time.split(' ')[0]}} 报备</text>
-						<text class="will-remove">即将被释放</text>
+						<text class="will-remove" v-if="info.release">即将被释放</text>
 					</view>
 					<view class="fix-box flex">
 						<text class="delete" @click.stop="askRemove(item)">删除</text>
