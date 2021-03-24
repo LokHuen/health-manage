@@ -326,11 +326,11 @@
 
 		.title {
 			color: #333333;
-			font-size: 15px;
+			font-size: 34rpx;
 			margin-left: 44rpx;
 			margin-right: 44rpx;
-			padding-top: 40rpx;
-			padding-bottom: 40rpx;
+			padding-top: 30rpx;
+			padding-bottom: 30rpx;
 		}
 
 		.line-space {

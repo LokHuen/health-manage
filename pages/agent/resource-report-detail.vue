@@ -12,7 +12,7 @@
 		
 		<view class="common-box">
 			<view class="left">医院名称</view>
-			<view class="right">{{detailInfo.hospitalId}}</view>
+			<view class="right">{{detailInfo.hospitalName}}</view>
 		</view>
 		
 		<view class="common-box" v-if="detailInfo.type !=1">

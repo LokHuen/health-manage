@@ -1,183 +1,282 @@
 <template>
-	<view class="container">
-		<view class="title" v-if="!params.salesId">我的报备</view>
-		<view class="list-box" v-for="(item,index) in list">
-			<view class="list-title">{{item.type}}</view>
-			<view class="list-desc">{{item.hospital}}</view>
-			<view class="list-desc" v-if="item.type !='医院'">{{item.deptName}}</view>
-			<view class="list-desc" v-if="item.type =='医生'">{{item.doctorNmae+' '+item.technicalTitle}}</view>
-			<view style="height: 15rpx;"></view>
-			<view class="list-desc" @click="cilckItem(item)">
-				<text>{{"月患者数量预估 "}}</text>
-				<text style="color: #A80003;">{{item.monthly_patient||0}}</text>
-				<text>人</text>
+	<view class="container flexc">
+		<view class="flexc tab" v-if="!params.salesId">
+			<view class="flex">
+				<view :class="{'tab-item':true,active:params.status==1}" @click="tabClick(1)">
+					<text>已报备({{info.successNum}})</text>
+				</view>
+				<view :class="{'tab-item':true,active:params.status==0}" @click="tabClick(0)">
+					<text>待审核({{info.waittingAuditNum}})</text>
+				</view>
+				<view :class="{'tab-item':true,active:params.status==-1}" @click="tabClick(-1)">
+					<text>未通过({{info.auditNoPassNum}})</text>
+				</view>
+				<view :class="{'tab-item':true,active:params.status==3}" @click="tabClick(3)">
+					<text>系统移除({{info.delSysNum}})</text>
+				</view>
 			</view>
-			<view class="list-desc" @click="cilckItem(item)">
-				<text>{{"月销售潜力 "}}</text>
-				<text style="color: #A80003;">{{item.completed_order||0}}</text>
-				<text>单</text>
+			<view class="tips">
+				注：如果最近60天内未有订单记录，该资源会被释放
 			</view>
-
-			<view style="height: 40rpx;"></view>
-			<view class="remove" @click="remove(index)" v-if="!params.salesId">移除</view>
 		</view>
-		<view class="no-data-tips" v-if="list.length == 0">暂无数据</view>
-		<!-- <view style="height: 900rpx;" v-if="list.length <4"></view>
-		<view style="height: 200rpx;"></view> -->
-
-
-		<view class="button-box" v-if="!params.salesId">
-			<button type="default" class="button" @click="submit">报备资源</button>
+		<scroll-view :class="{'no-self':params.salesId,'self':!params.salesId,flexc:true,content:true}" scroll-y
+			@scrolltolower="getList(params.pageNo+1)">
+			<view
+				style="justify-content: center;font-size: 32rpx; color: #999999;padding-top: 200rpx;text-align: center;"
+				v-if="list.length==0">
+				<text>暂无数据</text>
+			</view>
+			<view class="flexc list">
+				<view class="item flex" v-for="(item,index) in list" @click="toDetail(item)">
+					<view class="flexc left">
+						<view class="flex" style="margin-bottom: 10rpx;" v-if="item.doctorNmae">
+							<text class="doctor">{{item.doctorNmae}}</text>
+							<text class="post">{{item.technicalTitle}}</text>
+						</view>
+						<text class="hospital">{{item.hospital}} {{item.deptName}}</text>
+						<text style="margin-top: 20rpx;">月患者数量预估{{item.monthly_patient}}人</text>
+						<text>月成交单数预估{{item.completed_order}}人</text>
+					</view>
+					<view class="flexc right">
+						<text class="report-time">{{item.create_time.split(' ')[0]}} 报备</text>
+						<text class="will-remove">即将被释放</text>
+					</view>
+					<view class="fix-box flex">
+						<text class="delete" @click.stop="askRemove(item)">删除</text>
+						<text @click.stop="toUpdates(item)">更新信息</text>
+					</view>
+				</view>
+			</view>
+		</scroll-view>
+		<view class="flex bottom">
+			<text class="report-count">还能报备({{info.canApplyNum}})个客户</text>
+			<text class="btn-report" @click="toReport" v-if="!params.salesId">报备资源</text>
 		</view>
+
+		<uni-popup ref="removePop">
+			<view class="remove-pop flexc">
+				<view>
+					<text style="font-size: 34rpx; color: #333333;margin-left: 30rpx;">确定移除</text>
+				</view>
+				<view class="flex"
+					style="margin-top: 100rpx;text-align: center;border-top: 1rpx solid #f7f7f7;height: 88rpx; font-size: 34rpx;">
+					<text style="flex: 1;border-right: 1rpx solid #f7f7f7;height: 88rpx;line-height: 88rpx;"
+						@click="closeRemove">取消</text>
+					<text style="flex: 1;height: 88rpx;line-height: 88rpx; color: #4B8BE8;" @click="doRemove">确定</text>
+				</view>
+			</view>
+		</uni-popup>
 	</view>
 </template>
 
 <script>
 	const app = getApp();
 	export default {
-
 		data() {
 			return {
-				list: [],
 				params: {
 					pageNo: 1,
-					salesId: ''
-				}
+					salesId: '',
+					status: 1,
+				},
+				list: [],
+				info: {
+					recordCount: 0,
+					pageCount: 1
+				},
+				tempItem: {}
 			}
-		},
-		onShow() {
-			this.params.pageNo = 1;
-			this.getListData();
 		},
 		onLoad(props) {
 			if (props.salesId) {
-				this.params.salesId = props.salesId;
+				this.params.salesId = props.salesId
 			}
 		},
-		onPullDownRefresh() {
-			this.params.pageNo = 1;
-			this.getListData();
-		},
-		onReachBottom() {
-			this.params.pageNo++;
-			this.getListData();
+		onShow() {
+			this.getList(1)
 		},
 		methods: {
-			cilckItem(item) {
-				if (this.params.salesId) {
-					uni.navigateTo({
-						url: '../agent/resource-report-detail?id=' + item.id
-					})
-				} else {
-					uni.navigateTo({
-						url: 'resource-report?id=' + item.id
-					})
-				}
+			tabClick(status) {
+				this.params.status = status
+				this.info.pageCount = 1
+				this.getList(1)
 			},
-			remove(index) {
-				var id = this.list[index].id;
-				app.removeResource({
-					id: id
-				}).then(res => {
-					if (res.status == 1) {
-						app.tip('移除成功');
-						this.list.splice(index, 1);
-					}
-				});
-			},
-			submit() {
+			toReport() {
 				uni.navigateTo({
 					url: 'resource-report'
 				})
-
 			},
-			getListData() {
-				app.resourceList(this.params).then(res => {
-					if (res.status === 1) {
-						if (this.params.pageNo === 1) {
-							this.list = res.data.list;
-						} else {
-							if (res.data.pageCount >= this.params.pageNo) {
-								this.list = this.list.concat(res.data.list);
+			getList(pageNo = 1) {
+				if (this.info.pageCount >= pageNo) {
+					this.params.pageNo = pageNo
+					app.resourceList(this.params).then(res => {
+						if (res.status === 1) {
+							this.info = res.data
+							if (this.params.pageNo === 1) {
+								this.list = res.data.list;
+							} else {
+								if (res.data.pageCount >= this.params.pageNo) {
+									this.list = this.list.concat(res.data.list);
+								}
 							}
 						}
+					});
+				}
+			},
+			toDetail(item) {
+				uni.navigateTo({
+					url: '../agent/resource-report-detail?id=' + item.id
+				})
+			},
+			toUpdates(item) {
+				uni.navigateTo({
+					url: 'resource-report?id=' + item.id
+				})
+			},
+			askRemove(item) {
+				this.tempItem = item
+				this.$refs.removePop.open()
+			},
+			closeRemove() {
+				this.$refs.removePop.close()
+			},
+			doRemove() {
+				app.removeResource({
+					id: this.tempItem.id
+				}).then(res => {
+					if (res.status == 1) {
+						app.tip('移除成功');
+						this.closeRemove()
+						this.getList(1)
 					}
-					uni.stopPullDownRefresh();
 				});
 			}
-
-		},
-
+		}
 	}
 </script>
 
-<style lang="scss">
-	page {
-		background-color: $uni-defautt-bg-color;
-	}
+<style lang="scss" scoped>
+	$tab-height:120rpx;
+	$bottom-height:88rpx;
+	$main-color:#4B8BE8;
 
 	.container {
-		// background-color: #F5F6F6;
-		height: 1100vh;
-
-		.no-data-tips {
-			margin-top: 100rpx;
-			text-align: center;
-			font-size: 30rpx;
-			color: #666666;
-		}
-
-		.title {
-			background-color: #F5F6F6;
+		.remove-pop {
 			padding-top: 30rpx;
-			margin-left: 50rpx;
-			font-size: 26rpx;
-		}
-
-		.list-box {
-			margin-top: 20rpx;
-			margin-left: 30rpx;
-			margin-right: 30rpx;
 			background-color: #FFFFFF;
-			position: relative;
+			border-radius: 12rpx;
+			width: 680rpx;
+			margin: 0 auto;
+		}
 
-			.list-title {
-				padding-top: 20rpx;
-				margin-left: 20rpx;
-				font-size: 26rpx;
-				color: #666666;
-			}
+		.tab {
+			height: $tab-height;
+			background-color: $uni-defautt-bg-color;
+			padding-top: 24rpx;
+			box-sizing: border-box;
 
-			.list-desc {
-				margin-left: 20rpx;
-				margin-top: 20rpx;
-				color: #333333;
+			.tab-item {
+				flex: 1;
+				justify-content: center;
 				font-size: 30rpx;
+				text-align: center;
+				font-weight: bold;
 			}
 
-			.remove {
-				position: absolute;
-				color: #4B8BE8;
-				right: 30rpx;
-				top: 20rpx;
-				font-size: 26rpx;
+			.active {
+				color: $main-color;
+			}
+
+			.tips {
+				font-size: 22rpx;
+				color: #999999;
+				margin-left: 30rpx;
+				margin-top: 10rpx;
+
 			}
 		}
 
-		.button-box {
-			position: fixed;
-			bottom: 0;
-			height: 140rpx;
-			width: 100%;
+		.content {
+			// height: calc(100vh - #{$tab-height} - #{$bottom-height});
+			background-color: $uni-defautt-bg-color;
+			padding-bottom: 18rpx;
+			box-sizing: border-box;
 
-			.button {
-				height: 90rpx;
-				line-height: 90rpx;
-				width: 81%;
-				background-color: #4B8BE8 !important;
-				border-radius: 45rpx;
+			.list {
+				padding: 0 30rpx;
+
+				.item {
+					color: #333333;
+					font-size: 30rpx;
+					position: relative;
+					align-items: flex-start;
+					padding: 24rpx;
+					padding-bottom: 32rpx;
+					background-color: #FFFFFF;
+					border-radius: 12rpx;
+					margin-top: 18rpx;
+
+					.left {
+						flex: 1;
+
+						.doctor {
+							font-size: 32rpx;
+							font-weight: bold;
+							margin-right: 12rpx;
+						}
+					}
+
+					.right {
+						.report-time {
+							color: #999999;
+						}
+
+						.will-remove {
+							color: #999999;
+							text-align: right;
+							margin-top: 15rpx;
+						}
+					}
+
+					.fix-box {
+						position: absolute;
+						right: 24rpx;
+						bottom: 32rpx;
+						color: $main-color;
+						font-size: 30rpx;
+
+						.delete {
+							margin-right: 12rpx;
+						}
+					}
+				}
+			}
+		}
+
+		.self {
+			height: calc(100vh - #{$tab-height} - #{$bottom-height});
+		}
+
+		.no-self {
+			height: calc(100vh - #{$bottom-height});
+		}
+
+		.bottom {
+			height: $bottom-height;
+			justify-content: space-between;
+			padding: 0 24rpx;
+
+			.report-count {
+				font-size: 30rpx;
+				color: #999999;
+			}
+
+			.btn-report {
+				font-size: 32rpx;
 				color: #FFFFFF;
-				font-size: 17px;
+				padding: 15rpx 40rpx;
+				background-color: $main-color;
+				border-radius: 10rpx;
 			}
 		}
 	}

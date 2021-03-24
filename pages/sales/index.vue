@@ -1,13 +1,25 @@
 <template>
 	<view class="container flexc">
 		<view>
-			<image src="../../static/warnshow.jpg" style="width:100vw;display:block;" mode="widthFix" @click="towarnpage"></image>
+			<image src="../../static/warnshow.jpg" style="width:100vw;display:block;" mode="widthFix"
+				@click="towarnpage"></image>
 		</view>
-		<view class="head">
-			<text>欢迎您,{{user.name}}</text>
+		<view class="head flexc">
+			<view class="flex" style="justify-content: space-between;">
+				<text class="username">欢迎您,{{user.name}}</text>
+				<view style="padding: 10rpx;">
+					<image style="width: 32rpx;height: 32rpx;" src="../../static/icon/tishi.png" @click="toMessages(false)">
+					</image>
+				</view>
+				<view class="msg-point" v-if="msgInfo.status==0"></view>
+			</view>
+			<view class="msg-content flex" v-if="msgInfo.status==0" @click="toMessages(true)">
+				<image style="width: 32rpx;height: 32rpx;margin-right: 12rpx;" src="../../static/icon/tishi.png">
+				</image>
+				<text style="color: #DD524D">{{msgInfo.content}}</text>
+			</view>
 		</view>
 		<view class="content flexc" style="padding-bottom:20px;">
-
 			<view class="item flexc">
 				<view class="flex text-box" @click="toMybusiness">
 					<text class="item-text">我开展的业务</text>
@@ -76,7 +88,12 @@
 					orgName: '',
 					isCrossPlatform: 0,
 				},
-				info: {}
+				info: {},
+				msgInfo: {
+					id: '',
+					content: '',
+					status: 1
+				}
 
 			}
 		},
@@ -90,6 +107,27 @@
 			console.log(this.user)
 		},
 		methods: {
+			toMessages(needRead) {
+				if (needRead) {
+					app.readMessage({
+						id: this.msgInfo.id
+					}).then((res) => {
+						this.msgInfo.status = 1
+						uni.navigateTo({
+							url: 'message-list'
+						})
+					}).catch((err) => {
+						uni.navigateTo({
+							url: 'message-list'
+						})
+					})
+				} else {
+					uni.navigateTo({
+						url: 'message-list'
+					})
+				}
+
+			},
 			toMybusiness() {
 				uni.navigateTo({
 					url: 'sales-business'
@@ -109,7 +147,6 @@
 			toByorganization() {
 				uni.navigateTo({
 					url: 'by-organization?orgId=' + this.user.orgId + '&orgName=' + this.user.orgName
-
 				})
 			},
 			toDataCenter() {
@@ -167,11 +204,16 @@
 					})
 				}, 1000)
 			},
-			towarnpage(){
+			towarnpage() {
 				uni.navigateTo({
-					url:"/pages/doctor/warn"
+					url: "/pages/doctor/warn"
 				})
 			},
+			hasMesage() {
+				app.hasMessage().then((res) => {
+					this.msgInfo = res.data
+				})
+			}
 		}
 	}
 </script>
@@ -201,12 +243,25 @@
 
 	.container {
 		.head {
+			padding: 32rpx 50rpx;
 			color: #333333;
 			font-size: 32rpx;
+			position: relative;
 
-			text {
-				display: inline-block;
-				padding: 36rpx 0 40rpx 50rpx;
+			.msg-box {
+				width: 52rpx;
+				height: 52rpx;
+				margin-top: 10rpx;
+			}
+
+			.msg-point {
+				position: absolute;
+				top: 30rpx;
+				right: 30rpx;
+				width: 16rpx;
+				height: 16rpx;
+				background-color: #DD524D;
+				border-radius: 8rpx;
 			}
 		}
 

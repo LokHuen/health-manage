@@ -165,7 +165,7 @@
 		<uni-popup ref="sucesPpopup" type="center">
 			<view class="suc-popup-bg">
 				<image src="../../static/end.png" class="suc-img"></image>
-				<view class="suc-title">报备成功</view>
+				<view class="suc-title">{{type==2?'报备成功':'报备成功,等待管理员审核'}}</view>
 				<view class="btn-box">
 					<view class="btn" @click="close">
 						关闭
@@ -264,7 +264,7 @@
 				id: '',
 				searchHospital: '',
 				searchOption: '',
-				types: ['医生'],//['医生', '科室', '医院'],
+				types: ['医生', '科室', '医院'],
 				type: 4,
 				hasArea: false,
 				cityId: '',
@@ -627,6 +627,7 @@
 				}
 				this.$refs.popup.open();
 			},
+			//0：医院，1：科室，2：医生
 			selectsportType(index) {
 				if (index == 2) {
 					this.doctorName = '';

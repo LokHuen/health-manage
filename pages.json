@@ -1,6 +1,5 @@
 {
-	"pages": [
-        {
+	"pages": [{
 			"path": "pages/doctor/warn",
 			"style": {
 				"navigationBarTitleText": "详情"
@@ -666,7 +665,12 @@
 			"style": {
 				"navigationBarTitleText": "食谱"
 			}
-
+		},
+		{
+			"path": "pages/sales/message-list",
+			"style": {
+				"navigationBarTitleText": "消息"
+			}
 		}
 	],
 	"globalStyle": {
