@@ -41,7 +41,7 @@
 						<text class="report-time">{{item.create_time.split(' ')[0]}} 报备</text>
 						<text class="will-remove" v-if="info.release">即将被释放</text>
 					</view>
-					<view class="fix-box flex">
+					<view class="fix-box flex" v-if="!params.salesId">
 						<text class="delete" @click.stop="askRemove(item)">删除</text>
 						<text @click.stop="toUpdates(item)">更新信息</text>
 					</view>

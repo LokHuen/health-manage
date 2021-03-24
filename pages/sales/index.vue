@@ -13,10 +13,10 @@
 				</view>
 				<view class="msg-point" v-if="msgInfo.status==0"></view>
 			</view>
-			<view class="msg-content flex" v-if="msgInfo.status==0" @click="toMessages(true)">
+			<view class="msg-content flex" v-if="msgInfo.status==0" @click="toMessages(true)" style="flex-wrap: nowrap;">
 				<image style="width: 32rpx;height: 32rpx;margin-right: 12rpx;" src="../../static/icon/tishi.png">
 				</image>
-				<text style="color: #DD524D">{{msgInfo.content}}</text>
+				<text style="color: #DD524D;font-size: 30rpx;">{{msgInfo.content}}</text>
 			</view>
 		</view>
 		<view class="content flexc" style="padding-bottom:20px;">
@@ -104,7 +104,7 @@
 				info: {},
 				msgInfo: {
 					id: '',
-					content: '',
+					content: 'fdsfdfdsfdfdsfdsfdsfdfsdfdsfdsfsdfdsfdsfdsfdsfsdfdsfdsfsdfdsfsdfdsf',
 					status: 1
 				},
 				showNew:true
