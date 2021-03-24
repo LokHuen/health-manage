@@ -2,7 +2,7 @@
 	<view class="container">
 		<view class="top-box">
 			<view v-for="(item,index) in dirList" :key="index" class="top-item" @click="toproduct(item)">
-				<image class="top-img" src="" mode=""></image>
+				<image class="top-img" src="../../static/flie.png" mode=""></image>
 				<view class="top-title">{{item.directory}}</view>
 			</view>
 		</view>
@@ -14,7 +14,7 @@
 			
 			<view v-for="(item,index) in bottomList" :key="index">
 				<view class="bottom-item">
-					<image class="img" src="" mode=""></image>
+					<image class="img" src="../../static/file1.png" mode=""></image>
 					<view class="content-box">
 						<view class="content">{{item.fileName}}</view>
 						<!-- <view class="toppost" v-if="">【置顶文档】</view> -->
@@ -70,31 +70,33 @@
 		},
 		methods: {
 			toDetail(item){
-				var u = navigator.userAgent, app = navigator.appVersion; 
-				var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器 
-				var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端 
+				window.open(app1.globalData.baseUrl+item.fileUrl,"_blank");
+				// var u = navigator.userAgent, app = navigator.appVersion; 
+				// var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器 
+				// var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端 
 				
-				if(isiOS){
-					window.open(app1.globalData.baseUrl+item.fileUrl,"_blank");
-				}
-				if(isAndroid){
-					// 后缀获取
-					 var suffix = ''
-					 var flieArr = item.fileName.split('.')
-					 suffix = flieArr[flieArr.length - 1];
-			         if(suffix=='pdf'){
-						 // uni.navigateTo({
-						 // 	url:'file-detail?url='+item.fileUrl
-						 // })	
+				// if(isiOS){
+				// 	window.open(app1.globalData.baseUrl+item.fileUrl,"_blank");
+				// }
+				// if(isAndroid){
+				// 	// 后缀获取
+				// 	 var suffix = ''
+				// 	 var flieArr = item.fileName.split('.')
+				// 	 suffix = flieArr[flieArr.length - 1];
+			 //         if(suffix=='pdf'){
+				// 		 // uni.navigateTo({
+				// 		 // 	url:'file-detail?url='+item.fileUrl
+				// 		 // })	
 						 
-						 var fileSrc = encodeURIComponent(app1.globalData.baseUrl + item.fileUrl);
-						 window.open('http://view.officeapps.live.com/op/view.aspx?src='+this.fileSrc,"_blank")
-					 }else{
-						var fileSrc = encodeURIComponent(app1.globalData.baseUrl + item.fileUrl);
-						window.open('http://view.officeapps.live.com/op/view.aspx?src='+this.fileSrc,"_blank")
-					 }
+				// 		 window.open(app1.globalData.baseUrl+item.fileUrl,"_blank");
+				// 		 // var fileSrc = encodeURIComponent(app1.globalData.baseUrl + item.fileUrl);
+				// 		 // window.open('http://view.officeapps.live.com/op/view.aspx?src='+fileSrc,"_blank")
+				// 	 }else{
+				// 		var fileSrc = encodeURIComponent(app1.globalData.baseUrl + item.fileUrl);
+				// 		window.open('http://view.officeapps.live.com/op/view.aspx?src='+fileSrc,"_blank")
+				// 	 }
 					
-				}
+				// }
 			 
 			},
 			
@@ -246,7 +248,7 @@
 				width: 250rpx;
 				height: 250rpx;
 				.top-img{
-					background-color: #3B4144;
+					//background-color: #3B4144;
 					margin-top: 40rpx;
 					margin-left: 70rpx;
 					width: 110rpx;
@@ -282,7 +284,7 @@
 				.img{
 					width: 40rpx;
 					height: 40rpx;
-					background-color: #3F536E;
+					//background-color: #3F536E;
 					margin-top:10rpx;
 				}
 				.content-box{

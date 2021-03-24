@@ -50,6 +50,8 @@
 				this.sales.salesId = props.salesId
 			}
 			this.sales.salesName = props.salesName
+		},
+		onShow() {
 			this.getData();
 		},
 		onReady() {

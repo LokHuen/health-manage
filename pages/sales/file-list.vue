@@ -3,7 +3,7 @@
 		<view class="bottom-box">
 			<view v-for="(item,index) in list" :key="index" >
 				<view class="bottom-item">
-					<image class="img" src="" mode=""></image>
+					<image class="img" src="../../static/file1.png" mode=""></image>
 					<view class="content-box">
 						<view class="content">
 							{{item.fileName}}
@@ -106,31 +106,33 @@
 			   this.$refs.popup.open();
 			},
 			toDetail(item){
-				var u = navigator.userAgent, app = navigator.appVersion; 
-				var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器 
-				var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端 
+				window.open(app1.globalData.baseUrl+item.fileUrl,"_blank");
+	// 			var u = navigator.userAgent, app = navigator.appVersion; 
+	// 			var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器 
+	// 			var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端 
 				
-				if(isiOS){
-					window.open(app1.globalData.baseUrl+item.fileUrl,"_blank");
-				}
-				if(isAndroid){
-					// 后缀获取
-					 var suffix = ''
-					 var flieArr = item.fileName.split('.')
-					 suffix = flieArr[flieArr.length - 1];
-                     if(suffix=='pdf'){
-						 // uni.navigateTo({
-						 // 	url:'file-detail?url='+item.fileUrl
-						 // })	
-						 
-						 var fileSrc = encodeURIComponent(app1.globalData.baseUrl + item.fileUrl);
-						 window.open('http://view.officeapps.live.com/op/view.aspx?src='+this.fileSrc,"_blank")
-					 }else{
-						var fileSrc = encodeURIComponent(app1.globalData.baseUrl + item.fileUrl);
-						window.open('http://view.officeapps.live.com/op/view.aspx?src='+this.fileSrc,"_blank")
-					 }
+	// 			if(isiOS){
+	// 				window.open(app1.globalData.baseUrl+item.fileUrl,"_blank");
+	// 			}
+	// 			if(isAndroid){
+	// 				// 后缀获取
+	// 				 var suffix = ''
+	// 				 var flieArr = item.fileName.split('.')
+	// 				 suffix = flieArr[flieArr.length - 1];
+ //                     if(suffix=='pdf'){
+	// 					 // uni.navigateTo({
+	// 					 // 	url:'file-detail?url='+item.fileUrl
+	// 					 // })	
+	// 					 window.open(app1.globalData.baseUrl+item.fileUrl,"_blank");
+	
+	// 				 }else{
+	// 					 var fileSrc = encodeURIComponent(app1.globalData.baseUrl + item.fileUrl);
+	// 					 window.open('http://view.officeapps.live.com/op/view.aspx?src='+fileSrc,"_blank")
+	// 					// var fileSrc = encodeURIComponent(app1.globalData.baseUrl + item.fileUrl);
+	// 					// window.open('http://view.officeapps.live.com/op/view.aspx?src='+fileSrc,"_blank")
+	// 				 }
 					
-				}
+	// 			}
 			 
 			},
 			refreshData(){
@@ -246,7 +248,7 @@
 				.img{
 					width: 40rpx;
 					height: 40rpx;
-					background-color: #3F536E;
+					//background-color: #3F536E;
 					margin-top:10rpx;
 				}
 				.content-box{
