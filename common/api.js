@@ -405,7 +405,7 @@ var api = {
 	},
 	
 	readMessage: (data) => {
-		return rq("/wx/user/message/read", data, "GET");
+		return rq("/wx/user/message/read", data, "POST");
 	},
 	
 	messageList: (data) => {

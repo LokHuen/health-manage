@@ -16,7 +16,7 @@
 				</view>
 			</view>
 			<view class="tips">
-				注：如果最近60天内未有订单记录，该资源会被释放
+				{{params.status==1?'注：如果最近60天内未有订单记录，该资源会被释放':''}}
 			</view>
 		</view>
 		<scroll-view :class="{'no-self':params.salesId,'self':!params.salesId,flexc:true,content:true}" scroll-y
@@ -188,11 +188,11 @@
 			}
 
 			.tips {
+				height:32rpx ;
 				font-size: 22rpx;
 				color: #999999;
 				margin-left: 30rpx;
 				margin-top: 10rpx;
-
 			}
 		}
 

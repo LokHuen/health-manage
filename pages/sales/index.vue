@@ -108,8 +108,6 @@
 					status: 1
 				},
 				showNew:true
-
-
 			}
 		},
 		onLoad() {
@@ -122,7 +120,8 @@
 			console.log(this.user)
 		},
 		onShow() {
-		    this.judgeNew();	
+		    this.judgeNew();
+			this.hasMesage()
 		},
 		methods: {
 			toMessages(needRead) {

@@ -55,7 +55,8 @@
 							maxlength="10" @input="inputChange(0,$event)" />
 					</view>
 				</view>
-				<scroll-view scroll-y="true" style="max-height: 750rpx;" @scrolltolower="getHospitals(hospitalParams.pageNo+1)">
+				<scroll-view scroll-y="true" style="max-height: 750rpx;"
+					@scrolltolower="getHospitals(hospitalParams.pageNo+1)">
 					<view v-for="(item,idex) in hospitalList" :class="{'option-item':true,selected:item.name==hospital}"
 						@click="selectHospital(item)">
 						<text>{{item.name}}</text>
@@ -238,7 +239,7 @@
 				});
 			},
 			getHospitals(pageNo = 1) {
-				if(this.hospitalInfo.pageCount>=pageNo){
+				if (this.hospitalInfo.pageCount >= pageNo) {
 					this.hospitalParams.pageNo = pageNo
 					app.hospitalList(this.hospitalParams).then((res) => {
 						this.hospitalInfo = res.data
@@ -392,13 +393,16 @@
 		}
 
 		.button-box {
-			position: fixed;
-			bottom: 0;
+			// position: fixed;
+			// bottom: 0;
 			height: 140rpx;
 			width: 100%;
+			margin-top: 100rpx;
 
 			.button {
 				height: 90rpx;
+				line-height: 90rpx;
+				text-align: center;
 				width: 81%;
 				background-color: #52A29E !important;
 				border-radius: 45rpx;
