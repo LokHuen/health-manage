@@ -3,7 +3,7 @@
 		<view class="bottom-box">
 			<view v-for="(item,index) in list" :key="index" >
 				<view class="bottom-item">
-					<image class="img" src="" mode=""></image>
+					<image class="img" src="../../static/file1.png" mode=""></image>
 					<view class="content-box">
 						<view class="content">
 							{{item.fileName}}
@@ -126,8 +126,9 @@
 						 var fileSrc = encodeURIComponent(app1.globalData.baseUrl + item.fileUrl);
 						 window.open('http://view.officeapps.live.com/op/view.aspx?src='+this.fileSrc,"_blank")
 					 }else{
-						var fileSrc = encodeURIComponent(app1.globalData.baseUrl + item.fileUrl);
-						window.open('http://view.officeapps.live.com/op/view.aspx?src='+this.fileSrc,"_blank")
+						 window.open(app1.globalData.baseUrl+item.fileUrl,"_blank");
+						// var fileSrc = encodeURIComponent(app1.globalData.baseUrl + item.fileUrl);
+						// window.open('http://view.officeapps.live.com/op/view.aspx?src='+this.fileSrc,"_blank")
 					 }
 					
 				}
@@ -246,7 +247,7 @@
 				.img{
 					width: 40rpx;
 					height: 40rpx;
-					background-color: #3F536E;
+					//background-color: #3F536E;
 					margin-top:10rpx;
 				}
 				.content-box{

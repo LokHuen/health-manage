@@ -2,7 +2,7 @@
 	<view class="container">
 		<view class="top-box">
 			<view v-for="(item,index) in dirList" :key="index" class="top-item" @click="toproduct(item)">
-				<image class="top-img" src="" mode=""></image>
+				<image class="top-img" src="../../static/flie.png" mode=""></image>
 				<view class="top-title">{{item.directory}}</view>
 			</view>
 		</view>
@@ -14,7 +14,7 @@
 			
 			<view v-for="(item,index) in bottomList" :key="index">
 				<view class="bottom-item">
-					<image class="img" src="" mode=""></image>
+					<image class="img" src="../../static/file1.png" mode=""></image>
 					<view class="content-box">
 						<view class="content">{{item.fileName}}</view>
 						<!-- <view class="toppost" v-if="">【置顶文档】</view> -->
@@ -246,7 +246,7 @@
 				width: 250rpx;
 				height: 250rpx;
 				.top-img{
-					background-color: #3B4144;
+					//background-color: #3B4144;
 					margin-top: 40rpx;
 					margin-left: 70rpx;
 					width: 110rpx;
@@ -282,7 +282,7 @@
 				.img{
 					width: 40rpx;
 					height: 40rpx;
-					background-color: #3F536E;
+					//background-color: #3F536E;
 					margin-top:10rpx;
 				}
 				.content-box{
