@@ -37,56 +37,51 @@
 			
 		</view>
 		
+
+		
 		<!-- 总订单数 -->
-		<view style="background-color: #FFFFFF;">
-			<view class="item-box flex" style="height: auto;padding-top: 60rpx;">
-				<view class="item-left">
-					<view class="item-number">{{totalorderNum||0}}</view>
-					<view class="item-title">总订单数</view>
+		<view class="item-box flex">
+			<view class="item-left">
+				<view class="item-number">{{totalorderNum||0}}</view>
+				<view class="item-title">总订单数</view>
+			</view>
+			<view class="item-right">
+				<view class="item-right-detail flex" v-for="(item,index) in orderList" :key ="index">       
+					<view class="each1">{{item.channelValue}}</view>
+					<view class="each">{{item.patientNum||0}}</view>
+					<view class="each1">本月新增</view>
+					<view class="each">{{item.monthpatientNum||0}}</view>
 				</view>
-				<view class="item-right">
-					<view class="item-right-detail flex" v-for="(item,index) in orderList" :key ="index">       
-						<view class="each1">{{item.channelValue}}</view>
-						<view class="each">{{item.orderNum||0}}</view>
-						<view class="each1">本月新增</view>
-						<view class="each">{{item.monthorderNum||0}}</view>
-					</view>
-					
+				
+			</view>
+			
+		</view>
+		
+		
+		<!-- 总订单金额 -->
+		<view class="item-box flex">
+			<view class="item-left">
+				<view class="item-number">{{totalorderNum||0}}</view>
+				<view class="item-title">总订单金额</view>
+			</view>
+			<view class="item-right">
+				<view class="item-right-detail flex" v-for="(item,index) in orderList" :key ="index">       
+					<view class="each1">{{item.channelValue}}</view>
+					<view class="each">{{item.patientNum||0}}</view>
 					
 				</view>
 				
 			</view>
-			<view class="tip">订单统计范围：{{doctorList.length}}个小程序上客户已付款的所有商品订单数据</view>
-			<view class="order-tip">按商品统计订单数（{{doctorList.length}}个小程序合计）</view>
-			
-			
-			<!-- item -->
-			<view style="margin-left: 50rpx;margin-right: 50rpx;background-color: #FFFFFF;" v-for="(item,index) in commodityOrderList" :key="index">
-				<view class="item-box" style="background-color: #F6F6F6;padding-bottom: 60rpx;">
-					<view style="font-size: 28rpx;color: rgba(16, 16, 16, 100); text-align: left; margin-left: 50rpx; padding-top: 50rpx;">{{item.commodityPlatformName}}</view>
-					<view class="flex" style="margin-top: 40rpx;">
-						<view class="item-left" style="width: 180rpx;">
-							<view class="item-number">{{item.totalOrderCount||0}}</view>
-							<view class="item-title">总订单数</view>
-						</view>
-						<view class="item-right" style="margin-left: 20rpx;margin-right: 20rpx;">
-							<view class="item-right-detail flex" v-for="(detailItem,detailIndex) in item.commodityList">       
-								<view class="each1">{{detailItem.channelValue}}</view>
-								<view class="each">{{detailItem.orderCount||0}}</view>
-								<view class="each1">本月新增</view>
-								<view class="each">{{detailItem.monthOrderCount||0}}</view>
-							</view>
-							
-							
-						</view>
-					</view>
-					
-				</view>
-			</view>
-			
-			 <view style="height: 60rpx;"></view> 
 			
 		</view>
+		
+		<view class="detail" @click="toDetail">
+			按商品统计订单情况
+			<image src="../../static/icon/more_icon.png" mode="widthFix" class="detail-more"></image>
+		</view>
+		
+		
+		
 	
 		
 		
@@ -121,6 +116,11 @@
 						this.totalorderNum = res.data.order.totalorderNum;
 					}
 				});
+			},
+			toDetail(){
+				uni.navigateTo({
+					url:'data-detail'
+				})
 			}
 		},
 		onLoad(){
@@ -194,6 +194,26 @@
 			font-size: 24rpx;
 			text-align: left;
 			font-family: PingFangSC-regular;
+		}
+		
+		.detail{
+			height: 100rpx;
+			line-height: 100rpx;
+			color: rgba(16, 16, 16, 100);
+			font-size: 28rpx;
+			font-family: PingFangSC-regular;
+			text-align: left;
+			margin-top: 40rpx;
+			padding-left: 50rpx;
+			background-color: #FFFFFF;
+			margin-bottom: 60rpx;
+			position: relative;
+			.detail-more{
+				position: absolute;
+				width: 15rpx;
+				right: 50rpx;
+				top: 35rpx;
+			}
 		}
 	}
 </style>
