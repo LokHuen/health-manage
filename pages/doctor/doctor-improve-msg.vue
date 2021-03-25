@@ -15,14 +15,16 @@
 
 		<view class="name-box">
 			<view class="name-tips">* 所在医院</view>
-			<text @click="openOption(0)" style="flex: 1;"
-				:class="{empty:!hospital,'no-empty':hospital}">{{hospital?hospital:'请选择医院'}}</text>
+			<input class="name-input" type="text" value="" placeholder="请填写医院名称" v-model="hospital" />
+			<text @click="openOption(0)" style="flex: 1;" :class="{empty:!hospital,'no-empty':hospital}"
+				v-if="false">{{hospital?hospital:'请选择医院'}}</text>
 		</view>
 
 		<view class="name-box">
 			<view class="name-tips">* 科室名称</view>
-			<text @click="openOption(1)" style="flex: 1;"
-				:class="{empty:!department,'no-empty':department}">{{department?department:'请选择科室'}}</text>
+			<input class="name-input" type="text" value="" placeholder="请填写科室名称" v-model="department" />
+			<text @click="openOption(1)" style="flex: 1;" :class="{empty:!department,'no-empty':department}"
+				v-if="false">{{department?department:'请选择科室'}}</text>
 		</view>
 		<view class="name-box">
 
@@ -350,6 +352,7 @@
 
 			.input-placeholder {
 				color: #999999;
+				font-size: 32rpx;
 			}
 
 			.empty {
