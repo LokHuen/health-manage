@@ -249,14 +249,14 @@
 				height: 250rpx;
 				.top-img{
 					//background-color: #3B4144;
-					margin-top: 40rpx;
-					margin-left: 70rpx;
-					width: 110rpx;
-					height: 100rpx;
+					//margin-top: 40rpx;
+					margin-left: 50rpx;
+					width: 150rpx;
+					height: 150rpx;
 					
 				}
 				.top-title{
-					margin-top: 20rpx;
+					margin-top: 0rpx;
 					color: #666666;
 					font-size: 28rpx;
 					text-align: center;
