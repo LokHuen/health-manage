@@ -104,7 +104,7 @@
 				info: {},
 				msgInfo: {
 					id: '',
-					content: 'fdsfdfdsfdfdsfdsfdsfdfsdfdsfdsfsdfdsfdsfdsfdsfsdfdsfdsfsdfdsfsdfdsf',
+					content: '',
 					status: 1
 				},
 				showNew:true
