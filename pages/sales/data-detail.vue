@@ -1,22 +1,22 @@
 <template>
 	<view class="container">
-		<view v-for="(item,index) in list" :key="index" style="margin-top: 40rpx;">
+		<view v-for="(item,index) in commodityOrderList" :key="index" style="margin-top: 40rpx;">
 			
 			<view class="title">
-				【益爱宁】全面营养型，肿瘤肠内ONS剂，修复肠道功能，科学营养配方，全面符合指南推荐，1大盒42袋/疗程，21天装
+				{{item.subtitle}}
 			</view>
 			<!-- 总订单数-->
 			<view class="item-box flex">
 				<view class="item-left">
-					<view class="item-number">{{0}}</view>
+					<view class="item-number">{{item.totalOrderCount||0}}</view>
 					<view class="item-title">总订单数</view>
 				</view>
 				<view class="item-right">
-					<view class="item-right-detail flex" v-for="(item,index) in doctorList" :key="index">       
-						<view class="each1">{{"维新生物"}}</view>
-						<view class="each">{{0}}</view>
+					<view class="item-right-detail flex" v-for="(item1,index1) in item.orderList" :key="index1">       
+						<view class="each1">{{item1.channelValue}}</view>
+						<view class="each">{{item1.orderCount||0}}</view>
 						<view class="each1">本月新增</view>
-						<view class="each">{{0}}</view>
+						<view class="each">{{item1.monthOrderCount||0}}</view>
 					</view>
 					
 				</view>
@@ -26,15 +26,15 @@
 			<!-- 总盒数 -->
 			<view class="item-box flex">
 				<view class="item-left">
-					<view class="item-number">{{0}}</view>
+					<view class="item-number">{{item.totalQuantity||0}}</view>
 					<view class="item-title">总盒数</view>
 				</view>
 				<view class="item-right">
-					<view class="item-right-detail flex" v-for="(item,index) in patientList" :key ="index">       
-						<view class="each1">{{"维新生物"}}</view>
-						<view class="each">{{0}}</view>
+					<view class="item-right-detail flex" v-for="(item2,index2) in item.orderQuantityList" :key ="index2">       
+						<view class="each1">{{item2.channelValue}}</view>
+						<view class="each">{{item2.quantity||0}}</view>
 						<view class="each1">本月新增</view>
-						<view class="each">{{0}}</view>
+						<view class="each">{{item2.monthQuantity||0}}</view>
 					</view>
 				</view>
 				
@@ -43,13 +43,13 @@
 			<!-- 订单总金额 -->
 			<view class="item-box flex">
 				<view class="item-left">
-					<view class="item-number">{{0}}</view>
+					<view class="item-number">{{item.totalMoney||0}}</view>
 					<view class="item-title">订单总金额（元）</view>
 				</view>
 				<view class="item-right">
-					<view class="item-right-detail flex" v-for="(item,index) in orderList" :key ="index">       
-						<view class="each1">{{"维新生物"}}</view>
-						<view class="each">{{0}}</view>
+					<view class="item-right-detail flex" v-for="(item3,index3) in item.orderMoneyList" :key ="index3">       
+						<view class="each1">{{item3.channelValue||0}}</view>
+						<view class="each">{{item3.payAmonut||0}}</view>
 					</view>
 					
 				</view>
@@ -71,27 +71,15 @@
 	export default{
 		data(){
 			return{
-				doctorList:[1,2,3],
-				totaldoctorNum:'',
-				commodityOrderList:[1,2,3],
-				patientList:[1,2,3],
-				totalpatientNum:'',
-				orderList:[1,2,3],
-				totalorderNum:'',
-				list:[1,2,3]
+				commodityOrderList:[]
 			}
 		},
 		methods:{
 			getData(){
 				app.platformInfo().then(res =>{
 					if(res.status == 1){
-						this.doctorList = res.data.doctor.doctorList;
-						this.totaldoctorNum = res.data.doctor.totaldoctorNum;
 						this.commodityOrderList = res.data.commodityOrderList;
-						this.patientList = res.data.patient.patientList;
-						this.totalpatientNum = res.data.patient.totalpatientNum;
-						this.orderList = res.data.order.orderList;
-						this.totalorderNum = res.data.order.totalorderNum;
+						
 					}
 				});
 			}

@@ -48,9 +48,9 @@
 			<view class="item-right">
 				<view class="item-right-detail flex" v-for="(item,index) in orderList" :key ="index">       
 					<view class="each1">{{item.channelValue}}</view>
-					<view class="each">{{item.patientNum||0}}</view>
+					<view class="each">{{item.orderNum||0}}</view>
 					<view class="each1">本月新增</view>
-					<view class="each">{{item.monthpatientNum||0}}</view>
+					<view class="each">{{item.monthorderNum||0}}</view>
 				</view>
 				
 			</view>
@@ -61,13 +61,13 @@
 		<!-- 总订单金额 -->
 		<view class="item-box flex">
 			<view class="item-left">
-				<view class="item-number">{{totalorderNum||0}}</view>
+				<view class="item-number">{{payAmonutMap.totalMoney||0}}</view>
 				<view class="item-title">总订单金额</view>
 			</view>
 			<view class="item-right">
-				<view class="item-right-detail flex" v-for="(item,index) in orderList" :key ="index">       
+				<view class="item-right-detail flex" v-for="(item,index) in payAmonutMap.payAmonutList" :key ="index">       
 					<view class="each1">{{item.channelValue}}</view>
-					<view class="each">{{item.patientNum||0}}</view>
+					<view class="each" style="margin-left: 30rpx;">{{item.payAmonut||0}}</view>
 					
 				</view>
 				
@@ -99,7 +99,8 @@
 				patientList:[],
 				totalpatientNum:'',
 				orderList:[],
-				totalorderNum:''
+				totalorderNum:'',
+				payAmonutMap:''
 				
 			}
 		},
@@ -114,6 +115,7 @@
 						this.totalpatientNum = res.data.patient.totalpatientNum;
 						this.orderList = res.data.order.orderList;
 						this.totalorderNum = res.data.order.totalorderNum;
+						this.payAmonutMap = res.data.payAmonutMap;
 					}
 				});
 			},
