@@ -180,7 +180,7 @@
 			toDatabase(){
 				app.setCache('dataBase',1);
 				uni.navigateTo({
-					url:'database'
+					url:'/pages/sales/database'
 				})
 			},
 			toModifyPsw() {
