@@ -111,7 +111,7 @@
 								var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端 
 								
 								if(isiOS){
-									window.open(app1.globalData.baseUrl+item.fileUrl,"_blank");
+									window.open(app1.globalData.baseUrl+item.fileUrl);
 								}
 								if(isAndroid){
 									window.open(app1.globalData.baseUrl+item.fileUrl);
