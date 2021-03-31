@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		
+		<iframe v-if="url" :src="url" frameborder="0" style="width:100vw;height:100vh;border:0;"></iframe>
       <!-- <pdf v-if="pdfSrc" :src="pdfSrc"/> -->
 	    <!-- v-for="i in numPages" :key="i" :page="i" -->
 	
