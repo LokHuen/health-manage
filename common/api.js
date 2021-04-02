@@ -419,7 +419,8 @@ var api = {
 	fileList:(data)=>{return rq("/wx/doc/file/findPage",data,"GET");}, 
 	//发送邮件
 	sendMail:(data)=>{return rq("/wx/doc/file/sendMail",data,"GET");}, 
-
+	//首页模块配置列表
+	homepage:(data)=>{return rq("/wx/homepage/setting/list",data,"GET");},
 }
 
 export {
