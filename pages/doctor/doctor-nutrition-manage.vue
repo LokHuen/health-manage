@@ -73,7 +73,7 @@
 
 		<view class="line-space"></view>
 		<view class="screen-box">
-			<view class="all-patien-box" @click="patienScreen" v-if="doctorList.length>1">
+			<view class="all-patien-box" @click="patienScreen" v-if="doctorList.length>0">
 				<view class="all-patien">{{doctorItem.doctorName+doctorItem.technicalTitle}}</view>
 				<image class="all-arrow" src="../../static/icon/right_arrow.png" mode="widthFix"></image>
 			</view>
