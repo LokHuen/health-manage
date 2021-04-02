@@ -71,8 +71,8 @@
 
 		</view>
 
-		<view class="line-space" v-if="listDatas.length>0"></view>
-		<view class="screen-box" v-if="listDatas.length>0">
+		<view class="line-space"></view>
+		<view class="screen-box">
 			<view class="all-patien-box" @click="patienScreen" v-if="doctorList.length>1">
 				<view class="all-patien">{{doctorItem.doctorName+doctorItem.technicalTitle}}</view>
 				<image class="all-arrow" src="../../static/icon/right_arrow.png" mode="widthFix"></image>
@@ -93,7 +93,7 @@
 				</view>
 			</view>
 
-			<view class="line" v-if="listDatas.length>0"></view>
+			<view class="line"></view>
 
 
 			<!-- 健康信息 -->
@@ -170,7 +170,7 @@
 				listDatas: [],
 				showInfo: {},
 				show: true,
-				doctorList:[{id:'',technicalTitle:'',doctorName:'我的患者'}],
+				doctorList:[{id:'',technicalTitle:'',doctorName:'我的患者'},{id:app.getCache('uid'),technicalTitle:'',doctorName:'全科患者',isDepartmentIcu:1}],
 				doctorItem:{id:'',technicalTitle:'',doctorName:'我的患者'},
 			}
 		},
@@ -285,13 +285,16 @@
 				this.getListData();
 			},
 			getListData() {
-				app.patientListInfo({
-					pageNo: this.pageNo,
-					orderBy: this.orderBy,
-					bindDoctor:this.doctorItem.id
-				}).then(res => {
+				let parame = {pageNo:this.pageNo,orderBy:this.orderBy,bindDoctor:this.doctorItem.id}
+				if(this.doctorItem.isDepartmentIcu == 1){
+					parame = {
+						...parame,
+						isDepartmentIcu:1
+					}
+				}
+				app.patientListInfo(parame).then(res => {
 					if (res.status === 1) {
-						if(this.pageNo>res.data.pageCount) return;
+						if((this.pageNo>res.data.pageCount) && res.data.list.length>0) return;
 						this.listDatas = this.pageNo==1?res.data.list:this.listDatas.concat(res.data.list);
 					}
 					uni.stopPullDownRefresh();
