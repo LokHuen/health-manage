@@ -178,10 +178,12 @@
 			getManageDepartment(){
 				app.getManageDepartment().then(res =>{
 					if(res.status == 1){
-						if(res.data){
+						if(res.data.length>0){
 							for (var i = 0; i < res.data.length; i++) {
 								this.doctorList.push(res.data[i]); 
 							}
+						}else{
+							this.doctorList = [{id:'',technicalTitle:'',doctorName:'我的患者'}];
 						}
 					}
 				});
@@ -278,14 +280,14 @@
 			},
 			refreshData() {
 				this.pageNo = 1;
-				this.getListData();
+				this.getListData(this.pageNo);
 			},
 			loadMoreData() {
 				this.pageNo++;
-				this.getListData();
+				this.getListData(this.pageNo);
 			},
-			getListData() {
-				let parame = {pageNo:this.pageNo,orderBy:this.orderBy,bindDoctor:this.doctorItem.id}
+			getListData(pageNo) {
+				let parame = {pageNo:pageNo,orderBy:this.orderBy,bindDoctor:this.doctorItem.id}
 				if(this.doctorItem.isDepartmentIcu == 1){
 					parame = {
 						...parame,
@@ -294,8 +296,8 @@
 				}
 				app.patientListInfo(parame).then(res => {
 					if (res.status === 1) {
-						if((this.pageNo>res.data.pageCount) && res.data.list.length>0) return;
-						this.listDatas = this.pageNo==1?res.data.list:this.listDatas.concat(res.data.list);
+						if(pageNo>res.data.pageCount) return;
+						this.listDatas = pageNo==1?res.data.list:this.listDatas.concat(res.data.list);
 					}
 					uni.stopPullDownRefresh();
 				});
