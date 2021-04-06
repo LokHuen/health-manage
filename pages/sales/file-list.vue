@@ -106,7 +106,17 @@
 			   this.$refs.popup.open();
 			},
 			toDetail(item){
-				window.open(app1.globalData.baseUrl+item.fileUrl,"_self");
+				let ua = navigator.userAgent.toLowerCase();
+				    if(ua.match(/MicroMessenger/i)=="micromessenger") {
+				        wx.miniProgram.getEnv((res)=>{
+				           if (res.miniprogram) {
+				               wx.miniProgram.navigateTo({url:"/pages/other?url="+item.id});
+				           } else {
+				               window.open(app1.globalData.baseUrl+item.fileUrl);
+				           }
+				        })
+				    }
+				// window.open(app1.globalData.baseUrl+item.fileUrl,"_self");
 				// var u = navigator.userAgent, app = navigator.appVersion;
 				// 				var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器 
 				// 				var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端 
