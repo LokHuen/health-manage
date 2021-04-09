@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<iframe v-if="url" :src="url" frameborder="0" style="width:100vw;height:100vh;border:0;"></iframe>
+		<!-- <iframe v-if="url" :src="url" frameborder="0" style="width:100vw;height:100vh;border:0;"></iframe> -->
       <!-- <pdf v-if="pdfSrc" :src="pdfSrc"/> -->
 	    <!-- v-for="i in numPages" :key="i" :page="i" -->
 	
@@ -13,7 +13,7 @@
 	//import pdf from '../../plugins/vue-pdf'
 	export default {
 		components: {
-			pdf
+			// pdf
 		},
 		data() {
 			return {
@@ -23,8 +23,11 @@
 			}
 		},
 		onLoad(options) {
-			this.url = app.globalData.baseUrl + options.url;
-			//this.fileSrc = encodeURIComponent(app.globalData.baseUrl + options.links);
+			this.url = options.url;
+			app.docfileget({id:this.url}).then(res =>{
+				location.href = (app.globalData.baseUrl + res.data.fileUrl);
+			});
+			//this.fileSrc = encodeURIComponent(options.links);
 	         
 			// let text = this.$route.query.text;
 			// this.pdfSrc = "/file/"+text+".pdf";

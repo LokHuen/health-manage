@@ -1,20 +1,20 @@
 {
 	"pages": [
-		
+
 		{
 			"path": "pages/patient/patient-nutrition-manage",
 			"style": {
 				"navigationBarTitleText": "营养管理"
 			}
 		},
-		
+
 		{
 			"path": "pages/sales/data-detail",
 			"style": {
 				"navigationBarTitleText": "按商品统计订单情况"
 			}
 		},
-        {
+		{
 			"path": "pages/doctor/warn",
 			"style": {
 				"navigationBarTitleText": "详情"

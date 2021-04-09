@@ -30,7 +30,7 @@
 					<view class="count-tip">测评患者数</view>
 				</view>
 			</view>
-			<view class="join-box" @click="joinTest">营养状况评量表></view>
+			<view class="join-box" @click="joinTest">营养状况评量表>></view>
 		</view>
 
 
@@ -425,7 +425,7 @@
 				margin-top: 30rpx;
 				text-align: center;
 				color: #666666;
-				font-size: 13px;
+				font-size: 14px;
 				margin-bottom: 30rpx;
 
 			}

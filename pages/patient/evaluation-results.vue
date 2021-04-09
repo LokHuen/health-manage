@@ -17,58 +17,43 @@
 
 		</view>
 		<view class="infobox">
-			<view style="text-align:center;">
-				<!-- <wx-open-launch-weapp username="gh_e44479db8d50" path="pages/index/detail.html?id=1" style="width:100vw;">
-					<script type="text/wxtag-template">
-						<style>
-							.jumpimg{
-								width:100vw;height:auto;display:block;
-							}
-						</style>
-						<div>
-					    <img src='' alt="" class="jumpimg"/>
-						
-						</div>
-					  </script>
-				</wx-open-launch-weapp> -->
-			</view>
-			<!--  -->
 			<view class="backgroung">
 				<image :src="background" mode="widthFix"></image>
 			</view>
 
-			<div>
-				<div class="banner">
-					<image :src="banner" mode="widthFix"></image>
-					<div class="banner-content">{{banner_intro}}</div>
-					<wx-open-launch-weapp username="gh_e44479db8d50" path="pages/index/home.html" style="" class="otherbox">
-						<script type="text/wxtag-template">
-							<style>
-								.otherbox{position: absolute;top:0;left:0;right:0;bottom:0;z-index: 9;}
-							</style>
-							<div class="otherbox"></div>
-						</script>
-					</wx-open-launch-weapp>
-				</div>
+			<div class="banner">
+				<image :src="banner" mode="widthFix"></image>
+				<div class="banner-content">{{banner_intro}}</div>
+				<wx-open-launch-weapp username="gh_e44479db8d50" path="pages/index/home.html" style="" class="otherbox">
+					<script type="text/wxtag-template">
+						<style>
+							.otherbox{position: absolute;top:0;left:0;right:0;bottom:0;z-index: 9;}
+						</style>
+						<div class="otherbox"></div>
+					</script>
+				</wx-open-launch-weapp>
 			</div>
 
 
 
 			<view class="first-box">
-				<div class="first-item">
-					<img class="first-item-img" :src="nutrition" mode="widthFix"></img>
+				<div class="first-item" v-show="nutritionItem">
+					<img class="first-item-img" :src="nutrition" ></img>
 					<div class="first-item-title">
 						{{nutritionItem.name}}
 					</div>
 					<div class="first-item-subtitle">
 						{{nutritionItem.subTitle}}
 					</div>
+					<view class="linecenter"></view>
+					<view class="first-item-mininfo">
+						{{nutritionItem.linkDes||""}}
+					</view>
 
 					<div class="first-item-change-box">
 						<div class="first-item-change">
 							<div>{{nutritionItem.memo}}</div>
-							<img src="../../static/index/blue_more.png"
-							 class="first-item-rightImg"></img>
+							<img src="../../static/index/blue_more.png" class="first-item-rightImg"></img>
 						</div>
 
 					</div>
@@ -81,14 +66,18 @@
 								  </script>
 					</wx-open-launch-weapp>
 				</div>
-				<div class="first-item">
-					<img class="first-item-img" :src="energy" mode="widthFix"></img>
+				<div class="first-item" v-show="energyItem">
+					<img class="first-item-img" :src="energy" ></img>
 					<div class="first-item-title">
 						{{energyItem.name}}
 					</div>
 					<div class="first-item-subtitle">
 						{{energyItem.subTitle}}
 					</div>
+					<view class="linecenter"></view>
+					<view class="first-item-mininfo">
+						{{energyItem.linkDes||""}}
+					</view>
 
 					<div class="first-item-change-box">
 						<div class="first-item-change">
@@ -108,14 +97,18 @@
 					</wx-open-launch-weapp>
 				</div>
 
-				<div class="first-item">
-					<img class="first-item-img" :src="immunity" mode="widthFix"></img>
+				<div class="first-item" v-show="immunityItem">
+					<img class="first-item-img" :src="immunity" ></img>
 					<div class="first-item-title">
 						{{immunityItem.name}}
 					</div>
 					<div class="first-item-subtitle">
 						{{immunityItem.subTitle}}
 					</div>
+					<view class="linecenter"></view>
+					<view class="first-item-mininfo">
+						{{immunityItem.linkDes||""}}
+					</view>
 
 					<div class="first-item-change-box">
 						<div class="first-item-change">
@@ -134,16 +127,20 @@
 					</wx-open-launch-weapp>
 				</div>
 			</view>
+			<view class="pagecenterline"></view>
 			<view class="second-box">
 				
-				<div class="second-item">
-					<img class="second-item-img" :src="muscle" mode="widthFix"></img>
+				<div class="second-item" v-show="muscleItem">
+					<img class="second-item-img" :src="muscle" ></img>
 					<div class="second-item-title">
 						{{muscleItem.name}}
 					</div>
 					<div class="second-item-subtitle">
 						{{muscleItem.subTitle}}
 					</div>
+					<view class="second-item-mininfo">
+						{{muscleItem.linkDes||""}}
+					</view>
 
 					<div class="second-item-change-box">
 						<div class="second-item-change">
@@ -164,14 +161,17 @@
 
 				</div>
 				
-				<div class="second-item">
-					<img class="second-item-img" :src="sleep" mode="widthFix"></img>
+				<div class="second-item" v-show="sleepItem">
+					<img class="second-item-img" :src="sleep" ></img>
 					<div class="second-item-title" style="color: #0398AF;">
 						{{sleepItem.name}}
 					</div>
 					<div class="second-item-subtitle" style="color: #0398AF;">
 						{{sleepItem.subTitle}}
 					</div>
+					<view class="second-item-mininfo">
+						{{sleepItem.linkDes||""}}
+					</view>
 
 					<div class="second-item-change-box">
 						<div class="second-item-change">
@@ -192,14 +192,17 @@
 
 				</div>
 				
-				<div class="second-item">
-					<img class="second-item-img" :src="blood" mode="widthFix"></img>
+				<div class="second-item" v-show="bloodItem">
+					<img class="second-item-img" :src="blood" ></img>
 					<div class="second-item-title" style="color: #AF1D03;">
 						{{bloodItem.name}}
 					</div>
 					<div class="second-item-subtitle" style="color: #AF1D03;">
 						{{bloodItem.subTitle}}
 					</div>
+					<view class="second-item-mininfo">
+						{{bloodItem.linkDes||""}}
+					</view>
 
 					<div class="second-item-change-box">
 						<div class="second-item-change">
@@ -220,14 +223,17 @@
 
 				</div>
 				
-				<div class="second-item">
-					<image class="second-item-img" :src="metabolism" mode="widthFix"></image>
+				<div class="second-item" v-show="metabolismItem">
+					<image class="second-item-img" :src="metabolism" ></image>
 					<div class="second-item-title" style="color: #6747BE;">
 						{{metabolismItem.name}}
 					</div>
 					<div class="second-item-subtitle" style="color: #6747BE;">
 						{{metabolismItem.subTitle}}
 					</div>
+					<view class="second-item-mininfo">
+						{{metabolismItem.linkDes||""}}
+					</view>
 
 					<div class="second-item-change-box">
 						<div class="second-item-change">
@@ -245,6 +251,59 @@
 						</script>
 						</wx-open-launch-weapp>
 				</div>
+				<view class="second-item" v-show="bloodFatItem" >
+					<image class="second-item-img" :src="baseUrl+'/info/common/img/bloodFat.png'" ></image>
+					<view class="second-item-title" style="color: #6747BE;">
+						{{bloodFatItem.name}}
+					</view>
+					<view class="second-item-subtitle" style="color: #6747BE;">
+						{{bloodFatItem.subTitle}}
+					</view>
+					<view class="second-item-mininfo">
+						{{bloodFatItem.linkDes||""}}
+					</view>
+					<view class="second-item-change-box">
+						<view class="second-item-change">
+							<view>{{bloodFatItem.memo}}</view>
+							<image src="../../static/index/icon_more_black.png" class="second-item-rightImg"></image>
+						</view>
+					</view>
+					<wx-open-launch-weapp username="gh_e44479db8d50" :path="'pages/index/goods.html?id='+bloodFatItem.id" class="otherbox">
+						<script type="text/wxtag-template">
+							<style>
+								.otherbox{position: absolute;top:0;left:0;right:0;bottom:0;z-index: 9;}
+							</style>
+							<div class="otherbox"></div>
+						</script>
+						</wx-open-launch-weapp>
+				</view>
+				
+				<view class="second-item" v-show="uricAcidItem" >
+					<image class="second-item-img" :src="baseUrl+'/info/common/img/uricAcid.png'" ></image>
+					<view class="second-item-title" style="color: #6747BE;">
+						{{uricAcidItem.name}}
+					</view>
+					<view class="second-item-subtitle" style="color: #6747BE;">
+						{{uricAcidItem.subTitle}}
+					</view>
+					<view class="second-item-mininfo">
+						{{uricAcidItem.linkDes||""}}
+					</view>
+					<view class="second-item-change-box">
+						<view class="second-item-change">
+							<view>{{uricAcidItem.memo}}</view>
+							<image src="../../static/index/icon_more_black.png" class="second-item-rightImg"></image>
+						</view>
+					</view>
+					<wx-open-launch-weapp username="gh_e44479db8d50" :path="'pages/index/goods.html?id='+uricAcidItem.id" class="otherbox">
+						<script type="text/wxtag-template">
+							<style>
+								.otherbox{position: absolute;top:0;left:0;right:0;bottom:0;z-index: 9;}
+							</style>
+							<div class="otherbox"></div>
+						</script>
+						</wx-open-launch-weapp>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -284,6 +343,8 @@
 				energyItem: '',
 				bloodItem: '',
 				muscleItem: '',
+				bloodFatItem:"",
+				uricAcidItem:"",
 				banner_intro: '',
 			}
 		},
@@ -308,9 +369,10 @@
 				app.homepage().then(res => {
 					if (res.status == 1) {
 						this.listData = res.data;
-						this.banner_intro = this.listData[0].intro.replace(/\+/g, "<sup>+</sup>");
+						
 						for (var i = 0; i < this.listData.length; i++) {
 							if (this.listData[i].locate == 1) {
+								this.banner_intro=this.listData[i].intro.replace(/\+/g, "<sup>+</sup>");
 								this.bannerItem = this.listData[i];
 							} else if (this.listData[i].locate == 2) {
 								this.nutritionItem = this.listData[i];
@@ -332,6 +394,10 @@
 							}
 							if (this.listData[i].locate == 7) {
 								this.bloodItem = this.listData[i];
+							}if(this.listData[i].locate==9){
+								this.bloodFatItem = this.listData[i];
+							}if(this.listData[i].locate==10){
+								this.uricAcidItem = this.listData[i];
 							}
 						}
 						setconfig().then(res => {
@@ -422,114 +488,125 @@
 			// margin-right: 100rpx;
 		}
 	}
+	.pagecenterline{
+		border-top: 1rpx solid #62AEC2;margin: 60rpx 50rpx 0rpx;opacity: 0.5;
+	}
 
-	.first-box {
+	.first-box{
 		display: flex;
-		margin-left: 15px;
-		margin-right: 15px;
-		justify-content: space-around;
-		height: 110px;
+		margin-left: 30rpx;
+		margin-right: 30rpx;
+		justify-content:space-around;
+		// height: 220rpx;
+		.first-item{
+			width: 220rpx;
+			min-height: 246rpx;
+			position: relative;
+			.first-item-img{
+				width: 220rpx;position: absolute;left:0;right: 0;bottom:0;top: 0rpx;z-index: 0;
+				height: 100%!important;
+				// height: 220rpx;
+			}
+			.first-item-title{
+				font-size: 26rpx;
+				font-family: PingFang SC;
+				font-weight: 400;
+				color: #FFFFFF;
+				text-align: center;position: relative;
+				// position: absolute;
+				padding-top: 40rpx;
+				left: 0rpx;right: 0rpx;
+			}
+			
+			.first-item-subtitle{
+				font-size: 16rpx;
+				font-family: PingFang SC;
+				font-weight: 400;
+				color: #FFFFFF;
+				text-align: center;position: relative;
+				// position: absolute;
+				padding-top: 5rpx;
+				left: 0rpx;right: 0rpx;
+			}
+			.linecenter{
+				border-top:1rpx solid #FFFFFF;margin: 8rpx 40rpx 8rpx;opacity: 0.3;position: relative;
+			}
+			.first-item-mininfo{
+				font-size: 20rpx;position: relative;
+				color: #FFFFFF;
+				text-align: center;
+				padding: 5rpx 30rpx 60rpx;
+			}
+			
+			
+			.first-item-change-box{
+				position: absolute;
+				right: 20rpx;
+				bottom: 24rpx;
+				.first-item-change{
+					font-size: 18rpx;
+					font-family: PingFang SC;
+					font-weight: 500;
+					color: #fff;
+					display: flex;
+					 .first-item-rightImg{
+						 width: 5px;
+						 height: 10rpx;
+						 margin-top: 10rpx;
+						 margin-left: 5rpx;
+					 }
+					
+				}
+			}
+			
+		}
 	}
-
-	.first-box .first-item {
-		width: 110px;
-		height: 110px;
-		position: relative;
-	}
-
-	.first-box .first-item .first-item-img {
-		width: 110px;
-		height: 110px;
-	}
-
-	.first-box .first-item .first-item-title {
-		font-size: 13px;
-		font-family: PingFang SC;
-		font-weight: 400;
-		color: #FFFFFF;
-		text-align: center;
-		position: absolute;
-		top: 20px;
-		left: 0px;
-		right: 0px;
-	}
-
-	.first-box .first-item .first-item-subtitle {
-		font-size: 8px;
-		font-family: PingFang SC;
-		font-weight: 400;
-		color: #FFFFFF;
-		text-align: center;
-		position: absolute;
-		top: 42.5px;
-		left: 0px;
-		right: 0px;
-	}
-
-	.first-box .first-item .first-item-change-box {
-		position: absolute;
-		right: 10px;
-		bottom: 10px;
-
-
-	}
-
-	.first-box .first-item .first-item-change-box .first-item-change {
-		font-size: 9px;
-		font-family: PingFang SC;
-		font-weight: 500;
-		color: #fff;
-		display: flex;
-	}
-
-	.first-box .first-item .first-item-change-box .first-item-rightImg {
-		width: 5px;
-		height: 5px;
-		margin-top: 5px;
-		margin-left: 2.5px;
-	}
-
 	.second-box{
-		margin-top: 60rpx;
-		display: flex;padding-bottom: 35px;
+		margin-top: 26rpx;
+		display: flex;
 		flex-wrap:wrap;
 		justify-content:space-between;
 		margin-left: 50rpx;
 		margin-right: 50rpx;
-		height: 461rpx;
+		// height: 750rpx;
 		.second-item{
-			width: 310rpx;
-			height: 212rpx;
+			width: 310rpx;margin-top:36rpx;
+			min-height: 212rpx;
 			position: relative;
 			.second-item-img{
-				width: 310rpx;
-				height: 212rpx;
+				width: 310rpx;position: absolute;left:0;right: 0;bottom:0;top: 0rpx;z-index: 0;
+				height: 100%!important;// height: 212rpx;
 			}
 			.second-item-title{
-				position: absolute;
-				top: 97rpx;
+				// position: absolute;
+				padding-top: 94rpx;
 				left: 0rpx;right: 0rpx;
-				text-align: center;
+				text-align: center;position: relative;
 				font-size: 26rpx;
 				font-family: PingFang SC;
 				font-weight: 400;
 				color: #AE6C46;
 			}
 			.second-item-subtitle{
-				position: absolute;
-				top: 135rpx;
+				// position: absolute;
+				padding-top: 5rpx;
 				left: 0rpx;right: 0rpx;
 				text-align: center;
-				font-size: 16rpx;
+				font-size: 16rpx;position: relative;
 				font-family: PingFang SC;
 				font-weight: 400;
 				color: #AE6C46;
+			}
+			.second-item-mininfo{
+				font-size: 20rpx;position: relative;
+				text-align: center;color: #666666;min-height:80rpx;
+				padding: 5rpx 30rpx 60rpx;
 			}
 			
 			.second-item-change-box{
 				position: absolute;
 				right: 40rpx;
-				bottom: 20rpx;
+				bottom: 24rpx;
 				.second-item-change{
 					display: flex;
 					font-size: 18rpx;
@@ -784,7 +861,7 @@
 
 	.infobox {
 		border-top: 20rpx solid #EFEFEF;
-		box-sizing: border-box;
+		box-sizing: border-box;padding-bottom: 80rpx;
 	}
 
 	.resultbox {
