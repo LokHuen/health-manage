@@ -75,10 +75,10 @@
 			
 		</view>
 		
-		<view class="detail" @click="toDetail">
+		<!-- <view class="detail" @click="toDetail">
 			按商品统计订单情况
 			<image src="../../static/icon/more_icon.png" mode="widthFix" class="detail-more"></image>
-		</view>
+		</view> -->
 		
 		
 		
