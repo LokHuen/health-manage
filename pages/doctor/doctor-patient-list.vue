@@ -28,6 +28,9 @@
 			<view class="desc" v-if="item.surveyResult && item.surveyScore">
 				{{'最近一次测评结果：'+item.surveyResult+' ('+item.surveyScore+'分)'}}
 			</view>
+			<view class="desc" v-if="item.surveyResult && !item.surveyScore">
+				{{'最近一次测评结果：'+item.surveyResult}}
+			</view>
 			<view class="desc" v-if="item.lastSurveyTime">{{'最近一次测评时间：'+item.lastSurveyTime}}</view>
 			<view class="desc" v-if="!item.surveyResult">暂无营养评估记录</view>
 			<view class="desc">{{'订单数：'+item.orderCount+(item.orderTime?(' ('+'最近一次下单时间：'+item.orderTime+')'):'')}}
