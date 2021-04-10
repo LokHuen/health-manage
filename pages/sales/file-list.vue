@@ -110,7 +110,7 @@
 				    if(ua.match(/MicroMessenger/i)=="micromessenger") {
 				        wx.miniProgram.getEnv((res)=>{
 				           if (res.miniprogram) {
-				               wx.miniProgram.navigateTo({url:"/pages/other?url="+encodeURIComponent(app1.globalData.baseUrl+item.fileUrl)});
+				               wx.miniProgram.navigateTo({url:"/pages/other?url="+encodeURIComponent(item.fileUrl)});
 				           } else {
 				               window.open(app1.globalData.baseUrl+item.fileUrl);
 				           }
