@@ -7,6 +7,13 @@
 				"navigationBarTitleText": "营养管理"
 			}
 		},
+		
+		{
+			"path": "pages/department/index",
+			"style": {
+				"navigationBarTitleText": "科室"
+			}
+		},
 
 		{
 			"path": "pages/sales/data-detail",
