@@ -5,39 +5,42 @@
 			退出演示环境，回到我的页面
 			<image src="../../static/tuichu.png" mode="aspectFill" class="tuichu"></image>
 		</view>
-		<view class="title">潮州市红山医院  营养科</view>
+		<view class="title">{{doctorInfo.hospital+'  '+doctorInfo.department}}</view>
 		<view class="list-box">
-			<view class="list-item flex" v-for="(item,index) in list" :key="index">
+			<view class="list-item flex" v-for="(item,index) in doctorInfo.resultList" :key="index">
 				<view class="name">
-					吴卫东
+					{{item.doctorName}}
 				</view>
 				<view class="detail">
-					主任医师 
+					{{item.technicalTitle}}
 				</view>
 				<view class="detail">
-					患者数:9
+					{{'患者数: '+item.patientCount}}
 				</view>
 			</view>
 		</view>
-		<tabbar :now="1" :real="false" :hide="2"></tabbar>
 	</view>
 </template>
 
 <script>
 	const app = getApp();
-	import tabbar from "../../components/tabbar.vue"
 	export default {
-		components:{tabbar},
 		data() {
 			return {
-				list:[1,2,3]
+				doctorInfo:''
 			}
 		},
 		onLoad(){
-		
+		   this.getListData();
 		},
 		methods: {
-			
+			getListData(){
+				app.allDoctorList().then(res =>{
+					if(res.status == 1){
+						this.doctorInfo = res.data;
+					}
+				})
+			}
 		}
 	}
 </script>
