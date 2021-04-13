@@ -146,13 +146,16 @@
 			</view>
 
 		</uni-popup>
-
+		<tabbar :now="0" :real="false" :hide="2"></tabbar>
 	</view>
+	
 </template>
 
 <script>
 	const app = getApp();
+	import tabbar from "../../components/tabbar.vue"
 	export default {
+		components:{tabbar},
 		data() {
 			return {
 				selectIndex: 1

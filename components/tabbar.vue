@@ -1,7 +1,7 @@
 <template>
 	<view class="flex tabbar">
-		<view class="tabitem" v-for="(item,index) in list" :key="index" v-if="hide!=index" @click="tootherpage(item.path)">
-			<image :src="now==index?item.img:item.selected" class="img" mode="aspectFit"></image>
+		<view class="tabitem" v-for="(item,index) in list" :key="index" v-if="hide!=index" @click="tootherpage(item)">
+			<image :src="now==index?item.selected:item.img" class="img" mode="aspectFit"></image>
 			<view :class="'text '+(now==index?'on':'')">{{item.name}}</view>
 		</view>
 	</view>
@@ -16,33 +16,39 @@
 			now:{
 				default:0,
 			},
+			real:{
+				default:true,
+			},
 		},
 		data() {
 			return {
 				list:[
 					{
 						name:"首页",
-						img:"../static/doctor/1.png",
-						selected:"../static/doctor/11.png",
-						path:"/",
+						img:"/static/doctor/1.png",
+						selected:"/static/doctor/11.png",
+						path:"/pages/doctor/nutrition-manage",
+						path1:"/pages/showdata/nutrition-manage",
 					},
 					{
 						name:"科室",
-						img:"../static/doctor/2.png",
-						selected:"../static/doctor/22.png",
-						path:"/",
+						img:"/static/doctor/2.png",
+						selected:"/static/doctor/22.png",
+						path:"/pages/department/index",
+						path1:"/pages/showdata/department",
 					},
 					{
 						name:"服务",
-						img:"../static/doctor/3.png",
-						selected:"../static/doctor/33.png",
-						path:"/",
+						img:"/static/doctor/3.png",
+						selected:"/static/doctor/33.png",
+						path:"/pages/doctor/serve",
 					},
 				]
 			};
 		},
 		methods:{
-			tootherpage(url){
+			tootherpage(item){
+				let url = this.real==true?item.path:item.path1
 				uni.redirectTo({
 					url:url
 				})

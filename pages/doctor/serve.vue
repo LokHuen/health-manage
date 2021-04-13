@@ -14,7 +14,7 @@
 				
 			</view>
 		</view>
-		<view class="item-list other" click="">
+		<view class="item-list other" @click="toshowdata">
 			<view class="left-name">演示数据</view>
 			<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
 			
@@ -34,66 +34,22 @@
 			</view>
 		
 		</uni-popup>
-		
-		<uni-popup ref="nutritioninfo1" type="center">
-			<view class="nutritioninfo">
-				<view style="height: 50rpx;"></view>
-				<view class="tips-title">营养干预情况说明</view>
-				<view class="tips-sub">
-					<view class="list">
-						<text class="main">未干预：</text>患者未在本平台上购买过ONS产品。
-					</view>
-					<view class="list">
-						<text class="main">干预中：</text>患者在最近30天内有买过ONS产品。
-					</view>
-					<view class="list">
-						<text class="main">已停止干预：</text>患者在30天前有买过ONS产品，但最近30天内未有购买记录。
-					</view>
-				</view>
-				<view class="flex ct warnbox">
-					<image class="warnimg" src="../../static/icon/remind_icon2.png" mode="widthFix" style=""></image>干预情况依据本平台数据判断，存在局限性
-				</view>
-				<view class="tips-close" @click="$refs.nutritioninfo1.close()">关闭</view>
-				<view style="height: 50rpx;"></view>
-			</view>
-		
-		</uni-popup>
-		<uni-popup ref="nutritioninfo2" type="center">
-			<view class="nutritioninfo">
-				<view style="height: 50rpx;"></view>
-				<view class="tips-title">患者营养状况说明</view>
-				<view class="tips-sub">
-					<view class="listother">依据PG-SGA营养状况评估体系，根据评估得分做判断：</view>
-					<view class="listother">0-1分，无营养不良；</view>
-					<view class="listother">2-3分，可疑营养不良；</view>
-					<view class="listother">4-8分，中度营养不良；</view>
-					<view class="listother">>=9分，重度营养不良。</view>
-					<view class="listother">依据SGA营养状况评估体系，根据评分判断等级：</view>
-					<view class="listother">营养良好、轻-中度营养不良、重度营养不良</view>
-					
-				</view>
-				
-				<view class="tips-close" @click="$refs.nutritioninfo2.close()">关闭</view>
-				<view style="height: 50rpx;"></view>
-			</view>
-		
-		</uni-popup>
+
+		<tabbar :now="2"></tabbar>
 	</view>
 </template>
 
 <script>
 	const app = getApp();
+	import tabbar from "../../components/tabbar.vue"
 	export default {
-	
+		components:{tabbar},
 		data() {
 			return {
 				
 			}
 		},
 		onShow(){
-			this.$nextTick(()=>{
-				this.$refs.nutritioninfo2.open();
-			})
 			
 		},
 		methods: {
@@ -108,52 +64,18 @@
 			closeTips() {
 				this.$refs.popupTips.close();
 			},
+			toshowdata(){
+				uni.navigateTo({
+					url: "/pages/showdata/nutrition-manage"
+				});
+			},
 		},
 
 	}
 </script>
 
 <style lang="scss" scoped>
-	.nutritioninfo{
-		background-color: #FFFFFF;
-		border-radius: 10rpx;
-		width: 620rpx;
-		.warnbox{
-			padding-top:40rpx;font-size:26rpx;color:#999;
-			.warnimg{width:24rpx;margin-right:6rpx;}
-		}
-			
-		.tips-title {
-			text-align: center;
-			font-size: 34rpx;
-			color: #333;
-		}
-			
-		.tips-sub {
-			margin-top: 40rpx;
-			text-align: left;
-			font-size: 28rpx;
-			color: #555;
-			margin-left: 50rpx;
-			margin-right: 50rpx;
-			.list{padding-top:8rpx;}
-			.listother{padding-top:16rpx;color:#333;}
-			.main{color:#000;}
-		}
-			
-		.tips-close {
-			margin-top: 50rpx;
-			text-align: center;
-			font-size: 34rpx;
-			color: #FFFFFF;
-			background-color: #52A29E;
-			height: 90rpx;
-			line-height: 90rpx;
-			margin-left: 100rpx;
-			margin-right: 100rpx;
-			border-radius: 45rpx;
-		}
-	}
+	
 	.topbox{
 		margin-top:24rpx;
 		.centerline{margin:0 56rpx;border-top: 1px solid #E5E5E5;}
