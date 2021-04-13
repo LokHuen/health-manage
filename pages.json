@@ -15,8 +15,12 @@
 				"navigationBarTitleText": "发送医嘱"
 			}
 		},
-		
-		
+		{
+			"path": "pages/doctor/nutrition-manage",
+			"style": {
+				"navigationBarTitleText": "营养管理"
+			}
+		},
 		{
 			"path": "pages/department/index",
 			"style": {
@@ -24,7 +28,13 @@
 			}
 		},
 		{
-			"path": "pages/department/show-department-data",
+			"path": "pages/showdata/department",
+			"style": {
+				"navigationBarTitleText": "演示数据"
+			}
+		},
+		{
+			"path": "pages/showdata/nutrition-manage",
 			"style": {
 				"navigationBarTitleText": "演示数据"
 			}
