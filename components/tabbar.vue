@@ -1,8 +1,11 @@
 <template>
-	<view class="flex tabbar">
-		<view class="tabitem" v-for="(item,index) in list" :key="index" v-if="hide!=index" @click="tootherpage(item)">
-			<image :src="now==index?item.selected:item.img" class="img" mode="aspectFit"></image>
-			<view :class="'text '+(now==index?'on':'')">{{item.name}}</view>
+	<view>
+		<view style="height:140rpx;"></view>
+		<view class="flex tabbar">
+			<view class="tabitem" v-for="(item,index) in list" :key="index" v-if="hide!=index" @click="tootherpage(item)">
+				<image :src="now==index?item.selected:item.img" class="img" mode="aspectFit"></image>
+				<view :class="'text '+(now==index?'on':'')">{{item.name}}</view>
+			</view>
 		</view>
 	</view>
 </template>
