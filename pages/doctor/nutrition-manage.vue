@@ -1,7 +1,7 @@
 <template>
 	<!-- 医生营养管理 2.0版本  4月13号-->
 	<view class="container">
-		<image src="../../static/img/bannerImg.png" mode="widthFix" class="banner"></image>
+		<image src="../../static/warnshow.jpg" mode="widthFix" class="banner"></image>
 		<view class="condition-box flex" v-if="showCondition">
 			<view :class="selectIndex==1?'chose':'unchose'" @click="select(1)">
 				我的患者
@@ -16,7 +16,7 @@
 		<view class="count-box flex">
 			<view class="count-item">
 				<view class="count-item-number">
-					{{doctorInfo.patientCount||0}}
+					{{selectIndex==1?doctorInfo.patientCount:doctorInfo.depPatientCount}}
 				</view>
 				<view class="">
 					总患者数
@@ -24,7 +24,7 @@
 			</view>
 			<view class="count-item" style="border-right: 0rpx solid #fff;">
 				<view class="count-item-number" style="color: #F8BD63;">
-					{{doctorInfo.monthPatientCount||0}}
+					{{selectIndex==1?doctorInfo.monthPatientCount:doctorInfo.depPatientCountOfMonth}}
 				</view>
 				<view class="">
 					本月新增患者
@@ -39,14 +39,14 @@
 			<view class="detali-list-box">
 				<view class="detali-list-item">
 					<view>
-						<text class="detail1">{{doctorInfo.surveyResult4||0}}</text>
+						<text class="detail1">{{selectIndex==1?doctorInfo.surveyResult4:doctorInfo.depSurveyReslt4}}</text>
 						<text class="detail2">人</text>
 					</view>
 					<view class="detali-name">重度营养不良</view>
 				</view>
 				<view class="detali-list-item">
 					<view>
-						<text class="detail1">{{doctorInfo.surveyResult3||0}}</text>
+						<text class="detail1">{{selectIndex==1?doctorInfo.surveyResult3:doctorInfo.depSurveyReslt3}}</text>
 						<text class="detail2">人</text>
 					</view>
 					<view class="detali-name">中度营养不良</view>
@@ -54,7 +54,7 @@
 				
 				<view class="detali-list-item" style="border-right: 0rpx solid #fff;">
 					<view>
-						<text class="detail1">{{doctorInfo.surveyResult2||0}}</text>
+						<text class="detail1">{{selectIndex==1?doctorInfo.surveyResult2:doctorInfo.depSurveyReslt2}}</text>
 						<text class="detail2">人</text>
 					</view>
 					<view class="detali-name">可疑营养不良</view>
@@ -71,14 +71,14 @@
 			<view class="detali-list-box">
 				<view class="detali-list-item">
 					<view>
-						<text class="detail1">{{doctorInfo.noIntervene||0}}</text>
+						<text class="detail1">{{selectIndex==1?doctorInfo.noIntervene:doctorInfo.depNoIntervene}}</text>
 						<text class="detail2">人</text>
 					</view>
 					<view class="detali-name">未干预</view>
 				</view>
 				<view class="detali-list-item">
 					<view>
-						<text class="detail1">{{doctorInfo.intervened||0}}</text>
+						<text class="detail1">{{selectIndex==1?doctorInfo.intervened:doctorInfo.depIntervened}}</text>
 						<text class="detail2">人</text>
 					</view>
 					<view class="detali-name">停止干预</view>
@@ -86,7 +86,7 @@
 				
 				<view class="detali-list-item" style="border-right: 0rpx solid #fff;">
 					<view>
-						<text class="detail1">{{doctorInfo.intervene||0}}</text>
+						<text class="detail1">{{selectIndex==1?doctorInfo.intervene:doctorInfo.depIntervene}}</text>
 						<text class="detail2">人</text>
 					</view>
 					<view class="detali-name">干预中</view>
@@ -154,7 +154,7 @@
 		data() {
 			return {
 				selectIndex:1,
-				showCondition:true,
+				showCondition:false,
 				doctorInfo:''
 			}
 		},
@@ -173,16 +173,11 @@
 				this.$refs.nutritioninfo2.open();
 			},
 			getManageDepartment(){
-				app.getManageDepartment().then(res =>{
+				app.allDoctorList().then(res =>{
 					if(res.status == 1){
-						// if(res.data.length>0){
-						// 	for (var i = 0; i < res.data.length; i++) {
-						// 		this.doctorList.push(res.data[i]); 
-						// 	}
-						// }else{
-						// 	this.doctorList = [{id:'',technicalTitle:'',doctorName:'我的患者'}];
-						// }
-						//this.showCondition = res.data.length>0;
+						//数组元素有1个的时候，查到的是自己本身，就是普通的医生
+						//大于1的时候，表示主任
+						this.showCondition = res.data.resultList.leng>1;
 					}
 				});
 			},
