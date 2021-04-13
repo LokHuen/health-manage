@@ -8,7 +8,10 @@
 					吴卫东
 				</view>
 				<view class="detail">
-					主任医师   患者数：9
+					主任医师 
+				</view>
+				<view class="detail">
+					患者数:9
 				</view>
 			</view>
 		</view>
@@ -39,18 +42,36 @@
 	.container{
 	    .title{
 			height: 100rpx;
-			line-height: 100rpx;
-			padding-left: 50rpx;
+			line-height: 120rpx;
+			padding-left: 30rpx;
+			font-size: 30rpx;
+			font-family: PingFang SC;
+			font-weight: 400;
+			color: #333333;
 		}
 		.list-box{
 			.list-item{
-				margin-left: 50rpx;
-				margin-right: 50rpx;
-				padding-left: 20rpx;
+				margin-left: 30rpx;
+				margin-right: 30rpx;
+				padding-left: 40rpx;
 				background-color: #fff;
-				margin-top: 10rpx;
-				height: 100rpx;
-				line-height: 100rpx;
+				margin-top: 20rpx;
+				height: 110rpx;
+				line-height: 110rpx;
+				.name{
+					font-size: 32rpx;
+					font-family: PingFang SC;
+					font-weight: 400;
+					color: #333333;
+				}
+				.detail{
+					margin-left: 20rpx;
+					font-size: 26rpx;
+					font-family: PingFang SC;
+					font-weight: 400;
+					color: #666666;
+				}
+				
 			}
 		}
 	}
