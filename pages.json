@@ -8,10 +8,35 @@
 			}
 		},
 		
+		
+		{
+			"path": "pages/doctor/send-advice",
+			"style": {
+				"navigationBarTitleText": "发送医嘱"
+			}
+		},
+		{
+			"path": "pages/doctor/nutrition-manage",
+			"style": {
+				"navigationBarTitleText": "营养管理"
+			}
+		},
 		{
 			"path": "pages/department/index",
 			"style": {
 				"navigationBarTitleText": "科室"
+			}
+		},
+		{
+			"path": "pages/showdata/department",
+			"style": {
+				"navigationBarTitleText": "演示数据"
+			}
+		},
+		{
+			"path": "pages/showdata/nutrition-manage",
+			"style": {
+				"navigationBarTitleText": "演示数据"
 			}
 		},
 
