@@ -421,10 +421,10 @@
 		},
 		onLoad(props){
 			this.uid = props.id;
+			app.tip(this.uid)
 		},
 		methods: {
 			sureTransfer(){
-				
 				let transferId = '';
 				for (var i = 0; i < this.doctorList.length; i++) {
 					 if(this.doctorList[i].select==1){
@@ -932,7 +932,7 @@
 					
 				// });
 				uni.navigateTo({
-					url:'send-advice'
+					url:'send-advice?uid='+this.uid
 				})
 			},
 		    closeRecord(){

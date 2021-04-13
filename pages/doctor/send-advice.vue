@@ -1,8 +1,8 @@
 <template>
 	<!-- 发送医嘱界面 -->
 	<view class="container">
-		<textarea v-model="content" placeholder="请填写医嘱内容" class="textarea" :placeholder-class="placeholder" />
-		<view class="button">确定发送</view>
+		<textarea v-model="advice" placeholder="请填写医嘱内容" class="textarea" :placeholder-class="placeholder" />
+		<view class="button" @click="writeAdvice">确定发送</view>
 		<view class="tip">
 			点击“确定发送”后，不可撤回，患者会即时收到
 		</view>
@@ -14,14 +14,30 @@
 	export default {
 		data() {
 			return {
-			   content:''
+			   advice:'',
+			   uid:''
+			  // adviceId:'',
+			   
 			}
 		},
-		onLoad(){
-		
+		onLoad(props){
+		    this.uid = props.uid;
 		},
 		methods: {
-			
+			writeAdvice(){
+				if(!this.advice){
+					app.tip('请填写建议');
+					return;
+				}
+				app.saveAdvice({advice:this.advice,patientId:this.uid,creatorId:app.getCache('uid')}).then(res =>{
+					if(res.status ==1){
+						app.tip('发送成功');
+					    uni.navigateBack({
+					    	
+					    });
+					}
+				});
+			},
 		}
 	}
 </script>
