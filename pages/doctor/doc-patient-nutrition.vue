@@ -5,15 +5,15 @@
 		<view class="info-box">
 			<image :src="infoData.portrait" mode="scaleToFill" class="avator"></image>
 			<view class="user-msg-box">
-				<view class="name">
-					{{infoData.patientName||"游客"}}
+				<view class="name flex" style="align-items:flex-end;">
+					{{infoData.patientName||"游客"}}<view class="msg" style="padding-left:16rpx;"> {{" "+(infoData.patientGender||"")+' '+((infoData.age || infoData.age!=0)?(infoData.age+'岁 '):'')}}
+				</view> 
 				</view>
-				<view class="msg">{{(infoData.patientGender||"")+' '+((infoData.age || infoData.age!=0)?(infoData.age+'岁 '):'')+(infoData.illness||"")}}
-
+				<view class="msg">{{(infoData.illness||"")}} {{latelyData.result?(latelyData.total?`${latelyData.result}(${latelyData.total}分)`:latelyData.result):""}}
 				</view>
 			</view>
-			<view class="eidt" @click="more" v-if="showAdvice==1">...</view>
-			
+			<!-- <view class="eidt" @click="more" v-if="showAdvice==1">...</view> -->
+			<view class="eidt">2020/12/12 加入</view>
 		</view>
 		<view class="line-space"></view>
 		<view class="content">
@@ -24,7 +24,7 @@
 				</view>
 			</view>
 		</view>
-		
+		<view class="line-space"></view>
 		
 		<view class="record-chart-box" v-if="(hasLoadLindData==0)||(lineData.categories.length>0 &&hasLoadLindData ==1)">
 			<view class="record-chart-title">{{testtype==1?"PG-":""}}SGA营养状况评估</view>
@@ -48,7 +48,7 @@
 			</view>
 		</view>
 		
-		<view class="last-one" v-if="latelyData.result">最近一次评价</view>
+		<!-- <view class="last-one" v-if="latelyData.result">最近一次评价</view>
 		
 		<view class="listContent" v-if="latelyData.result">
 			<view class="health-list-item" @click="toanswerlist(latelyData)">
@@ -68,38 +68,41 @@
 				<image class="health-list-item-arrow" :src="showDetail?'../../static/icon/right_arrow_top.png':'../../static/icon/right_arrow.png'"
 				 mode="widthFix" @click.stop="showDetailMessage" v-show="false"></image>
 			</view>
-		</view>
-		
-		
-		<view class="health-msg-box" v-if="infoData.weight || infoData.standardWeight" style="margin-top: 40rpx;">
+		</view> -->
+		<view class="line-space"></view>
+		<view class="itemboxtitle">均衡饮食建议</view>
+		<view class="health-msg-box" v-if="infoData.weight || infoData.standardWeight" style="margin-top: 10rpx;">
 			<view class="health-list-box">
 				<view class="health-list-item">
-					<view class="top-title">当前体重</view>
+					<image src="../../static/doctor/weight.png" mode="widthFix" class="bodyimg"></image>
+					<view class="top-title">体重</view>
 					<view class="health-detail">
 						<text style="font-size: 23px;">{{infoData.weight}}</text>KG
 					</view>
 				</view>
-				<view class="health-list-item">
+				<view class="health-list-item" style="border-color:#3FBACE;">
+					<image src="../../static/doctor/height.png" mode="widthFix" class="bodyimg"></image>
 					<view class="top-title">
-						<view class="">标准体重</view>
-						<image src="../../static/icon/wenhaoIcon.png" mode="widthFix" class="askIcon" @click="showComputing"></image>
+						<view class="">身高</view>
+						<!-- <image src="../../static/icon/wenhaoIcon.png" mode="widthFix" class="askIcon" @click="showComputing"></image> -->
 					</view>
 					<view class="health-detail">
 						<text style="font-size: 23px;">{{infoData.standardWeight}}</text>KG
 					</view>
 				</view>
 
-				<view class="health-list-item">
-					<view class="top-title">
+				<view class="health-list-item" style="border-color:#728DF6;">
+					<image src="../../static/doctor/bmi.png" mode="widthFix" class="bodyimg"></image>
+					<view class="top-title" @click="showBMITips">
 						<view class="">BMI</view>
-						<image src="../../static/icon/wenhaoIcon.png" mode="widthFix" class="askIcon" @click="showBMITips"></image>
+						<image src="../../static/icon/wenhaoIcon.png" mode="widthFix" class="askIcon" ></image>
 					</view>
 					<view class="health-detail">
 						<text style="font-size: 23px;">{{infoData.bmi}}</text>
 					</view>
-					<view class="health-tips">
+					<!-- <view class="health-tips">
 						{{infoData.normal==1?'属正常体重范围':'超出正常体重范围'}}
-					</view>
+					</view> -->
 				</view>
 
 			</view>
@@ -130,7 +133,8 @@
 					</view>
 				</view>
 			</view>
-		
+		<view class="line-space"></view>
+		<view class="itemboxtitle">患者饮食记录</view>
 		<view class="flex choosedaybox">
 			<view v-for="(item,index) in daytab" :key="index" :class="dayindex==index?'daylist on':'daylist'" @click="clickday(index)" style="">{{item}}</view>
 		</view>
@@ -148,7 +152,7 @@
 					</view>			
 			</view>
 			<view class="prelative marlr20" style="">
-				<div id="threeecharts" class="echarts" style="height:70vw;"></div>
+				<div id="threeecharts" class="echarts" style="height:70vw;width:95vw;"></div>
 				<view class="flex blocklistbox">
 					<view class="blockgreen"></view>
 					建议摄入值
@@ -189,15 +193,48 @@
 			</view>
 			
 		</view>
-			<view style="height:10rpx;"></view>
+		<view class="item-list" @click="tofooddetail">
+			<view class="left-name">查看患者饮食详情</view>
+			<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
+		</view>
+		<view class="line-space"></view>
+		<view class="itemboxtitle">营养干预情况</view>
+		<view class="goodsbox">
+			<view class="buggoodslist">
+				<view class="ltime">2021年1月12日 </view>
+				<view class="lname">益爱宁-21天装</view>
+				<view class="linfo">科学配方，黄金配比，内含38种优势核心成分、全面符合最新指南的ONS产品，温水冲泡，简单易操作，颗粒制剂，易服好吸收，每日2袋，1大盒42袋/疗程，快速修复肠道，全面补充营养</view>
+			</view>
+		</view>
+		<view class="flex ct bottomtip">
+			<image src="../../static/doctor/warn.png" mode="widthFix" class="tips" ></image>干预情况依据本平台数据判断，存在局限性
+		</view>
+		<view class="line-space"></view>
+		<view class="itemboxtitle">医嘱记录</view>
+		<view class="recordbox">
+			<scroll-view scroll-y="true" style="max-height:1000rpx;">
+				<view :class="(index==recordList.length-1)?'MA-record-list1 flex':'MA-record-list flex'" v-for="(item,index) in recordList" :key ="index" v-if="recordList.length>0">
+					<image src="../../static/doctor/email.png" mode="widthFix" class="recordimg" ></image>
+					<view style="flex:1;">
+						<view class="record-content">{{item.advice}}</view>
+						<view class="record-time-box">
+							<view class="record-time">{{item.createTime}}</view>
+							<view class="record-motify" @click="motifyAdvice(item)">复制</view>
+						</view>
+					</view>
+				</view>
+			</scroll-view>
+		</view>
+		<view style="height:200rpx;background:#F7F8F8;"></view>
 		</view>
 
 		
 
-		<view class="button-box">
+		<view class="button-box flex">
 			<button type="default" class="button" @click="beginTest" v-show="showAdvice==1">医 嘱</button>
+			<view class="button btother">更多功能</view>
 		</view>
-		<view style="height: 200px;"></view>
+		<!-- <view style="height: 200px;"></view> -->
 		<uni-popup ref="popup" type="bottom">
 			<!-- 标准体重计算方法 -->
 			<view class="white-background">
@@ -776,9 +813,9 @@
 				}
 			},
 			motifyAdvice(item){
-				this.advice = item.advice;
-				this.adviceId = "";//item.id;
-				this.writeRecord = !this.writeRecord;
+				// this.advice = item.advice;
+				// this.adviceId = "";//item.id;
+				// this.writeRecord = !this.writeRecord;
 			},
 			writeAdvice(){
 				if(!this.advice){
@@ -809,7 +846,6 @@
 				app.adviceListRequest({patientId:this.uid}).then(res=>{
 				    if(res.status == 1){
 						this.recordList = res.data;
-						this.$refs.popupMedicalAdvice.open();
 					}
 					
 				});
@@ -906,6 +942,7 @@
 						if(this.greenindex<gindex) ++this.greenindex;
 						else clearInterval(ghandler);
 					},50)
+					this.beginTest();
 				});
 			},
 			//最近一次测评的数据
@@ -1120,12 +1157,99 @@
 			this.getUserData();
 			this.getDepartmentDoctors();
 		},
-
-
+		tofooddetail(){
+			uni.navigateTo({
+				url:"/pages/doctor/dietDetail?id="+this.uid
+			})
+		}
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+	.recordbox{
+		margin:0 70rpx;
+		.recordimg{width:30rpx;margin:8rpx 12rpx 0 0;}
+		.MA-record-list{
+			margin-top: 30rpx;
+			padding-bottom: 30rpx;align-items:flex-start;
+			border-bottom: 1rpx solid #E5E5E5;
+			&:first-child{margin-top:6rpx;}
+		}
+		.MA-record-list1{
+			margin-top: 30rpx;align-items:flex-start;
+			padding-bottom: 30rpx;			
+		}
+		
+		.record-content{
+			color: #333333;
+			font-size: 28rpx;
+		}
+		.record-time-box{
+			display: flex;
+			margin-top: 15rpx;
+			.record-time{
+				font-size: 14px;
+				color: #999999;
+			}
+			.record-motify{
+				font-size: 14px;
+				color: #666666;
+				margin-left: 25rpx;
+			}
+		}
+		
+		.MA-line{
+			margin-top: 30rpx;
+			background-color: #F6F6F6;
+			height: 20rpx;
+		}
+		.MA-send{
+			text-align: center;
+			height: 104rpx;
+			line-height: 104rpx;
+			color: #52A29E;
+			font-size: 15px;
+			border-bottom: 2rpx solid #E5E5E5;
+		}
+	}
+	.goodsbox{
+		margin:0 70rpx;
+		.buggoodslist{
+			padding-bottom:30rpx;margin-bottom:30rpx;border-bottom: 1rpx solid #DCDCDC;
+			.ltime{font-size: 26rpx;color: #999999;padding-bottom:20rpx;}
+			.lname{padding-bottom:20rpx;font-size: 30rpx;font-weight: 600;color: #333333;}
+			.linfo{font-size: 26rpx;color: #666666;}
+			&:last-child{border:none;margin:0;padding:0;}
+		}
+	}
+	.bottomtip{
+		padding:30rpx 0;font-size:26rpx;color:#999;
+		.tips {
+			width: 26rpx;margin-right:8rpx;
+			height: 26rpx;
+		}
+	}
+	
+	.item-list{
+		height: 106rpx;margin:0rpx 30rpx;
+		position: relative;border-top: 1rpx solid #eee;
+		.left-name{
+			height: 106rpx;
+			line-height: 106rpx;
+			font-size: 15px;
+			color: #333333;
+			padding-left: 26rpx;
+		}
+		.right-arrow{
+			position: absolute;
+			right: 20rpx;
+			width: 15rpx;
+			height: 26rpx;
+			top: 40rpx;
+			
+		}
+	}
+	.itemboxtitle{line-height:100rpx;text-align:center;font-size: 36rpx;font-weight: 600;color: #333333;padding-top:10rpx;}
 	.white-background-patient {
 		text-align: center;
 		background-color: #FFFFFF;
@@ -1187,7 +1311,7 @@
 		&.on{color:#52A29E;}
 	}
 	.blocklistbox{
-		font-size:26rpx;color:#555;padding:0 0 40rpx 30rpx;
+		font-size:26rpx;color:#555;padding:0 0 40rpx 20rpx;
 		.blockgreen{width:16rpx;height:16rpx;background:#ddd;margin-right:8rpx;}
 		.blockblue{width:16rpx;height:16rpx;background:#52A29E;margin:0 8rpx 0 60rpx;}
 	}
@@ -1278,8 +1402,8 @@
 			position: relative;
 			.eidt{
 				position: absolute;
-				right: 40rpx;
-				font-size: 50rpx;
+				right: 40rpx;color:#999;
+				font-size: 26rpx;
 				top: 20rpx;
 			}
 
@@ -1334,8 +1458,8 @@
 		}
 
 		.health-msg-box {
-			margin: 0 40rpx 30rpx;
-			box-shadow: 1px 1px 5px #999999;
+			// margin: 0 40rpx 30rpx;
+			// box-shadow: 1px 1px 5px #999999;
 			&.other {
 				padding: 30rpx;
 				box-sizing: border-box;
@@ -1345,15 +1469,16 @@
 				text-align: center;
 				display: flex;
 				justify-content: space-around;
-				height: 214rpx;
-				border-bottom: 1px #EEEEEE solid;
-				padding-bottom: 0.4rem;
+				border-bottom: 0px #EEEEEE solid;
+				padding:0 30rpx 0.4rem;
 
 				.health-list-item {
-					color: #333333;
-
+					color: #333333;width:30%;
+					border: 1rpx solid #F8AE58;padding: 18rpx;box-sizing:border-box;
+					border-radius: 10rpx;margin:0 20rpx;
+					.bodyimg{width:64rpx;}
 					.top-title {
-						margin-top: 40rpx;
+						margin-top: 0rpx;
 						display: flex;align-items: center;
 						font-size: 13px;
 						justify-content: center;
@@ -1502,19 +1627,20 @@
 
 		.button-box {
 			position: fixed;
-			bottom: 0;
-			height: 140rpx;
+			bottom: 0;justify-content: space-around;
+			height: 200rpx;
 			width: 100%;
 
 			.button {
 				height: 90rpx;
 				line-height: 90rpx;
-				width: 81%;
-				background-color: #52A29E !important;
+				width: 360rpx;
+				background-color: #F6B861 !important;
 				border-radius: 45rpx;
 				color: #FFFFFF;
-				font-size: 17px;
+				font-size: 34rpx;margin:auto;text-align:center;
 			}
+			.btother{background-color: #52A29E !important;width:280rpx;}
 		}
 
 		.white-background {
@@ -1755,7 +1881,7 @@
 	}
 
 	.notice-box {
-		padding: 30rpx 40rpx 28rpx;
+		padding: 30rpx 50rpx 28rpx;
 
 		.notice-info {
 			font-size: 26rpx;

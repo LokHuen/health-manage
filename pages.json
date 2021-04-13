@@ -276,6 +276,12 @@
 				"navigationBarTitleText": "记录营养品"
 			}
 		},
+		{
+			"path": "pages/doctor/dietDetail",
+			"style": {
+				"navigationBarTitleText": "患者饮食详情"
+			}
+		},
 
 		{
 			"path": "pages/nutrition/nutrition-record",
@@ -296,6 +302,12 @@
 			"path": "pages/doctor/doctor-center",
 			"style": {
 				"navigationBarTitleText": "个人中心"
+			}
+		},
+		{
+			"path": "pages/doctor/serve",
+			"style": {
+				"navigationBarTitleText": "服务"
 			}
 		},
 
