@@ -77,7 +77,7 @@
 					<image src="../../static/doctor/weight.png" mode="widthFix" class="bodyimg"></image>
 					<view class="top-title">体重</view>
 					<view class="health-detail">
-						<text style="font-size: 23px;">{{infoData.weight}}</text>KG
+						<text style="font-size: 23px;">{{infoData.weight}}</text>kg
 					</view>
 				</view>
 				<view class="health-list-item" style="border-color:#3FBACE;">
@@ -87,7 +87,7 @@
 						<!-- <image src="../../static/icon/wenhaoIcon.png" mode="widthFix" class="askIcon" @click="showComputing"></image> -->
 					</view>
 					<view class="health-detail">
-						<text style="font-size: 23px;">{{infoData.standardWeight}}</text>KG
+						<text style="font-size: 23px;">{{infoData.height}}</text>cm
 					</view>
 				</view>
 
@@ -205,6 +205,7 @@
 				<view class="lname">益爱宁-21天装</view>
 				<view class="linfo">科学配方，黄金配比，内含38种优势核心成分、全面符合最新指南的ONS产品，温水冲泡，简单易操作，颗粒制剂，易服好吸收，每日2袋，1大盒42袋/疗程，快速修复肠道，全面补充营养</view>
 			</view>
+			<!-- <view v-if="!listDatas.length" class="pagenodata">暂无数据</view> -->
 		</view>
 		<view class="flex ct bottomtip">
 			<image src="../../static/doctor/warn.png" mode="widthFix" class="tips" ></image>干预情况依据本平台数据判断，存在局限性
@@ -223,6 +224,7 @@
 						</view>
 					</view>
 				</view>
+				<view v-if="!recordList.length" class="pagenodata">暂无数据</view>
 			</scroll-view>
 		</view>
 		<view style="height:200rpx;background:#F7F8F8;"></view>
@@ -1236,16 +1238,17 @@
 					url:src
 				})
 			},
+			tofooddetail(){
+				uni.navigateTo({
+					url:"/pages/doctor/dietDetail?id="+this.uid
+				})
+			},
 		},
 		onShow() {
 			this.getUserData();
 			this.getDepartmentDoctors();
 		},
-		tofooddetail(){
-			uni.navigateTo({
-				url:"/pages/doctor/dietDetail?id="+this.uid
-			})
-		}
+		
 	}
 </script>
 

@@ -21,7 +21,7 @@
 			
 			</view>
 		</view>
-		
+		<view v-if="!listDatas.length" class="pagenodata">暂无数据</view>
 	</view>
 </template>
 
