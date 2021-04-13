@@ -23,6 +23,12 @@
 				"navigationBarTitleText": "科室"
 			}
 		},
+		{
+			"path": "pages/department/show-department-data",
+			"style": {
+				"navigationBarTitleText": "演示数据"
+			}
+		},
 
 		{
 			"path": "pages/sales/data-detail",
