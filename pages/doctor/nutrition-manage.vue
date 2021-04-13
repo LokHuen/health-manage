@@ -152,11 +152,13 @@
 		data() {
 			return {
 				selectIndex:1,
-				showCondition:true
+				showCondition:true,
+				doctorInfo:''
 			}
 		},
 		onLoad(){
 		     this.getManageDepartment();
+			 this.getDoctorInfo();
 		},
 		methods: {
 			select(index){
@@ -182,6 +184,13 @@
 					}
 				});
 			},
+			getDoctorInfo(){
+				app.doctorInfo().then(res =>{
+					if(res.status == 1){
+						this.doctorInfo = res.data;
+					}
+				})
+			}
 		}
 	}
 </script>

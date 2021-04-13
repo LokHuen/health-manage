@@ -421,7 +421,6 @@
 		},
 		onLoad(props){
 			this.uid = props.id;
-			app.tip(this.uid)
 		},
 		methods: {
 			sureTransfer(){
