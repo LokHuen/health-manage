@@ -232,7 +232,7 @@
 
 		<view class="button-box flex">
 			<button type="default" class="button" @click="beginTest" v-show="showAdvice==1">医 嘱</button>
-			<view class="button btother">更多功能</view>
+			<view class="button btother" @click="moreOnClick">更多功能</view>
 		</view>
 		<!-- <view style="height: 200px;"></view> -->
 		<uni-popup ref="popup" type="bottom">
@@ -336,6 +336,41 @@
 			</view>
 		</uni-popup>
 		
+		
+		
+		<uni-popup ref="pop1" type="bottom">
+			<!-- 更多功能 -->
+			<view class="white-background-pop1">
+				<view class="white-background-pop1-title">
+					更多功能
+					<image src="../../static/icon_close.png" mode="aspectFill" @click="closeMore" class="close"></image>
+				</view>
+				<view class="transferButton" @click="transfer">将患者转给同科室的医生</view>
+				<view style="height: 260rpx;"></view>
+				
+			</view>
+		</uni-popup>
+		
+		
+		<uni-popup ref="doctorPop" type="bottom">
+			<!-- 更多功能 -->
+			<view class="white-background-doctorPop">
+				<view class="white-background-doctorPop-title">
+					将患者转给同科室的医生
+					<image src="../../static/icon/turnback_icon.png" mode="aspectFill" @click="closeDoctorPop" class="close"></image>
+				</view>
+				<scroll-view scroll-y="true" style="max-height:600rpx;margin-top: 20rpx;">
+					<view class="docItem" v-for="(item,index) in doctorList" :key="index" @click="selectDoc(index)">
+				    {{item.doctorName+item.technicalTitle}}
+					<image src="../../static/icon/chose_icon1.png" mode="aspectFill" class="doctorSelect"  v-show="item.select==1"></image>
+					</view>
+				</scroll-view>
+				<view class="sureBtn" @click="sureTransfer">确定</view>
+				<view style="height: 60rpx;"></view>
+				
+			</view>
+		</uni-popup>
+		
 	</view>
 </template>
 
@@ -388,6 +423,50 @@
 			this.uid = props.id;
 		},
 		methods: {
+			sureTransfer(){
+				
+				let transferId = '';
+				for (var i = 0; i < this.doctorList.length; i++) {
+					 if(this.doctorList[i].select==1){
+						 transferId = this.doctorList[i].id;
+					 }
+				}
+				if(!transferId){
+					app.tip('请选择转交的医生');
+					return;
+				}
+				app.changeBindDoctor({patientId:this.uid,id:transferId}).then(res =>{
+					if(res.status == 1){
+						app.tip('转交成功');
+						this.closeDoctorPop();
+						this.getData();
+					}
+				});
+				
+			},
+			selectDoc(index){
+				for (var i = 0; i < this.doctorList.length; i++) {
+					this.doctorList[i].select = index==i?1:0;
+				}
+				this.$forceUpdate()
+			},
+			closeDoctorPop(){
+				for (var i = 0; i < this.doctorList.length; i++) {
+					this.doctorList[i].select = 0;
+				}
+				this.$refs.doctorPop.close();
+				this.$forceUpdate();
+			},
+			transfer(){
+				this.closeMore();
+				this.$refs.doctorPop.open();
+			},
+			moreOnClick(){
+				this.$refs.pop1.open();
+			},
+			closeMore(){
+				this.$refs.pop1.close();
+			},
 			selectInfo(item){
 				app.changeBindDoctor({patientId:this.uid,id:item.id}).then(res =>{
 					if(res.status == 1){
@@ -416,6 +495,9 @@
 			  app.getDepartmentDoctors().then(res =>{
 				 if(res.status == 1){
 					 this.doctorList = res.data;
+					 for (var i = 0; i < this.doctorList.length; i++) {
+					 	this.doctorList[i].select = 0;
+					 }
 				 } 
 			  });	
 			},
@@ -830,7 +912,7 @@
 						app.tip('发送成功');
 						this.writeRecord = !this.writeRecord;
 						this.advice = '';
-						this.beginTest();
+						//this.beginTest();
 					}
 				});
 			},
@@ -843,12 +925,15 @@
 				this.writeRecord = !this.writeRecord;
 			},
 			beginTest() {
-				app.adviceListRequest({patientId:this.uid}).then(res=>{
-				    if(res.status == 1){
-						this.recordList = res.data;
-					}
+				// app.adviceListRequest({patientId:this.uid}).then(res=>{
+				//     if(res.status == 1){
+				// 		this.recordList = res.data;
+				// 	}
 					
-				});
+				// });
+				uni.navigateTo({
+					url:'send-advice'
+				})
 			},
 		    closeRecord(){
 				this.$refs.popupMedicalAdvice.close();
@@ -942,7 +1027,7 @@
 						if(this.greenindex<gindex) ++this.greenindex;
 						else clearInterval(ghandler);
 					},50)
-					this.beginTest();
+					//this.beginTest();
 				});
 			},
 			//最近一次测评的数据
@@ -1934,4 +2019,98 @@
 	}
 	.centerwh{width:250rpx;display:inline-block;}
 	.centerwh1{display:inline-block;padding-right:16rpx;}
+	
+	
+	
+	.white-background-pop1 {
+		text-align: center;
+		background-color: #FFFFFF;
+		border-radius: 10px 10px 0px 0px;
+	
+		.white-background-pop1-title {
+			font-size: 14px;
+			color: #666666;
+			padding-top: 35rpx;
+			position: relative;
+			.close{
+				position: absolute;
+				right: 50rpx;
+				width: 30rpx;
+				height: 30rpx;
+				top: 40rpx;
+			}
+		}
+	    .transferButton{
+			margin-left: 105rpx;
+			width: 540rpx;
+			height: 74rpx;
+			line-height: 74rpx;
+			background: #52A29E;
+			border-radius: 6rpx;
+			font-size: 30rpx;
+			font-family: PingFang SC;
+			font-weight: 400;
+			color: #FFFFFF;
+			margin-top: 77rpx;
+		}
+		
+	}
+	
+	
+	.white-background-doctorPop {
+		text-align: center;
+		background-color: #FFFFFF;
+		border-radius: 10px 10px 0px 0px;
+	
+		.white-background-doctorPop-title {
+			font-size: 14px;
+			color: #666666;
+			padding-top: 35rpx;
+			position: relative;
+			.close{
+				position: absolute;
+				left: 60rpx;
+				width: 17rpx;
+				height: 29rpx;
+				top: 45rpx;
+			}
+		}
+	   
+	   .docItem{
+		   height: 108rpx;
+		   line-height: 108rpx;
+		   font-size: 30rpx;
+		   font-family: PingFang SC;
+		   font-weight: 400;
+		   color: #333333;
+		   margin-left: 60rpx;
+		   margin-right: 60rpx;
+		   border-bottom: 2rpx solid #DCDCDC;
+		   text-align: left;
+		   position: relative;
+		   
+		   .doctorSelect{
+			   position: absolute;
+			   right: 10rpx;top: 42rpx;
+			   width: 30rpx;height: 21rpx;
+		   }
+	   }
+	   .sureBtn{
+		   margin-left: 185rpx;
+		   width: 380rpx;
+		   height: 80rpx;
+		   line-height: 80rpx;
+		   background: #52A29E;
+		   border-radius: 40rpx;
+		   margin-top: 70rpx;
+		   text-align: center;
+		   font-size: 34rpx;
+		   font-family: PingFang SC;
+		   font-weight: 400;
+		   color: #FFFFFF;
+		   
+	   }
+		
+	}
+	
 </style>
