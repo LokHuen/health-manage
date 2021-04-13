@@ -1716,7 +1716,7 @@
 			position: fixed;
 			bottom: 0;justify-content: space-around;
 			height: 200rpx;
-			width: 100%;
+			width: 100%;padding: 0 20rpx;box-sizing: border-box;
 
 			.button {
 				height: 90rpx;
