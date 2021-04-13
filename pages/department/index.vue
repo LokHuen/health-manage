@@ -1,17 +1,17 @@
 <template>
 	<!-- 科室首页 -->
 	<view class="container">
-		<view class="title">潮州市红山医院  营养科</view>
+		<view class="title">{{doctorInfo.hospital+'  '+doctorInfo.department}}</view>
 		<view class="list-box">
-			<view class="list-item flex" v-for="(item,index) in list" :key="index">
+			<view class="list-item flex" v-for="(item,index) in doctorInfo.resultList" :key="index">
 				<view class="name">
-					吴卫东
+					{{item.doctorName}}
 				</view>
 				<view class="detail">
-					主任医师 
+					{{item.technicalTitle}}
 				</view>
 				<view class="detail">
-					患者数:9
+					{{'患者数: '+item.patientCount}}
 				</view>
 			</view>
 		</view>
@@ -23,14 +23,20 @@
 	export default {
 		data() {
 			return {
-				list:[1,2,3]
+				doctorInfo:''
 			}
 		},
 		onLoad(){
-		
+		   this.getListData();
 		},
 		methods: {
-			
+			getListData(){
+				app.allDoctorList().then(res =>{
+					if(res.status == 1){
+						this.doctorInfo = res.data;
+					}
+				})
+			}
 		}
 	}
 </script>

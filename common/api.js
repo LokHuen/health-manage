@@ -433,6 +433,11 @@ var api = {
 	docfileget: (data) => {
 		return rq("/wx/doc/file/get", data, "GET");
 	},
+	//科室/病区下所有医生信息
+	allDoctorList: (data) => {
+		return rq("/wx/doctor/getDepartmentAllDoctors", data, "GET");
+	},
+	 
 }
 
 export {

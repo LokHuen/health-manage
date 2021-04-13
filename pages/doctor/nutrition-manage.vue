@@ -16,7 +16,7 @@
 		<view class="count-box flex">
 			<view class="count-item">
 				<view class="count-item-number">
-					50
+					{{doctorInfo.patientCount||0}}
 				</view>
 				<view class="">
 					总患者数
@@ -24,7 +24,7 @@
 			</view>
 			<view class="count-item" style="border-right: 0rpx solid #fff;">
 				<view class="count-item-number" style="color: #F8BD63;">
-					31
+					{{doctorInfo.monthPatientCount||0}}
 				</view>
 				<view class="">
 					本月新增患者
@@ -39,14 +39,14 @@
 			<view class="detali-list-box">
 				<view class="detali-list-item">
 					<view>
-						<text class="detail1">12</text>
+						<text class="detail1">{{doctorInfo.surveyResult4||0}}</text>
 						<text class="detail2">人</text>
 					</view>
 					<view class="detali-name">重度营养不良</view>
 				</view>
 				<view class="detali-list-item">
 					<view>
-						<text class="detail1">12</text>
+						<text class="detail1">{{doctorInfo.surveyResult3||0}}</text>
 						<text class="detail2">人</text>
 					</view>
 					<view class="detali-name">中度营养不良</view>
@@ -54,7 +54,7 @@
 				
 				<view class="detali-list-item" style="border-right: 0rpx solid #fff;">
 					<view>
-						<text class="detail1">12</text>
+						<text class="detail1">{{doctorInfo.surveyResult2||0}}</text>
 						<text class="detail2">人</text>
 					</view>
 					<view class="detali-name">可疑营养不良</view>
@@ -71,14 +71,14 @@
 			<view class="detali-list-box">
 				<view class="detali-list-item">
 					<view>
-						<text class="detail1">12</text>
+						<text class="detail1">{{doctorInfo.noIntervene||0}}</text>
 						<text class="detail2">人</text>
 					</view>
 					<view class="detali-name">未干预</view>
 				</view>
 				<view class="detali-list-item">
 					<view>
-						<text class="detail1">12</text>
+						<text class="detail1">{{doctorInfo.intervened||0}}</text>
 						<text class="detail2">人</text>
 					</view>
 					<view class="detali-name">停止干预</view>
@@ -86,7 +86,7 @@
 				
 				<view class="detali-list-item" style="border-right: 0rpx solid #fff;">
 					<view>
-						<text class="detail1">12</text>
+						<text class="detail1">{{doctorInfo.intervene||0}}</text>
 						<text class="detail2">人</text>
 					</view>
 					<view class="detali-name">干预中</view>
