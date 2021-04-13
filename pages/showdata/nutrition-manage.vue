@@ -3,7 +3,7 @@
 	<view class="container">
 		<view class="top-tips">
 			退出演示环境，回到我的页面
-			<image src="../../static/tuichu.png" mode="aspectFill" class="tuichu"></image>
+			<image src="../../static/warnshow.jpg" mode="aspectFill" class="tuichu"></image>
 		</view>
 		<image src="../../static/img/bannerImg.png" mode="widthFix" class="banner"></image>
 		<view class="condition-box flex">
@@ -20,7 +20,7 @@
 		<view class="count-box flex">
 			<view class="count-item">
 				<view class="count-item-number">
-					50
+					{{selectIndex==1?doctorInfo.patientCount:doctorInfo.depPatientCount}}
 				</view>
 				<view class="">
 					总患者数
@@ -28,7 +28,7 @@
 			</view>
 			<view class="count-item" style="border-right: 0rpx solid #fff;">
 				<view class="count-item-number" style="color: #F8BD63;">
-					31
+					{{selectIndex==1?doctorInfo.monthPatientCount:doctorInfo.depPatientCountOfMonth}}
 				</view>
 				<view class="">
 					本月新增患者
@@ -43,14 +43,14 @@
 			<view class="detali-list-box">
 				<view class="detali-list-item">
 					<view>
-						<text class="detail1">12</text>
+						<text class="detail1"><text class="detail1">{{selectIndex==1?doctorInfo.surveyResult4:doctorInfo.depSurveyReslt4}}</text></text>
 						<text class="detail2">人</text>
 					</view>
 					<view class="detali-name">重度营养不良</view>
 				</view>
 				<view class="detali-list-item">
 					<view>
-						<text class="detail1">12</text>
+						<text class="detail1">{{selectIndex==1?doctorInfo.surveyResult3:doctorInfo.depSurveyReslt3}}</text>
 						<text class="detail2">人</text>
 					</view>
 					<view class="detali-name">中度营养不良</view>
@@ -58,7 +58,7 @@
 
 				<view class="detali-list-item" style="border-right: 0rpx solid #fff;">
 					<view>
-						<text class="detail1">12</text>
+						<text class="detail1">{{selectIndex==1?doctorInfo.surveyResult2:doctorInfo.depSurveyReslt2}}</text>
 						<text class="detail2">人</text>
 					</view>
 					<view class="detali-name">可疑营养不良</view>
@@ -75,14 +75,14 @@
 			<view class="detali-list-box">
 				<view class="detali-list-item">
 					<view>
-						<text class="detail1">12</text>
+						<text class="detail1">{{selectIndex==1?doctorInfo.noIntervene:doctorInfo.depNoIntervene}}</text>
 						<text class="detail2">人</text>
 					</view>
 					<view class="detali-name">未干预</view>
 				</view>
 				<view class="detali-list-item">
 					<view>
-						<text class="detail1">12</text>
+						<text class="detail1">{{selectIndex==1?doctorInfo.intervened:doctorInfo.depIntervened}}</text>
 						<text class="detail2">人</text>
 					</view>
 					<view class="detali-name">停止干预</view>
@@ -93,7 +93,7 @@
 						<text class="detail1">12</text>
 						<text class="detail2">人</text>
 					</view>
-					<view class="detali-name">干预中</view>
+					<view class="detali-name">{{selectIndex==1?doctorInfo.intervene:doctorInfo.depIntervene}}</view>
 				</view>
 			</view>
 		</view>
@@ -158,10 +158,13 @@
 		components:{tabbar},
 		data() {
 			return {
-				selectIndex: 1
+				selectIndex: 1,
+				doctorInfo:''
 			}
 		},
-		onLoad() {},
+		onLoad() {
+			this.getDoctorInfo();
+		},
 		methods: {
 			select(index) {
 				!this.selectIndex == index ? '' : this.selectIndex = index;
@@ -171,6 +174,13 @@
 			},
 			openNutritioninfo2(){
 				this.$refs.nutritioninfo2.open();
+			},
+			getDoctorInfo(){
+				app.doctorShowInfo().then(res =>{
+					if(res.status == 1){
+						this.doctorInfo = res.data;
+					}
+				})
 			}
 
 		}

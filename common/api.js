@@ -437,7 +437,10 @@ var api = {
 	allDoctorList: (data) => {
 		return rq("/wx/doctor/getDepartmentAllDoctors", data, "GET");
 	},
-	 
+	//演示数据，营养主页
+	 doctorShowInfo: (data) => {
+	 	return rq("/wx/doctor/showInfo", data, "GET");
+	 },
 }
 
 export {
