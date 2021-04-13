@@ -8,6 +8,15 @@
 			}
 		},
 		
+		
+		{
+			"path": "pages/doctor/send-advice",
+			"style": {
+				"navigationBarTitleText": "发送医嘱"
+			}
+		},
+		
+		
 		{
 			"path": "pages/department/index",
 			"style": {
