@@ -9,7 +9,7 @@
 					{{infoData.patientName||"游客"}}<view class="msg" style="padding-left:16rpx;"> {{" "+(infoData.patientGender||"")+' '+((infoData.age || infoData.age!=0)?(infoData.age+'岁 '):'')}}
 				</view> 
 				</view>
-				<view class="msg">{{(infoData.illness||"")}} {{latelyData.result?(latelyData.total?`${latelyData.result}(${latelyData.total}分)`:latelyData.result):""}}
+				<view class="msg" style="padding-top:10rpx;">{{(infoData.illness||"")}} {{latelyData.result?(latelyData.total?`${latelyData.result}(${latelyData.total}分)`:latelyData.result):""}} {{' '+("未干预"||"")}}
 				</view>
 			</view>
 			<!-- <view class="eidt" @click="more" v-if="showAdvice==1">...</view> -->
@@ -1254,7 +1254,7 @@
 
 <style lang="scss" scoped>
 	.recordbox{
-		margin:0 70rpx;
+		margin:0 50rpx;
 		.recordimg{width:30rpx;margin:8rpx 12rpx 0 0;}
 		.MA-record-list{
 			margin-top: 30rpx;
@@ -1300,7 +1300,7 @@
 		}
 	}
 	.goodsbox{
-		margin:0 70rpx;
+		margin:0 50rpx;
 		.buggoodslist{
 			padding-bottom:30rpx;margin-bottom:30rpx;border-bottom: 1rpx solid #DCDCDC;
 			.ltime{font-size: 26rpx;color: #999999;padding-bottom:20rpx;}

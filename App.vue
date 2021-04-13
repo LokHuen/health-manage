@@ -172,7 +172,7 @@
 </script>
 
 <style lang="scss">
-	.pagenodata{text-align:center;color:#999;font-size:28rpx;padding:30rpx;}
+	.pagenodata{text-align:center;color:#999;font-size:28rpx;padding:30rpx 0 42rpx;}
 	img {margin: 0; padding: 0; width: 100%; height: 100%; object-fit: cover;}
 	.edit {
 		.uni-radio-wrapper{width:100%;display: block;padding:0 30rpx;box-sizing:border-box;}
