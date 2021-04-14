@@ -32,6 +32,7 @@
 	export default {
 		data() {
 			return {
+				id:"",
 				listDatas: [],
 				page:1,
 			}
@@ -55,7 +56,8 @@
 			}
 
 		},
-		onLoad() {
+		onLoad(props) {
+			this.id = props.id;
 			this.getListData();
 		}
 

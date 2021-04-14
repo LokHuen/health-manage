@@ -2,7 +2,7 @@
 	<view>
 		<view style="height:140rpx;"></view>
 		<view class="flex tabbar">
-			<view class="tabitem" v-for="(item,index) in list" :key="index" v-if="hide!=index" @click="tootherpage(item)">
+			<view class="tabitem" v-for="(item,index) in list" :key="index" v-if="hide!=index" v-show="(index==1&&showCondition)||index!=1" @click="tootherpage(item)">
 				<image :src="now==index?item.selected:item.img" class="img" mode="aspectFit"></image>
 				<view :class="'text '+(now==index?'on':'')">{{item.name}}</view>
 			</view>
@@ -11,6 +11,7 @@
 </template>
 
 <script>
+	let app = getApp();
 	export default {
 		props:{
 			hide:{
@@ -25,6 +26,7 @@
 		},
 		data() {
 			return {
+				showCondition:false,
 				list:[
 					{
 						name:"首页",
@@ -48,6 +50,16 @@
 					},
 				]
 			};
+		},
+		created(){
+			if(!this.real) this.showCondition = true;
+			app.allDoctorList().then(res =>{
+				if(res.status == 1){
+					//数组元素有1个的时候，查到的是自己本身，就是普通的医生
+					//大于1的时候，表示主任
+					if(this.real) this.showCondition = res.data.resultList.leng>1;
+				}
+			});
 		},
 		methods:{
 			tootherpage(item){
