@@ -7,7 +7,7 @@
 		</view>
 		<view class="title">{{doctorInfo.hospital+'  '+doctorInfo.department}}</view>
 		<view class="list-box">
-			<view class="list-item flex" v-for="(item,index) in doctorInfo.ksList" :key="index">
+			<view class="list-item flex" v-for="(item,index) in doctorInfo.ksList" :key="index" @click="toPatientList(item)">
 				<view class="name">
 					{{item.doctorName}}
 				</view>
@@ -47,6 +47,11 @@
 			turnback(){
 				uni.navigateBack({
 					
+				})
+			},
+			toPatientList(item){
+				uni.navigateTo({
+					url:'../doctor/patient-list?bindDoctor='+item.id
 				})
 			}
 		}
