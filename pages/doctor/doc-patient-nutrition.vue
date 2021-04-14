@@ -203,7 +203,7 @@
 			<view class="buggoodslist" v-for="(item,index) in infoData.orderList" :key ="index" >
 				<view class="ltime">{{item.createTime}}</view>
 				<view v-for="(item1,index1) in item.orderDetailList" :key ="index1">
-					<view class="lname">{{item1.shortName}}</view>
+					<view class="lname">{{item1.shortName}}（{{item1.quantity}}盒）</view>
 					<view class="linfo">{{item1.commodity}}</view>
 				</view>
 			</view>
