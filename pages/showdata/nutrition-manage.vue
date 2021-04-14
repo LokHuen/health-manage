@@ -3,9 +3,9 @@
 	<view class="container">
 		<view class="top-tips">
 			退出演示环境，回到我的页面
-			<image src="../../static/warnshow.jpg" mode="aspectFill" class="tuichu"></image>
+			<image src="../../static/tuichu.png" mode="aspectFill" class="tuichu"></image>
 		</view>
-		<image src="../../static/img/bannerImg.png" mode="widthFix" class="banner" @click="towarnpage"></image>
+		<image src="../../static/warnshow.jpg" mode="widthFix" class="banner" @click="towarnpage"></image>
 		<view class="condition-box flex">
 			<view :class="selectIndex==1?'chose':'unchose'" @click="select(1)">
 				我的患者

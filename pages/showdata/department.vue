@@ -19,12 +19,15 @@
 				</view>
 			</view>
 		</view>
+		<tabbar :now="1" :real="false" :hide="2"></tabbar>
 	</view>
 </template>
 
 <script>
 	const app = getApp();
+	import tabbar from "../../components/tabbar.vue"
 	export default {
+		components:{tabbar},
 		data() {
 			return {
 				doctorInfo:''
