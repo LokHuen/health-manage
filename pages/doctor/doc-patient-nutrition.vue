@@ -1581,7 +1581,7 @@
 
 			.health-list-box {
 				text-align: center;
-				display: flex;
+				display: flex;box-sizing: border-box;
 				justify-content: space-around;
 				border-bottom: 0px #EEEEEE solid;
 				padding:0 30rpx 0.4rem;
