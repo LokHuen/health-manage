@@ -211,7 +211,7 @@
 					this.info = res.data
 					if (this.params.pageNo == 1) {
 						this.list = res.data.list
-						this.list = this.list.concat(res.data.list)
+						// this.list = this.list.concat(res.data.list)
 					} else {
 						if (this.params.pageNo <= this.info.pageCount) {
 							this.list = this.list.concat(res.data.list)
