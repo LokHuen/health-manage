@@ -162,6 +162,9 @@ var api = {
 	patientlist: (data) => {
 		return rq("/wx/patient/list", data, "GET");
 	}, //患者 营养干预情况list
+	recorddietList: (data) => {
+		return rq("/wx/diet/record/dietList", data, "GET");
+	}, //患者-饮食记录（分页列表）
 
 
 	//业务员
@@ -444,6 +447,23 @@ var api = {
 	 doctorShowInfo: (data) => {
 	 	return rq("/wx/doctor/showInfo", data, "GET");
 	 },
+	
+	//获取患者列表
+	getPatientList: (data) => {
+		return rq("/wx/doctor/getPatientList", data, "GET");
+	},
+	
+	//判断科室权限
+	departPermission: (data) => {
+		return rq("/wx/doctor/getDepartmentAllDoctors", data, "GET");
+	},
+	
+	//获取病种
+	getDepartmentAllIlls: (data) => {
+		return rq("/wx/doctor/getDepartmentAllIlls", data, "GET");
+	},
+	
+	
 }
 
 export {
