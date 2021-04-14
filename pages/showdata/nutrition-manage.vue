@@ -90,10 +90,10 @@
 
 				<view class="detali-list-item" style="border-right: 0rpx solid #fff;">
 					<view>
-						<text class="detail1">12</text>
+						<text class="detail1">{{selectIndex==1?doctorInfo.intervene:doctorInfo.depIntervene}}</text>
 						<text class="detail2">人</text>
 					</view>
-					<view class="detali-name">{{selectIndex==1?doctorInfo.intervene:doctorInfo.depIntervene}}</view>
+					<view class="detali-name">干预中</view>
 				</view>
 			</view>
 		</view>
