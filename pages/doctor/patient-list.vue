@@ -180,6 +180,11 @@
 					this.info = res.data
 					if (this.params.pageNo == 1) {
 						this.list = res.data.list
+						this.list = this.list.concat(res.data.list)
+						this.list = this.list.concat(res.data.list)
+						this.list = this.list.concat(res.data.list)
+						this.list = this.list.concat(res.data.list)
+						this.list = this.list.concat(res.data.list)
 					} else {
 						if (this.params.pageNo <= this.info.pageCount) {
 							this.list = this.list.concat(res.data.list)
@@ -427,6 +432,8 @@
 			background-color: #FFFFFF;
 			padding: 16rpx 0;
 			border-radius: 10rpx;
+			position: sticky;
+			top: 0;
 
 			image {
 				width: 24rpx;
