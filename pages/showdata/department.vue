@@ -51,7 +51,7 @@
 			},
 			toPatientList(item){
 				uni.navigateTo({
-					url:'../doctor/patient-list?bindDoctor='+item.id
+					url:'../doctor/patient-list?bindDoctor='+item.id+'&doctorName='+item.doctorName
 				})
 			}
 		}
