@@ -9,7 +9,7 @@
 					{{infoData.patientName||"游客"}}<view class="msg" style="padding-left:16rpx;"> {{" "+(infoData.patientGender||"")+' '+((infoData.age || infoData.age!=0)?(infoData.age+'岁 '):'')}}
 				</view> 
 				</view>
-				<view class="msg" style="padding-top:10rpx;">{{(infoData.illness||"")}} {{latelyData.result?(latelyData.testtype==1?`${latelyData.result}(${latelyData.total}分)`:latelyData.result):""}} {{' '+(infoData.isBuy||"")}}
+				<view class="msg" style="padding-top:10rpx;">{{(infoData.illness||"")}} {{latelyData.result?(testtype==1?`${latelyData.result}(${latelyData.total}分)`:latelyData.result):""}} {{' '+(infoData.isBuy||"")}}
 				</view>
 			</view>
 			<!-- <view class="eidt" @click="more" v-if="showAdvice==1">...</view> -->
@@ -388,6 +388,7 @@
 		},
 		data() {
 			return {
+				isMy:true, //是否我的病人
 				latelyData: {},
 				infoData: {},
 				list: [
@@ -443,6 +444,7 @@
 					if(res.status == 1){
 						app.tip('转交成功');
 						this.closeDoctorPop();
+						uni.navigateBack({});
 						this.getData();
 					}
 				});
@@ -463,6 +465,9 @@
 			},
 			transfer(){
 				this.closeMore();
+				if(!this.isMy){
+					app.tip("您不是患者所属医生");return;
+				}
 				this.$refs.doctorPop.open();
 			},
 			moreOnClick(){
@@ -942,6 +947,9 @@
 				// 	}
 					
 				// });
+				if(!this.isMy){
+					app.tip("您不是患者所属医生");return;
+				}
 				uni.navigateTo({
 					url:'send-advice?uid='+this.uid
 				})
@@ -1034,7 +1042,7 @@
 					}
 					this.showAdvice = 1;
 					
-					//this.showAdvice = localStorage.getItem("uid")==this.infoData.bindDoctor;
+					this.isMy = localStorage.getItem("uid")==this.infoData.bindDoctor;
 					this.infoData.protein = this.infoData.protein>0?this.infoData.protein:1.01;
 					this.infoData.fat = this.infoData.fat>0?this.infoData.fat:1.01;
 					this.infoData.carbohydrate = this.infoData.carbohydrate>0?this.infoData.carbohydrate:1.01;
