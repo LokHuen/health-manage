@@ -697,7 +697,20 @@
 			"style": {
 				"navigationBarTitleText": "消息"
 			}
+		},
+		{
+			"path": "pages/doctor/patient-list",
+			"style": {
+				"navigationBarTitleText": "患者列表"
+			}
+		},
+		{
+			"path": "pages/doctor/search-patient-list",
+			"style": {
+				"navigationBarTitleText": "搜索"
+			}
 		}
+
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
