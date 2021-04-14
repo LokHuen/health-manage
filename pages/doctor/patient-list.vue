@@ -138,8 +138,8 @@
 			this.getDepartmentAllIlls()
 		},
 		data() {
-			// let uid = uid:app.getCache('uid')
-			let uid = 126
+			let uid = app.getCache('uid')
+			// let uid = 126
 			return {
 				uid,
 				filter: false,
@@ -211,11 +211,11 @@
 					this.info = res.data
 					if (this.params.pageNo == 1) {
 						this.list = res.data.list
-						this.list = this.list.concat(res.data.list)
-						this.list = this.list.concat(res.data.list)
-						this.list = this.list.concat(res.data.list)
-						this.list = this.list.concat(res.data.list)
-						this.list = this.list.concat(res.data.list)
+						// this.list = this.list.concat(res.data.list)
+						// this.list = this.list.concat(res.data.list)
+						// this.list = this.list.concat(res.data.list)
+						// this.list = this.list.concat(res.data.list)
+						// this.list = this.list.concat(res.data.list)
 					} else {
 						if (this.params.pageNo <= this.info.pageCount) {
 							this.list = this.list.concat(res.data.list)

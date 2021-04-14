@@ -35,8 +35,8 @@
 			this.getList(1)
 		},
 		data() {
-			// let uid=app.getCache('uid')
-			let uid = 129
+			let uid=app.getCache('uid')
+			// let uid = 129
 			return {
 				list: [],
 				params: {
