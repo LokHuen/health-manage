@@ -53,11 +53,14 @@
 		},
 		created(){
 			if(!this.real) this.showCondition = true;
+			if(localStorage.getItem("showCondition")==1) this.showCondition = true;
 			app.allDoctorList().then(res =>{
 				if(res.status == 1){
 					//数组元素有1个的时候，查到的是自己本身，就是普通的医生
 					//大于1的时候，表示主任
 					if(this.real) this.showCondition = res.data.resultList.length>1;
+					if(this.showCondition) localStorage.setItem("showCondition",1);
+					else localStorage.setItem("showCondition",0);
 				}
 			});
 		},
