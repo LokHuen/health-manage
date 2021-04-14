@@ -7,8 +7,8 @@
 				"navigationBarTitleText": "营养管理"
 			}
 		},
-		
-		
+
+
 		{
 			"path": "pages/doctor/send-advice",
 			"style": {
@@ -746,13 +746,15 @@
 			"path": "pages/doctor/patient-list",
 			"style": {
 				"navigationBarTitleText": "患者列表"
-			}
+			},
+			"enablePullDownRefresh": true
 		},
 		{
 			"path": "pages/doctor/search-patient-list",
 			"style": {
 				"navigationBarTitleText": "搜索"
-			}
+			},
+			"enablePullDownRefresh": true
 		}
 
 	],
