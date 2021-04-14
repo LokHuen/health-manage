@@ -13,6 +13,8 @@
 				<view :class="selectIndex==2?'bottomline':''"></view>
 			</view>
 		</view>
+		
+		<view style="height: 20rpx;" v-if="!showCondition"></view>
 		<view class="count-box flex">
 			<view class="count-item">
 				<view class="count-item-number" @click="toPatientList(0,0)">
@@ -197,11 +199,12 @@
 					  isBuyText ='未干预';
 				      isBuy = 1;	  
 				  }else if(secondIndex==1){
-				  		isBuyText ='干预中';
-				  		isBuy = 2;				  
+				  			isBuyText ='停止干预';
+				  			isBuy = 3;			  
 				  }else{
-				  		isBuyText ='停止干预';
-				  		isBuy = 3;				  
+				  		
+						 isBuyText ='干预中';
+						 isBuy = 2;	
 				  }
 			  }
 			  
