@@ -185,7 +185,7 @@
 					isDepartmentIcu: '',
 					orderBy: 1,
 					surveyResult: '',
-					isBuy: 1,
+					isBuy: '',
 					illness: '',
 					month: ''
 				},
