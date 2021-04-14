@@ -35,8 +35,7 @@
 			this.getList(1)
 		},
 		data() {
-			let uid=app.getCache('uid')
-			// let uid = 129
+			let uid = app.getCache('uid')
 			return {
 				list: [],
 				params: {
@@ -123,7 +122,7 @@
 			position: sticky;
 			top: 0;
 			background-color: $uni-defautt-bg-color;
-			z-index: 999;
+			z-index: 10;
 		}
 
 		.search-box {
