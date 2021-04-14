@@ -9,11 +9,11 @@
 					{{infoData.patientName||"游客"}}<view class="msg" style="padding-left:16rpx;"> {{" "+(infoData.patientGender||"")+' '+((infoData.age || infoData.age!=0)?(infoData.age+'岁 '):'')}}
 				</view> 
 				</view>
-				<view class="msg" style="padding-top:10rpx;">{{(infoData.illness||"")}} {{latelyData.result?(latelyData.total?`${latelyData.result}(${latelyData.total}分)`:latelyData.result):""}} {{' '+("未干预"||"")}}
+				<view class="msg" style="padding-top:10rpx;">{{(infoData.illness||"")}} {{latelyData.result?(latelyData.testtype==1?`${latelyData.result}(${latelyData.total}分)`:latelyData.result):""}} {{' '+(infoData.isBuy||"")}}
 				</view>
 			</view>
 			<!-- <view class="eidt" @click="more" v-if="showAdvice==1">...</view> -->
-			<view class="eidt">2020/12/12 加入</view>
+			<view class="eidt">{{infoData.createTime}} 加入</view>
 		</view>
 		<view class="line-space"></view>
 		<view class="content">
@@ -200,12 +200,14 @@
 		<view class="line-space"></view>
 		<view class="itemboxtitle">营养干预情况</view>
 		<view class="goodsbox">
-			<view class="buggoodslist">
-				<view class="ltime">2021年1月12日 </view>
-				<view class="lname">益爱宁-21天装</view>
-				<view class="linfo">科学配方，黄金配比，内含38种优势核心成分、全面符合最新指南的ONS产品，温水冲泡，简单易操作，颗粒制剂，易服好吸收，每日2袋，1大盒42袋/疗程，快速修复肠道，全面补充营养</view>
+			<view class="buggoodslist" v-for="(item,index) in infoData.orderList" :key ="index" >
+				<view class="ltime">{{item.createTime}}</view>
+				<view v-for="(item1,index1) in item.orderDetailList" :key ="index1">
+					<view class="lname">{{item1.shortName}}</view>
+					<view class="linfo">{{item1.commodity}}</view>
+				</view>
 			</view>
-			<!-- <view v-if="!listDatas.length" class="pagenodata">暂无数据</view> -->
+			<view v-if="!infoData.orderList.length" class="pagenodata">暂无数据</view>
 		</view>
 		<view class="flex ct bottomtip">
 			<image src="../../static/doctor/warn.png" mode="widthFix" class="tips" ></image>干预情况依据本平台数据判断，存在局限性
@@ -418,7 +420,8 @@
 				tlinedata:{},
 				testtype:1,
 				doctorList:'',
-				showAdvice:1
+				showAdvice:1,
+				goodslist:[],
 			}
 		},
 		onLoad(props){
@@ -896,6 +899,13 @@
 				}
 			},
 			motifyAdvice(item){
+				let oInput = document.createElement('input');
+				oInput.value = item.advice;
+				document.body.appendChild(oInput);
+				oInput.select(); // 选择对象;
+				document.execCommand("Copy"); // 执行浏览器复制命令
+				oInput.remove();
+				app.tip("复制成功")
 				// this.advice = item.advice;
 				// this.adviceId = "";//item.id;
 				// this.writeRecord = !this.writeRecord;
@@ -935,6 +945,13 @@
 				uni.navigateTo({
 					url:'send-advice?uid='+this.uid
 				})
+			},
+			getTest() {
+				app.adviceListRequest({patientId:this.uid}).then(res=>{
+				    if(res.status == 1){
+						this.recordList = res.data;
+					}
+				});
 			},
 		    closeRecord(){
 				this.$refs.popupMedicalAdvice.close();
@@ -1006,11 +1023,13 @@
 						}
 					}
 				});
+				
 			},
 			//用户信息数据
 			getData() {
 				app.doctorPatientx({id:this.uid}).then(res => {
 					if (res.status == 1) {
+						res.data.createTime = res.data.createTime?res.data.createTime.split(" ")[0]:"";
 						this.infoData = res.data;
 					}
 					this.showAdvice = 1;
@@ -1028,7 +1047,7 @@
 						if(this.greenindex<gindex) ++this.greenindex;
 						else clearInterval(ghandler);
 					},50)
-					//this.beginTest();
+					this.getTest();
 				});
 			},
 			//最近一次测评的数据
@@ -1303,8 +1322,8 @@
 		margin:0 50rpx;
 		.buggoodslist{
 			padding-bottom:30rpx;margin-bottom:30rpx;border-bottom: 1rpx solid #DCDCDC;
-			.ltime{font-size: 26rpx;color: #999999;padding-bottom:20rpx;}
-			.lname{padding-bottom:20rpx;font-size: 30rpx;font-weight: 600;color: #333333;}
+			.ltime{font-size: 26rpx;color: #999999;}
+			.lname{padding:20rpx 0;font-size: 30rpx;font-weight: 600;color: #333333;}
 			.linfo{font-size: 26rpx;color: #666666;}
 			&:last-child{border:none;margin:0;padding:0;}
 		}

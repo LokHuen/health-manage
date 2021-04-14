@@ -159,6 +159,9 @@ var api = {
 	statTemplate: (data) => {
 		return rq("/wx/diet/record/statTemplate", data, "GET");
 	}, //7天30天摄入和运动能量图表
+	patientlist: (data) => {
+		return rq("/wx/patient/list", data, "GET");
+	}, //患者 营养干预情况list
 
 
 	//业务员
