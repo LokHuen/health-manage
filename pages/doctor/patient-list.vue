@@ -10,7 +10,7 @@
 		<view class="flexc filter-box">
 			<view class="flexc filter-list" v-if="filter">
 				<view class="flex filter-item" @click="byDoctor(-1)" v-if="params.isDepartmentIcu==1">
-					<text>{{paramTexts.bindDoctor?'paramTexts.bindDoctor':'按患者所属的医生筛选'}}</text>
+					<text>{{paramTexts.bindDoctor?paramTexts.bindDoctor:'按患者所属的医生筛选'}}</text>
 					<image src="../../static/icon/right_arrow.png"></image>
 				</view>
 				<view class="flex filter-item" @click="byIlls(-1)">
