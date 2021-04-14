@@ -9,12 +9,12 @@
 
 		<view class="flexc filter-box">
 			<view class="flexc filter-list" v-if="filter">
-				<view class="flex filter-item" @click="byDoctor(-1)" v-if="hasPermission">
+				<view class="flex filter-item" @click="byDoctor(-1)" v-if="params.isDepartmentIcu==1">
 					<text>{{paramTexts.bindDoctor?'paramTexts.bindDoctor':'按患者所属的医生筛选'}}</text>
 					<image src="../../static/icon/right_arrow.png"></image>
 				</view>
 				<view class="flex filter-item" @click="byIlls(-1)">
-					<text>{{params.illness?params.illness:'按病种筛选'}}</text>
+					<text>{{paramTexts.illness?paramTexts.illness:'按病种筛选'}}</text>
 					<image src="../../static/icon/right_arrow.png"></image>
 				</view>
 				<view class="flex filter-item" @click="byNutrition(-1)">
@@ -60,16 +60,17 @@
 				<view class="pop-item" @click="byDoctor(item.id,item.doctorName)" v-for="(item,index) in doctorList">
 					{{item.doctorName}}
 				</view>
-				<view class="pop-item" @click="byDoctor(-2)" style="border: none;">取消</view>
+				<view class="pop-item" @click="byDoctor(-2)" style="border: none;color: #52A29E;">取消</view>
 			</view>
 		</uni-popup>
 
 		<!-- 按病种 -->
 		<uni-popup ref="ills_pop" type="bottom">
 			<view class="pop-container">
+				<view class="pop-item" @click="byIlls('')">全部</view>
 				<view class="pop-item" @click="byIlls(item.illness)" v-for="(item,index) in ills">{{item.illness}}
 				</view>
-				<view class="pop-item" @click="byIlls(-2)" style="border: none;">取消</view>
+				<view class="pop-item" @click="byIlls(-2)" style="border: none;color: #52A29E;">取消</view>
 			</view>
 		</uni-popup>
 
@@ -79,7 +80,7 @@
 				<view class="pop-item" @click="byNutrition(item.value,item.text)" v-for="(item,index) in nuritions">
 					{{item.text}}
 				</view>
-				<view class="pop-item" @click="byNutrition(-2)" style="border: none;">取消</view>
+				<view class="pop-item" @click="byNutrition(-2)" style="border: none;color: #52A29E;">取消</view>
 			</view>
 		</uni-popup>
 
@@ -89,7 +90,7 @@
 				<view class="pop-item" @click="byIntervene(item.value,item.text)" v-for="(item,index) in intervenes">
 					{{item.text}}
 				</view>
-				<view class="pop-item" @click="byIntervene(-2)" style="border: none;">取消</view>
+				<view class="pop-item" @click="byIntervene(-2)" style="border: none;color: #52A29E;">取消</view>
 			</view>
 		</uni-popup>
 
@@ -98,7 +99,7 @@
 			<view class="pop-container">
 				<view class="pop-item" @click="byTime(1)">按患者最近一次测评时间排序</view>
 				<view class="pop-item" @click="byTime(2)">按患者和医生绑定的时间排序</view>
-				<view class="pop-item" @click="byTime(-2)" style="border: none;">取消</view>
+				<view class="pop-item" @click="byTime(-2)" style="border: none;color: #52A29E;">取消</view>
 			</view>
 		</uni-popup>
 	</view>
@@ -108,31 +109,31 @@
 	const app = getApp()
 	export default {
 		onLoad(props) {
-			let filter = false
 			if (props.isDepartmentIcu) {
 				this.params.isDepartmentIcu = props.isDepartmentIcu
 			}
 			if (props.month) {
 				this.params.month = props.month
 			}
+			if (props.bindDoctor) {
+				this.params.bindDoctor = props.bindDoctor
+			}
+			if (props.doctorName) {
+				this.paramTexts.bindDoctor = props.doctorName
+			}
 			if (props.surveyResult) {
 				this.params.surveyResult = props.surveyResult
-				filter = true
 			}
 			if (props.surveyResultText) {
 				this.paramTexts.surveyResult = props.surveyResultText
-				filter = true
 			}
 			if (props.isBuy) {
 				this.params.isBuy = props.isBuy
-				filter = true
 			}
 			if (props.isBuyText) {
 				this.paramTexts.isBuy = props.isBuyText
-				filter = true
 			}
-			this.filter = filter
-			this.departPermission()
+			// this.departPermission()
 			this.getList(1)
 			this.getManageDepartment()
 			this.getDepartmentAllIlls()
@@ -147,7 +148,7 @@
 				doctorList: [],
 				ills: [],
 				nuritions: [{
-						text: '全部患者',
+						text: '全部',
 						value: ''
 					}, {
 						text: '重度营养不良',
@@ -168,6 +169,9 @@
 					},
 				],
 				intervenes: [{
+						text: '全部',
+						value: ''
+					}, {
 						text: '未干预',
 						value: 1
 					}, {
@@ -195,7 +199,8 @@
 					bindDoctor: '',
 					surveyResult: '',
 					isBuy: '',
-				}
+					illness: ''
+				},
 			}
 		},
 		onReachBottom() {
@@ -211,7 +216,6 @@
 					this.info = res.data
 					if (this.params.pageNo == 1) {
 						this.list = res.data.list
-						// this.list = this.list.concat(res.data.list)
 					} else {
 						if (this.params.pageNo <= this.info.pageCount) {
 							this.list = this.list.concat(res.data.list)
@@ -272,10 +276,15 @@
 						this.$refs.ills_pop.close()
 						break;
 					case -1:
-						this.$refs.ills_pop.open()
+						if (this.ills.length > 0) {
+							this.$refs.ills_pop.open()
+						} else {
+							app.tip('暂无患者')
+						}
 						break;
 					default:
 						this.params.illness = illness
+						this.paramTexts.illness = illness ? illness : '全部'
 						this.byIlls(-2)
 						this.getList(1)
 						break;
@@ -310,12 +319,10 @@
 					case -1:
 						this.$refs.intervene_pop.open()
 						break;
-					case 1:
-					case 2:
-					case 3:
+					default:
 						this.byIntervene(-2)
 						this.params.isBuy = status
-						this.paramTexts.isBuy = text
+						this.paramTexts.isBuy = text ? text : '全部'
 						this.getList(1)
 						break;
 				}

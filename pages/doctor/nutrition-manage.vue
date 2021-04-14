@@ -161,6 +161,7 @@
 			}
 		},
 		onLoad(){
+			app.setCache('uid',127)
 		     this.getManageDepartment();
 			 this.getDoctorInfo();
 		},

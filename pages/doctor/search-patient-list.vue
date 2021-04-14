@@ -19,7 +19,7 @@
 			</view>
 		</view>
 		<view class="nodata flex" style="padding-top: 100rpx; color: #999999; justify-content: center;font-size: 30rpx;"
-			v-if="list.length==0">
+			v-if="list.length==0&&requested">
 			<text>没找到相关数据</text>
 		</view>
 	</view>
@@ -32,12 +32,13 @@
 			if (props.isDepartmentIcu) {
 				this.params.isDepartmentIcu = props.isDepartmentIcu
 			}
-			this.getList(1)
+			// this.getList(1)
 		},
 		data() {
 			let uid = app.getCache('uid')
 			return {
 				list: [],
+				requested:false,
 				params: {
 					pageNo: 1,
 					patientName: '',
@@ -57,6 +58,7 @@
 				this.params.pageNo = pageNo
 				app.getPatientList(this.params).then((res) => {
 					this.info = res.data
+					this.requested=true
 					if (this.params.pageNo == 1) {
 						this.list = res.data.list
 					} else {
