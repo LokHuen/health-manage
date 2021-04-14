@@ -162,6 +162,9 @@ var api = {
 	patientlist: (data) => {
 		return rq("/wx/patient/list", data, "GET");
 	}, //患者 营养干预情况list
+	recorddietList: (data) => {
+		return rq("/wx/diet/record/dietList", data, "GET");
+	}, //患者-饮食记录（分页列表）
 
 
 	//业务员

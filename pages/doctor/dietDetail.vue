@@ -1,20 +1,20 @@
 <template>
 	<view class="container">
 		<view class="pagebackground"></view>
-		<view class="listitem">
-			<view class="listhead">2021年2月1日 早餐 <view style="padding-top:8rpx;">共摄入 <text class="detail-number">1998.21千卡能量  21.2克碳水</text></view></view>
-			<view class="list-content-box" v-for="(item,index) in listDatas" :key="index" @click="clickItem(item)">
-				<image :src="item.pic" mode="widthFix" class="list-img"></image>
+		<view class="listitem" v-for="(item,index) in listDatas" :key="index">
+			<view class="listhead">{{item.startTime}} {{item.durationValue}} <view style="padding-top:8rpx;">共摄入 <text class="detail-number">{{item.calories}}千卡能量  {{item.carbohydrate}}克碳水</text></view></view>
+			<view class="list-content-box" v-for="(item1,index1) in item.detailList" :key="index1">
+				<image :src="item1.pic" mode="widthFix" class="list-img"></image>
 				<view class="list-msg">
 					<view class="list-title flex">
-						<view style="flex:1;">{{item.name}}</view>
-						<view>800g</view>
+						<view style="flex:1;">{{item1.food_name}}</view>
+						<view>{{item1.weight}}g</view>
 					</view>
 					<view class="list-detail">
-						<view class="list-detail-tip"> {{'每'+item.ediblePart+'克含'}} </view>
-						<view class="list-detail-number">{{item.energy}}</view>
+						<view class="list-detail-tip"> {{'每'+item1.edible_part+'克含'}} </view>
+						<view class="list-detail-number">{{item1.energy}}</view>
 						<view class="list-detail-tip"> 千卡 </view>
-						<view class="list-detail-number">{{item.carbohydrate?item.carbohydrate:0}} </view>
+						<view class="list-detail-number">{{item1.carbohydrate?item1.carbohydrate:0}} </view>
 						<view class="list-detail-tip"> g碳水 </view>
 					</view>
 				</view>
@@ -38,14 +38,14 @@
 			}
 		},
 		methods: {
-			getListData() {
-				app.foodList({
-					genre:2,pageNo:this.page,
+			getListData(page) {
+				app.recorddietList({
+					pageNo:page,patientId:this.id,
 				}).then(res => {
 					if (res.status == 1) {
-						if(this.page!=1&&this.page>=res.data.pageCount) return;
-						this.listDatas = this.page==1?res.data.list:this.listDatas.concat(res.data.list);
-						if(this.page<res.data.pageCount) this.page++;
+						if(page!=1&&page>=res.data.pageCount) return;
+						this.listDatas = page==1?res.data.list:this.listDatas.concat(res.data.list);
+						if(page<=res.data.pageCount) this.page++;
 					}
 				});
 			},
@@ -58,8 +58,11 @@
 		},
 		onLoad(props) {
 			this.id = props.id;
-			this.getListData();
-		}
+			this.getListData(this.page);
+		},
+		onReachBottom(){
+			this.getListData(this.page);
+		},
 
 	}
 </script>
