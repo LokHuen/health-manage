@@ -80,7 +80,16 @@
 					</view>
 					<view class="detali-name">未干预</view>
 				</view>
-				<view class="detali-list-item" @click="toPatientList(2,1)">
+				
+				<view class="detali-list-item" @click="toPatientList(2,2)">
+					<view>
+						<text class="detail1">{{selectIndex==1?doctorInfo.intervene:doctorInfo.depIntervene}}</text>
+						<text class="detail2">人</text>
+					</view>
+					<view class="detali-name">干预中</view>
+				</view>
+				
+				<view class="detali-list-item" style="border-right: 0rpx solid #fff;" @click="toPatientList(2,1)">
 					<view>
 						<text class="detail1">{{selectIndex==1?doctorInfo.intervened:doctorInfo.depIntervened}}</text>
 						<text class="detail2">人</text>
@@ -88,13 +97,7 @@
 					<view class="detali-name">停止干预</view>
 				</view>
 
-				<view class="detali-list-item" style="border-right: 0rpx solid #fff;" @click="toPatientList(2,2)">
-					<view>
-						<text class="detail1">{{selectIndex==1?doctorInfo.intervene:doctorInfo.depIntervene}}</text>
-						<text class="detail2">人</text>
-					</view>
-					<view class="detali-name">干预中</view>
-				</view>
+				
 			</view>
 		</view>
 		<view style="height: 100rpx;"></view>

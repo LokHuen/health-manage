@@ -9,7 +9,7 @@
 					{{infoData.patientName||"游客"}}<view class="msg" style="padding-left:16rpx;"> {{" "+(infoData.patientGender||"")+' '+((infoData.age || infoData.age!=0)?(infoData.age+'岁 '):'')}}
 				</view> 
 				</view>
-				<view class="msg" style="padding-top:10rpx;">{{(infoData.illness||"")}} {{latelyData.result?(testtype==1?`${latelyData.result}(${latelyData.total}分)`:latelyData.result):""}} {{' '+(infoData.isBuy||"")}}
+				<view class="msg" style="padding-top:10rpx;">{{(infoData.illness||"")}} {{latelyData.result=='营养良好'?"":(latelyData.result?(testtype==1?`${latelyData.result}(${latelyData.total}分)`:latelyData.result):"")}} {{' '+(infoData.isBuy||"")}}
 				</view>
 			</view>
 			<!-- <view class="eidt" @click="more" v-if="showAdvice==1">...</view> -->
