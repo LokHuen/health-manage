@@ -15,14 +15,14 @@
 		</view>
 		<view class="count-box flex">
 			<view class="count-item">
-				<view class="count-item-number">
+				<view class="count-item-number" @click="toPatientList(0,0)">
 					{{selectIndex==1?doctorInfo.patientCount:doctorInfo.depPatientCount}}
 				</view>
 				<view class="">
 					总患者数
 				</view>
 			</view>
-			<view class="count-item" style="border-right: 0rpx solid #fff;">
+			<view class="count-item" style="border-right: 0rpx solid #fff;" @click="toPatientList(0,1)">
 				<view class="count-item-number" style="color: #F8BD63;">
 					{{selectIndex==1?doctorInfo.monthPatientCount:doctorInfo.depPatientCountOfMonth}}
 				</view>
@@ -37,14 +37,14 @@
 				<image src="../../static/iconfontwenhao.png" mode="aspectFill" class="ask" @click="openNutritioninfo2"></image>
 			</view>
 			<view class="detali-list-box">
-				<view class="detali-list-item">
+				<view class="detali-list-item" @click="toPatientList(1,0)">
 					<view>
 						<text class="detail1">{{selectIndex==1?doctorInfo.surveyResult4:doctorInfo.depSurveyReslt4}}</text>
 						<text class="detail2">人</text>
 					</view>
 					<view class="detali-name">重度营养不良</view>
 				</view>
-				<view class="detali-list-item">
+				<view class="detali-list-item" @click="toPatientList(1,1)">
 					<view>
 						<text class="detail1">{{selectIndex==1?doctorInfo.surveyResult3:doctorInfo.depSurveyReslt3}}</text>
 						<text class="detail2">人</text>
@@ -52,7 +52,7 @@
 					<view class="detali-name">中度营养不良</view>
 				</view>
 				
-				<view class="detali-list-item" style="border-right: 0rpx solid #fff;">
+				<view class="detali-list-item" style="border-right: 0rpx solid #fff;" @click="toPatientList(1,2)">
 					<view>
 						<text class="detail1">{{selectIndex==1?doctorInfo.surveyResult2:doctorInfo.depSurveyReslt2}}</text>
 						<text class="detail2">人</text>
@@ -69,14 +69,14 @@
 				<image src="../../static/iconfontwenhao.png" mode="aspectFill" class="ask" @click="openNutritioninfo1"></image>
 			</view>
 			<view class="detali-list-box">
-				<view class="detali-list-item">
+				<view class="detali-list-item" @click="toPatientList(2,0)">
 					<view>
 						<text class="detail1">{{selectIndex==1?doctorInfo.noIntervene:doctorInfo.depNoIntervene}}</text>
 						<text class="detail2">人</text>
 					</view>
 					<view class="detali-name">未干预</view>
 				</view>
-				<view class="detali-list-item">
+				<view class="detali-list-item" @click="toPatientList(2,1)">
 					<view>
 						<text class="detail1">{{selectIndex==1?doctorInfo.intervened:doctorInfo.depIntervened}}</text>
 						<text class="detail2">人</text>
@@ -84,7 +84,7 @@
 					<view class="detali-name">停止干预</view>
 				</view>
 				
-				<view class="detali-list-item" style="border-right: 0rpx solid #fff;">
+				<view class="detali-list-item" style="border-right: 0rpx solid #fff;" @click="toPatientList(2,2)">
 					<view>
 						<text class="detail1">{{selectIndex==1?doctorInfo.intervene:doctorInfo.depIntervene}}</text>
 						<text class="detail2">人</text>
@@ -163,6 +163,53 @@
 			 this.getDoctorInfo();
 		},
 		methods: {
+			toPatientList(index,secondIndex){
+				
+				// surveyResultText：重度营养不良，中度营养不良，可疑营养不良
+				// surveyResult：4，3，2
+				// isBuyText：未干预，干预中，停止干预
+				// isBuy：1，2，3
+			  let isDepartmentIcu = this.selectIndex==1?'':1;
+			  let month = '';
+			  let surveyResultText ='';
+			  let surveyResult ='';
+			  let isBuyText ='';
+              let isBuy = '';
+			  if(index==0){
+				  if(secondIndex == 1){
+					  //月份
+					 let nowDate = new Date();
+					 month = nowDate.getFullYear()+'-'+(nowDate.getMonth()>8?(nowDate.getMonth()+1):('0'+(nowDate.getMonth()+1)))
+				  }
+			  }else if(index == 1){
+				  if(secondIndex==0){
+					  surveyResultText = '重度营养不良';
+					  surveyResult = 4;
+				  }else if(secondIndex==1){
+					  surveyResultText = '中度营养不良';
+					  surveyResult = 3;
+				  }else{
+					  surveyResultText = '可疑营养不良';
+					  surveyResult = 2;
+				  }
+			  }else{
+				  if(secondIndex==0){
+					  isBuyText ='未干预';
+				      isBuy = 1;	  
+				  }else if(secondIndex==1){
+				  		isBuyText ='干预中';
+				  		isBuy = 2;				  
+				  }else{
+				  		isBuyText ='停止干预';
+				  		isBuy = 3;				  
+				  }
+			  }
+			  
+				uni.navigateTo({
+					url:'patient-list?isDepartmentIcu='+isDepartmentIcu+'&month='+month+'&surveyResultText='+surveyResultText+
+					'&surveyResult='+surveyResult+'&isBuyText='+isBuyText+'&isBuy='+isBuy
+				})
+			},
 			select(index){
 				!this.selectIndex==index?'':this.selectIndex = index;
 			},
