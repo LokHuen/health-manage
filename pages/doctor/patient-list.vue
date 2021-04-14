@@ -7,23 +7,23 @@
 		<view class="flexc filter-box">
 			<view class="flexc filter-list" v-if="filter">
 				<view class="flex filter-item" @click="byDoctor(-1)" v-if="hasPermission">
-					<text>按患者所属的医生筛选</text>
+					<text>{{paramTexts.bindDoctor?'paramTexts.bindDoctor':'按患者所属的医生筛选'}}</text>
 					<image src="../../static/icon/right_arrow.png"></image>
 				</view>
 				<view class="flex filter-item" @click="byIlls(-1)">
-					<text>按病种筛选</text>
+					<text>{{params.illness?params.illness:'按病种筛选'}}</text>
 					<image src="../../static/icon/right_arrow.png"></image>
 				</view>
 				<view class="flex filter-item" @click="byNutrition(-1)">
-					<text>按营养状况筛选</text>
+					<text>{{paramTexts.surveyResult?paramTexts.surveyResult:'按营养状况筛选'}}</text>
 					<image src="../../static/icon/right_arrow.png"></image>
 				</view>
 				<view class="flex filter-item" @click="byIntervene(-1)">
-					<text>按营养干预情况筛选</text>
+					<text>{{paramTexts.isBuy?paramTexts.isBuy:'按营养干预情况筛选'}}</text>
 					<image src="../../static/icon/right_arrow.png"></image>
 				</view>
 				<view class="flex filter-item" style="border: none;" @click="byTime(-1)">
-					<text>按患者加入时间排序</text>
+					<text>{{params.orderBy==1?'按患者加入时间排序':'按患者和医生绑定的时间排序'}}</text>
 					<image src="../../static/icon/right_arrow.png"></image>
 				</view>
 				<text class="close-filter" @click="filter=false">关闭</text>
@@ -54,7 +54,8 @@
 		<!-- 按医生 -->
 		<uni-popup ref="doctor_pop" type="bottom">
 			<view class="pop-container">
-				<view class="pop-item" @click="byDoctor(item.id)" v-for="(item,index) in doctorList">{{item.doctorName}}
+				<view class="pop-item" @click="byDoctor(item.id,item.doctorName)" v-for="(item,index) in doctorList">
+					{{item.doctorName}}
 				</view>
 				<view class="pop-item" @click="byDoctor(-2)" style="border: none;">取消</view>
 			</view>
@@ -72,7 +73,8 @@
 		<!-- 按营养状况 -->
 		<uni-popup ref="nutrition_pop" type="bottom">
 			<view class="pop-container">
-				<view class="pop-item" @click="byNutrition(item.value)" v-for="(item,index) in nuritions">{{item.text}}
+				<view class="pop-item" @click="byNutrition(item.value,item.text)" v-for="(item,index) in nuritions">
+					{{item.text}}
 				</view>
 				<view class="pop-item" @click="byNutrition(-2)" style="border: none;">取消</view>
 			</view>
@@ -81,7 +83,8 @@
 		<!-- 按营养干预情况 -->
 		<uni-popup ref="intervene_pop" type="bottom">
 			<view class="pop-container">
-				<view class="pop-item" @click="byIntervene(item.value)" v-for="(item,index) in intervenes">{{item.text}}
+				<view class="pop-item" @click="byIntervene(item.value,item.text)" v-for="(item,index) in intervenes">
+					{{item.text}}
 				</view>
 				<view class="pop-item" @click="byIntervene(-2)" style="border: none;">取消</view>
 			</view>
@@ -162,7 +165,12 @@
 					illness: ''
 				},
 				info: {},
-				hasPermission: false
+				hasPermission: false,
+				paramTexts: {
+					bindDoctor: '',
+					surveyResult: '',
+					isBuy: '',
+				}
 			}
 		},
 		methods: {
@@ -188,7 +196,7 @@
 			},
 			departPermission() {
 				app.departPermission().then((res) => {
-					this.hasPermission = res.reultList&&res.reultList.length > 1
+					this.hasPermission = res.reultList && res.reultList.length > 1
 				})
 			},
 			getDepartmentAllIlls() {
@@ -196,15 +204,15 @@
 					isDept: this.params.isDepartmentIcu == 1 ? 1 : 0,
 					doctorId: this.params.bindDoctor
 				}).then((res) => {
-					this.ills = res.date
+					this.ills = res.data
 				})
 			},
 			toSearch() {
 				uni.navigateTo({
-					url: 'search-patient-list?isDepartmentIcu='+this.params.isDepartmentIcu
+					url: 'search-patient-list?isDepartmentIcu=' + this.params.isDepartmentIcu
 				})
 			},
-			byDoctor(id) {
+			byDoctor(id, doctorName) {
 				switch (id) {
 					case -2:
 						this.$refs.doctor_pop.close()
@@ -214,13 +222,15 @@
 						break;
 					default:
 						this.params.bindDoctor = id
+						this.paramTexts.bindDoctor = doctorName
+						this.params.illness = ''
 						this.byDoctor(-2)
 						this.getList(1)
 						break;
 				}
 			},
 			byIlls(illness) {
-				switch (id) {
+				switch (illness) {
 					case -2:
 						this.$refs.ills_pop.close()
 						break;
@@ -234,7 +244,7 @@
 						break;
 				}
 			},
-			byNutrition(status) {
+			byNutrition(status, text) {
 				switch (status) {
 					case -2:
 						this.$refs.nutrition_pop.close()
@@ -249,12 +259,13 @@
 					case 4:
 					case 5:
 						this.params.surveyResult = status
+						this.paramTexts.surveyResult = text
 						this.byNutrition(-2)
 						this.getList(1)
 						break;
 				}
 			},
-			byIntervene(status) {
+			byIntervene(status, text) {
 				switch (status) {
 					case -2:
 						this.$refs.intervene_pop.close()
@@ -267,6 +278,7 @@
 					case 3:
 						this.byIntervene(-2)
 						this.params.isBuy = status
+						this.paramTexts.isBuy = text
 						this.getList(1)
 						break;
 				}
