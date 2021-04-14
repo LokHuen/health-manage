@@ -1,7 +1,7 @@
 <template>
 	<!-- 医生营养管理 2.0版本  4月13号-->
 	<view class="container">
-		<image src="../../static/warnshow.jpg" mode="widthFix" class="banner"></image>
+		<image src="../../static/warnshow.jpg" mode="widthFix" class="banner" @click="towarnpage"></image>
 		<view class="condition-box flex" v-if="showCondition">
 			<view :class="selectIndex==1?'chose':'unchose'" @click="select(1)">
 				我的患者
@@ -187,7 +187,12 @@
 						this.doctorInfo = res.data;
 					}
 				})
-			}
+			},
+			towarnpage(){
+				uni.navigateTo({
+					url:"/pages/doctor/warn"
+				})
+			},
 		}
 	}
 </script>
