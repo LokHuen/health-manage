@@ -3,7 +3,7 @@
 	<view class="container">
 		<view class="title">{{doctorInfo.hospital+'  '+doctorInfo.department}}</view>
 		<view class="list-box">
-			<view class="list-item flex" v-for="(item,index) in doctorInfo.resultList" :key="index">
+			<view class="list-item flex" v-for="(item,index) in doctorInfo.resultList" :key="index" @click="toPatientList(item)">
 				<view class="name">
 					{{item.doctorName}}
 				</view>
@@ -38,6 +38,11 @@
 					if(res.status == 1){
 						this.doctorInfo = res.data;
 					}
+				})
+			},
+			toPatientList(item){
+				uni.navigateTo({
+					url:'../doctor/patient-list?bindDoctor='+item.id+'&doctorName='+item.doctorName
 				})
 			}
 		}
