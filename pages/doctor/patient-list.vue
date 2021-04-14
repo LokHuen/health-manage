@@ -136,6 +136,7 @@
 			this.getList(1)
 			this.getManageDepartment()
 			this.getDepartmentAllIlls()
+			console.log(this.params)
 		},
 		data() {
 			let uid = app.getCache('uid')
