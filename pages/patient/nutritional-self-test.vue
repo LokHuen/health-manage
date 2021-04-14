@@ -32,7 +32,7 @@
 			</view>
 			
 		</view>
-		<view style="padding:200rpx 30rpx 200rpx;">
+		<view style="padding:200rpx 30rpx 200rpx;" v-if="testtype==1">
 			<video id="myVideo" initial-time="0.01" :src="baseUrl+'/yindao.mp4'" controls style="width:100%;"></video>
 		</view>
 		<view class="button-box">
