@@ -7,7 +7,7 @@
 		</view>
 		<view class="title">{{doctorInfo.hospital+'  '+doctorInfo.department}}</view>
 		<view class="list-box">
-			<view class="list-item flex" v-for="(item,index) in doctorInfo.resultList" :key="index">
+			<view class="list-item flex" v-for="(item,index) in doctorInfo.ksList" :key="index">
 				<view class="name">
 					{{item.doctorName}}
 				</view>
@@ -35,7 +35,7 @@
 		},
 		methods: {
 			getListData(){
-				app.allDoctorList().then(res =>{
+				app.doctorShowInfo().then(res =>{
 					if(res.status == 1){
 						this.doctorInfo = res.data;
 					}
