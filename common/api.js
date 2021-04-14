@@ -447,6 +447,23 @@ var api = {
 	 doctorShowInfo: (data) => {
 	 	return rq("/wx/doctor/showInfo", data, "GET");
 	 },
+	
+	//获取患者列表
+	getPatientList: (data) => {
+		return rq("/wx/doctor/getPatientList", data, "GET");
+	},
+	
+	//判断科室权限
+	departPermission: (data) => {
+		return rq("/wx/doctor/getDepartmentAllDoctors", data, "GET");
+	},
+	
+	//获取病种
+	getDepartmentAllIlls: (data) => {
+		return rq("/wx/doctor/getDepartmentAllIlls", data, "GET");
+	},
+	
+	
 }
 
 export {
