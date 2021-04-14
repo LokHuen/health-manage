@@ -1,7 +1,7 @@
 <template>
 	<!-- 医生营养管理 2.0版本  4月13号-->
 	<view class="container">
-		<view class="top-tips">
+		<view class="top-tips" @click="turnback">
 			退出演示环境，回到我的页面
 			<image src="../../static/tuichu.png" mode="aspectFill" class="tuichu"></image>
 		</view>
@@ -187,6 +187,11 @@
 					url:"/pages/doctor/warn"
 				})
 			},
+			turnback(){
+				uni.navigateBack({
+					
+				})
+			}
 
 		}
 	}

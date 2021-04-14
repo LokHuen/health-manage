@@ -1,7 +1,7 @@
 <template>
 	<!-- 科室首页 -->
 	<view class="container">
-		<view class="top-tips">
+		<view class="top-tips" @click="turnback">
 			退出演示环境，回到我的页面
 			<image src="../../static/tuichu.png" mode="aspectFill" class="tuichu"></image>
 		</view>
@@ -42,6 +42,11 @@
 					if(res.status == 1){
 						this.doctorInfo = res.data;
 					}
+				})
+			},
+			turnback(){
+				uni.navigateBack({
+					
 				})
 			}
 		}
