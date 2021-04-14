@@ -1,11 +1,13 @@
 <template>
 	<view class="flexc container">
-		<view class="flex search-box">
-			<image src="../../static/icon/incon_search.png"></image>
-			<input placeholder="请输入患者昵称或名字搜索" v-model="params.patientName" @input="getList(1)" />
+		<view class="search-out-box">
+			<view class="flex search-box">
+				<image src="../../static/icon/incon_search.png"></image>
+				<input placeholder="请输入患者昵称或名字搜索" v-model="params.patientName" @input="getList(1)" />
+			</view>
 		</view>
 		<view class="flexc list" v-if="list.length>0">
-			<view class="flexc item" v-for="(item,index) in list">
+			<view class="flexc item" v-for="(item,index) in list" @click="toPatient(item.id)">
 				<view class="flex" style="align-items: flex-start;">
 					<image class="avator" :src="item.portrait"></image>
 					<view class="flexc">
@@ -33,8 +35,8 @@
 			this.getList(1)
 		},
 		data() {
-			// let uid=app.getCache('uid')
-			let uid = 129
+			let uid=app.getCache('uid')
+			// let uid = 129
 			return {
 				list: [],
 				params: {
@@ -43,6 +45,12 @@
 					isDepartmentIcu: '',
 					bindDoctor: uid
 				}
+			}
+		},
+		onReachBottom() {
+			let pageNo = this.params.pageNo + 1
+			if (pageNo <= this.info.pageCount) {
+				this.getList(pageNo)
 			}
 		},
 		methods: {
@@ -58,6 +66,11 @@
 						}
 					}
 				})
+			},
+			toPatient(id) {
+				uni.navigateTo({
+					url: 'doc-patient-nutrition?id=' + id
+				});
 			},
 		}
 	}
@@ -104,6 +117,13 @@
 					color: #999999;
 				}
 			}
+		}
+
+		.search-out-box {
+			position: sticky;
+			top: 0;
+			background-color: $uni-defautt-bg-color;
+			z-index: 999;
 		}
 
 		.search-box {

@@ -1,9 +1,12 @@
 <template>
 	<view class="flexc container">
-		<view class="flex search-box" @click="toSearch">
-			<image src="../../static/icon/incon_search.png"></image>
-			<text>请输入患者昵称或名字搜索</text>
+		<view class="search-out-box">
+			<view class="flex search-box" @click="toSearch">
+				<image src="../../static/icon/incon_search.png"></image>
+				<text>请输入患者昵称或名字搜索</text>
+			</view>
 		</view>
+
 		<view class="flexc filter-box">
 			<view class="flexc filter-list" v-if="filter">
 				<view class="flex filter-item" @click="byDoctor(-1)" v-if="hasPermission">
@@ -35,7 +38,7 @@
 			</view>
 		</view>
 		<view class="flexc list" v-if="list.length>0">
-			<view class="flexc item" v-for="(item,index) in list">
+			<view class="flexc item" v-for="(item,index) in list" @click="toPatient(item.id)">
 				<view class="flex" style="align-items: flex-start;">
 					<image class="avator" :src="item.portrait"></image>
 					<view class="flexc">
@@ -105,17 +108,38 @@
 	const app = getApp()
 	export default {
 		onLoad(props) {
+			let filter = false
 			if (props.isDepartmentIcu) {
 				this.params.isDepartmentIcu = props.isDepartmentIcu
 			}
+			if (props.month) {
+				this.params.month = props.month
+			}
+			if (props.surveyResult) {
+				this.params.surveyResult = props.surveyResult
+				filter = true
+			}
+			if (props.surveyResultText) {
+				this.paramTexts.surveyResult = props.surveyResultText
+				filter = true
+			}
+			if (props.isBuy) {
+				this.params.isBuy = props.isBuy
+				filter = true
+			}
+			if (props.isBuyText) {
+				this.paramTexts.isBuy = props.isBuyText
+				filter = true
+			}
+			this.filter = filter
 			this.departPermission()
 			this.getList(1)
 			this.getManageDepartment()
 			this.getDepartmentAllIlls()
 		},
 		data() {
-			// let uid = uid:app.getCache('uid')
-			let uid = 126
+			let uid = app.getCache('uid')
+			// let uid = 126
 			return {
 				uid,
 				filter: false,
@@ -162,7 +186,8 @@
 					orderBy: 1,
 					surveyResult: '',
 					isBuy: 1,
-					illness: ''
+					illness: '',
+					month: ''
 				},
 				info: {},
 				hasPermission: false,
@@ -173,6 +198,12 @@
 				}
 			}
 		},
+		onReachBottom() {
+			let pageNo = this.params.pageNo + 1
+			if (pageNo <= this.info.pageCount) {
+				this.getList(pageNo)
+			}
+		},
 		methods: {
 			getList(pageNo = 1) {
 				this.params.pageNo = pageNo
@@ -180,11 +211,11 @@
 					this.info = res.data
 					if (this.params.pageNo == 1) {
 						this.list = res.data.list
-						this.list = this.list.concat(res.data.list)
-						this.list = this.list.concat(res.data.list)
-						this.list = this.list.concat(res.data.list)
-						this.list = this.list.concat(res.data.list)
-						this.list = this.list.concat(res.data.list)
+						// this.list = this.list.concat(res.data.list)
+						// this.list = this.list.concat(res.data.list)
+						// this.list = this.list.concat(res.data.list)
+						// this.list = this.list.concat(res.data.list)
+						// this.list = this.list.concat(res.data.list)
 					} else {
 						if (this.params.pageNo <= this.info.pageCount) {
 							this.list = this.list.concat(res.data.list)
@@ -216,6 +247,11 @@
 				uni.navigateTo({
 					url: 'search-patient-list?isDepartmentIcu=' + this.params.isDepartmentIcu
 				})
+			},
+			toPatient(id) {
+				uni.navigateTo({
+					url: 'doc-patient-nutrition?id=' + id
+				});
 			},
 			byDoctor(id, doctorName) {
 				switch (id) {
@@ -425,6 +461,13 @@
 
 		}
 
+		.search-out-box {
+			position: sticky;
+			top: 0;
+			background-color: $uni-defautt-bg-color;
+			z-index: 999;
+		}
+
 		.search-box {
 			justify-content: center;
 			align-items: center;
@@ -432,8 +475,7 @@
 			background-color: #FFFFFF;
 			padding: 16rpx 0;
 			border-radius: 10rpx;
-			position: sticky;
-			top: 0;
+
 
 			image {
 				width: 24rpx;
