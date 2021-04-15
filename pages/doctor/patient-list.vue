@@ -115,7 +115,7 @@
 			<view class="pop-container">
 				<view class="pop-item" @click="byTime(2,'按患者加入的时间排序')">按患者加入的时间排序</view>
 				<view class="pop-item" @click="byTime(1,'按患者最近一次测评时间排序')">按患者最近一次测评时间排序</view>
-				<view class="pop-item" @click="byTime(3,'按营养评测分值由高到底排序')">按营养评测分值由高到底排序</view>
+				<view class="pop-item" @click="byTime(3,'按营养评测分值由高到低排序')">按营养评测分值由高到低排序</view>
 				<view class="pop-item" @click="byTime(-2)" style="border: none;color: #52A29E;">取消</view>
 			</view>
 		</uni-popup>
