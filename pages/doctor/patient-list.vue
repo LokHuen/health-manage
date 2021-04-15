@@ -9,7 +9,7 @@
 
 		<view class="flexc filter-box">
 			<view class="flexc filter-list" v-if="filter">
-				<view class="flex filter-item" @click="byDoctor(-1)" v-if="params.isDepartmentIcu==1">
+				<view class="flex filter-item" @click="byDoctor(-1)" v-if="params.isDepartmentIcu==1&&isDept==1">
 					<text>{{paramTexts.bindDoctor?paramTexts.bindDoctor:'按患者所属的医生筛选'}}</text>
 					<image src="../../static/icon/right_arrow.png"></image>
 				</view>
@@ -157,6 +157,11 @@
 			if (props.isBuyText) {
 				this.paramTexts.isBuy = props.isBuyText
 			}
+
+			if (props.isDept) {
+				this.isDept = props.isDept
+			}
+
 			// this.departPermission()
 			this.getList(1)
 			this.getManageDepartment()
@@ -168,6 +173,7 @@
 			return {
 				uid,
 				selfName: '',
+				isDept: 0,
 				filter: false,
 				list: [],
 				doctorList: [],
@@ -222,7 +228,7 @@
 					bindDoctor: '',
 					surveyResult: '',
 					isBuy: '',
-					orderBy:'',
+					orderBy: '',
 					illness: ''
 				},
 			}
@@ -236,7 +242,12 @@
 		methods: {
 			getList(pageNo = 1) {
 				this.params.pageNo = pageNo
-				app.getPatientList(this.params).then((res) => {
+				let params = {...this.params};
+				
+				if (this.isDept == 0) {
+					params.isDepartmentIcu = ''
+				}
+				app.getPatientList(params).then((res) => {
 					this.info = res.data
 					if (this.params.pageNo == 1) {
 						this.list = res.data.list
@@ -351,7 +362,7 @@
 						break;
 				}
 			},
-			byTime(status,text) {
+			byTime(status, text) {
 				switch (status) {
 					case -2:
 						this.$refs.time_pop.close()
@@ -364,7 +375,7 @@
 					case 3:
 						this.byTime(-2)
 						this.params.orderBy = status
-						this.paramTexts.orderBy=text
+						this.paramTexts.orderBy = text
 						this.getList(1)
 						break;
 
