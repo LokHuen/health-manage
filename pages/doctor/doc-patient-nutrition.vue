@@ -6,7 +6,7 @@
 			<image :src="infoData.portrait" mode="scaleToFill" class="avator"></image>
 			<view class="user-msg-box">
 				<view class="name flex" style="align-items:flex-end;">
-					{{infoData.patientName||"游客"}}<view class="msg" style="padding-left:16rpx;"> {{" "+(infoData.patientGender||"")+' '+((infoData.age || infoData.age!=0)?(infoData.age+'岁 '):'')}}
+					{{infoData.patientName||"游客"}}<view class="msg" style="padding:0 0 4rpx 16rpx;"> {{" "+(infoData.patientGender||"")+' '+((infoData.age || infoData.age!=0)?(infoData.age+'岁 '):'')}}
 				</view> 
 				</view>
 				<view class="msg" style="padding-top:10rpx;">{{(infoData.illness||"")}} {{latelyData.result=='营养良好'?"":(latelyData.result?(testtype==1?`${latelyData.result}(${latelyData.total}分)`:latelyData.result):"")}} {{' '+(infoData.isBuy||"")}}
@@ -204,7 +204,7 @@
 				<view class="ltime">{{item.createTime}}</view>
 				<view v-for="(item1,index1) in item.orderDetailList" :key ="index1">
 					<view class="lname">{{item1.shortName}}（{{item1.quantity}}盒）</view>
-					<view class="linfo">{{item1.commodity}}</view>
+					<view class="linfo">{{item1.usage}}</view>
 				</view>
 			</view>
 			<view v-if="!infoData.orderList.length" class="pagenodata">暂无数据</view>
