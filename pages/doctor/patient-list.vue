@@ -123,6 +123,14 @@
 			if (props.month) {
 				this.params.month = props.month
 			}
+			if (props.queryType) {
+				if (props.queryType == 'day') {
+					this.params.queryType = 0
+				} else if (props.queryType == 'week') {
+					this.params.queryType = 1
+				}
+			}
+
 			if (props.bindDoctor) {
 				this.params.bindDoctor = props.bindDoctor
 			}
@@ -196,7 +204,8 @@
 					surveyResult: '',
 					isBuy: '',
 					illness: '',
-					month: ''
+					month: '',
+					queryType: ''
 				},
 				info: {},
 				hasPermission: false,

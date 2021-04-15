@@ -25,19 +25,19 @@
 				</view>
 			</view>
 			<view class="flex">
-				<view class="count-item1">
+				<view class="count-item1" @click="toPatientList(0,1)">
 					<text class="count-item1-tip">本月新增</text>
-					<text class="count-item1-number">31</text>
+					<text class="count-item1-number">{{selectIndex==1?doctorInfo.monthPatientCount:doctorInfo.depPatientCountOfMonth}}</text>
 				</view>
 				
-				<view class="count-item1">
+				<view class="count-item1" @click="toPatientList(0,2)">
 					<text class="count-item1-tip">本周新增</text>
-					<text class="count-item1-number">31</text>
+					<text class="count-item1-number">{{(selectIndex==1?doctorInfo.weekPatientCount:doctorInfo.depPatientCountOfWeek)||0}}</text>
 				</view>
 				
-				<view class="count-item1">
+				<view class="count-item1" @click="toPatientList(0,3)">
 					<text class="count-item1-tip">本日新增</text>
-					<text class="count-item1-number">31</text>
+					<text class="count-item1-number">{{(selectIndex==1?doctorInfo.dayPatientCount:doctorInfo.depPatientCountOfDay)||0}}</text>
 				</view>
 			</view>
 			
@@ -184,6 +184,8 @@
 				// surveyResult：4，3，2
 				// isBuyText：未干预，干预中，停止干预
 				// isBuy：1，2，3
+				//queryType;// 1本周  0本日
+			  let queryType = ''
 			  let isDepartmentIcu = this.selectIndex==1?'':1;
 			  let month = '';
 			  let surveyResultText ='';
@@ -195,6 +197,10 @@
 					  //月份
 					 let nowDate = new Date();
 					 month = nowDate.getFullYear()+'-'+(nowDate.getMonth()>8?(nowDate.getMonth()+1):('0'+(nowDate.getMonth()+1)))
+				  }else if(secondIndex == 2){
+					  queryType = 'week';
+				  }else if(secondIndex == 3){
+					  queryType = 'day';
 				  }
 			  }else if(index == 1){
 				  if(secondIndex==0){
@@ -223,7 +229,7 @@
 			  
 				uni.navigateTo({
 					url:'patient-list?isDepartmentIcu='+isDepartmentIcu+'&month='+month+'&surveyResultText='+surveyResultText+
-					'&surveyResult='+surveyResult+'&isBuyText='+isBuyText+'&isBuy='+isBuy
+					'&surveyResult='+surveyResult+'&isBuyText='+isBuyText+'&isBuy='+isBuy+'&queryType='+queryType
 				})
 			},
 			select(index){
@@ -329,7 +335,7 @@
 				height: 115rpx;
 				line-height: 85rpx;
 				.count-item1-tip{
-					font-size: 24rpx;
+					font-size: 29rpx;
 					font-family: PingFang SC;
 					font-weight: 400;
 					color: #333333;
