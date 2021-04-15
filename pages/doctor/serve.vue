@@ -80,10 +80,10 @@
 		margin-top:24rpx;
 		.centerline{margin:0 56rpx;border-top: 1px solid #E5E5E5;}
 	}
-	.bottomtip{padding-top:200rpx;font-size:30rpx;color:#52A29E;}
+	.bottomtip{padding-top:20rpx;font-size:24rpx;color:#52A29E;position: fixed;z-index: 9;left:0;right:0;bottom:250rpx;}
 	.tips {
-		width: 40rpx;
-		height: 40rpx;
+		width: 34rpx;
+		height: 34rpx;
 	}
 	.minfont{color: rgba(106, 105, 105, 100);font-size:24rpx;margin-left:30rpx;}
 	.container{
