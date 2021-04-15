@@ -189,7 +189,7 @@
 				// isBuy：1，2，3
 				//queryType;// 1本周  0本日
 			  let queryType = ''
-			  let isDepartmentIcu = this.selectIndex==1?'':1;
+			  let isDepartmentIcu =this.showCondition?1:'';
 			  let month = '';
 			  let surveyResultText ='';
 			  let surveyResult ='';
