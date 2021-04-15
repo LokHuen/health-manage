@@ -82,8 +82,8 @@
 	}
 	.bottomtip{padding-top:20rpx;font-size:24rpx;color:#52A29E;position: fixed;z-index: 9;left:0;right:0;bottom:250rpx;}
 	.tips {
-		width: 34rpx;
-		height: 34rpx;
+		width: 30rpx;
+		height: 30rpx;
 	}
 	.minfont{color: rgba(106, 105, 105, 100);font-size:24rpx;margin-left:30rpx;}
 	.container{
