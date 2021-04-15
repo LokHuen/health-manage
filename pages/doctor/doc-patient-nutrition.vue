@@ -71,7 +71,7 @@
 		</view> -->
 		<view class="line-space"></view>
 		<view class="itemboxtitle">均衡饮食建议</view>
-		<view class="health-msg-box" v-if="infoData.weight || infoData.standardWeight" style="padding-top: 10rpx;">
+		<view class="health-msg-box" v-if="infoData.weight || infoData.standardWeight" style="padding-top: 6rpx;">
 			<view class="health-list-box">
 				<view class="health-list-item">
 					<image src="../../static/doctor/weight.png" mode="widthFix" class="bodyimg"></image>
@@ -1584,7 +1584,7 @@
 				display: flex;box-sizing: border-box;
 				justify-content: space-around;
 				border-bottom: 0px #EEEEEE solid;
-				padding:0 30rpx 0.4rem;
+				padding:10rpx 30rpx 0.4rem;
 
 				.health-list-item {
 					color: #333333;width:30%;
