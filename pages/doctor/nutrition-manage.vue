@@ -146,7 +146,8 @@
 					<view class="listother">2-3分，可疑营养不良；</view>
 					<view class="listother">4-8分，中度营养不良；</view>
 					<view class="listother">>=9分，重度营养不良。</view>
-					<view class="listother" style="padding-top:26rpx;">依据SGA营养状况评估体系，根据评分分为三个等级：营养良好、轻-中度营养不良、重度营养不良</view>
+					<view class="listother">依据SGA营养状况评估体系，根据评分判断等级：</view>
+					<view class="listother">营养良好、轻-中度营养不良、重度营养不良</view>
 		
 				</view>
 		
