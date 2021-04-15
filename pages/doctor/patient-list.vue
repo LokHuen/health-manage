@@ -26,7 +26,7 @@
 					<image src="../../static/icon/right_arrow.png"></image>
 				</view>
 				<view class="flex filter-item" style="border: none;" @click="byTime(-1)">
-					<text>{{params.orderBy==1?'按患者加入时间排序':'按患者和医生绑定的时间排序'}}</text>
+					<text>{{paramTexts.orderBy?paramTexts.orderBy:'按患者加入时间排序'}}</text>
 					<image src="../../static/icon/right_arrow.png"></image>
 				</view>
 				<text class="close-filter" @click="filter=false" v-if="false">关闭</text>
@@ -38,18 +38,22 @@
 			</view>
 		</view>
 		<view class="flexc list" v-if="list.length>0">
-			<view class="flexc item" v-for="(item,index) in list" @click="toPatient(item.id)">
+			<view class="flexc item" v-for="(item,index) in list" @click="toPatient(item.id)" :key="index">
 				<view class="flex" style="align-items: flex-start;">
 					<image class="avator" :src="item.portrait"></image>
 					<view class="flexc">
 						<text class="name">{{item.patientName}}</text>
-						<view class="text">
+						<view class="text flex">
 							<text>{{item.illness}}</text>
-							<text v-if="item.surveyResultValue&&item.surveyResultValue!='/'">{{item.surveyResultValue}}
-							</text>
-							<text :style="item.surveyResult==4&&item.isBuy!='干预中'?'color: #52A29E;':'color: #333333;'"
-								v-if="item.surveyScore&&item.surveyScore!='/'">{{'（'+item.surveyScore+'）'}}</text>
-							<text v-if="item.surveyResult&&item.surveyResult!='/'">{{item.isBuy}}</text>
+							<view class="flex"
+								:style="item.surveyResult==4&&item.isBuy!=''&&item.isBuy!='干预中'?'color: #52A29E;':'color: #333333;'">
+								<text
+									v-if="item.surveyResultValue&&item.surveyResultValue!='/'">{{item.surveyResultValue}}
+								</text>
+								<text v-if="item.surveyScore&&item.surveyScore!='/'">{{'（'+item.surveyScore+'）'}}</text>
+								<text v-if="item.surveyResult&&item.surveyResult!='/'">{{item.isBuy}}</text>
+							</view>
+
 						</view>
 						<text class="join-time" @click="getDepartmentAllIlls">加入时间：{{item.createTime}}</text>
 					</view>
@@ -64,6 +68,7 @@
 		<!-- 按医生 -->
 		<uni-popup ref="doctor_pop" type="bottom">
 			<view class="pop-container">
+				<view class="pop-item" @click="byDoctor(uid,selfName)" v-if="selfName">{{selfName}}</view>
 				<view class="pop-item" @click="byDoctor(item.id,item.doctorName)" v-for="(item,index) in doctorList">
 					{{item.doctorName}}
 				</view>
@@ -104,9 +109,9 @@
 		<!-- 按时间 -->
 		<uni-popup ref="time_pop" type="bottom">
 			<view class="pop-container">
-				<view class="pop-item" @click="byTime(1)">按患者最近一次测评时间排序</view>
-				<view class="pop-item" @click="byTime(2)">按患者和医生绑定的时间排序</view>
-				<view class="pop-item" @click="byTime(3)">按营养评测分值由高到底排序</view>
+				<view class="pop-item" @click="byTime(1,'按患者最近一次测评时间排序')">按患者最近一次测评时间排序</view>
+				<view class="pop-item" @click="byTime(2,'按患者和医生绑定的时间排序')">按患者和医生绑定的时间排序</view>
+				<view class="pop-item" @click="byTime(3,'按营养评测分值由高到底排序')">按营养评测分值由高到底排序</view>
 				<view class="pop-item" @click="byTime(-2)" style="border: none;color: #52A29E;">取消</view>
 			</view>
 		</uni-popup>
@@ -117,6 +122,9 @@
 	const app = getApp()
 	export default {
 		onLoad(props) {
+			if (props.selfName) {
+				this.selfName = props.selfName
+			}
 			if (props.isDepartmentIcu) {
 				this.params.isDepartmentIcu = props.isDepartmentIcu
 			}
@@ -159,6 +167,7 @@
 			let uid = app.getCache('uid')
 			return {
 				uid,
+				selfName: '',
 				filter: false,
 				list: [],
 				doctorList: [],
@@ -213,6 +222,7 @@
 					bindDoctor: '',
 					surveyResult: '',
 					isBuy: '',
+					orderBy:'',
 					illness: ''
 				},
 			}
@@ -341,7 +351,7 @@
 						break;
 				}
 			},
-			byTime(status) {
+			byTime(status,text) {
 				switch (status) {
 					case -2:
 						this.$refs.time_pop.close()
@@ -354,6 +364,7 @@
 					case 3:
 						this.byTime(-2)
 						this.params.orderBy = status
+						this.paramTexts.orderBy=text
 						this.getList(1)
 						break;
 
