@@ -209,9 +209,9 @@
 			</view>
 			<view v-if="!infoData.orderList.length" class="pagenodata">暂无数据</view>
 		</view>
-		<view class="flex ct bottomtip">
+		<!-- <view class="flex ct bottomtip">
 			<image src="../../static/doctor/warn.png" mode="widthFix" class="tips" ></image>干预情况依据本平台数据判断，存在局限性
-		</view>
+		</view> -->
 		<view class="line-space"></view>
 		<view class="itemboxtitle">医嘱记录</view>
 		<view class="recordbox">
@@ -235,7 +235,7 @@
 		
 
 		<view class="button-box flex">
-			<button type="default" class="button" @click="beginTest" v-show="showAdvice==1">医 嘱</button>
+			<button type="default" class="button" @click="beginTest" v-show="showAdvice==1">发送医嘱</button>
 			<view class="button btother" @click="moreOnClick">更多功能</view>
 		</view>
 		<!-- <view style="height: 200px;"></view> -->
@@ -1333,7 +1333,7 @@
 			.ltime{font-size: 26rpx;color: #999999;}
 			.lname{padding:20rpx 0;font-size: 30rpx;font-weight: 600;color: #333333;}
 			.linfo{font-size: 26rpx;color: #666666;}
-			&:last-child{border:none;margin:0;padding:0;}
+			&:last-child{border:none;margin:0;}
 		}
 	}
 	.bottomtip{
