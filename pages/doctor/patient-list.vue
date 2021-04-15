@@ -29,11 +29,11 @@
 					<text>{{params.orderBy==1?'按患者加入时间排序':'按患者和医生绑定的时间排序'}}</text>
 					<image src="../../static/icon/right_arrow.png"></image>
 				</view>
-				<text class="close-filter" @click="filter=false">关闭</text>
+				<text class="close-filter" @click="filter=false" v-if="false">关闭</text>
 			</view>
 			<view class="flex toggle" @click="filter=!filter">
-				<text>{{filter?'收起筛选条件':'展开筛选条件'}}</text>
-				<image :src="filter?'../../static/icon/right_arrow_top.png':'../../static/icon/right_arrow.png'">
+				<text :style="filter?'color: #52A29E;':'color: #333333;'">{{filter?'收起筛选条件':'展开筛选条件'}}</text>
+				<image :src="filter?'../../static/icon/icon_arrow_close.png':'../../static/icon/icon_arrow_open.png'">
 				</image>
 			</view>
 		</view>
@@ -43,7 +43,14 @@
 					<image class="avator" :src="item.portrait"></image>
 					<view class="flexc">
 						<text class="name">{{item.patientName}}</text>
-						<text class="text">{{item.illness}} {{item.surveyResult}} {{item.isBuy}}</text>
+						<view class="text">
+							<text>{{item.illness}}</text>
+							<text v-if="item.surveyResultValue&&item.surveyResultValue!='/'">{{item.surveyResultValue}}
+							</text>
+							<text :style="item.surveyResult==4&&item.isBuy!='干预中'?'color: #52A29E;':'color: #333333;'"
+								v-if="item.surveyScore&&item.surveyScore!='/'">{{'（'+item.surveyScore+'）'}}</text>
+							<text v-if="item.surveyResult&&item.surveyResult!='/'">{{item.isBuy}}</text>
+						</view>
 						<text class="join-time" @click="getDepartmentAllIlls">加入时间：{{item.createTime}}</text>
 					</view>
 				</view>
@@ -99,6 +106,7 @@
 			<view class="pop-container">
 				<view class="pop-item" @click="byTime(1)">按患者最近一次测评时间排序</view>
 				<view class="pop-item" @click="byTime(2)">按患者和医生绑定的时间排序</view>
+				<view class="pop-item" @click="byTime(3)">按营养评测分值由高到底排序</view>
 				<view class="pop-item" @click="byTime(-2)" style="border: none;color: #52A29E;">取消</view>
 			</view>
 		</uni-popup>
@@ -161,10 +169,7 @@
 						text: '可疑营养不良',
 						value: 2
 					}, {
-						text: '营养良好',
-						value: 5
-					}, {
-						text: '无营养不良',
+						text: '营养良好 / 无营养不良',
 						value: 1
 					},
 				],
@@ -337,6 +342,7 @@
 						break;
 					case 1:
 					case 2:
+					case 3:
 						this.byTime(-2)
 						this.params.orderBy = status
 						this.getList(1)
