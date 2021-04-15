@@ -15,7 +15,7 @@
 		</view>
 		
 		<view style="height: 20rpx;" v-if="!showCondition"></view>
-		<view class="count-box flex">
+		<view class="count-box">
 			<view class="count-item">
 				<view class="count-item-number" @click="toPatientList(0,0)">
 					{{selectIndex==1?doctorInfo.patientCount:doctorInfo.depPatientCount}}
@@ -24,14 +24,23 @@
 					总患者数
 				</view>
 			</view>
-			<view class="count-item" style="border-right: 0rpx solid #fff;" @click="toPatientList(0,1)">
-				<view class="count-item-number" style="color: #F8BD63;">
-					{{selectIndex==1?doctorInfo.monthPatientCount:doctorInfo.depPatientCountOfMonth}}
+			<view class="flex">
+				<view class="count-item1">
+					<text class="count-item1-tip">本月新增</text>
+					<text class="count-item1-number">31</text>
 				</view>
-				<view class="">
-					本月新增患者
+				
+				<view class="count-item1">
+					<text class="count-item1-tip">本周新增</text>
+					<text class="count-item1-number">31</text>
+				</view>
+				
+				<view class="count-item1">
+					<text class="count-item1-tip">本日新增</text>
+					<text class="count-item1-number">31</text>
 				</view>
 			</view>
+			
 		</view>
 		<view class="detail-box">
 			<view class="detail-title">
@@ -289,7 +298,6 @@
 			}
 		}
 		.count-box{
-			display: flex;
 			background-color: #fff;
 			margin-left: 35rpx;
 			margin-right: 35rpx;
@@ -300,11 +308,13 @@
 			text-align: center;
 			box-shadow: 0px 0px 27rpx 0px rgba(0, 0, 0, 0.08);
 			border-radius: 10rpx;
+			height: 260rpx;
 			.count-item{
-				width: 339rpx;
-				margin-top: 45rpx;
-				margin-bottom: 45rpx;
-				border-right: #E5E5E5 solid 2rpx;
+				padding-top: 20rpx;
+				height: 145rpx;
+				margin-left: 40rpx;
+				margin-right: 40rpx;
+				border-bottom: #E5E5E5 solid 2rpx;
 				.count-item-number{
 					font-size: 50rpx;
 					font-family: PingFang SC;
@@ -313,6 +323,26 @@
 				}
 				
 			}
+			.count-item1{
+				width: 226.6rpx;
+				height: 115rpx;
+				line-height: 85rpx;
+				.count-item1-tip{
+					font-size: 24rpx;
+					font-family: PingFang SC;
+					font-weight: 400;
+					color: #333333;
+				}
+				.count-item1-number{
+					font-size: 38rpx;
+					font-family: PingFang SC;
+					font-weight: 500;
+					color: #F8BD63;
+					margin-left: 10rpx;
+				}
+				
+			}
+			
 			
 		}
 		.detail-box{
