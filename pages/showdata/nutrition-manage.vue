@@ -229,7 +229,7 @@
 			  
 				uni.navigateTo({
 					url:'../doctor/patient-list?isDepartmentIcu='+isDepartmentIcu+'&month='+month+'&surveyResultText='+surveyResultText+
-					'&surveyResult='+surveyResult+'&isBuyText='+isBuyText+'&isBuy='+isBuy+'&queryType='+queryType+'&doctorName='+this.doctorInfo.doctorName
+					'&surveyResult='+surveyResult+'&isBuyText='+isBuyText+'&isBuy='+isBuy+'&queryType='+queryType+'&selfName='+this.doctorInfo.doctorName
 				})
 			},
 			select(index) {
