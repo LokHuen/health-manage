@@ -207,7 +207,7 @@
 					<view class="linfo">{{item1.usage}}</view>
 				</view>
 			</view>
-			<view v-if="!infoData.orderList.length" class="pagenodata">暂无数据</view>
+			<view v-if="!infoData.orderList.length" class="pagenodata">暂无干预记录</view>
 		</view>
 		<!-- <view class="flex ct bottomtip">
 			<image src="../../static/doctor/warn.png" mode="widthFix" class="tips" ></image>干预情况依据本平台数据判断，存在局限性
