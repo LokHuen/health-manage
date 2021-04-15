@@ -142,7 +142,7 @@
 		<uni-popup ref="nutritioninfo2" type="center">
 			<view class="nutritioninfo">
 				<view style="height: 50rpx;"></view>
-				<view class="tips-title">患者营养状况说明</view>
+				<!-- <view class="tips-title">患者营养状况说明</view>
 				<view class="tips-sub">
 					<view class="listother">依据PG-SGA营养状况评估体系，根据评估得分做判断：</view>
 					<view class="listother">0-1分，无营养不良；</view>
@@ -152,7 +152,8 @@
 					<view class="listother">依据SGA营养状况评估体系，根据评分判断等级：</view>
 					<view class="listother">营养良好、轻-中度营养不良、重度营养不良</view>
 		
-				</view>
+				</view> -->
+				<view class="tips-sub">患者营养状况信息，来自于患者进行PG-SGA营养状况评估或SGA营养状况评估结果。</view>
 		
 				<view class="tips-close" @click="$refs.nutritioninfo2.close()">关闭</view>
 				<view style="height: 50rpx;"></view>
