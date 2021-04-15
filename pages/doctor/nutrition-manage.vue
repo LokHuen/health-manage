@@ -112,7 +112,7 @@
 		<uni-popup ref="nutritioninfo1" type="center">
 			<view class="nutritioninfo">
 				<view style="height: 50rpx;"></view>
-				<view class="tips-title">营养干预情况说明</view>
+				<!-- <view class="tips-title">营养干预情况说明</view>
 				<view class="tips-sub">
 					<view class="list">
 						<text class="main">未干预：</text>患者未在本平台上购买过ONS产品。
@@ -127,6 +127,9 @@
 				<view class="flex ct warnbox">
 					<image class="warnimg" src="../../static/icon/remind_icon2.png" mode="widthFix" style=""></image>
 					干预情况依据本平台数据判断，存在局限性
+				</view> -->
+				<view class="tips-sub">
+					患者营养干预信息，来自于患者日常饮食记录和随访专员定期回访，以患者口服营养产品（即ONS类产品）为主，如实记录。
 				</view>
 				<view class="tips-close" @click="$refs.nutritioninfo1.close()">关闭</view>
 				<view style="height: 50rpx;"></view>
@@ -173,6 +176,7 @@
 			}
 		},
 		onLoad(){
+			// app.setCache('uid',127)
 		     this.getManageDepartment();
 			 this.getDoctorInfo();
 		},

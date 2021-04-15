@@ -12,8 +12,15 @@
 					<image class="avator" :src="item.portrait"></image>
 					<view class="flexc">
 						<text class="name">{{item.patientName}}</text>
-						<text class="text">{{item.illness}} {{item.surveyResult}} {{item.isBuy}}</text>
-						<text class="join-time">加入时间：{{item.createTime}}</text>
+						<view class="text">
+							<text>{{item.illness}}</text>
+							<text v-if="item.surveyResultValue&&item.surveyResultValue!='/'">{{item.surveyResultValue}}
+							</text>
+							<text :style="item.surveyResult==4&&item.isBuy!='干预中'?'color: #52A29E;':'color: #333333;'"
+								v-if="item.surveyScore&&item.surveyScore!='/'">{{'（'+item.surveyScore+'）'}}</text>
+							<text v-if="item.surveyResult&&item.surveyResult!='/'">{{item.isBuy}}</text>
+						</view>
+						<text class="join-time" @click="getDepartmentAllIlls">加入时间：{{item.createTime}}</text>
 					</view>
 				</view>
 			</view>
