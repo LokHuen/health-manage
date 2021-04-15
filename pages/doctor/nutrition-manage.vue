@@ -25,9 +25,9 @@
 				</view>
 			</view>
 			<view class="flex">
-				<view class="count-item1">
+				<view class="count-item1" @click="toPatientList(0,1)">
 					<text class="count-item1-tip">本月新增</text>
-					<text class="count-item1-number">31</text>
+					<text class="count-item1-number">{{selectIndex==1?doctorInfo.monthPatientCount:doctorInfo.depPatientCountOfMonth}}</text>
 				</view>
 				
 				<view class="count-item1">
@@ -329,7 +329,7 @@
 				height: 115rpx;
 				line-height: 85rpx;
 				.count-item1-tip{
-					font-size: 24rpx;
+					font-size: 29rpx;
 					font-family: PingFang SC;
 					font-weight: 400;
 					color: #333333;
