@@ -1588,7 +1588,7 @@
 
 				.health-list-item {
 					color: #333333;width:30%;
-					border: 1rpx solid #F8AE58;padding: 18rpx;box-sizing:border-box;
+					border: 2rpx solid #F8AE58;padding: 18rpx;box-sizing:border-box;
 					border-radius: 10rpx;margin:0 20rpx;
 					.bodyimg{width:64rpx;}
 					.top-title {
