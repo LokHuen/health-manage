@@ -1038,6 +1038,9 @@
 			getData() {
 				app.doctorPatientx({id:this.uid}).then(res => {
 					if (res.status == 1) {
+						for (let i = 0; i < res.data.orderList.length; i++) {
+							res.data.orderList[i].createTime = res.data.orderList[i].createTime.split(" ")[0];
+						}
 						res.data.createTime = res.data.createTime?res.data.createTime.split(" ")[0]:"";
 						this.infoData = res.data;
 					}
