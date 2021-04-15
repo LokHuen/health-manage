@@ -2044,7 +2044,7 @@
 	}
 	.echarts {
 		width: 85vw;
-		height: 85vw;
+		height: 85vw;margin: auto;
 	}
 	.centerwh{width:250rpx;display:inline-block;}
 	.centerwh1{display:inline-block;padding-right:16rpx;}
