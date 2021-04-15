@@ -7,18 +7,22 @@
 			</view>
 		</view>
 		<view class="flexc list" v-if="list.length>0">
-			<view class="flexc item" v-for="(item,index) in list" @click="toPatient(item.id)">
+			<view class="flexc item" v-for="(item,index) in list" @click="toPatient(item.id)" :key="index">
 				<view class="flex" style="align-items: flex-start;">
 					<image class="avator" :src="item.portrait"></image>
 					<view class="flexc">
 						<text class="name">{{item.patientName}}</text>
-						<view class="text">
+						<view class="text flex">
 							<text>{{item.illness}}</text>
-							<text v-if="item.surveyResultValue&&item.surveyResultValue!='/'">{{item.surveyResultValue}}
-							</text>
-							<text :style="item.surveyResult==4&&item.isBuy!='干预中'?'color: #52A29E;':'color: #333333;'"
-								v-if="item.surveyScore&&item.surveyScore!='/'">{{'（'+item.surveyScore+'）'}}</text>
-							<text v-if="item.surveyResult&&item.surveyResult!='/'">{{item.isBuy}}</text>
+							<view class="flex"
+								:style="item.surveyResult==4&&item.isBuy!=''&&item.isBuy!='干预中'?'color: #52A29E;':'color: #333333;'">
+								<text
+									v-if="item.surveyResultValue&&item.surveyResultValue!='/'">{{item.surveyResultValue}}
+								</text>
+								<text v-if="item.surveyScore&&item.surveyScore!='/'">{{'（'+item.surveyScore+'）'}}</text>
+								<text v-if="item.surveyResult&&item.surveyResult!='/'">{{item.isBuy}}</text>
+							</view>
+			
 						</view>
 						<text class="join-time" @click="getDepartmentAllIlls">加入时间：{{item.createTime}}</text>
 					</view>
