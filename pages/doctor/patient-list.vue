@@ -9,7 +9,7 @@
 
 		<view class="flexc filter-box">
 			<view class="flexc filter-list" v-if="filter">
-				<view class="flex filter-item" @click="byDoctor(-1)" v-if="params.isDepartmentIcu==1&&isDept==1">
+				<view class="flex filter-item" @click="byDoctor(-1)" v-if="isDept==1">
 					<text>{{paramTexts.bindDoctor?paramTexts.bindDoctor:'按患者所属的医生筛选'}}</text>
 					<image src="../../static/icon/right_arrow.png"></image>
 				</view>
@@ -44,7 +44,7 @@
 					<view class="flexc">
 						<text class="name">{{item.patientName}}</text>
 						<view class="text flex">
-							<text>{{item.illness}}</text>
+							<text style="margin-right: 10rpx;">{{item.illness}}</text>
 							<view class="flex"
 								:style="item.surveyResult==4&&item.isBuy!=''&&item.isBuy!='干预中'?'color: #52A29E;':'color: #333333;'">
 								<text
@@ -55,7 +55,10 @@
 							</view>
 
 						</view>
-						<text class="join-time" @click="getDepartmentAllIlls">加入时间：{{item.createTime}}</text>
+						<text class="join-time" @click="getDepartmentAllIlls"
+							v-if="params.orderBy==2">加入时间：{{item.createTime}}</text>
+						<text class="join-time" @click="getDepartmentAllIlls"
+							v-if="params.orderBy!=2">{{item.lastSurveyTime&&item.lastSurveyTime!='/'?'最近一次评测时间：'+item.lastSurveyTime:'暂无评估记录'}}</text>
 					</view>
 				</view>
 			</view>
@@ -68,6 +71,7 @@
 		<!-- 按医生 -->
 		<uni-popup ref="doctor_pop" type="bottom">
 			<view class="pop-container">
+				<view class="pop-item" @click="byDoctor(-3,'全部医生')" v-if="isDept==1">全部医生</view>
 				<view class="pop-item" @click="byDoctor(uid,selfName)" v-if="selfName">{{selfName}}</view>
 				<view class="pop-item" @click="byDoctor(item.id,item.doctorName)" v-for="(item,index) in doctorList">
 					{{item.doctorName}}
@@ -79,7 +83,7 @@
 		<!-- 按病种 -->
 		<uni-popup ref="ills_pop" type="bottom">
 			<view class="pop-container">
-				<view class="pop-item" @click="byIlls('')">全部</view>
+				<view class="pop-item" @click="byIlls('')">全部病种</view>
 				<view class="pop-item" @click="byIlls(item.illness)" v-for="(item,index) in ills">{{item.illness}}
 				</view>
 				<view class="pop-item" @click="byIlls(-2)" style="border: none;color: #52A29E;">取消</view>
@@ -109,8 +113,8 @@
 		<!-- 按时间 -->
 		<uni-popup ref="time_pop" type="bottom">
 			<view class="pop-container">
+				<view class="pop-item" @click="byTime(2,'按患者加入的时间排序')">按患者加入的时间排序</view>
 				<view class="pop-item" @click="byTime(1,'按患者最近一次测评时间排序')">按患者最近一次测评时间排序</view>
-				<view class="pop-item" @click="byTime(2,'按患者和医生绑定的时间排序')">按患者和医生绑定的时间排序</view>
 				<view class="pop-item" @click="byTime(3,'按营养评测分值由高到底排序')">按营养评测分值由高到底排序</view>
 				<view class="pop-item" @click="byTime(-2)" style="border: none;color: #52A29E;">取消</view>
 			</view>
@@ -179,7 +183,7 @@
 				doctorList: [],
 				ills: [],
 				nuritions: [{
-						text: '全部',
+						text: '全部营养状况',
 						value: ''
 					}, {
 						text: '重度营养不良',
@@ -197,7 +201,7 @@
 					},
 				],
 				intervenes: [{
-						text: '全部',
+						text: '全部干预情况',
 						value: ''
 					}, {
 						text: '未干预',
@@ -215,7 +219,7 @@
 					pageNo: 1,
 					bindDoctor: uid,
 					isDepartmentIcu: '',
-					orderBy: 1,
+					orderBy: 2,
 					surveyResult: '',
 					isBuy: '',
 					illness: '',
@@ -242,8 +246,10 @@
 		methods: {
 			getList(pageNo = 1) {
 				this.params.pageNo = pageNo
-				let params = {...this.params};
-				
+				let params = {
+					...this.params
+				};
+
 				if (this.isDept == 0) {
 					params.isDepartmentIcu = ''
 				}
@@ -272,7 +278,7 @@
 			},
 			getDepartmentAllIlls() {
 				app.getDepartmentAllIlls({
-					isDept: this.params.isDepartmentIcu == 1 ? 1 : 0,
+					isDept: this.isDept == 1 ? 1 : 0,
 					doctorId: this.params.bindDoctor
 				}).then((res) => {
 					this.ills = res.data
@@ -290,6 +296,15 @@
 			},
 			byDoctor(id, doctorName) {
 				switch (id) {
+					//-3表科室
+					case -3:
+						this.params.bindDoctor = this.uid
+						this.paramTexts.bindDoctor = doctorName
+						this.params.isDepartmentIcu = 1
+						this.params.illness = ''
+						this.byDoctor(-2)
+						this.getList(1)
+						break;
 					case -2:
 						this.$refs.doctor_pop.close()
 						break;
@@ -299,6 +314,7 @@
 					default:
 						this.params.bindDoctor = id
 						this.paramTexts.bindDoctor = doctorName
+						this.params.isDepartmentIcu = 0
 						this.params.illness = ''
 						this.byDoctor(-2)
 						this.getList(1)
@@ -319,7 +335,7 @@
 						break;
 					default:
 						this.params.illness = illness
-						this.paramTexts.illness = illness ? illness : '全部'
+						this.paramTexts.illness = illness ? illness : '全部病种'
 						this.byIlls(-2)
 						this.getList(1)
 						break;
@@ -357,7 +373,7 @@
 					default:
 						this.byIntervene(-2)
 						this.params.isBuy = status
-						this.paramTexts.isBuy = text ? text : '全部'
+						this.paramTexts.isBuy = text ? text : '全部干预情况'
 						this.getList(1)
 						break;
 				}
