@@ -204,7 +204,7 @@
 				<view class="ltime">{{item.createTime}}</view>
 				<view v-for="(item1,index1) in item.orderDetailList" :key ="index1">
 					<view class="lname">{{item1.shortName}}（{{item1.quantity}}盒）</view>
-					<view class="linfo">{{item1.usage}}</view>
+					<view class="linfo">{{item1.usages}}</view>
 				</view>
 			</view>
 			<view v-if="!infoData.orderList.length" class="pagenodata">暂无干预记录</view>
