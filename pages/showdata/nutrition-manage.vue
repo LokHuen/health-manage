@@ -187,6 +187,7 @@
 				//queryType;// 1本周  0本日
 			  let queryType = ''
 			  let isDepartmentIcu = 1;
+			  let isDept = this.selectIndex==1?0:1;
 			  let month = '';
 			  let surveyResultText ='';
 			  let surveyResult ='';
@@ -229,7 +230,8 @@
 			  
 				uni.navigateTo({
 					url:'../doctor/patient-list?isDepartmentIcu='+isDepartmentIcu+'&month='+month+'&surveyResultText='+surveyResultText+
-					'&surveyResult='+surveyResult+'&isBuyText='+isBuyText+'&isBuy='+isBuy+'&queryType='+queryType+'&selfName='+this.doctorInfo.doctorName
+					'&surveyResult='+surveyResult+'&isBuyText='+isBuyText+'&isBuy='+isBuy+'&queryType='+queryType+'&selfName='+this.doctorInfo.doctorName+
+					'&isDept='+isDept
 				})
 			},
 			select(index) {
