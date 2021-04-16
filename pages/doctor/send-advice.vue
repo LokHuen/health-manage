@@ -15,16 +15,22 @@
 		data() {
 			return {
 			   advice:'',
-			   uid:''
+			   uid:'',
 			  // adviceId:'',
+			   capable:true
 			   
 			}
 		},
 		onLoad(props){
-		    this.uid = props.uid;
+		    this.uid = props.id;
+			if(props.id != props.doctor) this.capable = false;
 		},
 		methods: {
 			writeAdvice(){
+				if(!this.capable){
+					app.tip('您不是该患者所属医生');
+					return;
+				}
 				if(!this.advice){
 					app.tip('请填写建议');
 					return;
