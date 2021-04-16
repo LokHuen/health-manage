@@ -23,7 +23,7 @@
 		},
 		onLoad(props){
 		    this.uid = props.id;
-			if(props.id != props.doctor) this.capable = false;
+			if(localStorage.getItem("uid") !=props.doctor) this.capable = false;
 		},
 		methods: {
 			writeAdvice(){
