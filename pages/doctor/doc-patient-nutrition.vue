@@ -368,6 +368,7 @@
 				    {{item.doctorName+item.technicalTitle}}
 					<image src="../../static/icon/chose_icon1.png" mode="aspectFill" class="doctorSelect"  v-show="item.select==1"></image>
 					</view>
+					<view v-if="!doctorList.length" class="pagenodata">暂无同科室医生</view>
 				</scroll-view>
 				<view class="sureBtn" @click="sureTransfer">确定</view>
 				<view style="height: 60rpx;"></view>
@@ -948,11 +949,11 @@
 				// 	}
 					
 				// });
-				if(!this.isMy){
-					app.tip("您不是患者所属医生");return;
-				}
+				// if(!this.isMy){
+				// 	app.tip("您不是患者所属医生");return;
+				// }
 				uni.navigateTo({
-					url:'send-advice?uid='+this.uid
+					url:'send-advice?id='+this.uid+'&doctor=' + this.infoData.bindDoctor
 				})
 			},
 			getTest() {
