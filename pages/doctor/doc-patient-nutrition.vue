@@ -948,11 +948,11 @@
 				// 	}
 					
 				// });
-				if(!this.isMy){
-					app.tip("您不是患者所属医生");return;
-				}
+				// if(!this.isMy){
+				// 	app.tip("您不是患者所属医生");return;
+				// }
 				uni.navigateTo({
-					url:'send-advice?uid='+this.uid
+					url:'send-advice?id='+this.uid+'&doctor=' + this.infoData.bindDoctor
 				})
 			},
 			getTest() {
