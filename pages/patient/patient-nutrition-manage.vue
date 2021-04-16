@@ -792,7 +792,7 @@
 						if (res.data.userType == 2) {
 							//如果是医生，就跳过去医生的营养管理页面
 							uni.redirectTo({
-								url: '../doctor/doctor-nutrition-manage'
+								url: '../doctor/nutrition-manage'
 							});
 						} else {
 							if (res.data.perfect == true) {
