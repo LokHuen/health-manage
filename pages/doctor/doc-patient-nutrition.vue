@@ -2,10 +2,11 @@
 	<!-- 患者营养管理界面 -->
 	<view class="container">
 		<view style="position: fixed;top:0;left:0;bottom:0;right:0;z-index:999;background:#fff;" v-show="!infoData.patientName">
-		<view style="text-align: center; margin-top: 200rpx;">
+			<image style="margin-top: 110rpx;margin-left: 290rpx;width: 170rpx;height: 146rpx; " src="../../static/kong.png" mode="aspectFill"></image>
+		<view  style="text-align: center; margin-top: 19rpx;font-size: 32rpx;color: #999999;">
 			用户未完善资料
 		</view>
-		<view @click="beginTest" style="margin-top: 100rpx; height: 90rpx;line-height: 90rpx;border-radius: 45rpx;background-color: #59A29F;color: #fff;margin-left: 60rpx;margin-right: 60rpx;text-align: center;">
+		<view @click="beginTest" style="font-weight: 400;margin-top: 100rpx; height: 90rpx;line-height: 90rpx;border-radius: 45rpx;background-color: #59A29F;color: #fff;margin-left: 60rpx;margin-right: 60rpx;text-align: center;font-family: PingFang SC;">
 			给患者发送完善资料提醒消息
 		</view>
 		

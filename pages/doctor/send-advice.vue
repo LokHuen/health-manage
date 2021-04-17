@@ -3,7 +3,7 @@
 	<view class="container">
 		<view class="condition-box">
 			<view :class="selectIndex==0?'chose':'unchose'" @click="select(0)">选模版发送</view>
-			<view style="width: 30rpx;"></view>
+			<view style="width: 31rpx;"></view>
 			<view :class="selectIndex==1?'chose':'unchose'" @click="select(1)">写医嘱</view>
 		</view>
 		<textarea v-model="advice" placeholder="请填写医嘱内容" class="textarea" :placeholder-class="placeholder" v-if="selectIndex==1"/>
@@ -29,7 +29,8 @@
 						模板内容：
 					</view>
 					<view class="content">
-						{{item.templateName}}
+						<!-- {{item.templateName}} -->
+						你上课和富士康合适的方式都会发生手机付款后是否会尽快收到回复及时的回复就是的粉红色啥都好说
 					</view>
 				</view>
 				<view class="button-box">
@@ -68,14 +69,15 @@
 			<view class="white-background1">
 				<view class="content-title">
 					将以下内容发送给患者：
-					<image class="content-close" src="../../static/icon/close_new.png" mode="aspectFill" @click="closeContentPop"></image>
+					<image class="content-close" src="../../static/icon_close.png" mode="aspectFill" @click="closeContentPop"></image>
 				</view>
 				<view class="content-detail">
 					{{template.templateName}}
 				</view>
 				<view class="send-btn" @click="send">确定发送</view>
-				<view style="height: 40rpx;"></view>
+				<view style="height: 60rpx;"></view>
 			</view>
+			
 		</uni-popup>
 		
 		<uni-popup ref="sucessPop" type="center">
@@ -211,17 +213,21 @@
 	.container{
 		.condition-box{
 			display: flex;
-			height: 100rpx;
+			height: 94rpx;
 			line-height: 100rpx;
 			padding-left: 30rpx;
 			text-align: center;
 			.chose{
-				color: #333333;
 				font-size: 30rpx;
+				font-family: PingFang SC;
+				font-weight: 500;
+				color: #333333;
 			}
 			.unchose{
+				font-size: 28rpx;
+				font-family: PingFang SC;
+				font-weight: 400;
 				color: #999999;
-				font-size: 24rpx;
 			}
 		}
 	    .textarea{
@@ -268,23 +274,24 @@
 			margin-top: 30rpx;
 		}
 		.condition{
-			height: 80rpx;
-			line-height: 80rpx;
+			height: 84rpx;
+			line-height: 84rpx;
 			border-radius: 10rpx;
-			border: 2rpx solid #999999;
 			background-color: #fff;
 			color: #333333;
-			padding-left: 15rpx;
+			padding-left: 40rpx;
 			margin-left: 30rpx;
 			margin-right: 30rpx;
-			font-size: 25rpx;
+			font-size: 26rpx;
+			font-family: PingFang SC;
+			font-weight: 400;
 			position: relative;
 			.img{
 				position: absolute;
 				width: 20rpx;
 				height: 10rpx;
-				right: 20rpx;
-				top: 32rpx;
+				right: 30rpx;
+				top: 35rpx;
 			}
 		}
 		.list-box{
@@ -300,47 +307,52 @@
 				background-color: #fff;
 				border: 10rpx;
 				margin-top: 20rpx;
-				font-size: 25rpx;
 				margin-left: 30rpx;
 				margin-right: 30rpx;
 				color: #333333;
+				font-size: 28rpx;
+				font-family: PingFang SC;
+				font-weight: 400;
 				.type{
-					padding-left: 20rpx;
-					padding-top: 20rpx;
+					padding-left: 40rpx;
+					padding-top: 50rpx;
 				}
 				.content-box{
 					padding-top: 20rpx;
 					display: flex;
-					line-height: 40rpx;
+					line-height: 50rpx;
 					.content-tip{
-						padding-left: 20rpx;
+						padding-left: 40rpx;
 					}
 					.content{
 						flex: 1;
-						padding-right: 30rpx;
+						padding-right: 40rpx;
 					}
 				}
 				
 				.button-box{
 					height: 60rpx;
 					line-height: 60rpx;
-					margin-top: 50rpx;
+					margin-top: 38rpx;
 					display: flex;
-					color: #333333;
-					font-size: 25rpx;
-					padding-left: 132rpx;
+					padding-left: 180rpx;
 					text-align: center;
-					padding-bottom: 50rpx;
+					padding-bottom: 44rpx;
+					font-size: 28rpx;
+					font-family: PingFang SC;
+					font-weight: 400;
+					color: #52A29E;
+					
 					.left-btn{
-						width: 150rpx;
-						border-radius: 10rpx;
-						border: 2rpx solid #999999;
-					}
-					.right-btn{
 						width: 200rpx;
 						border-radius: 10rpx;
-						border: 2rpx solid #999999;
-						margin-left: 30rpx;
+						border: 1rpx solid #52A29E;
+					}
+					.right-btn{
+						width: 220rpx;
+						border-radius: 10rpx;
+						border: 1rpx solid #52A29E;
+						margin-left: 20rpx;
 					}
 				}
 			}
@@ -402,38 +414,42 @@
 		}
 		
 		.content-title{
-			color: #007AFF;
-			font-size: 24rpx;
+			font-size: 28rpx;
+			font-family: PingFang SC;
+			font-weight: 400;
+			color: #52A29E;
 			height: 70rpx;
 			line-height: 100rpx;
-			padding-left: 30rpx;
+			padding-left: 59rpx;
 			position: relative;
 			.content-close{
 				position: absolute;
-				right: 80rpx;
-				top: 35rpx;
-				width: 35rpx;
-				height: 35rpx;
+				right: 60rpx;
+				top: 38rpx;
+				width: 26rpx;
+				height: 26rpx;
 			}
 		}
 		.content-detail{
-			padding-top: 50rpx;
-			padding-left: 30rpx;
-			padding-right: 30rpx;
-			font-size: 28rpx;
-			color: #666666;
-			line-height: 45rpx;
+			padding-top: 30rpx;
+			padding-left: 60rpx;
+			padding-right: 60rpx;
+			font-size: 30rpx;
+			font-family: PingFang SC;
+			font-weight: 400;
+			color: #333333;
+			line-height: 56rpx;
 		}
 		
 		.send-btn{
-			height: 90rpx;
-			line-height: 90rpx;
+			height: 80rpx;
+			line-height: 80rpx;
 			background: #52A29E;
-			border-radius: 45rpx;
-			margin-left: 60rpx;
-			margin-right: 60rpx;
+			border-radius: 40rpx;
+			margin-left: 185rpx;
+			margin-right: 185rpx;
 			margin-top: 40rpx;
-			font-size: 30rpx;
+			font-size: 34rpx;
 			font-family: PingFang SC;
 			font-weight: 400;
 			color: #FFFFFF;
