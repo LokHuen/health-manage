@@ -166,6 +166,10 @@
 				app.tip('复制成功')
 			},
 			send(){
+				if(!this.capable){
+					app.tip('您不是该患者所属医生');
+					return;
+				}
 				this.closeContentPop();
 				app.saveAdvice({advice:this.template.templateName,patientId:this.uid,creatorId:app.getCache('uid')}).then(res =>{
 					if(res.status ==1){
@@ -176,6 +180,9 @@
 			},
 			finish(){
 				this.$refs.sucessPop.close();
+				uni.navigateBack({
+					
+				});
 			},
 			select(index){
 				if(this.selectIndex != index){
