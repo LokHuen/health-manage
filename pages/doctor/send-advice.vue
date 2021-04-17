@@ -103,7 +103,7 @@
 			   capable:true,
 			   selectIndex:0,
 			   modalList:[],
-			   screenList:[],
+			   screenList:[{typeName:'全部'}],
 			   templateType:'',//选中的条件
 			   template:''//当前的模版
 			}
@@ -124,7 +124,9 @@
 			templateTypeList(){
 				app.templateTypeList().then(res =>{
 					if(res.status == 1){
-						this.screenList = res.data;
+						for (var i = 0; i < res.data.length; i++) {
+						this.screenList.push(res.data[i]);	
+						}
 					}
 				});
 			},
