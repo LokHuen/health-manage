@@ -16,7 +16,7 @@
 			<view class="line" ></view>
 		</view>
 		
-		 <view style="height: 40rpx;background-color: #F5F6F6;"></view> 
+		 <view style="height: 30rpx;background-color: #F5F6F6;"></view> 
 		<view class="item-list" v-for="(item,index) in list2" :key="index" v-if="index==2 ||(index>=0 && index<=1 && data.showAccount==1)" @click="clickItem(1,index)">
 			<view class="left-name">{{item}}</view>
 			<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
