@@ -13,27 +13,27 @@
 		</view>
 		
 		<view class="condition" v-if="selectIndex==0" @click="screen">
-			按分类筛选模版
+			{{templateType.typeName?templateType.typeName:'按分类筛选模版'}}
 			<image class="img" src="../../static/icon/icon_arrow_open.png" mode="aspectFill"></image>
 		</view>
 		<view class="list-box" v-if="selectIndex==0">
 			<view class="list-item" v-for="(item,index) in modalList" :key="index">
 				<view class="type">
-					模板类型：患者营养严重不良
+					模板类型：{{item.typeName}}
 				</view>
 				<view class="content-box">
 					<view class="content-tip">
 						模板内容：
 					</view>
 					<view class="content">
-						定时测评，可考虑补充营养品。定时测评，可考虑补充营养品。定时测评，可考虑补充营养品。
+						{{item.templateName}}
 					</view>
 				</view>
 				<view class="button-box">
-					<view class="left-btn" @click="sendContent">
+					<view class="left-btn" @click="sendContent(item)">
 						发送此内容
 					</view>
-					<view class="right-btn" @click="copyContent">
+					<view class="right-btn" @click="copyContent(item)">
 						复制模板内容
 					</view>
 				</view>
@@ -50,13 +50,13 @@
 					<view class="title"></view>
 				</view>
 				<view v-for="(item,index) in screenList" :key="index">
-					<view class="itemList" @click="selectIndex(index)">
-						<view class="itemContent">{{'第'+item+'筛选条件'}}</view>
+					<view class="itemList" @click="selectType(item)">
+						<view class="itemContent">{{item.typeName}}</view>
 					</view>
 					<view class="line" v-show="(index!=screenList.length-1)"></view>
 				</view>
 		
-				<view class="white-bottom"></view>
+				<!-- <view class="white-bottom"></view> -->
 			</view>
 		</uni-popup>
 		
@@ -68,7 +68,7 @@
 					<image class="content-close" src="../../static/icon/close_new.png" mode="aspectFill" @click="closeContentPop"></image>
 				</view>
 				<view class="content-detail">
-					定时测评，可考虑补充营养品。定时测评，可考虑补充营养品。定时测评，可考虑补充营养品。定时测评，可考虑补充营养品。定时测评，可考虑补充营养品。定时测评，可考虑补充营养品。定时测评，可考虑补充营养品。定时测评，可考虑补充营养品。定时测评，可考虑补充营养品。定时测评，可考虑补充营养品。定时测评，可考虑补充营养品。定时测评，可考虑补充营养品。
+					{{template.templateName}}
 				</view>
 				<view class="send-btn" @click="send">确定发送</view>
 				<view style="height: 40rpx;"></view>
@@ -99,33 +99,67 @@
 			  // adviceId:'',
 			   capable:true,
 			   selectIndex:0,
-			   modalList:[1,2,3,4,5],
-			   screenList:[1,2,3,4,5]
+			   modalList:[],
+			   screenList:[],
+			   templateType:'',//选中的条件
+			   template:''//当前的模版
 			}
 		},
 		onLoad(props){
 		    this.uid = props.id;
 			if(localStorage.getItem("uid") !=props.doctor) this.capable = false;
+			this.templateTypeList();
+			this.templateList();
 		},
 		methods: {
+			selectType(item){
+				this.templateType = item;
+				this.closeScreenPopup();
+				this.templateList();
+			},
+			//医嘱模板分类列表
+			templateTypeList(){
+				app.templateTypeList().then(res =>{
+					if(res.status == 1){
+						this.screenList = res.data;
+					}
+				});
+			},
+			//
+			templateList(){
+				app.templateList({
+					typeId:this.templateType.id
+				}).then(res =>{
+					if(res.status == 1){
+						this.modalList = res.data;
+					}
+				});
+			},
 			closeScreenPopup(){
 				this.$refs.screenPopup.close();
 			},
 			screen(){
 				this.$refs.screenPopup.open();
 			},
-			sendContent(){
+			sendContent(item){
+				this.template = item;
 				this.$refs.contentPop.open();
 			},
 			closeContentPop(){
 				this.$refs.contentPop.close();
 			},
-			copyContent(){
+			copyContent(item){
+				this.template = item;
 				app.tip('复制成功')
 			},
 			send(){
 				this.closeContentPop();
-				this.$refs.sucessPop.open();
+				app.saveAdvice({advice:this.template.templateName,patientId:this.uid,creatorId:app.getCache('uid')}).then(res =>{
+					if(res.status ==1){
+						this.$refs.sucessPop.open();
+					}
+				});
+				
 			},
 			finish(){
 				this.$refs.sucessPop.close();
@@ -146,10 +180,11 @@
 				}
 				app.saveAdvice({advice:this.advice,patientId:this.uid,creatorId:app.getCache('uid')}).then(res =>{
 					if(res.status ==1){
-						app.tip('发送成功');
-					    uni.navigateBack({
+						// app.tip('发送成功');
+					 //    uni.navigateBack({
 					    	
-					    });
+					 //    });
+					 this.$refs.sucessPop.open();
 					}
 				});
 			},
@@ -295,8 +330,8 @@
 		
 		
 		.white-background {
-			border-radius: 20rpx;
-			height: 660rpx;
+			border-radius: 20rpx 20rpx 0rpx 0rpx;
+			//height: 660rpx;
 			background-color: #FFFFFF;
 		}
 		

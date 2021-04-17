@@ -3,7 +3,7 @@
 	<view class="container">
 		<view class="item-box">
 			接收患者评估结果
-			<switch :checked="true" @change="switch1Change" color="#46918D" class="switch"/>
+			<switch :checked="isRcvSurveyResult==1" @change="switch1Change" color="#46918D" class="switch"/>
 		</view>
 		<view class="tip">
 			开启此功能，患者做了评估后，您会收到公众号推送的消息通知，能够及时知道患者每次评估的结果。
@@ -11,7 +11,7 @@
 		
 		<view class="item-box">
 			接收重度营养不良患者提醒消息
-			<switch :checked="true" @change="switch2Change" color="#46918D" class="switch"/>
+			<switch :checked="isRcvSevereMalnutrition==1" @change="switch2Change" color="#46918D" class="switch"/>
 		</view>
 		<view class="tip">
 			开启此功能，当前一天有重度营养不良的患者时，您会收到提醒消息。
@@ -24,14 +24,34 @@
 	export default {
 		data() {
 			return {
-			   
+			   isRcvSurveyResult:'',
+			   isRcvSevereMalnutrition:''
 			}
 		},
 		onLoad(props){
-		    
+		    this.isRcvSurveyResult = props.isRcvSurveyResult;
+			 this.isRcvSevereMalnutrition = props.isRcvSevereMalnutrition;
 		},
 		methods: {
-			
+			switch1Change(){
+				let isRcvSurveyResult = this.isRcvSurveyResult==0?1:0;
+				app.updateDoctorName({isRcvSurveyResult:isRcvSurveyResult}).then(res =>{
+					if(res.status == 1){
+						app.tip('设置成功');
+						this.isRcvSurveyResult = isRcvSurveyResult;
+					}
+				})
+			},
+			switch2Change(){
+				
+				let isRcvSevereMalnutrition = this.isRcvSevereMalnutrition==0?1:0;
+				app.updateDoctorName({isRcvSevereMalnutrition:isRcvSevereMalnutrition}).then(res =>{
+					if(res.status == 1){
+						app.tip('设置成功');
+						this.isRcvSevereMalnutrition = isRcvSevereMalnutrition;
+					}
+				})
+			},
 		}
 	}
 </script>

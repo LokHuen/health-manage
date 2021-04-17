@@ -56,7 +56,7 @@
 					this.judgeDoctorAuthenticationStatus();
 				}else{
 					uni.navigateTo({
-						url:'message-remind'
+						url:'message-remind?isRcvSurveyResult='+this.data.isRcvSurveyResult+'&isRcvSevereMalnutrition='+this.data.isRcvSevereMalnutrition
 					})
 				}
 			},
