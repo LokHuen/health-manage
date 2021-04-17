@@ -6,7 +6,7 @@
 			<image src="../../static/tuichu.png" mode="aspectFill" class="tuichu"></image>
 		</view>
 		<image src="../../static/warnshow.jpg" mode="widthFix" class="banner" @click="towarnpage"></image>
-		<view class="condition-box flex">
+		<view class="condition-box flex" v-if="showCondition">
 			<view :class="selectIndex==1?'chose':'unchose'" @click="select(1)">
 				我的患者
 				<view :class="selectIndex==1?'bottomline':''"></view>
@@ -17,6 +17,8 @@
 				<view :class="selectIndex==2?'bottomline':''"></view>
 			</view>
 		</view>
+		
+		<view style="height: 20rpx;" v-if="!showCondition"></view>
 		<view class="count-box">
 			<view class="count-item">
 				<view class="count-item-number" @click="toPatientList(0,0)">
@@ -175,10 +177,12 @@
 		data() {
 			return {
 				selectIndex: 1,
-				doctorInfo:''
+				doctorInfo:'',
+				showCondition:false,
 			}
 		},
 		onLoad() {
+			this.getManageDepartment();
 			this.getDoctorInfo();
 		},
 		methods: {
@@ -190,7 +194,8 @@
 				// isBuy：1，2，3
 				//queryType;// 1本周  0本日
 			  let queryType = ''
-			  let isDepartmentIcu = 1;
+			  //let isDepartmentIcu = 1;
+			  let isDepartmentIcu =this.showCondition?1:'';
 			  let isDept = this.selectIndex==1?0:1;
 			  let month = '';
 			  let surveyResultText ='';
@@ -235,7 +240,7 @@
 				uni.navigateTo({
 					url:'../doctor/patient-list?isDepartmentIcu='+isDepartmentIcu+'&month='+month+'&surveyResultText='+surveyResultText+
 					'&surveyResult='+surveyResult+'&isBuyText='+isBuyText+'&isBuy='+isBuy+'&queryType='+queryType+'&selfName='+this.doctorInfo.doctorName+
-					'&isDept='+isDept
+					'&isDept='+isDept+'&showId='+this.doctorInfo.doctorId
 				})
 			},
 			select(index) {
@@ -253,6 +258,15 @@
 						this.doctorInfo = res.data;
 					}
 				})
+			},
+			getManageDepartment(){
+				app.allDoctorList().then(res =>{
+					if(res.status == 1){
+						//数组元素有1个的时候，查到的是自己本身，就是普通的医生
+						//大于1的时候，表示主任
+						if(res.data) this.showCondition = res.data.resultList.length>1;
+					}
+				});
 			},
 			towarnpage(){
 				uni.navigateTo({

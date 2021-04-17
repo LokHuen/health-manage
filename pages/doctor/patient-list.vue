@@ -70,24 +70,24 @@
 
 		<!-- 按医生 -->
 		<uni-popup ref="doctor_pop" type="bottom">
-			<view class="pop-container">
+			<scroll-view class="pop-container" style="max-height: 750rpx;" scroll-y>
 				<view class="pop-item" @click="byDoctor(-3,'全部医生')" v-if="isDept==1">全部医生</view>
 				<view class="pop-item" @click="byDoctor(uid,selfName)" v-if="selfName">{{selfName}}</view>
 				<view class="pop-item" @click="byDoctor(item.id,item.doctorName)" v-for="(item,index) in doctorList">
 					{{item.doctorName}}
 				</view>
 				<view class="pop-item" @click="byDoctor(-2)" style="border: none;color: #52A29E;">取消</view>
-			</view>
+			</scroll-view>
 		</uni-popup>
 
 		<!-- 按病种 -->
 		<uni-popup ref="ills_pop" type="bottom">
-			<view class="pop-container">
+			<scroll-view class="pop-container" style="max-height: 750rpx;" scroll-y>
 				<view class="pop-item" @click="byIlls('')">全部病种</view>
 				<view class="pop-item" @click="byIlls(item.illness)" v-for="(item,index) in ills">{{item.illness}}
 				</view>
 				<view class="pop-item" @click="byIlls(-2)" style="border: none;color: #52A29E;">取消</view>
-			</view>
+			</scroll-view>
 		</uni-popup>
 
 		<!-- 按营养状况 -->
@@ -115,7 +115,7 @@
 			<view class="pop-container">
 				<view class="pop-item" @click="byTime(2,'按患者加入的时间排序')">按患者加入的时间排序</view>
 				<view class="pop-item" @click="byTime(1,'按患者最近一次测评时间排序')">按患者最近一次测评时间排序</view>
-				<view class="pop-item" @click="byTime(3,'按营养评测分值由高到底排序')">按营养评测分值由高到底排序</view>
+				<view class="pop-item" @click="byTime(3,'按营养评测分值由高到低排序')">按营养评测分值由高到低排序</view>
 				<view class="pop-item" @click="byTime(-2)" style="border: none;color: #52A29E;">取消</view>
 			</view>
 		</uni-popup>
@@ -128,6 +128,9 @@
 		onLoad(props) {
 			if (props.selfName) {
 				this.selfName = props.selfName
+			}
+			if (props.showId) {
+				this.showId = props.showId
 			}
 			if (props.isDepartmentIcu) {
 				this.params.isDepartmentIcu = props.isDepartmentIcu
@@ -176,6 +179,7 @@
 			let uid = app.getCache('uid')
 			return {
 				uid,
+				showId: '',
 				selfName: '',
 				isDept: 0,
 				filter: false,
@@ -253,6 +257,9 @@
 				if (this.isDept == 0) {
 					params.isDepartmentIcu = ''
 				}
+				if (this.showId) {
+					params.bindDoctor = this.showId
+				}
 				app.getPatientList(params).then((res) => {
 					this.info = res.data
 					if (this.params.pageNo == 1) {
@@ -266,7 +273,7 @@
 			},
 			getManageDepartment() {
 				app.getManageDepartment({
-					doctorId: this.uid
+					doctorId: this.showId ? this.showId : this.uid
 				}).then((res) => {
 					this.doctorList = res.data
 				})
@@ -279,7 +286,7 @@
 			getDepartmentAllIlls() {
 				app.getDepartmentAllIlls({
 					isDept: this.isDept == 1 ? 1 : 0,
-					doctorId: this.params.bindDoctor
+					doctorId: this.showId ? this.showId : this.params.bindDoctor
 				}).then((res) => {
 					this.ills = res.data
 				})

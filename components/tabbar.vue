@@ -1,10 +1,18 @@
 <template>
 	<view>
 		<view style="height:140rpx;"></view>
-		<view class="flex tabbar">
-			<view class="tabitem" v-for="(item,index) in list" :key="index" v-if="hide!=index" v-show="(index==1&&showCondition)||index!=1" @click="tootherpage(item)">
-				<image :src="now==index?item.selected:item.img" class="img" mode="aspectFit"></image>
-				<view :class="'text '+(now==index?'on':'')">{{item.name}}</view>
+		<view class="flex tabbar" v-if="real||(showCondition&&!real)">
+			<view class="tabitem" v-if="hide!=0" @click="tootherpage(list[0])">
+				<image :src="now==0?list[0].selected:list[0].img" class="img" mode="aspectFit"></image>
+				<view :class="'text '+(now==0?'on':'')">{{list[0].name}}</view>
+			</view>
+			<view class="tabitem" v-if="(hide!=1)&&showCondition" @click="tootherpage(list[1])">
+				<image :src="now==1?list[1].selected:list[1].img" class="img" mode="aspectFit"></image>
+				<view :class="'text '+(now==1?'on':'')">{{list[1].name}}</view>
+			</view>
+			<view class="tabitem" v-if="hide!=2" @click="tootherpage(list[2])">
+				<image :src="now==2?list[2].selected:list[2].img" class="img" mode="aspectFit"></image>
+				<view :class="'text '+(now==2?'on':'')">{{list[2].name}}</view>
 			</view>
 		</view>
 	</view>
@@ -52,15 +60,18 @@
 			};
 		},
 		created(){
-			if(!this.real) this.showCondition = true;
 			if(localStorage.getItem("showCondition")==1) this.showCondition = true;
 			app.allDoctorList().then(res =>{
 				if(res.status == 1){
 					//数组元素有1个的时候，查到的是自己本身，就是普通的医生
 					//大于1的时候，表示主任
-					if(this.real) this.showCondition = res.data.resultList.length>1;
-					if(this.real&&this.showCondition) localStorage.setItem("showCondition",1);
-					if(this.real&&!this.showCondition) localStorage.setItem("showCondition",0);
+					if(!res.data){
+						this.showCondition = false;
+					}else{
+						this.showCondition = res.data.resultList.length>1;
+						localStorage.setItem("showCondition",this.showCondition==true?1:0);
+					}
+					
 				}
 			});
 		},

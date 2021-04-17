@@ -462,7 +462,14 @@ var api = {
 	getDepartmentAllIlls: (data) => {
 		return rq("/wx/doctor/getDepartmentAllIlls", data, "GET");
 	},
-	
+	//医嘱模板分类列表
+	templateTypeList: (data) => {
+		return rq("/wx/patient/templateTypeList", data, "GET");
+	},
+	//医嘱模板列表
+	templateList: (data) => {
+		return rq("/wx/patient/templateList", data, "GET");
+	},
 	
 }
 
