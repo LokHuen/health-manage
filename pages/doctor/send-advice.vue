@@ -17,6 +17,9 @@
 			<image class="img" src="../../static/icon/icon_arrow_open.png" mode="aspectFill"></image>
 		</view>
 		<view class="list-box" v-if="selectIndex==0">
+			<view class="no-data-tip" v-if="modalList.length==0">
+			    暂无数据
+			</view>
 			<view class="list-item" v-for="(item,index) in modalList" :key="index">
 				<view class="type">
 					模板类型：{{item.typeName}}
@@ -150,6 +153,13 @@
 			},
 			copyContent(item){
 				this.template = item;
+				
+				let oInput = document.createElement('input');
+				oInput.value = item.templateName;
+				document.body.appendChild(oInput);
+				oInput.select(); // 选择对象;
+				document.execCommand("Copy"); // 执行浏览器复制命令
+				oInput.remove();
 				app.tip('复制成功')
 			},
 			send(){
@@ -276,6 +286,12 @@
 			}
 		}
 		.list-box{
+			.no-data-tip{
+				font-size: 30rpx;
+				text-align: center;
+				margin-top: 100rpx;
+				color: #333333;
+			}
 			margin-top: 30rpx;
 			padding-bottom: 50rpx;
 			.list-item{
