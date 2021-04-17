@@ -29,8 +29,7 @@
 						模板内容：
 					</view>
 					<view class="content">
-						<!-- {{item.templateName}} -->
-						你上课和富士康合适的方式都会发生手机付款后是否会尽快收到回复及时的回复就是的粉红色啥都好说
+						{{item.templateName}}
 					</view>
 				</view>
 				<view class="button-box">
