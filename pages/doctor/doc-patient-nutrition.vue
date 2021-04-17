@@ -1,7 +1,12 @@
 <template>
 	<!-- 患者营养管理界面 -->
 	<view class="container">
-		<view style="position: fixed;top:0;left:0;bottom:0;right:0;z-index:999;background:#fff;" v-show="!infoData.patientName">
+		
+		<view style="position: fixed;top:0;left:0;bottom:0;right:0;z-index:1000;background:#fff;" v-show="loadInfoData==0">
+		
+		</view>
+		
+		<view style="position: fixed;top:0;left:0;bottom:0;right:0;z-index:999;background:#fff;" v-show="(!infoData.patientName) && loadInfoData==1">
 			<image style="margin-top: 110rpx;margin-left: 290rpx;width: 170rpx;height: 146rpx; " src="../../static/kong.png" mode="aspectFill"></image>
 		<view  style="text-align: center; margin-top: 19rpx;font-size: 32rpx;color: #999999;">
 			用户未完善资料
@@ -403,6 +408,7 @@
 				nodata:false,
 				latelyData: {},
 				infoData: {},
+				loadInfoData:0,
 				list: [
 					["/static/icon/baseInfoicon.png", "基础信息"],
 					["/static/icon/bingliMangmenticon.png", "病例管理"],
@@ -1055,6 +1061,7 @@
 						res.data.createTime = res.data.createTime?res.data.createTime.split(" ")[0]:"";
 						this.infoData = res.data;
 					}
+					this.loadInfoData = 1;
 					this.showAdvice = 1;
 					if(!this.infoData.patientName) this.nodata = true;
 					this.isMy = localStorage.getItem("uid")==this.infoData.bindDoctor;
