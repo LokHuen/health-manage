@@ -351,6 +351,11 @@
 			getIllnessList() {
 				app.getIllnessSetting().then(res => {
 					if (res.status == 1) {
+						let hasother = false;
+						for (let i = 0; i < res.data.illness.length; i++) {
+							if(res.data.illness[i]=="其它疾病") hasother = true;
+						}
+						if(!hasother) res.data.illness.push("其它疾病");
 						this.inllList = res.data.illness;
 					}
 				});
