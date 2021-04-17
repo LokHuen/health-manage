@@ -13,7 +13,7 @@
 		</view>
 		
 		<view class="condition" v-if="selectIndex==0" @click="screen">
-			{{templateType.typeName?templateType.typeName:'按分类筛选模版'}}
+			{{templateType.typeName?templateType.typeName:'按应用场景筛选模版'}}
 			<image class="img" src="../../static/icon/icon_arrow_open.png" mode="aspectFill"></image>
 		</view>
 		<view class="list-box" v-if="selectIndex==0">
@@ -22,7 +22,7 @@
 			</view>
 			<view class="list-item" v-for="(item,index) in modalList" :key="index">
 				<view class="type">
-					模板类型：{{item.typeName}}
+					应用场景：{{item.typeName}}
 				</view>
 				<view class="content-box">
 					<view class="content-tip">
