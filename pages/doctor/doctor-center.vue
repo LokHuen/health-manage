@@ -10,11 +10,19 @@
 				<view class="department">{{data.hospital+data.department}}</view>
 			</view>
 		</view>
-		<view class="item-list" v-for="(item,index) in list" :key="index" v-if="index==0 || index==3|| index==4 || (index>0 && index<3 && data.showAccount==1)" @click="clickItem(index)">
+		<view class="item-list" v-for="(item,index) in list1" :key="index" @click="clickItem(0,index)">
 			<view class="left-name">{{item}}</view>
 			<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
 			<view class="line" ></view>
 		</view>
+		
+		 <view style="height: 30rpx;background-color: #F5F6F6;"></view> 
+		<view class="item-list" v-for="(item,index) in list2" :key="index" v-if="index==2 ||(index>=0 && index<=1 && data.showAccount==1)" @click="clickItem(1,index)">
+			<view class="left-name">{{item}}</view>
+			<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
+			<view class="line" ></view>
+		</view>
+		
 		<view class="bottom"></view>
 	</view>
 </template>
@@ -25,7 +33,8 @@
 	
 		data() {
 			return {
-				list: ["名片码","账户","身份认证","医嘱署名","电脑端患者管理权限配置"],
+				list1:["名片码","医嘱署名","电脑端患者管理权限配置"],
+				list2:["账户","身份认证","消息提醒"],
 				data:{}
 			}
 		},
@@ -33,26 +42,37 @@
 			this.getData();
 		},
 		methods: {
-			clickItem(index){
-				if(index==0){
-					uni.navigateTo({
-						url:'doctor-business-card?id='+app.getCache('uid')
-					});
-				}else if(index==1){
-					uni.navigateTo({
-						url:'doctor-account-list'
-					});
-				}else if(index==2){
-					this.judgeDoctorAuthenticationStatus();
-				}else if(index==3){
-				    uni.navigateTo({
-				    	url:'doctor-signature?name='+this.data.adviceName
-				    });
+			clickItem(index,secondIndex){
+				if(index == 0){
+					
+					if(secondIndex==0){
+						uni.navigateTo({
+							url:'doctor-business-card?id='+app.getCache('uid')
+						});
+					}else if(secondIndex==1){
+						uni.navigateTo({
+							url:'doctor-signature?name='+this.data.adviceName
+						});
+					}else{
+						uni.navigateTo({
+							url:'/pages/branch/list'
+						});
+					}
 				}else{
-					uni.navigateTo({
-						url:'/pages/branch/list'
-					});
+					if(secondIndex==0){
+						uni.navigateTo({
+							url:'doctor-account-list'
+						});
+						
+					}else if(secondIndex==1){
+						this.judgeDoctorAuthenticationStatus();
+					}else{
+						uni.navigateTo({
+							url:'message-remind?isRcvSurveyResult='+this.data.isRcvSurveyResult+'&isRcvSevereMalnutrition='+this.data.isRcvSevereMalnutrition
+						})
+					}
 				}
+				
 			},
 			getData(){
 				// 34是医生

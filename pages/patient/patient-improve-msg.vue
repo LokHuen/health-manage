@@ -46,8 +46,10 @@
 		<view class="name-box">
 			<view class="name-tips">* 疾病诊断</view>
 			<!-- <input class="name-input" type="text" value="" placeholder="请填写疾病名称" v-model="illness" /> -->
-
-			<view :class="illness?'name-input':'name-novalue-input'" @click="openSelectResult">{{illness?illness:'请选择疾病诊断'}}</view>
+			<view style="flex:1;">
+				<view :class="(illness?'name-input':'name-novalue-input')+' otherinput'" @click="openSelectResult">{{illness?illness:'请选择疾病诊断'}}</view>
+				<input v-if="illness=='其它疾病'" class="name-input otherinput" type="text" placeholder="请填写疾病名称" v-model="illnessother" />
+			</view>
 		</view>
 
 		<view class="projectList" v-for="(item,index) in projectList">
@@ -237,6 +239,7 @@
 				provinceId: '',
 				province: '',
 				illness: '',
+				illnessother:"",
 				height: '',
 				weight: '',
 				areaList: [
@@ -348,6 +351,11 @@
 			getIllnessList() {
 				app.getIllnessSetting().then(res => {
 					if (res.status == 1) {
+						let hasother = false;
+						for (let i = 0; i < res.data.illness.length; i++) {
+							if(res.data.illness[i]=="其它疾病") hasother = true;
+						}
+						if(!hasother) res.data.illness.push("其它疾病");
 						this.inllList = res.data.illness;
 					}
 				});
@@ -515,6 +523,13 @@
 						return;
 					}
 				}
+				if(this.illness=="其它疾病"&&!this.illnessother){
+					app.tip('请输入疾病名称');return;
+				}
+				if(this.illness=="其它疾病"){
+					this.illness=this.illnessother;
+				}
+				
 
 				if (this.imgList.length > 0) {
 					this.uploadImg();
@@ -552,6 +567,7 @@
 				}
 			},
 			submitRequest() {
+				app.loading("保存中");
 				var projectList = [];
 				if (this.projectList) {
 					for (var i = 0; i < this.projectList.length; i++) {
@@ -597,6 +613,7 @@
 						weight: this.weight,
 						detailList: projectList,
 					}).then(res => {
+						app.loaded();
 						if (res.status == 1) {
 							if(this.selfTest==1){
 							    uni.navigateTo({
@@ -625,6 +642,7 @@
 						pathologyUrl: this.pathologyUrl,
 						detailList: projectList,
 					}).then(res => {
+						app.loaded();
 						if (res.status == 1) {
 							uni.navigateTo({
 								url: 'patient-submit-sucess?type=' + this.type
@@ -770,7 +788,7 @@
 		.name-box {
 			display: flex;
 			margin-left: 43rpx;
-			margin-right: 43rpx;
+			margin-right: 43rpx;flex-wrap: wrap;
 			// height: 100rpx;
 			border-bottom: 2rpx solid #EEEEEE;
 			position: relative;
@@ -967,4 +985,5 @@
 			}
 		}
 	}
+	.otherinput{width:400rpx;flex: unset!important;}
 </style>
