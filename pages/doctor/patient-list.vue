@@ -168,12 +168,15 @@
 			if (props.isDept) {
 				this.isDept = props.isDept
 			}
+			if (props.patientIds) {
+				this.params.patientIds = props.patientIds
+			}
 
 			// this.departPermission()
 			this.getList(1)
 			this.getManageDepartment()
 			this.getDepartmentAllIlls()
-			console.log(this.params)
+			// console.log(this.params)
 		},
 		data() {
 			let uid = app.getCache('uid')
@@ -228,7 +231,8 @@
 					isBuy: '',
 					illness: '',
 					month: '',
-					queryType: ''
+					queryType: '',
+					patientIds:''
 				},
 				info: {},
 				hasPermission: false,
