@@ -1,6 +1,8 @@
 <template>
 	<!-- 账户列表 -->
 	<view class="container">
+		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
+		  
 		<view class="not-received-item" @click="select(0)">
 			<view class="money-box">
 				<view class="money">{{data.online?data.online:'0'}}</view>
@@ -26,13 +28,32 @@
 
 <script>
 	const app = getApp();
+	import wx from '../../plugins/jweixin.js'
+	import turnback from "../../components/turnback.vue"
+	
 	export default {
+		components: {turnback},
+		
 	 	data() {
 	 		return {
-	 			data:{}
+	 			data:{},
+				isMiniProgram:false
+				
+				
 			}
 		},
 		methods:{
+			getMiniProgramStatic(){
+			 wx.miniProgram.getEnv((res)=>{
+			    this.isMiniProgram = res.miniprogram?true:false;
+			 })
+			},
+			back(){
+			  uni.navigateBack({
+			   
+			  })
+			},
+			
 			doctorAccountInfo(){
 				app.sale_settleInfo({}).then(res =>{
 					if(res.status == 1){
@@ -54,6 +75,7 @@
 		},
 		onLoad(){
 			this.doctorAccountInfo();
+			this.getMiniProgramStatic();
 		}
 	}
 </script>

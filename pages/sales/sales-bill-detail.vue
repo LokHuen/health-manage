@@ -1,6 +1,8 @@
 <template>
 	<!-- 账单详情 -->
 	<view class="container">
+		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
+		  
 		<!-- <view class="info">
 			<image :src="data.portrait" mode="widthFix" class="avtor"></image>
 			<view class="info-box">
@@ -47,16 +49,35 @@
 
 <script>
 	const app = getApp();
+	import wx from '../../plugins/jweixin.js'
+	import turnback from "../../components/turnback.vue"
+	
 	export default {
+		components: {turnback},
+		
 		data() {
 			return {
 				id:"",
 				data:{
 					
-				}
+				},
+				isMiniProgram:false
+				
+				
 			}
 		},
 		methods: {
+			getMiniProgramStatic(){
+			 wx.miniProgram.getEnv((res)=>{
+			    this.isMiniProgram = res.miniprogram?true:false;
+			 })
+			},
+			back(){
+			  uni.navigateBack({
+			   
+			  })
+			},
+			
 			getDetail(){
 				app.sale_divideRecord({id:this.id}).then(res =>{
 					if(res.status ==1){
@@ -69,6 +90,7 @@
 		onLoad(props){
 			this.id = props.id;
 			this.getDetail();
+			this.getMiniProgramStatic();
 		}
 
 	}

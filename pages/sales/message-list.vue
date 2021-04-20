@@ -1,5 +1,6 @@
 <template>
 	<view class="container flexc">
+		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
 		<view class="empty-msg" v-if="list.length==0">暂无消息</view>
 		<view class="msg-item flexc" v-for="(item,index) in list">
 			<text class="content">{{item.content}}</text>
@@ -17,6 +18,8 @@
 
 <script>
 	const app = getApp()
+	import wx from '../../plugins/jweixin.js'
+	import turnback from "../../components/turnback.vue"
 	const testData = {
 		"msg": "查询成功",
 		"data": {
@@ -47,6 +50,9 @@
 		"status": 1
 	}
 	export default {
+		components: {
+			turnback
+		},
 		data() {
 			return {
 				list: [
@@ -57,13 +63,25 @@
 				},
 				info: {
 					pageCount: 1
-				}
+				},
+				isMiniProgram:false
 			}
 		},
 		onLoad() {
 			this.getList(1)
+			this.getMiniProgramStatic();
 		},
 		methods: {
+			getMiniProgramStatic(){
+				wx.miniProgram.getEnv((res)=>{
+				   this.isMiniProgram = res.miniprogram?true:false;
+				})
+			},
+			back(){
+			  uni.navigateBack({
+			  	
+			  })
+			},
 			getList(pageNo = 1) {
 				if (pageNo <= this.info.pageCount) {
 					this.params.pageNo = pageNo

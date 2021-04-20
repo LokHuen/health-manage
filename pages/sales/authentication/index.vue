@@ -1,6 +1,7 @@
 <template>
 	<view>
 		<view class="contentbox">
+			<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
 			<view class="introbox">
 				<view class="bigtitle">请完善身份信息</view>
 				<view class="textinfo">身份认证成功后，收益会在第二天转入您的银行卡。</view>
@@ -106,7 +107,12 @@
 
 <script>
 	const app = getApp();
+	import wx from '../../../plugins/jweixin.js'
+	import turnback from "../../../components/turnback.vue"
+	
 	export default {
+		components: {turnback},
+		
 		data() {
 			return {
 				options: {},
@@ -156,18 +162,30 @@
 				citylist: [],
 				arealist: [],
 				childlist: [],
-				chooserank: ["", "", "", ""]
+				chooserank: ["", "", "", ""],
+				isMiniProgram:false
 			}
 		},
 		onLoad(options) {
 			this.options = options;
 			this.getinfo();
-
+            this.getMiniProgramStatic();
 		},
 		onShow() {
 
 		},
 		methods: {
+			getMiniProgramStatic(){
+			 wx.miniProgram.getEnv((res)=>{
+			    this.isMiniProgram = res.miniprogram?true:false;
+			 })
+			},
+			back(){
+			  uni.navigateBack({
+			   
+			  })
+			},
+
 			getinfo() {
 				app.loading("连接中");
 				app.sale_authentication({}).then(res => {

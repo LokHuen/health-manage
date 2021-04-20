@@ -1,6 +1,8 @@
 <template>
 	<!-- 待结算 -->
 	<view class="container">
+		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
+		  
 		<!-- <view class="not-received-item">
 			<view class="money-box">
 				<view class="money">{{money}}</view>
@@ -34,15 +36,32 @@
 
 <script>
 	const app = getApp();
+	import wx from '../../plugins/jweixin.js'
+	import turnback from "../../components/turnback.vue"
+	
 	export default {
+		components: {turnback},
+		
 		data() {
 			return {
 				list: [],
 				pageNo:1,
-				money:''
+				money:'',
+				isMiniProgram:false
 			}
 		},
 		methods: {
+			getMiniProgramStatic(){
+			 wx.miniProgram.getEnv((res)=>{
+			    this.isMiniProgram = res.miniprogram?true:false;
+			 })
+			},
+			back(){
+			  uni.navigateBack({
+			   
+			  })
+			},
+			
 			select(item){
 				// uni.navigateTo({
 				// 	url:'doctor-bill-detail?id='+item.id
@@ -77,6 +96,7 @@
 		},
 		onLoad(props){
 			this.money = props.money;
+			this.getMiniProgramStatic();
 		}
 
 	}

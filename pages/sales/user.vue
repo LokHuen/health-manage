@@ -1,5 +1,6 @@
 <template>
 	<view class="listbox">
+		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
 		<view class="pagebackground"></view>
 		<view>
 			<view class="flex userlist" v-for="(item,index) in list" :key="index" @click="toDoctor(item)">
@@ -20,7 +21,10 @@
 
 <script>
 	const app = getApp();
+	import wx from '../../plugins/jweixin.js'
+	import turnback from "../../components/turnback.vue"
 	export default {
+		components: {turnback},
 		data() {
 			return {
 				baseUrl: app.globalData.baseUrl,
@@ -30,15 +34,27 @@
 				params:{
 					page: 1,
 					salesManId: ''
-				}
+				},
+				isMiniProgram:false
 			}
 		},
 		onLoad(options) {
 			this.params.salesManId = options.salesManId;
 			this.init();
+			this.getMiniProgramStatic();
 		},
 		
 		methods: {
+			getMiniProgramStatic(){
+			 wx.miniProgram.getEnv((res)=>{
+			    this.isMiniProgram = res.miniprogram?true:false;
+			 })
+			},
+			back(){
+			  uni.navigateBack({
+			   
+			  })
+			},
 			init() {
 				if (this.params.page > this.pageCount) return;
 				app.salesuserlist(this.params).then(res => {

@@ -1,5 +1,6 @@
 <template>
 	<view class="container flexc">
+		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
 		<view class="" style="padding-top: 30rpx;padding-left: 50rpx;padding-bottom: 20rpx;">
 			{{name}}的团队
 		</view>
@@ -44,17 +45,22 @@
 
 <script>
 	import tkiTree from "@/components/tki-tree/tki-tree.vue"
+	import wx from '../../plugins/jweixin.js'
+	import turnback from "../../components/turnback.vue"
+	
 	const app = getApp();
 
 	export default {
 		components: {
-			tkiTree
+			tkiTree,
+			turnback
 		},
 		data() {
 			return {
 				info: {},
 				name: '',
-				salesId: ''
+				salesId: '',
+				isMiniProgram:false
 			}
 		},
 		onLoad(props) {
@@ -64,8 +70,19 @@
 			}
 
 			this.getAgentInfo()
+			this.getMiniProgramStatic();
 		},
 		methods: {
+			getMiniProgramStatic(){
+			 wx.miniProgram.getEnv((res)=>{
+			    this.isMiniProgram = res.miniprogram?true:false;
+			 })
+			},
+			back(){
+			  uni.navigateBack({
+			   
+			  })
+			},
 			toMonthOrderList() {
 				uni.navigateTo({
 					url: 'month-order-list?pageResource=2' + '&salesId=' + this.salesId

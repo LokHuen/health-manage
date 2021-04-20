@@ -1,5 +1,6 @@
 <template>
 	<view class="container">
+		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
 		<view class="list flexc">
 			<view class="list-item" v-for="(item,index) in list" @click="selectItem(item)">
 				<view class="name">{{item.name}}</view>
@@ -13,15 +14,18 @@
 
 <script>
 	const app = getApp();
+	import wx from '../../plugins/jweixin.js'
+	import turnback from "../../components/turnback.vue"
 	export default {
-
+components: {turnback},
 		data() {
 			return {
 				list: [],
 				orgName: '',
 				params: {
 					orgId: '',
-				}
+				},
+				isMiniProgram:false
 			}
 		},
 		onLoad(props) {
@@ -33,6 +37,7 @@
 			}
 
 			this.refreshData();
+				this.getMiniProgramStatic();
 		},
 		onReady() {
 			if (this.orgName) {
@@ -46,6 +51,17 @@
 			this.refreshData();
 		},
 		methods: {
+			getMiniProgramStatic(){
+			 wx.miniProgram.getEnv((res)=>{
+			    this.isMiniProgram = res.miniprogram?true:false;
+			 })
+			},
+			back(){
+			  uni.navigateBack({
+			   
+			  })
+			},
+		
 			refreshData() {
 				this.params.pageNo = 1;
 				this.getListData();

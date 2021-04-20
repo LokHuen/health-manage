@@ -1,5 +1,6 @@
 <template>
 	<view class="contentbox">
+		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
 		<view class="bigtitle">已认证</view>
 		<view class="flex">
 			<image :src="baseUrl+info.idCardFront" mode="aspectFill" class="imglist" @click="preview(baseUrl+info.idCardFront)"></image>
@@ -12,21 +13,40 @@
 
 <script>
 	const app = getApp();
+	import wx from '../../../plugins/jweixin.js'
+	import turnback from "../../../components/turnback.vue"
+	
 	export default {
+		components: {turnback},
+		
 		data() {
 			return {
 				baseUrl:app.globalData.baseUrl,
 				imgUrl:app.globalData.imageUrl,
 				info:{},
+				isMiniProgram:false
+				
+				
 			}
 		},
 		onLoad(options){
 			this.getinfo();
+			this.getMiniProgramStatic();
 		},
 		onShow(){
 			
 		},
 		methods: {
+			getMiniProgramStatic(){
+			 wx.miniProgram.getEnv((res)=>{
+			    this.isMiniProgram = res.miniprogram?true:false;
+			 })
+			},
+			back(){
+			  uni.navigateBack({
+			   
+			  })
+			},
 			getinfo(){
 				app.loading("连接中");
 				app.sale_authentication({}).then(res => {

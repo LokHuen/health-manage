@@ -1,5 +1,6 @@
 <template>
 	<view class="contentbox">
+		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
 		<view class="bigtitle">修改密码</view>
 		<view class="flex linebox">
 			<view class="lefttext flex">原密码</view>
@@ -21,7 +22,12 @@
 
 <script>
 	const app = getApp();
+	import wx from '../../plugins/jweixin.js'
+	import turnback from "../../components/turnback.vue"
 	export default {
+		components: {
+			turnback
+		},
 		data() {
 			return {
 				baseUrl:app.globalData.baseUrl,
@@ -36,15 +42,26 @@
 					newPass: "请输入新的密码",
 					comfirmPass: "请再次输入新密码",
 				},
+				isMiniProgram:false
 			}
 		},
 		onLoad(options){
-			
+			this.getMiniProgramStatic();
 		},
 		onShow(){
 			
 		},
 		methods: {
+			getMiniProgramStatic(){
+				wx.miniProgram.getEnv((res)=>{
+				   this.isMiniProgram = res.miniprogram?true:false;
+				})
+			},
+			back(){
+			  uni.navigateBack({
+			  	
+			  })
+			},
 			saveinfo() {
 				for (let key in this.warn) {
 					if (!this.form[key]) {

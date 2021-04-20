@@ -1,5 +1,7 @@
 <template>
 	<view class="container">
+		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
+		 
 		<view class="title" v-if="!params.salesId">我的报备</view>
 		<view class="list-box" v-for="(item,index) in list">
 			<view class="list-title">{{item.type}}</view>
@@ -34,15 +36,21 @@
 
 <script>
 	const app = getApp();
+	import wx from '../../plugins/jweixin.js'
+	import turnback from "../../components/turnback.vue"
 	export default {
-
+        components: {turnback},
+        
 		data() {
 			return {
 				list: [],
 				params: {
 					pageNo: 1,
 					salesId: ''
-				}
+				},
+				isMiniProgram:false
+				
+				
 			}
 		},
 		onShow() {
@@ -53,6 +61,7 @@
 			if (props.salesId) {
 				this.params.salesId = props.salesId;
 			}
+			this.getMiniProgramStatic();
 		},
 		onPullDownRefresh() {
 			this.params.pageNo = 1;
@@ -63,6 +72,17 @@
 			this.getListData();
 		},
 		methods: {
+			getMiniProgramStatic(){
+			 wx.miniProgram.getEnv((res)=>{
+			    this.isMiniProgram = res.miniprogram?true:false;
+			 })
+			},
+			back(){
+			  uni.navigateBack({
+			   
+			  })
+			},
+			
 			cilckItem(item) {
 				if (this.params.salesId) {
 					uni.navigateTo({

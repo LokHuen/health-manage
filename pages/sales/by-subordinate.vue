@@ -1,5 +1,6 @@
 <template>
 	<view class="container flexc">
+		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
 		<view class="flexc head">
 			<view class="flexc order-count-box">
 				<view class="content flex" @click="toOrder">
@@ -41,26 +42,40 @@
 
 <script>
 	import tkiTree from "@/components/tki-tree/tki-tree.vue"
-
+    import wx from '../../plugins/jweixin.js'
+    import turnback from "../../components/turnback.vue"
 	const app = getApp();
 
 	export default {
 		components: {
-			tkiTree
+			tkiTree,
+			turnback
 		},
 		data() {
 			return {
 				salesId:'',
 				info: {},
+				isMiniProgram:false
 			}
 		},
 		onLoad(props) {
 			if(props.salesId){
 				this.salesId = props.salesId
 			}
-			this.getAgentInfo()
+			this.getAgentInfo();
+			this.getMiniProgramStatic();
 		},
 		methods: {
+			getMiniProgramStatic(){
+				wx.miniProgram.getEnv((res)=>{
+				   this.isMiniProgram = res.miniprogram?true:false;
+				})
+			},
+			back(){
+			  uni.navigateBack({
+			  	
+			  })
+			},
 			toMonthOrderList() {
 				uni.navigateTo({
 					url: 'month-order-list?pageResource=2'+'&salesId='+this.salesId

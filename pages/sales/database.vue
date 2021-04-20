@@ -1,5 +1,6 @@
 <template>
 	<view class="container">
+		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
 		<view class="top-box">
 			<view v-for="(item,index) in dirList" :key="index" class="top-item" @click="toproduct(item)">
 				<image class="top-img" src="../../static/flie.png" mode=""></image>
@@ -54,22 +55,35 @@
 <script>
 	const app1 = getApp();
 	import wx from '../../plugins/jweixin.js'
+	import turnback from "../../components/turnback.vue"
 	export default {
-
+        components:{turnback},
 		data() {
 			return {
 				dirList: [],
 				bottomList:[],
 				pageNo:1,
 				currentItem:'',//操作的对象，分享/发邮件
-				email:''
+				email:'',
+				isMiniProgram:false
                 
 			}
 		},
 		onLoad(props) {
 			this.refreshData();
+			this.getMiniProgramStatic();
 		},
 		methods: {
+			getMiniProgramStatic(){
+				wx.miniProgram.getEnv((res)=>{
+				   this.isMiniProgram = res.miniprogram?true:false;
+				})
+			},
+			back(){
+			  uni.navigateBack({
+			  	
+			  })
+			},
 			toDetail(item){
 				let ua = navigator.userAgent.toLowerCase();
 				    if(ua.match(/MicroMessenger/i)=="micromessenger") {

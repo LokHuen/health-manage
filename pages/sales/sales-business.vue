@@ -1,5 +1,6 @@
 <template>
 	<view class="container flexc">
+		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
 		<view class="head flexc">
 			<text class="sales-name" v-if="sales.salesName">{{sales.salesName}}</text>
 			<view class="flex head-data" @click="toOrder">
@@ -33,8 +34,10 @@
 
 <script>
 	const app = getApp();
+	import wx from '../../plugins/jweixin.js'
+	import turnback from "../../components/turnback.vue"
 	export default {
-
+        components: {turnback},
 		data() {
 			let that = this
 			return {
@@ -43,6 +46,7 @@
 					salesName: ''
 				},
 				info: {},
+				isMiniProgram:false
 			}
 		},
 		onLoad(props) {
@@ -50,6 +54,7 @@
 				this.sales.salesId = props.salesId
 			}
 			this.sales.salesName = props.salesName
+			this.getMiniProgramStatic();
 		},
 		onShow() {
 			this.getData();
@@ -67,6 +72,17 @@
 			}
 		},
 		methods: {
+			getMiniProgramStatic(){
+			 wx.miniProgram.getEnv((res)=>{
+			    this.isMiniProgram = res.miniprogram?true:false;
+			 })
+			},
+			back(){
+			  uni.navigateBack({
+			   
+			  })
+			},
+			
 			clickItem(index) {
 				if (index == 0) {
 					uni.navigateTo({

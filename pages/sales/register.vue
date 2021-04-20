@@ -1,5 +1,5 @@
 <template>
-	<view class="contentbox">
+	<view class="contentbox">  
 		<view>
 			<image src="../../static/warnshow.jpg" style="width:100vw;display:block;" mode="widthFix" @click="towarnpage"></image>
 		</view>
@@ -23,6 +23,7 @@
 
 <script>
 	const app = getApp();
+	
 	export default {
 		data() {
 			return {
@@ -35,8 +36,13 @@
 				warn: {
 					username: "请输入账号",
 					password: "请输入密码",
-				},
+				}
+				
+				
 			}
+		},
+		onLoad() {
+			
 		},
 		methods: {
 			saveinfo() {

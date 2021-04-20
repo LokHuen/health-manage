@@ -117,7 +117,6 @@
 			this.user.name = app.getCache('name')
 			this.user.orgId = app.getCache('orgId')
 			this.user.orgName = app.getCache('orgName')
-			console.log(this.user)
 		},
 		onShow() {
 		    this.judgeNew();

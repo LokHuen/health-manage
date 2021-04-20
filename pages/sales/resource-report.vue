@@ -1,5 +1,7 @@
 <template>
 	<view class="container">
+		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
+		  
 		<view class="title-box">
 			<view class="left">资源所在区域：</view>
 
@@ -254,8 +256,12 @@
 <script>
 	const app = getApp();
 	import http from '../../common/http.js'
+	import wx from '../../plugins/jweixin.js'
+	import turnback from "../../components/turnback.vue"
+	
 	export default {
-
+components: {turnback},
+	
 		data() {
 			return {
 				areaIndex: [0, 0],
@@ -311,6 +317,8 @@
 				coefficientItems: [],
 				coefficient: '', //系数
 				orderNum: 0, //成交单数预估 
+				isMiniProgram:false
+				
 			}
 		},
 		onLoad(props) {
@@ -323,12 +331,23 @@
 				this.getAreaRequest();
 			}
 			this.relateListRequest();
-
+            this.getMiniProgramStatic();
 		},
 		onShow() {
 
 		},
 		methods: {
+			getMiniProgramStatic(){
+			 wx.miniProgram.getEnv((res)=>{
+			    this.isMiniProgram = res.miniprogram?true:false;
+			 })
+			},
+			back(){
+			  uni.navigateBack({
+			   
+			  })
+			},
+			
 			//如果是点详情进来的，就要请求详情数据
 			getDetailRequest() {
 				app.resourceReportDetail({

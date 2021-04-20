@@ -1,5 +1,7 @@
 <template>
 	<view class="container flexc">
+		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
+		  
 		<view class="flexc tab" v-if="!params.salesId">
 			<view class="flex">
 				<view :class="{'tab-item':true,active:params.status==1}" @click="tabClick(1)">
@@ -71,7 +73,12 @@
 
 <script>
 	const app = getApp();
+	import wx from '../../plugins/jweixin.js'
+	import turnback from "../../components/turnback.vue"
+	
 	export default {
+		components: {turnback},
+		
 		data() {
 			return {
 				params: {
@@ -84,18 +91,33 @@
 					recordCount: 0,
 					pageCount: 1
 				},
-				tempItem: {}
+				tempItem: {},
+				isMiniProgram:false
+				
+				
 			}
 		},
 		onLoad(props) {
 			if (props.salesId) {
 				this.params.salesId = props.salesId
 			}
+			this.getMiniProgramStatic();
 		},
 		onShow() {
 			this.getList(1)
 		},
 		methods: {
+			getMiniProgramStatic(){
+			 wx.miniProgram.getEnv((res)=>{
+			    this.isMiniProgram = res.miniprogram?true:false;
+			 })
+			},
+			back(){
+			  uni.navigateBack({
+			   
+			  })
+			},
+			
 			tabClick(status) {
 				this.params.status = status
 				this.info.pageCount = 1

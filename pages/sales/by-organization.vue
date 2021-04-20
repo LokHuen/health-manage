@@ -1,5 +1,7 @@
 <template>
 	<view class="container flexc">
+		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
+		
 		<view class="flexc head">
 			<view class="organization-box flex">
 				<text class="name">{{orgName}}</text>
@@ -42,7 +44,7 @@
 				</view>
 			</view>
 		</view>
-
+	
 		<!-- 	<uni-popup ref="origanzePopup" type="bottom">
 			<view class="origanzePopup flexc">
 				<view class="head flex">
@@ -51,11 +53,11 @@
 				<tki-tree :range="organizeList" rangeKey="name" selectParent @treeItemSelect="treeItemSelect" />
 			</view>
 		</uni-popup> -->
-
+	
 		<view class="mask flexc"
 			style="position: absolute;top: 0;right: 0;bottom: 0;left: 0; background-color: #333333; justify-content: flex-end; background-color: rgba(60,60,60,0.8);"
 			v-show="isShow">
-
+	
 			<view class="origanzePopup flexc">
 				<view class="head flex">
 					<text class="tip">点击三角图标展开或关闭，点击文字选中</text>
@@ -65,19 +67,22 @@
 					<tki-tree :range="organizeList" rangeKey="name" selectParent @treeItemSelect="treeItemSelect" />
 				</scroll-view>
 			</view>
-
+	
 		</view>
 	</view>
+	
 </template>
 
 <script>
 	import tkiTree from "@/components/tki-tree/tki-tree.vue"
-
+    import wx from '../../plugins/jweixin.js'
+	import turnback from "../../components/turnback.vue"
 	const app = getApp();
 
 	export default {
 		components: {
-			tkiTree
+			tkiTree,
+			turnback
 		},
 		data() {
 			return {
@@ -86,7 +91,8 @@
 				organizeList: [],
 				info: {},
 				teamNum: 0,
-				isShow: 0
+				isShow: 0,
+				isMiniProgram:false
 			}
 		},
 		onLoad(props) {
@@ -97,8 +103,19 @@
 			this.getSalesManOrg()
 			this.getOrgInfo(this.orgId)
 			this.getOrgMembers()
+			this.getMiniProgramStatic();
 		},
 		methods: {
+			getMiniProgramStatic(){
+				wx.miniProgram.getEnv((res)=>{
+				   this.isMiniProgram = res.miniprogram?true:false;
+				})
+			},
+			back(){
+			  uni.navigateBack({
+			  	
+			  })
+			},
 			toMonthOrderList() {
 				uni.navigateTo({
 					url: 'month-order-list?pageResource=3' + '&orgId=+' + this.orgId

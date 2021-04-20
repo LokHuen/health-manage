@@ -1,7 +1,8 @@
 <template>
 	<!-- 医生营养管理界面 -->
 	<view class="container">
-
+       <turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
+         
 		<view class="screen-box">
 			<view class="all-patien-box" @click="patienScreen">
 				<view class="all-patien">{{params.orderBy==1?'按患者最近一次测评时间排序':'按患者和医生绑定的时间排序'}}</view>
@@ -51,7 +52,12 @@
 
 <script>
 	const app = getApp();
+	import wx from '../../plugins/jweixin.js'
+	import turnback from "../../components/turnback.vue"
+	
 	export default {
+		components: {turnback},
+		
 		data() {
 			return {
 				list: [],
@@ -60,14 +66,29 @@
 					pageNo: 1,
 					salesManId: ''
 				},
-				pageCount: 1
+				pageCount: 1,
+				isMiniProgram:false
+				
+				
 			}
 		},
 		onLoad(props) {
 			this.params.salesManId = props.salesManId;
 			this.refreshData();
+			this.getMiniProgramStatic();
 		},
 		methods: {
+			getMiniProgramStatic(){
+			 wx.miniProgram.getEnv((res)=>{
+			    this.isMiniProgram = res.miniprogram?true:false;
+			 })
+			},
+			back(){
+			  uni.navigateBack({
+			   
+			  })
+			},
+			
 			selecgtInfo(index) {
 				if (this.params.orderBy != index) {
 					this.params.orderBy = index;

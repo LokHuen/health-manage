@@ -1,6 +1,7 @@
 <template>
 	<!-- 团队成员 -->
 	<view class="container">
+		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
 		<view class="list-box" v-for="(item,index) in list" :key="index">
 			<view class="name">{{item.name}}</view>
 			<view :class="item.isParent==0?'item-box':'item-box team'" @click="toBusiness(item)">
@@ -20,14 +21,30 @@
 
 <script>
 	const app = getApp();
+	import wx from '../../plugins/jweixin.js'
+	import turnback from "../../components/turnback.vue"
+	
 	export default {
+		components: {turnback},
 		data() {
 			return {
 				list: [],
-				salesId:''
+				salesId:'',
+				isMiniProgram:false
 			}
 		},
 		methods: {
+			getMiniProgramStatic(){
+			 wx.miniProgram.getEnv((res)=>{
+			    this.isMiniProgram = res.miniprogram?true:false;
+			 })
+			},
+			back(){
+			  uni.navigateBack({
+			   
+			  })
+			},
+			
 			getTeamMembers() {
 				app.getTeamMembers({
 					salesId:this.salesId
@@ -51,6 +68,7 @@
 				this.salesId = props.salesId;
 			}
 			this.getTeamMembers()
+			this.getMiniProgramStatic();
 		}
 	}
 </script>

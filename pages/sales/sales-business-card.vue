@@ -1,6 +1,7 @@
 <template>
 	<!-- 医生名片界面 -->
 	<view class="container">
+		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
 		<view class="i-content-box" @click="saveimg" id="doctorcode"  click="saveQRCode">
 			<image src="../../static/sales/codebg.png" mode="widthFix" class="content-bg"></image>
 			<view class="content-info">
@@ -29,18 +30,32 @@
 
 <script>
 	import html2canvas from "plugins/html2canvas"
+	import wx from '../../plugins/jweixin.js'
+	import turnback from "../../components/turnback.vue"
 	const app = getApp();
 	export default {
-
+        components: {turnback},
 		data() {
 			return {
 				infoData:"",
 				id: '',
 				imgUrl:"",
 				create:false,
+				isMiniProgram:false
 			}
 		},
 		methods: {
+			getMiniProgramStatic(){
+			 wx.miniProgram.getEnv((res)=>{
+			    this.isMiniProgram = res.miniprogram?true:false;
+			 })
+			},
+			back(){
+			  uni.navigateBack({
+			   
+			  })
+			},
+			
 			getData() {
 				app.sale_doctorBusinessCard({}).then(res => {
 					console.log(res);
@@ -123,6 +138,7 @@
 		onLoad(props) {
 			this.id = props.id;
 			this.getData();
+			this.getMiniProgramStatic();
 		}
 
 

@@ -1,5 +1,6 @@
 <template>
 	<view class="container">
+		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
 		<view style="height: 10rpx; background-color: #F5F6F6;"></view>
 		<view class="list-box" v-for="(item,index) in list">
 			<view style="height: 10rpx;"></view>
@@ -25,8 +26,12 @@
 
 <script>
 	const app = getApp();
+	import wx from '../../plugins/jweixin.js'
+	import turnback from "../../components/turnback.vue"
+	
 	export default {
-
+       components: {turnback},
+       
 		data() {
 			return {
 				list: [],
@@ -35,7 +40,10 @@
 					salesId: '',
 					deptId: '',
 					month: '',
-					pageResource: ''
+					pageResource: '',
+					isMiniProgram:false
+					
+					
 				}
 
 			}
@@ -54,6 +62,7 @@
 				this.params.pageResource = props.pageResource
 			}
 			this.refreshData();
+			this.getMiniProgramStatic();
 		},
 		onPullDownRefresh() {
 			this.refreshData();
@@ -62,6 +71,17 @@
 			this.loadMoreData();
 		},
 		methods: {
+			getMiniProgramStatic(){
+				wx.miniProgram.getEnv((res)=>{
+				   this.isMiniProgram = res.miniprogram?true:false;
+				})
+			},
+			back(){
+			  uni.navigateBack({
+			  	
+			  })
+			},
+			
 			refreshData() {
 				this.params.pageNo = 1;
 				this.getListData();

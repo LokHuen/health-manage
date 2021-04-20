@@ -7,6 +7,7 @@
 				<view class="health-title-detail">已转账金额</view>
 			</view>
 		</view> -->
+		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
 		<view class="health-list">
 			<view class="health-list-content">
 				<!-- <view class="health-list-title">转账记录</view> -->
@@ -25,15 +26,31 @@
 
 <script>
 	const app = getApp();
+	import wx from '../../plugins/jweixin.js'
+	import turnback from "../../components/turnback.vue"
 	export default {
+		components: {
+			turnback
+		},
 		data() {
 			return {
 				listDatas: [],
 				pageNo: 1,
-				money: ''
+				money: '',
+				isMiniProgram:false
 			}
 		},
 		methods: {
+			getMiniProgramStatic(){
+				wx.miniProgram.getEnv((res)=>{
+				   this.isMiniProgram = res.miniprogram?true:false;
+				})
+			},
+			back(){
+			  uni.navigateBack({
+			  	
+			  })
+			},
 			select(item) {
 				// uni.navigateTo({
 				// 	url: 'sales-bill-detail?id=' + item.id
@@ -70,6 +87,7 @@
 		},
 		onLoad(props) {
 			this.money = props.money;
+			this.getMiniProgramStatic();
 		}
 
 	}

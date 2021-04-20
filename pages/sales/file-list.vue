@@ -1,5 +1,6 @@
 <template>
 	<view class="container">
+		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
 		<view class="bottom-box">
 			<view v-for="(item,index) in list" :key="index" >
 				<view class="bottom-item">
@@ -49,25 +50,39 @@
 <script>
 	import setconfig from "../../common/wxconfig.js"
 	import wx from '../../plugins/jweixin.js'
+	import turnback from "../../components/turnback.vue"
 	const app1 = getApp();
 	export default {
-
+        components: {
+			turnback
+		},
 		data() {
 			return {
 				list:[],
                 directoryId:'',
 				pageNo:1,
 				currentItem:'',//操作的对象，分享/发邮件
-				email:''
+				email:'',
+				isMiniProgram:false
 			}
 		},
 		onLoad(props) {
 			this.directoryId = props.directoryId;
 			this.refreshData();
 			//this.setwxconfig();
+			this.getMiniProgramStatic();
 		},
 		methods: {
-			
+			getMiniProgramStatic(){
+				wx.miniProgram.getEnv((res)=>{
+				   this.isMiniProgram = res.miniprogram?true:false;
+				})
+			},
+			back(){
+			  uni.navigateBack({
+			  	
+			  })
+			},
 			closePopup(){
 				this.$refs.popup.close();
 			},

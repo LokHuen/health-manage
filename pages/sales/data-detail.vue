@@ -1,5 +1,6 @@
 <template>
 	<view class="container">
+		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
 		<view v-for="(item,index) in commodityOrderList" :key="index" style="margin-top: 40rpx;">
 			
 			<view class="title">
@@ -68,13 +69,29 @@
 
 <script>
 	const app = getApp();
+	import wx from '../../plugins/jweixin.js'
+	import turnback from "../../components/turnback.vue"
 	export default{
+		components: {
+			turnback
+		},
 		data(){
 			return{
-				commodityOrderList:[]
+				commodityOrderList:[],
+				isMiniProgram:false
 			}
 		},
 		methods:{
+			getMiniProgramStatic(){
+				wx.miniProgram.getEnv((res)=>{
+				   this.isMiniProgram = res.miniprogram?true:false;
+				})
+			},
+			back(){
+			  uni.navigateBack({
+			  	
+			  })
+			},
 			getData(){
 				app.platformInfo().then(res =>{
 					if(res.status == 1){
@@ -85,6 +102,7 @@
 			}
 		},
 		onLoad(){
+			this.getMiniProgramStatic();
 			this.getData();
 		},
 	}
