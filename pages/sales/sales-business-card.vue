@@ -1,7 +1,7 @@
 <template>
 	<!-- 医生名片界面 -->
 	<view class="container">
-		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
+		<turnback @back="back" v-if="isMiniProgram"> </turnback>
 		<view class="i-content-box" @click="saveimg" id="doctorcode"  click="saveQRCode">
 			<image src="../../static/sales/codebg.png" mode="widthFix" class="content-bg"></image>
 			<view class="content-info">

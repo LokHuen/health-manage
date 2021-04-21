@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="contentbox">
-			<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
+			<turnback @back="back" v-if="isMiniProgram"> </turnback>
 			<view class="introbox">
 				<view class="bigtitle">请完善身份信息</view>
 				<view class="textinfo">身份认证成功后，收益会在第二天转入您的银行卡。</view>

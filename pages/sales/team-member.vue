@@ -1,7 +1,7 @@
 <template>
 	<!-- 团队成员 -->
 	<view class="container">
-		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
+		<turnback @back="back" v-if="isMiniProgram"> </turnback>
 		<view class="list-box" v-for="(item,index) in list" :key="index">
 			<view class="name">{{item.name}}</view>
 			<view :class="item.isParent==0?'item-box':'item-box team'" @click="toBusiness(item)">

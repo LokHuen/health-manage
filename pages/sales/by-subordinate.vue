@@ -1,6 +1,6 @@
 <template>
 	<view class="container flexc">
-		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
+		<turnback @back="back" v-if="isMiniProgram"> </turnback>
 		<view class="flexc head">
 			<view class="flexc order-count-box">
 				<view class="content flex" @click="toOrder">

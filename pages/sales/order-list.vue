@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
+		<turnback @back="back" v-if="isMiniProgram"> </turnback>
 		<view style="height: 10rpx; background-color: #F5F6F6;"></view>
 		<view class="list-box" v-for="(item,index) in list">
 			<view style="height: 10rpx;"></view>

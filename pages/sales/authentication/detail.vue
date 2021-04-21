@@ -1,6 +1,6 @@
 <template>
 	<view class="contentbox">
-		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
+		<turnback @back="back" v-if="isMiniProgram"> </turnback>
 		<view class="bigtitle">已认证</view>
 		<view class="flex">
 			<image :src="baseUrl+info.idCardFront" mode="aspectFill" class="imglist" @click="preview(baseUrl+info.idCardFront)"></image>

@@ -1,7 +1,7 @@
 <template>
 	<view class="container flexc">
-
-
+		<turnback @back="back" v-if="isMiniProgram"> </turnback>
+		
 		<view class="screen-box">
 			<view class="flex head" @click="showQrCode">
 				<text>医生名片码</text>
@@ -61,12 +61,16 @@
 
 <script>
 	const app = getApp()
+	import wx from '../../plugins/jweixin.js'
+	 import turnback from "../../components/turnback.vue"
+	
 	export default {
 		created() {
 			uni.setNavigationBarTitle({
 				title: this.dortorName
 			})
 		},
+		components: {turnback},
 		data() {
 			return {
 				dortorName: '',
@@ -79,10 +83,22 @@
 					orderBy: 2,
 					pageNo:1
 				},
-				pageCount: 1
+				pageCount: 1,
+				isMiniProgram:false
+				
 			}
 		},
 		methods: {
+			getMiniProgramStatic(){
+			    wx.miniProgram.getEnv((res)=>{
+			       this.isMiniProgram = res.miniprogram?true:false;
+			    })
+			   },
+			   back(){
+			     uni.navigateBack({
+			      
+			     })
+			   },
 			showQrCode() {
 				if (this.openQrCode) {
 					this.$refs.qrPopup.close()
@@ -155,6 +171,7 @@
 			this.params.bindDoctor = props.doctorId
 			this.dortorName = props.dortorName
 			this.getListData()
+			this.getMiniProgramStatic();
 		}
 	}
 </script>

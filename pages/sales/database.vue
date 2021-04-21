@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
+		<turnback @back="back" v-if="isMiniProgram"> </turnback>
 		<view class="top-box">
 			<view v-for="(item,index) in dirList" :key="index" class="top-item" @click="toproduct(item)">
 				<image class="top-img" src="../../static/flie.png" mode=""></image>

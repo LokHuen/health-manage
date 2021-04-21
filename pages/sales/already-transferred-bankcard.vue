@@ -7,7 +7,7 @@
 				<view class="health-title-detail">已转账金额</view>
 			</view>
 		</view> -->
-		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
+		<turnback @back="back" v-if="isMiniProgram"> </turnback>
 		<view class="health-list">
 			<view class="health-list-content">
 				<!-- <view class="health-list-title">转账记录</view> -->

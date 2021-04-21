@@ -1,7 +1,7 @@
 <template>
 	<!-- 医生营养管理界面 -->
 	<view class="container">
-       <turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
+       <turnback @back="back" v-if="isMiniProgram"> </turnback>
          
 		<view class="screen-box">
 			<view class="all-patien-box" @click="patienScreen">

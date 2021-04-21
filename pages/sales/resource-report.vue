@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
+		<turnback @back="back" v-if="isMiniProgram"> </turnback>
 		  
 		<view class="title-box">
 			<view class="left">资源所在区域：</view>

@@ -1,6 +1,6 @@
 <template>
 	<view class="container flexc">
-		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
+		<turnback @back="back" v-if="isMiniProgram"> </turnback>
 		<view class="" style="padding-top: 30rpx;padding-left: 50rpx;padding-bottom: 20rpx;">
 			{{name}}的团队
 		</view>

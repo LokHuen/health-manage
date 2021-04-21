@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
+		<turnback @back="back" v-if="isMiniProgram"> </turnback>
 		 
 		<view class="title" v-if="!params.salesId">我的报备</view>
 		<view class="list-box" v-for="(item,index) in list">

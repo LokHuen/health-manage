@@ -1,6 +1,6 @@
 <template>
 	<view class="container flexc">
-		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
+		<turnback @back="back" v-if="isMiniProgram"> </turnback>
 		<view class="empty-msg" v-if="list.length==0">暂无消息</view>
 		<view class="msg-item flexc" v-for="(item,index) in list">
 			<text class="content">{{item.content}}</text>

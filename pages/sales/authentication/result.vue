@@ -1,6 +1,6 @@
 <template>
 	<view class="">
-		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
+		<turnback @back="back" v-if="isMiniProgram"> </turnback>
 		<view class="successbox">
 			<image class="successimg" mode="widthFix" src="../../../static/sales/finish.png"></image>
 			<view class="keytext">提交成功</view>

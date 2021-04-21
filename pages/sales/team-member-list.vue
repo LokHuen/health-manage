@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
+		<turnback @back="back" v-if="isMiniProgram"> </turnback>
 		<view class="list flexc">
 			<view class="list-item" v-for="(item,index) in list" @click="selectItem(item)">
 				<view class="name">{{item.name}}</view>

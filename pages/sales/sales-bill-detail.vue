@@ -1,7 +1,7 @@
 <template>
 	<!-- 账单详情 -->
 	<view class="container">
-		<turnback @back="back" v-if="isMiniProgram" style="position: sticky;top: 0;"> </turnback>
+		<turnback @back="back" v-if="isMiniProgram"> </turnback>
 		  
 		<!-- <view class="info">
 			<image :src="data.portrait" mode="widthFix" class="avtor"></image>

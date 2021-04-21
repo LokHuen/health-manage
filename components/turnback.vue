@@ -1,6 +1,9 @@
 <template>
 	<view class="containers">
-		<image src="/static/icon/turnback_icon.png" mode="widthFix" class="img" @click="back"></image>
+		<view style="position: fixed;top: 0;left: 0;right: 0;background-color: #FFFFFF;">
+			<image src="/static/icon/turnback_icon.png" mode="widthFix" class="img" @click="back"></image>
+		</view>
+		<view style="height: 30rpx;"></view>
 	</view>
 </template>
 

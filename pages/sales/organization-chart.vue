@@ -1,6 +1,6 @@
 <template>
 	<view class="container flexc">
-		<view class="back" v-if="isMiniProgram" style="position: sticky;top: 0;z-index: 999;">
+		<view class="back" v-if="isMiniProgram">
 			<image src="/static/icon/turnback_icon.png" mode="widthFix" class="img" @click="back"></image>
 		</view>
 		<view class="warn">点击三角图标展开或关闭，点击文字选中</view>
