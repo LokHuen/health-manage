@@ -297,7 +297,7 @@
 			},
 			toSearch() {
 				uni.navigateTo({
-					url: 'search-patient-list?isDepartmentIcu=' + this.params.isDepartmentIcu
+					url: 'search-patient-list?isDepartmentIcu=' + this.params.isDepartmentIcu+'&bindDoctor='+this.params.bindDoctor
 				})
 			},
 			toPatient(id) {

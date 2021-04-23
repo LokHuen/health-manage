@@ -43,10 +43,13 @@
 			if (props.isDepartmentIcu) {
 				this.params.isDepartmentIcu = props.isDepartmentIcu
 			}
+			if(props.bindDoctor){
+				this.params.bindDoctor = props.bindDoctor
+			}
 			// this.getList(1)
 		},
 		data() {
-			let uid = app.getCache('uid')
+			 let uid = app.getCache('uid')
 			return {
 				list: [],
 				requested:false,
