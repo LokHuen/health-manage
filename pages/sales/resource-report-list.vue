@@ -292,7 +292,7 @@
 		// }
 
 		.self-min {
-			height: calc(100vh - #{$tab-height} - #{$bottom-height}-#{$return-height});
+			height: calc(100vh - #{$tab-height} - #{$bottom-height} - #{$return-height});
 		}
 
 		.self-no-min {
@@ -300,7 +300,7 @@
 		}
 
 		.no-self-min {
-			height: calc(100vh - #{$bottom-height}-#{$return-height});
+			height: calc(100vh - #{$bottom-height} - #{$return-height});
 		}
 
 		.no-self-no-min {
