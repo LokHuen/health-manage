@@ -1,7 +1,7 @@
 <template>
 	<view class="container flexc">
 		<turnback @back="back" v-if="isMiniProgram"> </turnback>
-		  
+
 		<view class="flexc tab" v-if="!params.salesId">
 			<view class="flex">
 				<view :class="{'tab-item':true,active:params.status==1}" @click="tabClick(1)">
@@ -21,8 +21,13 @@
 				{{params.status==1?'注：如果最近60天内未有订单记录，该资源会被释放':''}}
 			</view>
 		</view>
-		<scroll-view :class="{'no-self':params.salesId,'self':!params.salesId,flexc:true,content:true}" scroll-y
-			@scrolltolower="getList(params.pageNo+1)">
+		<scroll-view :class="{
+			'self-min':!params.salesId&&isMiniProgram,
+			'self-no-min':!params.salesId&&!isMiniProgram,
+			'no-self-min':params.salesId&&isMiniProgram,
+			'no-self-no-min':params.salesId&&!isMiniProgram,
+		
+		flexc:true,content:true}" scroll-y @scrolltolower="getList(params.pageNo+1)">
 			<view
 				style="justify-content: center;font-size: 32rpx; color: #999999;padding-top: 200rpx;text-align: center;"
 				v-if="list.length==0">
@@ -75,10 +80,12 @@
 	const app = getApp();
 	import wx from '../../plugins/jweixin.js'
 	import turnback from "../../components/turnback.vue"
-	
+
 	export default {
-		components: {turnback},
-		
+		components: {
+			turnback
+		},
+
 		data() {
 			return {
 				params: {
@@ -92,9 +99,9 @@
 					pageCount: 1
 				},
 				tempItem: {},
-				isMiniProgram:false
-				
-				
+				isMiniProgram: false
+
+
 			}
 		},
 		onLoad(props) {
@@ -107,17 +114,17 @@
 			this.getList(1)
 		},
 		methods: {
-			getMiniProgramStatic(){
-			 wx.miniProgram.getEnv((res)=>{
-			    this.isMiniProgram = res.miniprogram?true:false;
-			 })
+			getMiniProgramStatic() {
+				wx.miniProgram.getEnv((res) => {
+					this.isMiniProgram = res.miniprogram ? true : false;
+				})
 			},
-			back(){
-			  uni.navigateBack({
-			   
-			  })
+			back() {
+				uni.navigateBack({
+
+				})
 			},
-			
+
 			tabClick(status) {
 				this.params.status = status
 				this.info.pageCount = 1
@@ -179,6 +186,7 @@
 
 <style lang="scss" scoped>
 	$tab-height:120rpx;
+	$return-height:90rpx;
 	$bottom-height:88rpx;
 	$main-color:#4B8BE8;
 
@@ -210,7 +218,7 @@
 			}
 
 			.tips {
-				height:32rpx ;
+				height: 32rpx;
 				font-size: 22rpx;
 				color: #999999;
 				margin-left: 30rpx;
@@ -275,11 +283,27 @@
 			}
 		}
 
-		.self {
+		// .self {
+		// 	height: calc(100vh - #{$tab-height} - #{$bottom-height});
+		// }
+
+		// .no-self {
+		// 	height: calc(100vh - #{$bottom-height});
+		// }
+
+		.self-min {
+			height: calc(100vh - #{$tab-height} - #{$bottom-height}-#{$return-height});
+		}
+
+		.self-no-min {
 			height: calc(100vh - #{$tab-height} - #{$bottom-height});
 		}
 
-		.no-self {
+		.no-self-min {
+			height: calc(100vh - #{$bottom-height}-#{$return-height});
+		}
+
+		.no-self-no-min {
 			height: calc(100vh - #{$bottom-height});
 		}
 
