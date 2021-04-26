@@ -1,6 +1,6 @@
 <template>
 	<view class="listbox">
-		<turnback @back="back" v-if="!isMiniProgram"> </turnback>
+		<turnback @back="back" v-if="isMiniProgram"> </turnback>
 		<view class="pagebackground"></view>
 		<view>
 			<view class="flex userlist" v-for="(item,index) in list" :key="index" @click="toDoctor(item)">
