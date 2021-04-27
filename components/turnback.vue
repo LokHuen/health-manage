@@ -1,5 +1,5 @@
 <template>
-	<view class="containers">
+	<view class="containers" v-if="isMiniProgram">
 		<view style="position: fixed;top: 0;left: 0;right: 0;background-color: #FFFFFF;">
 			<image src="/static/icon/turnback_icon.png" mode="widthFix" class="img" @click="back"></image>
 		</view>
@@ -8,16 +8,26 @@
 </template>
 
 <script>
+	import wx from '../plugins/jweixin.js'
 	export default {
 		data() {
 			return {
-				
+				isMiniProgram:false
 			};
+		},
+		created(){
+			this.getMiniProgramStatic();
 		},
 		methods:{
 			back(){
-				this.$emit('back')
-			}
+				uni.navigateBack({});
+				// this.$emit('back')
+			},
+			getMiniProgramStatic(){
+				wx.miniProgram.getEnv((res)=>{
+				   this.isMiniProgram = res.miniprogram?true:false;
+				})
+			},
 		},
 	}
 </script>

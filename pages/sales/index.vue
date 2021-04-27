@@ -62,6 +62,13 @@
 					<image src="../../static/icon/more_icon.png"></image>
 				</view>
 			</view>
+			
+			<view class="item flexc" @click="tocardmake" style="margin-top: 30rpx;">
+				<view class="flex text-box">
+					<text class="item-text">卡片制作</text>
+					<image src="../../static/icon/more_icon.png"></image>
+				</view>
+			</view>
 
 			<view class="auth-box flexc" style="margin-top: 30rpx;">
 				<view @click="toAccount">
@@ -234,6 +241,11 @@
 			towarnpage() {
 				uni.navigateTo({
 					url: "/pages/doctor/warn"
+				})
+			},
+			tocardmake(){
+				uni.navigateTo({
+					url: "/pages/card/index"
 				})
 			},
 			hasMesage() {

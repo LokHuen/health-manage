@@ -471,6 +471,40 @@ var api = {
 		return rq("/wx/patient/templateList", data, "GET");
 	},
 	
+	//卡片
+	cardlist: (data) => {
+		return rq("/wx/card/list", data, "GET");
+	},//卡片列表
+	cardtemplateList: (data) => {
+		return rq("/wx/card/templateList", data, "GET");
+	},//卡片规格列表
+	cardapplysave: (data) => {
+		return rq("/wx/card/apply/save", data, "POST");
+	},//保存卡片申请信息（点“确认无误”或选中业务员卡片模版后调用）
+	hospitalgetOne: (data) => {
+		return rq("/wx/service/hospital/getOne", data, "GET");
+	},//通过名字找到医院
+	dictgetOne: (data) => {
+		return rq("/wx/system/dict/getOne", data, "GET");
+	},//通过名字找到科室
+	applygetDetail: (data) => {
+		return rq("/wx/card/apply/getDetail", data, "GET");
+	},//获得生成卡片所需的资料
+	applyuploadPic: (data) => {
+		return rq("/wx/card/apply/uploadPic", data, "POST");
+	},//保存前端生成的卡片图
+	sendEmail: (data) => {
+		return rq("/wx/card/apply/sendEmail", data, "POST");
+	},//发送卡片图到邮箱
+	getMakeUnit: (data) => {
+		return rq("/wx/card/apply/getMakeUnit", data, "GET");
+	},//卡片的制作单位
+	applytoMake: (data) => {
+		return rq("/wx/card/apply/toMake", data, "POST");
+	},//保存实体卡制作申请
+	getRecordPage: (data) => {
+		return rq("/wx/card/apply/getRecordPage", data, "GET");
+	},//卡片的制作记录（分页）
 }
 
 export {
