@@ -296,7 +296,7 @@
 			color: #333333;
 			font-size: 15px;
 			background-color: #FFFFFF;
-			z-index: 999;
+			//z-index: 999;
 			position: sticky;
 			top: 0;
 
