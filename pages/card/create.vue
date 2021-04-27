@@ -293,17 +293,20 @@
 				});
 			},
 			finish(){
-				if(!this.serimgurl){
-					this.sendpic(rep=>{
-						uni.reLaunch({
-							url:"/pages/card/index"
-						})
-					});
-				}else{
-					uni.reLaunch({
-						url:"/pages/card/index"
-					})
-				}
+				uni.reLaunch({
+					url:"/pages/sales/index"
+				})
+				// if(!this.serimgurl){
+				// 	this.sendpic(rep=>{
+				// 		uni.reLaunch({
+				// 			url:"/pages/card/index"
+				// 		})
+				// 	});
+				// }else{
+				// 	uni.reLaunch({
+				// 		url:"/pages/card/index"
+				// 	})
+				// }
 			},
 			toreply(){
 				if(!this.serimgurl){
