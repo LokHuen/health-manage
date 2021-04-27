@@ -55,7 +55,8 @@
 			// this.getList();
 		},
 		methods: {
-			getList() {
+			getList(page) {
+				if(page) this.params.page = page;
 				if (this.params.page > this.pageCount) return;
 				app.salesuserlist(this.params).then((res) => {
 					this.info = res.data
