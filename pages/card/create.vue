@@ -137,7 +137,7 @@
 				<!-- 海吉60*96 -->
 			</swiper>
 		</view>
-		<view class="foottips">点击图片生成保存图片</view>
+		<view class="foottips">点击上图后长按保存</view>
 		<view class="footerbt flex">
 			<view class="btitem" @click="toreply">申请制作</view>
 			<view class="btitem other" @click="$refs.pop1.open()">发送到邮箱</view>

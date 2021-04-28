@@ -8,7 +8,7 @@
 		<view class="search-out-box">
 			<view class="flex search-box">
 				<image src="../../static/icon/incon_search.png"></image>
-				<input placeholder="输入医生护士业务员名字搜索" v-model="params.keyword" @input="getList(1)" />
+				<input placeholder="输入名字搜索" v-model="params.keyword" @input="getList(1)" />
 			</view>
 		</view>
 		<view class="flexc list" v-if="list.length>0">
@@ -194,7 +194,7 @@
 			}
 
 			input {
-				width: 260rpx;
+				width: 200rpx;
 				font-size: 26rpx;
 				margin-left: 15rpx;
 			}
