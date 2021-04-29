@@ -135,6 +135,28 @@
 					</view>
 				</swiper-item>
 				<!-- 海吉60*96 -->
+				<!-- 推广 -->
+				<swiper-item v-if="info.templateCode=='0801'">
+					<view :class="'swiperimgbox '+(create?'big':'')" @click="getallimg" id="doctorcode">
+						<image v-if="info.cardFrontPic" :src="'/api'+info.cardFrontPic" class="swiperimg" mode="widthFix"></image>
+						<view :class="'outinfobox '+(create?'big':'') ">
+							
+							<image :src="'/api'+info.qrCode" class="outimg"></image>
+							<view class="teamtext flex ct">扫码关注<image src="../../static/index/right.png" mode="widthFix" class="rightarrow"></image>信息注册<image src="../../static/index/right.png" mode="widthFix" class="rightarrow"></image>患者管理</view>
+							<view class="depttext">
+								<view :class="create?'movetext':''">推广志愿者</view>
+							</view>
+							<view class="doctortext">{{info.userName}}</view>
+							<view ><view class="numtext">【编号：{{info.userCode}}】</view></view>
+						</view>
+					</view>
+				</swiper-item>
+				<swiper-item v-if="info.templateCode=='0801'">
+					<view class="swiperimgbox" @click="getsecondimg(baseUrl+info.cardBackPic)">
+						<image :src="baseUrl+info.cardBackPic" class="swiperimg" mode="widthFix"></image>
+					</view>
+				</swiper-item>
+				<!-- 推广 -->
 			</swiper>
 		</view>
 		<view class="foottips">点击上图后长按保存</view>
@@ -599,6 +621,35 @@
 			&.noall{
 				.haiji_a6img{margin-top:100*5rpx;width: 290*5rpx;height: 290*5rpx;}
 			}
+		}
+	}
+	.outinfobox{
+		position:absolute;z-index:3;top:140rpx;left:0;right:0;text-align:center;
+		.outimg{border: 12rpx solid #0063B3;box-sizing: border-box;width: 282rpx;height: 282rpx;margin-top:54rpx;}
+		.teamtext{font-size: 16rpx;color: #2E75B6;line-height: 1;padding:0rpx 0 40rpx;width:300rpx;margin:auto;}
+		.depttext{
+			line-height:1;padding:12rpx 0;
+			border-radius: 60rpx;font-size: 32rpx;
+			background:#2E75B6;
+			width: 296rpx;color:#fff;margin:auto;
+			text-align: center;
+		}
+		.rightarrow{width:18rpx;height:18rpx;margin:0 10rpx;}
+		.movetext{margin-top:-20*5rpx;padding-top:10*5rpx;}
+		.doctortext{font-size: 32rpx;color: #2E75B6;padding:20rpx 15rpx 10rpx;}
+		.numtext{font-size: 24rpx;color: #2E75B6;display: inline-block;padding:0rpx 0rpx 0;}
+		&.big{
+			top:140*5rpx;
+			.outimg{border: 12*5rpx solid #0063B3;width: 282*5rpx;height: 282*5rpx;margin-top:54*5rpx;}
+			.teamtext{font-size: 16*5rpx;padding:0rpx 0 40*5rpx;width:300*5rpx;}
+			.depttext{
+				padding:12*5rpx 0;
+				border-radius: 60*5rpx;font-size: 32*5rpx;
+				width: 296*5rpx;
+			}
+			.rightarrow{width:18*5rpx;height:18*5rpx;margin:0 10*5rpx;}
+			.doctortext{font-size: 32*5rpx;padding:20*5rpx 15*5rpx 16*5rpx;}
+			.numtext{font-size: 24*5rpx;}
 		}
 	}
 	.foottips{font-size: 28rpx;color: #999999;padding:10rpx 30rpx 30rpx;text-align:center;}
