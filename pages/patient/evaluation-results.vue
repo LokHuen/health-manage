@@ -23,7 +23,7 @@
 
 			<div class="banner">
 				<image :src="banner" mode="widthFix"></image>
-				<div class="banner-content">{{banner_intro}}</div>
+				<div class="banner-content" v-html="banner_intro"></div>
 				<wx-open-launch-weapp username="gh_e44479db8d50" path="pages/index/home.html" style="" class="otherbox">
 					<script type="text/wxtag-template">
 						<style>
