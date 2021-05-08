@@ -16,21 +16,25 @@
 			<view class="btitem" @click="back">返回</view>
 			<view class="btitem other" @click="userthis">使用此模板</view>
 		</view>
+		<n-address ref="address" @up-data="upData" title="请完善常驻区域信息"></n-address>
 	</view>
 </template>
 
 <script>
 	const app = getApp();
+	import nAddress from "../../components/n-address/n-address.vue"
 	import turnback from "../../components/turnback.vue"
 	export default {
 		components: {
-			turnback
+			turnback,
+			nAddress
 		},
 		data() {
 			return {
 				baseUrl: app.globalData.baseUrl,
 				imgUrl: app.globalData.imageUrl,
 				info:app.cardinfo,
+				region:''
 			}
 		},
 		onLoad(options) {
@@ -40,6 +44,15 @@
 
 		},
 		methods: {
+			upData (e) {
+				// this.region = e.regionArr.join(" ");
+				this.region = e.districtCode;
+				this.userthis();
+			},
+			//省市区
+			openareachoose(){
+				this.$refs['address'].popUp();
+			},
 			back(){
 				uni.navigateBack({});
 			},
@@ -58,6 +71,7 @@
 						templateId:app.cardinfo.templateId,
 						templateCode:app.cardinfo.templateCode,//模版编码
 						cardType:3,//卡片用户类型 1 医生 2护士 3 业务员
+						regionId:this.region
 					}).then(res => {
 						app.loaded();
 						uni.navigateTo({
@@ -65,6 +79,9 @@
 						});
 					}).catch(res=>{
 						app.tip(res.msg);
+						if(res.msg == '请先选定业务员所在的区域！'){
+							this.openareachoose();
+						}
 					})
 				}
 				

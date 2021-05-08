@@ -2,6 +2,7 @@
 	<n-transition ref="pop" :height="500" :maskVal="0.2">
 		<view class="btn">
 			<view class="btn_item" :style="{color: fStyles.cancelColor}" @click="popDown">{{ fStyles.canceltext }}</view>
+			<view class="btn_title">{{titleText}}</view>
 			<view class="btn_item" :style="{color: fStyles.confirmColor}" @click="bindSure">{{ fStyles.confirmText }}</view>
 		</view>
 		<picker-view class="picker" :indicator-style="indicatorStyle" :value="value" @change="bindChange">
@@ -47,10 +48,17 @@
 						columnFontSize: '28rpx'
 					}
 				}
+			},
+			title:{
+				type:String,
+				default () {
+					return ''
+				}
 			}
 		},
 		data() {
 			return {
+				titleText:this.title,
 				provinces,
 				cities: [],
 				districts: [],
@@ -145,6 +153,12 @@
 		padding: 0 30rpx;
 		font-size: 30rpx;
 		line-height: 60rpx;
+	}
+	.btn_title{
+		font-size: 30rpx;
+		line-height: 60rpx;
+		color: #CC3A3A;
+		text-align: center;
 	}
 }
 .picker {
