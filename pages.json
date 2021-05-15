@@ -7,6 +7,24 @@
 				"navigationBarTitleText": "营养管理"
 			}
 		},
+		{
+			"path": "pages/sales/changeAvater",
+			"style": {
+				"navigationBarTitleText": "工作照"
+			}
+		},
+		{
+			"path": "pages/sales/changeOther",
+			"style": {
+				"navigationBarTitleText": "帐号设置"
+			}
+		},
+		{
+			"path": "pages/doctor/changeData",
+			"style": {
+				"navigationBarTitleText": "修改个人资料"
+			}
+		},
 
 
 		{

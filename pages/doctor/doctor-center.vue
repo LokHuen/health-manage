@@ -17,8 +17,14 @@
 		</view>
 		
 		 <view style="height: 30rpx;background-color: #F5F6F6;"></view> 
-		<view class="item-list" v-for="(item,index) in list2" :key="index" v-if="index==2 ||(index>=0 && index<=1 && data.showAccount==1)" @click="clickItem(1,index)">
+		<view class="item-list" v-for="(item,index) in list2" :key="8+index" v-if="index==2 ||(index>=0 && index<=1 && data.showAccount==1)" @click="clickItem(1,index)">
 			<view class="left-name">{{item}}</view>
+			<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
+			<view class="line" ></view>
+		</view>
+		<view style="height: 30rpx;background-color: #F5F6F6;"></view>
+		<view class="item-list" data-src="/pages/doctor/changeData" @click="tootherpage">
+			<view class="left-name">个人资料</view>
 			<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
 			<view class="line" ></view>
 		</view>
@@ -106,7 +112,12 @@
 						 })
 					 }
 				});
-			}
+			},
+			tootherpage(e){
+				uni.navigateTo({
+					url:e.currentTarget.dataset.src
+				})
+			},
 			
 		},
 
@@ -183,7 +194,7 @@
 		}
 		.bottom{
 			background-color: #F5F6F6;
-			height: 400px;
+			height: 30px;
 		}
 	}
 </style>

@@ -85,7 +85,7 @@
 				</view>
 				<view @click="toModifyPsw">
 					<view class="flex text-box">
-						<text class="item-text">修改密码</text>
+						<text class="item-text">帐号设置</text>
 						<image src="../../static/icon/more_icon.png"></image>
 					</view>
 				</view>
@@ -191,7 +191,7 @@
 			},
 			toModifyPsw() {
 				uni.navigateTo({
-					url: '../sales/change-password'
+					url: '/pages/sales/changeOther'
 				});
 			},
 			toAccount() {

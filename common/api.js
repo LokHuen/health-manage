@@ -505,6 +505,14 @@ var api = {
 	getRecordPage: (data) => {
 		return rq("/wx/card/apply/getRecordPage", data, "GET");
 	},//卡片的制作记录（分页）
+	
+	//cnmi
+	salesmangetOne: (data) => {
+		return rq("/wx/salesman/getOne", data, "GET");
+	},//获取业务员账号信息详情
+	doctorsaveInfo: (data) => {
+		return rq("/wx/doctor/saveInfo", data, "POST");
+	},//修改个人资料
 }
 
 export {

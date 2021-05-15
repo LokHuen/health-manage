@@ -4,7 +4,7 @@
 		<view style="padding-top:40rpx;">帐号设置</view>
 		<view class="name-box">
 			<view class="name-tips">账号：</view>
-			<input class="name-input" :disabled="id?true:false" type="text" :value="form.accountCode" placeholder="用户名请输入4到10个字母或数字" v-model="form.accountCode" @input='inputcheck($event,"accountCode")'/>
+			<input class="name-input" :disabled="id?true:false" type="text" placeholder="用户名请输入4到10个字母或数字" v-model="form.accountCode" @input='inputcheck($event,"accountCode")'/>
 		</view>
 
 		<view class="nametext">用户名用于登录电脑端患者管理系统，设置成功后不可修改</view>
