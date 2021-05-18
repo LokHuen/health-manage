@@ -8,6 +8,10 @@
 				<view class="left-name">修改密码</view>
 				<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
 			</view>
+			<view class="item-list1 flex other" @click="torecord(3)">
+				<view class="left-name">绑定微信</view>
+				<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
+			</view>
 			
 			<view class="item-list1 flex other" @click="torecord(2)">
 				<view class="left-name">工作照</view>
@@ -21,6 +25,7 @@
 
 <script>
 	const app = getApp();
+	import wx from '../../plugins/jweixin.js'
 	import turnback from "../../components/turnback.vue"
 	export default {
 		components: {
@@ -32,7 +37,8 @@
 				typelist:[],
 			}
 		},
-		onLoad(){
+		onLoad(opt){
+			if(opt.bind) app.tip("绑定成功");
 			this.getlist();
 		},
 		onShow(){
@@ -61,6 +67,10 @@
 			torecord(index){
 				let url = "/pages/sales/change-password";
 				if(index==2) url = "/pages/sales/changeAvater";
+				if(index==3) {
+					wx.miniProgram.navigateTo({url:"/pages/right?t="+localStorage.getItem("salesToken")+"&c="+app.globalData.channel});
+					return;
+				}
 				uni.navigateTo({
 					url:url
 				})

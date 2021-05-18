@@ -13,7 +13,7 @@
 		data() {
 			return {
 				list:[
-					{name:"拓普健康业务",src:"https://jxgzh.healxin.com/pages/sales/register"},
+					{name:"拓普健康业务",src:"http://weixingzh-test.cvddr.com/pages/sales/register"},
 				]
 			}
 		},
