@@ -83,9 +83,9 @@
 					<div class="chartleft">
 						<div id="echarts" class="echartsleft" ref="echartsline"></div>
 
-						<view style="font-size:40rpx;padding:0 0 30rpx 160rpx;text-align:left;">
+						<view style="font-size:36rpx;padding:0 0 30rpx 160rpx;text-align:left;">
 							<view class="flex">
-								<view class="flexc" style="width: 500rpx;margin-right: 100rpx;">
+								<view class="flexc" style="width: 400rpx;margin-right: 100rpx;">
 									<view class="flex">
 										<text class="smallblockleft color1"></text>
 										<text>0-1: 无营养不良</text>
@@ -807,7 +807,7 @@
 						let data = JSON.parse(rq.data);
 						this.showimgbox = false;
 						app.tip("生成成功");
-						// window.open(app.globalData.baseUrl+data.data);
+						window.open(app.globalData.baseUrl+data.data);
 						// console.log(rq)
 					},
 					fail: (res) => {
@@ -1809,7 +1809,7 @@
 	}
 
 	.echartsleft {
-		width: 80%;
+		width: 90%;
 		height: 1200rpx;
 	}
 

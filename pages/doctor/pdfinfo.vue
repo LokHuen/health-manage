@@ -1,6 +1,6 @@
 <template>
 
-	<view >
+	<view style="background:#f7f7f7;">
 		<div id="imgcreatebox">
 
 		<div class="pagebox">
@@ -37,11 +37,12 @@
 				<div class="flex nearitem ">
 					<span class="nearleft">本次测评总得分</span><span class="nearright">{{userData.total}}分</span>
 				</div>
+				<view class="item-list flex" v-show="testtype==1" @click="topgdetail">
+					<view class="left-name">测评答题记录</view>
+					<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
+				</view>
 			</div>
-			<view class="item-list flex" v-show="testtype==1" @click="topgdetail">
-				<view class="left-name">测评答题记录</view>
-				<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
-			</view>
+			
 			<div class="chartbox">
 				<div class="charttitle">PG-SGA营养状况评估记录分值</div>
 				<div class="">
@@ -678,7 +679,7 @@
 			border-radius: 7rpx;
 			padding:30rpx;
 			box-sizing:border-box;
-			background-color: rgba(248, 248, 248, 100);
+			background-color: #fff;
 			margin-bottom:34rpx;
 		}
 
@@ -695,7 +696,7 @@
 			border-radius: 7rpx;
 			padding:30rpx;
 			box-sizing:border-box;
-			background-color: rgba(248, 248, 248, 100);
+			background-color: #fff;
 			margin-bottom:34rpx;
 		}
 
@@ -731,7 +732,7 @@
 			border-radius: 7rpx;
 			padding:20rpx 30rpx 30rpx;
 			box-sizing:border-box;
-			background-color: rgba(248, 248, 248, 100);
+			background-color: #fff;
 			margin-bottom:34rpx;
 		}
 
@@ -741,8 +742,8 @@
 			border-radius: 8rpx;
 			padding:30rpx 10rpx 30rpx 30rpx;
 			box-sizing:border-box;
-			background-color: rgba(248, 248, 248, 100);
-			margin-bottom:34rpx;
+			background-color: #fff;
+			margin-bottom:34rpx;margin-top:30rpx;
 			line-height: 50rpx;
 
 			.infoitem {
@@ -1694,11 +1695,11 @@
 		}
 	}
 	.item-list{
-		margin:-34rpx 0rpx 0;
-		position: relative;
+		margin:20rpx 0rpx 0;
+		position: relative;background:#f7f7f7;
 		.left-name{
-			height: 116rpx;
-			line-height: 116rpx;
+			height: 100rpx;
+			line-height: 100rpx;
 			font-size: 16px;
 			color: #333333;
 			padding-left: 26rpx;
