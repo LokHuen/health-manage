@@ -84,6 +84,10 @@
 				 mode="widthFix" @click.stop="showDetailMessage" v-show="false"></image>
 			</view>
 		</view> -->
+		<view class="item-list" v-show="testtype==1" @click="topgdetail">
+			<view class="left-name">查看患者营养状况反馈表</view>
+			<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
+		</view>
 		<view class="line-space"></view>
 		<view class="itemboxtitle">均衡饮食建议</view>
 		<view class="health-msg-box" v-if="infoData.weight || infoData.standardWeight" style="padding-top: 6rpx;">
@@ -1290,6 +1294,11 @@
 			tofooddetail(){
 				uni.navigateTo({
 					url:"/pages/doctor/dietDetail?id="+this.uid
+				})
+			},
+			topgdetail(){
+				uni.navigateTo({
+					url:"/pages/doctor/pdfinfo?id="+this.uid
 				})
 			},
 		},

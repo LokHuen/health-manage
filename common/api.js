@@ -513,6 +513,13 @@ var api = {
 	doctorsaveInfo: (data) => {
 		return rq("/wx/doctor/saveInfo", data, "POST");
 	},//修改个人资料
+	//获得答题记录列表
+	getPatientReplyList:(data)=>{return rq("/pc/doctor/survey/getPatientReplyList",data,"GET");},
+	getPatientScoreDetail:(data)=>{return rq("/pc/doctor/survey/getPatientScoreDetail",data,"GET");},//导出PG-SGA评测结果——个人信息及评测得分
+	getPatientScorePage:(data)=>{return rq("/pc/doctor/survey/getPatientScorePage",data,"GET");},//导出PG-SGA评测结果——各项得分及体格得分记录列表
+	surveysendEmail: (data) => {
+		return rq("/pc/doctor/survey/sendEmail", data, "POST");
+	},//营养状况反馈表——发送到邮箱 
 }
 
 export {

@@ -8,6 +8,24 @@
 			}
 		},
 		{
+			"path": "pages/doctor/pdfresult",
+			"style": {
+				"navigationBarTitleText": "提示"
+			}
+		},
+		{
+			"path": "pages/doctor/makepdf",
+			"style": {
+				"navigationBarTitleText": "生成PDF文件并导出"
+			}
+		},
+		{
+			"path": "pages/doctor/pdfinfo",
+			"style": {
+				"navigationBarTitleText": "营养状况反馈表"
+			}
+		},
+		{
 			"path": "pages/sales/changeAvater",
 			"style": {
 				"navigationBarTitleText": "工作照"
