@@ -45,7 +45,7 @@
 		<div class="pagebox">
 			<div class="userinfo flex">
 				<span class="infoitem">姓名：{{userData.patientName}}</span><span class="infoitem">性别：{{userData.patientGender||"无"}}</span><span
-				 class="infoitem">年龄：{{userData.age||"无"}}岁</span><span class="infoitem">疾病诊断：{{userData.illness||"无"}}</span><span
+				 class="infoitem">年龄：{{userData.age?userData.age+'岁':"暂无"}}</span><span class="infoitem">疾病诊断：{{userData.illness||"无"}}</span><span
 				 class="infoitem">联系方式：{{userData.phone||"无"}}</span>
 			</div>
 			<div class="neartest">
