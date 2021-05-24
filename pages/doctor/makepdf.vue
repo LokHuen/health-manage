@@ -11,6 +11,9 @@
 	</view>
 	<!-- <img v-if="imgUrl" :src="imgUrl" alt="" style="width:100%;height:auto;"> -->
 	<!-- <img v-if="imgUrl1" :src="imgUrl1" alt="" style="width:100%;height:auto;"> -->
+	<view v-if="showimgbox" style="position:relative;">
+		<view class="hidewhitebox"></view>
+	</view>
 	<view v-show="showimgbox" style="width:1460px;">
 		
 		<div id="imgcreatebox">
@@ -45,7 +48,7 @@
 		<div class="pagebox">
 			<div class="userinfo flex">
 				<span class="infoitem">姓名：{{userData.patientName}}</span><span class="infoitem">性别：{{userData.patientGender||"无"}}</span><span
-				 class="infoitem">年龄：{{userData.age?userData.age+'岁':"暂无"}}</span><span class="infoitem">疾病诊断：{{userData.illness||"无"}}</span><span
+				 class="infoitem">年龄：{{userData.age?(userData.age+'岁'):"暂无"}}</span><span class="infoitem">疾病诊断：{{userData.illness||"无"}}</span><span
 				 class="infoitem">联系方式：{{userData.phone||"无"}}</span>
 			</div>
 			<div class="neartest">
@@ -260,7 +263,7 @@
 		},
 		methods: {
 			getUserData() {
-				app.loading("生成中");
+				app.loading("生成中",true);
 				if (this.puid == "") return;
 				this.getInfo();
 
@@ -856,6 +859,7 @@
 </script>
 
 <style lang="scss" scoped>
+	.hidewhitebox{position: absolute;z-index:9;top:0;left:0;right:0;height:200vh;background:#fff;}
 	.linetext {
 		font-size: 28*1.1rpx;
 		padding: 30rpx 0;
