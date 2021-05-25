@@ -810,7 +810,7 @@
 						let data = JSON.parse(rq.data);
 						this.showimgbox = false;
 						app.tip("生成成功");
-						window.open(app.globalData.baseUrl+data.data,"_blank");
+						// window.open(app.globalData.baseUrl+data.data,"_blank");
 						// console.log(rq)
 					},
 					fail: (res) => {
