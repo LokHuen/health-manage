@@ -26,7 +26,7 @@
 		},
 		methods: {
 			clickItem(index) {
-				uni.redirectTo({
+				uni.navigateTo({
 					url: '/pages/doctor/export/send?type='+(index+1)+'&text='+this.list[index],
 				});
 			},
