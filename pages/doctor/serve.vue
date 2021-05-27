@@ -14,6 +14,12 @@
 				
 			</view>
 		</view>
+		<view class="item-list other" @click="toexport">
+			<view class="left-name">患者营养状况评估数据导出</view>
+			<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
+			
+		</view>
+		<view class="minfont">可以导出您的患者做过的评估数据</view>
 		<view class="item-list other" @click="toshowdata">
 			<view class="left-name">演示数据</view>
 			<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
@@ -69,6 +75,11 @@
 					url: "/pages/showdata/nutrition-manage"
 				});
 			},
+			toexport(){
+				uni.navigateTo({
+					url: "/pages/doctor/export/list"
+				});
+			},
 		},
 
 	}
@@ -111,7 +122,7 @@
 				height: 6rpx;
 				background-color: #F5F6F6;
 			}
-			&.other{margin-top:60rpx;}
+			&.other{margin-top:30rpx;}
 			&.unit{margin-top:0;margin-bottom:0;border-radius: 0;}
 		}
 

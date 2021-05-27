@@ -519,7 +519,14 @@ var api = {
 	getPatientScorePage:(data)=>{return rq("/pc/doctor/survey/getPatientScorePage",data,"GET");},//导出PG-SGA评测结果——各项得分及体格得分记录列表
 	surveysendEmail: (data) => {
 		return rq("/pc/doctor/survey/sendEmail", data, "POST");
-	},//营养状况反馈表——发送到邮箱 
+	},//营养状况反馈表——发送到邮箱
+	
+	replysendReply: (data) => {
+		return rq("/wx/survey/reply/sendReply", data, "GET");
+	},//发送pg-sga营养评估电子邮件
+	replysendReply1: (data) => {
+		return rq("/wx/survey/reply/sendReply1", data, "GET");
+	},//发送sga营养评估电子邮件
 }
 
 export {
