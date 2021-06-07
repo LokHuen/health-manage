@@ -201,9 +201,16 @@
 					app.loaded();
 					this.commiting = false;
 					if (res.status == 1) {
-						uni.navigateTo({
-							url: 'doctor-submit-result'
-						});
+						if(res.data.closeDoctorAccount){
+							uni.redirectTo({
+								url: 'doctor-center'
+							});
+						}else{
+							uni.navigateTo({
+								url: 'doctor-submit-result'
+							});
+						}
+						
 					}
 				}).catch(res => {
 					app.loaded();
