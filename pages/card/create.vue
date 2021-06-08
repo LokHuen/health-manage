@@ -366,7 +366,7 @@
 					      // 'content-type': 'multipart/form-data',
 						  'salesToken':localStorage.getItem("salesToken"),
 						  'uid': localStorage.getItem("uid"),
-						  'channel':1,
+						  'channel':app.globalData.channel,
 					    },
 					    success: (rq)=>{
 							let data = JSON.parse(rq.data);
