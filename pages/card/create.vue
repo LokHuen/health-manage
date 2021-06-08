@@ -8,7 +8,7 @@
 				<swiper-item v-if="info.templateCode=='0401'||info.templateCode=='0402'||info.templateCode=='0403'||info.templateCode=='0404'">
 					<view :class="'swiperimgbox '+(create?'big':'')" @click="getallimg" id="doctorcode">
 						<image v-if="info.cardFrontPic" :src="'/api'+info.cardFrontPic" class="swiperimg" mode="widthFix"></image>
-						<view :class="'a5infobox '+(create?'big':'') +(info.templateCode=='0401'?' noall':'')+(info.templateCode=='0402'?' noname':'')+(info.templateCode=='0403'?' nonum':'')">
+						<view :class="'a5infobox '+(create?'big':'') +(info.templateCode=='0401'?' noall':'')+(info.templateCode=='0402'?' noname':'')+((info.templateCode=='0403'||!info.userCode)?' nonum':'')">
 							<!-- nonum:0403无编号 noname:0402无名字 noall:0401无编号无名字 -->
 							<image :src="'/api'+info.qrCode" class="a5img"></image>
 							<view class="teamtext">{{info.userHospital}}</view>
@@ -16,7 +16,7 @@
 								<view :class="create?'movetext':''">{{info.userDepartment}}</view>
 							</view>
 							<view v-show="(info.templateCode=='0404')||(info.templateCode=='0403')" class="doctortext">{{info.userName}}  {{info.userTitle||""}}</view>
-							<view v-show="(info.templateCode=='0404')||(info.templateCode=='0402')"><view class="numtext">编号：{{info.userCode}}</view></view>
+							<view v-if="info.userCode" v-show="(info.templateCode=='0404')||(info.templateCode=='0402')"><view class="numtext">编号：{{info.userCode}}</view></view>
 						</view>
 					</view>
 				</swiper-item>
@@ -30,7 +30,7 @@
 				<swiper-item v-if="info.templateCode=='0101'||info.templateCode=='0102'||info.templateCode=='0103'||info.templateCode=='0104'">
 					<view :class="'swiperimgbox '+(create?'big':'')" @click="getallimg" id="doctorcode">
 						<image v-if="info.cardFrontPic" :src="'/api'+info.cardFrontPic" class="swiperimg" mode="widthFix"></image>
-						<view :class="'a6infobox '+(create?'big':'') +(info.templateCode=='0101'?' noall':'')+(info.templateCode=='0102'?' noname':'')+(info.templateCode=='0103'?' nonum':'')">
+						<view :class="'a6infobox '+(create?'big':'') +(info.templateCode=='0101'?' noall':'')+(info.templateCode=='0102'?' noname':'')+((info.templateCode=='0103'||!info.userCode)?' nonum':'')">
 							<!-- nonum:0103无编号 noname:0102无名字 noall:0101无编号无名字 -->
 							<image :src="'/api'+info.qrCode" class="a6img"></image>
 							<view class="teamtext">{{info.userHospital}}</view>
@@ -38,7 +38,7 @@
 								<view :class="create?'movetext':''">{{info.userDepartment}}</view>
 							</view>
 							<view class="doctortext" v-show="(info.templateCode=='0104')||(info.templateCode=='0103')">{{info.userName}}  {{info.userTitle||""}}</view>
-							<view v-show="(info.templateCode=='0104')||(info.templateCode=='0102')"><view class="numtext">编号：{{info.userCode}}</view></view>
+							<view v-if="info.userCode" v-show="(info.templateCode=='0104')||(info.templateCode=='0102')"><view class="numtext">编号：{{info.userCode}}</view></view>
 						</view>
 					</view>
 				</swiper-item>
@@ -52,10 +52,10 @@
 				<swiper-item v-if="info.templateCode=='0201'||info.templateCode=='0202'">
 					<view :class="'swiperimgbox '+(create?'big':'')" @click="getallimg" id="doctorcode">
 						<image v-if="info.cardFrontPic" :src="'/api'+info.cardFrontPic" class="swiperimg" mode="widthFix"></image>
-						<view :class="'greeninfobox '+(create?'big':'') +(info.templateCode=='0201'?' nonum':'')">
+						<view :class="'greeninfobox '+(create?'big':'') +((info.templateCode=='0201'||!info.userCode)?' nonum':'')">
 							<!-- nonum:0201无编号 -->
 							<image :src="'/api'+info.qrCode" class="greenimg"></image>
-							<view v-show="info.templateCode=='0202'"><view class="numtext">编号:{{info.userCode}}</view></view>
+							<view v-if="info.userCode" v-show="info.templateCode=='0202'"><view class="numtext">编号:{{info.userCode}}</view></view>
 						</view>
 					</view>
 					<view class="swiperimgbox" style="margin-top:50rpx;" @click="getsecondimg(baseUrl+info.cardBackPic)">
@@ -67,10 +67,10 @@
 				<swiper-item v-if="info.templateCode=='0301'||info.templateCode=='0302'">
 					<view :class="'swiperimgbox '+(create?'big':'')" @click="getallimg" id="doctorcode">
 						<image v-if="info.cardFrontPic" :src="'/api'+info.cardFrontPic" class="swiperimg" mode="widthFix"></image>
-						<view :class="'blueinfobox '+(create?'big':'') +(info.templateCode=='0301'?' nonum':'')">
+						<view :class="'blueinfobox '+(create?'big':'') +((info.templateCode=='0301'||!info.userCode)?' nonum':'')">
 							<!-- nonum:0301无编号 -->
 							<image :src="'/api'+info.qrCode" class="blueimg"></image>
-							<view v-show="info.templateCode=='0302'"><view class="numtext">编号：{{info.userCode}}</view></view>
+							<view v-if="info.userCode" v-show="info.templateCode=='0302'"><view class="numtext">编号：{{info.userCode}}</view></view>
 						</view>
 					</view>
 					<view class="swiperimgbox" style="margin-top:50rpx;" @click="getsecondimg(baseUrl+info.cardBackPic)">
@@ -147,7 +147,7 @@
 								<view :class="create?'movetext':''">推广志愿者</view>
 							</view>
 							<view class="doctortext">{{info.userName}}</view>
-							<view ><view class="numtext">【编号：{{info.userCode}}】</view></view>
+							<view v-if="info.userCode"><view class="numtext">【编号：{{info.userCode}}】</view></view>
 						</view>
 					</view>
 				</swiper-item>

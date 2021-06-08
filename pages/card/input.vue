@@ -165,7 +165,7 @@
 			selectHospital(item) {
 				this.hospital = item.name;
 				this.hospitalCode = `${item.hospitalCode}（${item.name}）`;//医院编码
-				if(!item.hospitalCode) this.hospitalCode = ""
+				if(!item.hospitalCode) this.hospitalCode = "无"
 				this.userHospitalId = item.id;
 				this.closeOption(0)
 			},
@@ -183,14 +183,11 @@
 			},
 			submit() {
 				
-				if (!this.userName || !this.position || !this.hospital || !this.departmentCode || !this.department) {
+				if (!this.userName || !this.position || !this.hospital || !this.department) {
 					app.tip('请输入完整信息');
 					return;
 				}
-				if(!this.hospitalCode){
-					app.tip('该医院暂无编码，请选择其他医院');
-					return;
-				}
+				
 				if (this.commiting) return;
 				this.commiting = true;
 				app.loading("保存中");
@@ -250,7 +247,7 @@
 					if(res.data){
 						this.userHospitalId = res.data.id;
 						if(res.data.hospitalCode) this.hospitalCode = `${res.data.hospitalCode}（${this.hospital}）`;
-						else this.hospitalCode = "";
+						else this.hospitalCode = "无";
 					}else{
 						this.userHospitalId = "";
 						this.hospitalCode = "";
