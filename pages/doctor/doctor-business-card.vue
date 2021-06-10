@@ -4,7 +4,7 @@
 		<view class="i-content-box" @click="saveimg" id="doctorcode"  click="saveQRCode">
 			<image src="../../static/img/doctor_bg.png" mode="widthFix" class="content-bg"></image>
 			<view class="content-info">
-				<image :src="infoData.portrait" mode="widthFix" class="avator"></image>
+				<image :src="infoData.portrait" mode="aspectFill" class="avator"></image>
 				<view class="name">{{infoData.doctorName}}</view>
 				<view class="technicalTitle" :style="create?'':''"><text>{{infoData.technicalTitle}}</text></view>
 				<view class="department">{{infoData.hospital+infoData.department}} </view>
