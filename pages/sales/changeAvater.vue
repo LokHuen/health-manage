@@ -8,7 +8,7 @@
 		</view>
 		
 		<view v-if="preimg" style="position: fixed;left:0;right:0;top:0;bottom:0;">
-			<avatar selWidth="280px" selHeight="280px" ref='avatar' @upload="myUpload" :avatarSrc="preimg" fileType='png' avatarStyle="width: 280px; height: 280px; margin: 40px;"></avatar>
+			<avatar selWidth="280px" selHeight="360px" ref='avatar' @upload="myUpload" :avatarSrc="preimg" fileType='png' avatarStyle="width: 280px; height: 360px; margin: 40px;"></avatar>
 		</view>
 		
 	</view>
