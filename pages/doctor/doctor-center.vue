@@ -4,7 +4,7 @@
 			<image src="../../static/img/doctor_center.png" mode="widthFix" class="background-img"></image>
 			<view class="info-box">
 				<view class="title"> </view>
-				<image :src="data.portrait" mode="widthFix" class="avator"></image>
+				<image :src="data.portrait" mode="aspectFill" class="avator"></image>
 				<view class="name">{{data.doctorName}}</view>
 				<view class="position">{{data.technicalTitle}}</view>
 				<view class="department">{{data.hospital+data.department}}</view>
