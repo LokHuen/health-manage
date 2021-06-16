@@ -39,7 +39,7 @@
 		},
 		onLoad(opt){
 			if(opt.bind) app.tip("绑定成功");
-			this.getlist();
+			// this.getlist();
 		},
 		onShow(){
 			

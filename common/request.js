@@ -28,7 +28,7 @@ function rq(url, data = {}, type, ctype) {
 						localStorage.removeItem("uid");
 						location.reload();
 					}
-					reject('未登录')
+					reject(res.data)
 				}
 				if (res.data.status !== 1) {
 					if(res.data.msg)

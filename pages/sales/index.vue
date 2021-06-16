@@ -92,11 +92,23 @@
 			</view>
 			<text class="login-out" @click="logOut">退出登录</text>
 		</view>
+		<uni-popup ref="pop1" type="center">
+			<view class="white-background-pop1">
+				<view class="white-background-pop1-title">
+					<image src="../../static/icon_close.png" mode="aspectFill" @click="$refs.pop1.close()" class="close"></image>
+				</view>
+				<view class="bindtips">
+					请绑定微信帐号，便于及时收取患者中、<br>重度营养评估数据；收取待付款订单通知。
+				</view>
+				<view class="sendemail" @click="toapplication">去绑定</view>
+			</view>
+		</uni-popup>
 	</view>
 </template>
 
 <script>
-	const app = getApp()
+	const app = getApp();
+	import wx from '../../plugins/jweixin.js'
 	export default {
 		data() {
 			return {
@@ -127,9 +139,20 @@
 		},
 		onShow() {
 		    this.judgeNew();
-			this.hasMesage()
+			this.hasMesage();
+			
+			if(!app.getCache('fwOpenid')){
+				this.$nextTick(()=>{
+					this.$refs.pop1.open();
+				})
+			}
+			
 		},
 		methods: {
+			toapplication(){
+				this.$refs.pop1.close();
+				wx.miniProgram.navigateTo({url:"/pages/right?t="+localStorage.getItem("salesToken")+"&c="+app.globalData.channel});
+			},
 			toMessages(needRead) {
 				if (needRead) {
 					app.readMessage({
@@ -258,6 +281,33 @@
 </script>
 
 <style scoped lang="scss">
+	.white-background-pop1 {
+		text-align: center;width:90vw;
+		background-color: #FFFFFF;padding:0 0 30rpx 0;
+		border-radius: 10px;
+	
+		.white-background-pop1-title {
+			font-size: 30rpx;
+			color: #333;font-weight:bold;
+			padding: 35rpx 0;
+			position: relative;
+			.close{
+				position: absolute;
+				right: 50rpx;
+				width: 30rpx;
+				height: 30rpx;
+				top: 40rpx;
+			}
+		}
+		.bindtips{font-size:30rpx;padding:50rpx 0 30rpx;}
+		.sendemail{
+			line-height:1;padding:24rpx 0;
+			border-radius: 60rpx;font-size: 32rpx;
+			background:#4789EB;
+			width: 74%;color:#fff;margin:40rpx auto 20rpx;
+			text-align: center;
+		}
+	}
 	page {
 		background-color: $uni-bg-color-grey;
 	}
