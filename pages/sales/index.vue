@@ -135,17 +135,16 @@
 			this.user.isCrossPlatform = app.getCache('isCrossPlatform')
 			this.user.name = app.getCache('name')
 			this.user.orgId = app.getCache('orgId')
-			this.user.orgName = app.getCache('orgName')
-		},
-		onShow() {
-		    this.judgeNew();
-			this.hasMesage();
-			
+			this.user.orgName = app.getCache('orgName');
 			if(!app.getCache('fwOpenid')){
 				this.$nextTick(()=>{
 					this.$refs.pop1.open();
 				})
 			}
+		},
+		onShow() {
+		    this.judgeNew();
+			this.hasMesage();
 			
 		},
 		methods: {
