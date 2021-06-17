@@ -136,11 +136,7 @@
 			this.user.name = app.getCache('name')
 			this.user.orgId = app.getCache('orgId')
 			this.user.orgName = app.getCache('orgName');
-			if(!app.getCache('fwOpenid')){
-				this.$nextTick(()=>{
-					this.$refs.pop1.open();
-				})
-			}
+			
 		},
 		onShow() {
 		    this.judgeNew();
@@ -272,7 +268,12 @@
 			},
 			hasMesage() {
 				app.hasMessage().then((res) => {
-					this.msgInfo = res.data
+					this.msgInfo = res.data;
+                    if(!this.msgInfo.fwOpenid){
+                    	this.$nextTick(()=>{
+                    		this.$refs.pop1.open();
+                    	})
+                    }
 				})
 			}
 		}
