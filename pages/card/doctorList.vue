@@ -58,7 +58,11 @@
 			getList(page) {
 				if(page) this.params.page = page;
 				if (this.params.page > this.pageCount) return;
-				app.salesuserlist(this.params).then((res) => {
+				let bindDoctor = this.params.bindDoctor;
+				if(this.params.keyword){
+					bindDoctor = "";
+				}
+				app.salesuserlist({...this.params,bindDoctor}).then((res) => {
 					this.info = res.data
 					this.pageCount = res.data.pageCount;
 					this.list = this.params.page == 1 ? res.data : this.list.concat(res.data);

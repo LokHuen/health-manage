@@ -10,7 +10,11 @@
 						<image v-if="info.cardFrontPic" :src="'/api'+info.cardFrontPic" class="swiperimg" mode="widthFix"></image>
 						<view :class="'a5infobox '+(create?'big':'') +(info.templateCode=='0401'?' noall':'')+(info.templateCode=='0402'?' noname':'')+((info.templateCode=='0403'||!info.userCode)?' nonum':'')">
 							<!-- nonum:0403无编号 noname:0402无名字 noall:0401无编号无名字 -->
-							<image :src="'/api'+info.qrCode" class="a5img"></image>
+							<view class="prelative">
+								<image :src="'/api'+info.qrCode" class="a5img"></image>
+								<view class="imginfobox">扫码关注 - 信息注册 - 营养评测</view>
+							</view>
+							
 							<view class="teamtext">{{info.userHospital}}</view>
 							<view class="depttext">
 								<view :class="create?'movetext':''">{{info.userDepartment}}</view>
@@ -32,7 +36,10 @@
 						<image v-if="info.cardFrontPic" :src="'/api'+info.cardFrontPic" class="swiperimg" mode="widthFix"></image>
 						<view :class="'a6infobox '+(create?'big':'') +(info.templateCode=='0101'?' noall':'')+(info.templateCode=='0102'?' noname':'')+((info.templateCode=='0103'||!info.userCode)?' nonum':'')">
 							<!-- nonum:0103无编号 noname:0102无名字 noall:0101无编号无名字 -->
-							<image :src="'/api'+info.qrCode" class="a6img"></image>
+							<view class="prelative">
+								<image :src="'/api'+info.qrCode" class="a6img"></image>
+								<view class="imginfobox">扫码关注 - 信息注册 - 营养评测</view>
+							</view>
 							<view class="teamtext">{{info.userHospital}}</view>
 							<view class="depttext">
 								<view :class="create?'movetext':''">{{info.userDepartment}}</view>
@@ -97,7 +104,10 @@
 						<image v-if="info.cardFrontPic" :src="'/api'+info.cardFrontPic" class="swiperimg" mode="widthFix"></image>
 						<view :class="'haiji_a5infobox '+(create?'big':'') +(info.templateCode=='0701'?' noall':'')">
 							<!-- noall:0701无医院 -->
-							<image :src="'/api'+info.qrCode" class="haiji_a5img"></image>
+							<view class="prelative">
+								<image :src="'/api'+info.qrCode" class="haiji_a5img"></image>
+								<view class="imginfobox">扫码关注 - 信息注册 - 营养评测</view>
+							</view>
 							<view v-show="info.templateCode=='0702'">
 								<view class="teamtext">{{info.userHospital}}</view>
 								<view class="depttext">
@@ -119,7 +129,10 @@
 						<image v-if="info.cardFrontPic" :src="'/api'+info.cardFrontPic" class="swiperimg" mode="widthFix"></image>
 						<view :class="'haiji_a6infobox '+(create?'big':'') +(info.templateCode=='0601'?' noall':'')">
 							<!-- noall:0601无医院 -->
-							<image :src="'/api'+info.qrCode" class="haiji_a6img"></image>
+							<view class="prelative">
+								<image :src="'/api'+info.qrCode" class="haiji_a6img"></image>
+								<view class="imginfobox">扫码关注 - 信息注册 - 营养评测</view>
+							</view>
 							<view v-show="info.templateCode=='0602'">
 								<view class="teamtext">{{info.userHospital}}</view>
 								<view class="depttext">
@@ -237,6 +250,7 @@
 			getinfo(){
 				app.applygetDetail({makeId:this.mid}).then((res) => {
 					if(res.data) {
+						// res.data.templateCode = "0104";
 						this.info = res.data;
 						this.email = res.data.applyEmail||this.email;
 					}
@@ -384,6 +398,7 @@
 </script>
 
 <style lang="scss" scoped>
+	.imginfobox{font-size: 16rpx;color: #2E75B6;line-height: 1;padding:0rpx 0 0rpx;text-align:center;position: absolute;bottom:-10rpx;left:0;right:0;font-weight:bold;}
 	.emailinput{width: 80%;background: #F5F5F5;border-radius:8rpx;padding:18rpx 24rpx;text-align: left;margin:auto;}
 	.white-background-pop1 {
 		text-align: center;width:90vw;
@@ -414,7 +429,7 @@
 	.a5infobox{
 		position:absolute;z-index:3;top:140rpx;left:0;right:0;text-align:center;
 		.a5img{border: 12rpx solid #0063B3;box-sizing: border-box;width: 262rpx;height: 262rpx;margin-top:40rpx;}
-		.teamtext{font-size: 32rpx;color: #2E75B6;line-height: 1;padding:22rpx 0 20rpx;}
+		.teamtext{font-size: 32rpx;color: #2E75B6;line-height: 1;padding:26rpx 0 20rpx;}
 		.depttext{
 			line-height:1;padding:12rpx 0;
 			border-radius: 60rpx;font-size: 32rpx;
@@ -424,45 +439,46 @@
 		}
 		.movetext{margin-top:-20*5rpx;padding-top:10*5rpx;}
 		.doctortext{font-size: 32rpx;color: #2E75B6;padding:20rpx 15rpx;}
-		.numtext{font-size: 27rpx;color: #666666;display: inline-block;padding:16rpx 15rpx 0;border-top:2rpx solid #D2D2D2;}
+		.numtext{font-size: 27rpx;color: #666666;display: inline-block;padding:12rpx 15rpx 0;border-top:2rpx solid #D2D2D2;}
 		&.nonum{
 			.a5img{margin-top:58rpx;}
-			.teamtext{padding:28rpx 0 28rpx;}
+			.teamtext{padding:38rpx 0 28rpx;}
 			.doctortext{padding:26rpx 15rpx;}
 		}
 		&.noname{
 			.a5img{margin-top:58rpx;}
-			.teamtext{padding:28rpx 0 28rpx;}
+			.teamtext{padding:38rpx 0 28rpx;}
 			.numtext{margin-top:34rpx;}
 		}
 		&.noall{
 			.a5img{margin-top:80rpx;}
-			.teamtext{padding:46rpx 0 44rpx;}
+			.teamtext{padding:54rpx 0 44rpx;}
 		}
 		&.big{
 			top:140*5rpx;
 			.a5img{border: 12*5rpx solid #0063B3;width: 262*5rpx;height: 262*5rpx;margin-top:40*5rpx;}
-			.teamtext{font-size: 32*5rpx;padding:22*5rpx 0 20*5rpx;}
+			.imginfobox{font-size: 16*5rpx;bottom:-14*5rpx;}
+			.teamtext{font-size: 32*5rpx;padding:26*5rpx 0 20*5rpx;}
 			.depttext{
 				padding:12*5rpx 0;
 				border-radius: 60*5rpx;font-size: 32*5rpx;
 				width: 296*5rpx;
 			}
 			.doctortext{font-size: 32*5rpx;padding:20*5rpx 15*5rpx;}
-			.numtext{font-size: 27*5rpx;padding:16*5rpx 15*5rpx 0;border-top:2*5rpx solid #D2D2D2;}
+			.numtext{font-size: 27*5rpx;padding:12*5rpx 15*5rpx 0;border-top:2*5rpx solid #D2D2D2;}
 			&.nonum{
 				.a5img{margin-top:58*5rpx;}
-				.teamtext{padding:28*5rpx 0 28*5rpx;}
+				.teamtext{padding:38*5rpx 0 28*5rpx;}
 				.doctortext{padding:26*5rpx 15*5rpx;}
 			}
 			&.noname{
 				.a5img{margin-top:58*5rpx;}
-				.teamtext{padding:28*5rpx 0 28*5rpx;}
+				.teamtext{padding:38*5rpx 0 28*5rpx;}
 				.numtext{margin-top:34*5rpx;}
 			}
 			&.noall{
 				.a5img{margin-top:80*5rpx;}
-				.teamtext{padding:46*5rpx 0 44*5rpx;}
+				.teamtext{padding:54*5rpx 0 44*5rpx;}
 			}
 		}
 	}
@@ -497,6 +513,7 @@
 		&.big{
 			top:140*5rpx;
 			.a6img{border: 12*5rpx solid #0063B3;width: 262*5rpx;height: 262*5rpx;margin-top:50*5rpx;}
+			.imginfobox{font-size: 16*5rpx;bottom:-14*5rpx;}
 			.teamtext{font-size: 32*5rpx;padding:30*5rpx 0 28*5rpx;}
 			.depttext{
 				padding:12*5rpx 0;
@@ -568,7 +585,7 @@
 	.haiji_a5infobox{
 		position:absolute;z-index:3;top:140rpx;left:0;right:0;text-align:center;
 		.haiji_a5img{box-sizing: border-box;width: 230rpx;height: 230rpx;margin-top:36rpx;}
-		.teamtext{font-size: 32rpx;color: #2E75B6;line-height: 1;padding:22rpx 0 20rpx;}
+		.teamtext{font-size: 32rpx;color: #2E75B6;line-height: 1;padding:26rpx 0 20rpx;}
 		.depttext{
 			line-height:1;padding:12rpx 0;
 			border-radius: 60rpx;font-size: 32rpx;
@@ -583,7 +600,8 @@
 		&.big{
 			top:140*5rpx;
 			.haiji_a5img{width: 230*5rpx;height: 230*5rpx;margin-top:36*5rpx;}
-			.teamtext{font-size: 32*5rpx;padding:22*5rpx 0 20*5rpx;}
+			.imginfobox{font-size: 16*5rpx;bottom:-14*5rpx;}
+			.teamtext{font-size: 32*5rpx;padding:26*5rpx 0 20*5rpx;}
 			.depttext{
 				padding:12*5rpx 0;
 				border-radius: 60*5rpx;font-size: 32*5rpx;
@@ -612,6 +630,7 @@
 		&.big{
 			top:140*5rpx;
 			.haiji_a6img{width: 230*5rpx;height: 230*5rpx;margin-top:56*5rpx;}
+			.imginfobox{font-size: 16*5rpx;bottom:-14*5rpx;}
 			.teamtext{font-size: 32*5rpx;padding:38*5rpx 0 40*5rpx;}
 			.depttext{
 				padding:12*5rpx 0;
