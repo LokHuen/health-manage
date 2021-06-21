@@ -14,18 +14,18 @@
 				<view class="content flex" @click="toOrder">
 					<view class="head-item flexc">
 						<text class="value">{{info.orderNum||0}}</text>
-						<text class="key">本月订单数</text>
+						<text class="key">订单数</text>
 					</view>
 					<view class="head-item flexc">
 						<text class="value">{{info.orderMoney||0}}</text>
-						<text class="key">本月订单总金额(元)</text>
+						<text class="key">订单总金额(元)</text>
 					</view>
 					<view class="head-item flexc">
 						<text class="value">{{info.realIncome||0}}</text>
 						<text class="key">实收总金额</text>
 					</view>
 				</view>
-				<text class="tip">统计范围：客户已付款订单</text>
+				<text class="tip">统计范围：客户本月已付款订单</text>
 			</view>
 		</view>
 		<view class="flexc">
