@@ -56,7 +56,8 @@
 				info: {
 					pageCount: 1
 				},
-				isMiniProgram:false
+				isMiniProgram:false,
+				orgId:"",
 			}
 		},
 		onLoad(props) {
