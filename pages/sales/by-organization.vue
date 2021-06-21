@@ -10,7 +10,7 @@
 					<image class="down-arrow" src="../../static/icon/right_arrow.png"></image>
 				</view>
 			</view>
-			<view class="flexc order-count-box">
+			<view v-if="!orgId" class="flexc order-count-box">
 				<view class="content flex" @click="toOrder">
 					<view class="head-item flexc">
 						<text class="value">{{info.orderNum||0}}</text>
@@ -20,7 +20,20 @@
 						<text class="value">{{info.orderMoney||0}}</text>
 						<text class="key">订单总金额(元)</text>
 					</view>
-					<view class="head-item flexc">
+				</view>
+				<text class="tip">统计范围：客户本月已付款订单</text>
+			</view>
+			<view v-if="orgId" class="flexc order-count-box">
+				<view class="content flex" @click="toOrder">
+					<view class="head-item1 flexc">
+						<text class="value">{{info.orderNum||0}}</text>
+						<text class="key">订单数</text>
+					</view>
+					<view class="head-item1 flexc">
+						<text class="value">{{info.orderMoney||0}}</text>
+						<text class="key">订单总金额(元)</text>
+					</view>
+					<view class="head-item1 flexc">
 						<text class="value">{{info.realIncome||0}}</text>
 						<text class="key">实收总金额(元)</text>
 					</view>
@@ -269,7 +282,7 @@
 
 					.head-item {
 						flex: 1;
-						font-size: 24rpx;
+						font-size: 28rpx;
 						justify-content: center;
 						align-items: center;border-right: 2rpx solid #ddd;
 
@@ -277,6 +290,22 @@
 							border-right: 0rpx solid #ddd;
 						}
 
+						.value {
+							font-size: 46rpx;
+							padding-bottom: 10rpx;
+							color: #4B8BE8;
+						}
+					}
+					.head-item1 {
+						flex: 1;
+						font-size: 24rpx;
+						justify-content: center;
+						align-items: center;border-right: 2rpx solid #ddd;
+					
+						&:last-child {
+							border-right: 0rpx solid #ddd;
+						}
+					
 						.value {
 							font-size: 38rpx;
 							padding-bottom: 10rpx;
