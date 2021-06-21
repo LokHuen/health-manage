@@ -22,7 +22,7 @@
 					</view>
 					<view class="head-item flexc">
 						<text class="value">{{info.realIncome||0}}</text>
-						<text class="key">实收总金额</text>
+						<text class="key">实收总金额(元)</text>
 					</view>
 				</view>
 				<text class="tip">统计范围：客户本月已付款订单</text>

@@ -26,7 +26,7 @@
 				</view>
 				<view class="numitem">
 					<view class="number">{{item.realIncome||0}}</view>
-					<view>实收总金额</view>
+					<view>实收总金额(元)</view>
 				</view>
 			</view>
 			<view>
