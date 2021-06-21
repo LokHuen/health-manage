@@ -114,7 +114,7 @@
 		},
 		onLoad(props) {
 			if (props.orgId) {
-				this.orgId = props.orgId
+				this.orgId = props.orgId||this.orgId
 			}
 			this.orgName = props.orgName
 			this.getSalesManOrg()
@@ -135,7 +135,7 @@
 			},
 			toMonthOrderList() {
 				uni.navigateTo({
-					url: 'month-order-list?pageResource=3' + '&orgId=+' + this.orgId
+					url: 'month-order-list?pageResource=3' + '&orgId=' + this.orgId
 				})
 			},
 			toOrganize() {
@@ -151,7 +151,7 @@
 				}
 
 			},
-			getOrgInfo(deptId = this.this.orgId) {
+			getOrgInfo(deptId = this.orgId) {
 				app.getOrgInfo({
 					deptId: deptId
 				}).then(res => {

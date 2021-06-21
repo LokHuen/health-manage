@@ -61,6 +61,7 @@
 			}
 		},
 		onLoad(props) {
+			console.log(props)
 			if (props.salesId) {
 				this.params.salesId = props.salesId
 			}
