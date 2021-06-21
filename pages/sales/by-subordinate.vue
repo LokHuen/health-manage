@@ -2,18 +2,35 @@
 	<view class="container flexc">
 		<turnback @back="back" v-if="isMiniProgram"> </turnback>
 		<view class="flexc head">
-			<view class="flexc order-count-box">
+			<view v-if="!showgetmoney" class="flexc order-count-box">
 				<view class="content flex" @click="toOrder">
 					<view class="head-item flexc">
 						<text class="value">{{info.orderNum||0}}</text>
-						<text class="key">本月订单数</text>
+						<text class="key">订单数</text>
 					</view>
 					<view class="head-item flexc">
 						<text class="value">{{info.orderMoney||0}}</text>
-						<text class="key">本月订单总金额（元）</text>
+						<text class="key">订单总金额(元)</text>
 					</view>
 				</view>
-				<text class="tip">统计范围：客户已付款订单</text>
+				<text class="tip">统计范围：客户本月已付款订单</text>
+			</view>
+			<view v-if="showgetmoney" class="flexc order-count-box">
+				<view class="content flex" @click="toOrder">
+					<view class="head-item1 flexc">
+						<text class="value">{{info.orderNum||0}}</text>
+						<text class="key">订单数</text>
+					</view>
+					<view class="head-item1 flexc">
+						<text class="value">{{info.orderMoney||0}}</text>
+						<text class="key">订单总金额(元)</text>
+					</view>
+					<view class="head-item1 flexc">
+						<text class="value">{{info.realIncome||0}}</text>
+						<text class="key">实收总金额(元)</text>
+					</view>
+				</view>
+				<text class="tip">统计范围：客户本月已付款订单</text>
 			</view>
 		</view>
 		<view class="flexc">
@@ -55,7 +72,8 @@
 			return {
 				salesId:'',
 				info: {},
-				isMiniProgram:false
+				isMiniProgram:false,
+				showgetmoney:false,
 			}
 		},
 		onLoad(props) {
@@ -99,6 +117,11 @@
 				app.agentInfo({}).then((res) => {
 					this.info = res.data
 				})
+				app.salesmangetIdentity({}).then(res => {
+					if (res.status == 1) {
+						this.showgetmoney = res.data.isAgent
+					}
+				});
 			}
 		},
 
@@ -163,7 +186,7 @@
 				padding-bottom: 40rpx;
 
 				.content {
-					padding: 60rpx 30rpx;
+					padding: 60rpx 0rpx;
 					padding-bottom: 36rpx;
 					flex-wrap: nowrap;
 
@@ -179,6 +202,22 @@
 
 						.value {
 							font-size: 52rpx;
+							padding-bottom: 10rpx;
+							color: #4B8BE8;
+						}
+					}
+					.head-item1 {
+						flex: 1;
+						font-size: 24rpx;
+						justify-content: center;
+						align-items: center;border-right: 2rpx solid #ddd;
+					
+						&:last-child {
+							border-right: 0rpx solid #ddd;
+						}
+					
+						.value {
+							font-size: 38rpx;
 							padding-bottom: 10rpx;
 							color: #4B8BE8;
 						}
