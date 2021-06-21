@@ -10,7 +10,7 @@
 					<image class="down-arrow" src="../../static/icon/right_arrow.png"></image>
 				</view>
 			</view>
-			<view v-if="!orgId" class="flexc order-count-box">
+			<view v-if="!showgetmoney" class="flexc order-count-box">
 				<view class="content flex" @click="toOrder">
 					<view class="head-item flexc">
 						<text class="value">{{info.orderNum||0}}</text>
@@ -23,7 +23,7 @@
 				</view>
 				<text class="tip">统计范围：客户本月已付款订单</text>
 			</view>
-			<view v-if="orgId" class="flexc order-count-box">
+			<view v-if="showgetmoney" class="flexc order-count-box">
 				<view class="content flex" @click="toOrder">
 					<view class="head-item1 flexc">
 						<text class="value">{{info.orderNum||0}}</text>
@@ -109,7 +109,8 @@
 				info: {},
 				teamNum: 0,
 				isShow: 0,
-				isMiniProgram:false
+				isMiniProgram:false,
+				showgetmoney:false,
 			}
 		},
 		onLoad(props) {
@@ -157,6 +158,11 @@
 				}).then(res => {
 					if (res.status == 1) {
 						this.info = res.data
+					}
+				});
+				app.salesmangetIdentity({}).then(res => {
+					if (res.status == 1) {
+						this.showgetmoney = res.data.isAgent
 					}
 				});
 			},

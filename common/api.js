@@ -527,6 +527,9 @@ var api = {
 	replysendReply1: (data) => {
 		return rq("/wx/survey/reply/sendReply1", data, "GET");
 	},//发送sga营养评估电子邮件
+	salesmangetIdentity: (data) => {
+		return rq("/wx/salesman/getIdentity", data, "GET");
+	},
 }
 
 export {

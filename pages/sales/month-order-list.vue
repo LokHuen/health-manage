@@ -5,7 +5,7 @@
 			<view class="time">
 				{{item.month}}
 			</view>
-			<view v-if="!orgId" class="flex numbox" @click="toOrder(item.month)">
+			<view v-if="!showgetmoney" class="flex numbox" @click="toOrder(item.month)">
 				<view class="numitem">
 					<view class="number">{{item.orderNum||0}}</view>
 					<view>订单数</view>
@@ -15,7 +15,7 @@
 					<view>订单总金额(元)</view>
 				</view>
 			</view>
-			<view v-if="orgId" class="flex numbox1" @click="toOrder(item.month)">
+			<view v-if="showgetmoney" class="flex numbox1" @click="toOrder(item.month)">
 				<view class="numitem">
 					<view class="number">{{item.orderNum||0}}</view>
 					<view>订单数</view>
@@ -58,10 +58,10 @@
 				},
 				isMiniProgram:false,
 				orgId:"",
+				showgetmoney:false,
 			}
 		},
 		onLoad(props) {
-			console.log(props)
 			if (props.salesId) {
 				this.params.salesId = props.salesId
 			}
@@ -86,6 +86,11 @@
 				wx.miniProgram.getEnv((res)=>{
 				   this.isMiniProgram = res.miniprogram?true:false;
 				})
+				app.salesmangetIdentity({}).then(res => {
+					if (res.status == 1) {
+						this.showgetmoney = res.data.isAgent
+					}
+				});
 			},
 			back(){
 			  uni.navigateBack({
