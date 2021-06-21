@@ -5,7 +5,7 @@
 			<view class="time">
 				{{item.month}}
 			</view>
-			<view class="flex numbox" @click="toOrder(item.month)">
+			<view v-if="!orgId" class="flex numbox" @click="toOrder(item.month)">
 				<view class="numitem">
 					<view class="number">{{item.orderNum||0}}</view>
 					<view>订单数</view>
@@ -13,6 +13,20 @@
 				<view class="numitem">
 					<view class="number">{{item.money||0}}</view>
 					<view>订单总金额(元)</view>
+				</view>
+			</view>
+			<view v-if="orgId" class="flex numbox1" @click="toOrder(item.month)">
+				<view class="numitem">
+					<view class="number">{{item.orderNum||0}}</view>
+					<view>订单数</view>
+				</view>
+				<view class="numitem">
+					<view class="number">{{item.money||0}}</view>
+					<view>订单总金额(元)</view>
+				</view>
+				<view class="numitem">
+					<view class="number">{{item.realIncome||0}}</view>
+					<view>实收总金额</view>
 				</view>
 			</view>
 			<view>
@@ -53,7 +67,8 @@
 				this.params.pageResource = props.pageResource
 			}
 			if (props.orgId) {
-				this.params.deptId = props.orgId
+				this.params.deptId = props.orgId;
+				this.orgId = props.orgId;
 			}
 			this.refreshData();
 			this.getMiniProgramStatic();
@@ -154,6 +169,27 @@
 
 				.number {
 					font-size: 52rpx;
+					padding-bottom: 10rpx;
+					color: #4B8BE8;
+				}
+			}
+		}
+		.numbox1 {
+			padding: 60rpx 0rpx;
+			background: #fff;
+		
+			.numitem {
+				width: 33.2%;
+				text-align: center;
+				font-size: 24rpx;
+				box-sizing: border-box;border-right: 2rpx solid #ddd;
+		
+				&:last-child {
+					border-right: 0rpx solid #ddd;
+				}
+		
+				.number {
+					font-size: 38rpx;
 					padding-bottom: 10rpx;
 					color: #4B8BE8;
 				}

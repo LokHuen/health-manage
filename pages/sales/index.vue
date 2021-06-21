@@ -184,12 +184,12 @@
 					url: 'by-subordinate'
 				})
 			},
-			toByorganization() {
-				uni.navigateTo({
-					url: 'data-center'
+			// toByorganization() {
+			// 	uni.navigateTo({
+			// 		url: 'data-center'
 
-				})
-			},
+			// 	})
+			// },
 			toByorganization() {
 				uni.navigateTo({
 					url: 'by-organization?orgId=' + this.user.orgId + '&orgName=' + this.user.orgName
