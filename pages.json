@@ -198,13 +198,22 @@
 			"path": "pages/patient/patient-basic-information",
 			"style": {
 				"navigationBarTitleText": "基础信息"
-			}
+			},
+			"enablePullDownRefresh": true
+		},
+		{
+			"path": "pages/patient/illness-progress",
+			"style": {
+				"navigationBarTitleText": "病情进展"
+			},
+			"enablePullDownRefresh": true
 		},
 		{
 			"path": "pages/doctor/doc-patient-basic-information",
 			"style": {
 				"navigationBarTitleText": "基础信息"
-			}
+			},
+			"enablePullDownRefresh": true
 		},
 		{
 			"path": "pages/patient/patient-improve-msg",

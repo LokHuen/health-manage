@@ -24,6 +24,33 @@
 			</view>
 		</view>
 		
+		<view class="line-space"></view>
+		
+		<view class="record-box">
+			<view class="record-item">
+				<view style="padding-left: 50rpx;height: 80rpx;line-height: 80rpx;font-size: 30rpx;">最近一次营养筛选</view>
+				<view class="record-item-detail">筛查工具：河南省住院成人患者营养风险筛查表...</view>
+				<view class="record-item-detail">筛查时间： 2020/06/23 12:21</view>
+				<view class="record-item-detail">筛查结果：存在营养风险</view>
+				<view class="record-item-detail">建议内容：建议继续进行SGA营养状况评估</view>
+			</view>
+			
+			<view class="line-space"></view>
+			
+			<view class="record-item">
+				<view style="padding-left: 50rpx;height: 80rpx;line-height: 80rpx;font-size: 30rpx;">最近一次营养评估</view>
+				<view class="record-item-detail">评估工具：PG-SGA</view>
+				<view class="record-item-detail">评估时间： 2020/06/23 12:21</view>
+				<view class="record-item-detail">治疗阶段：放疗后 化疗中</view>
+				<view class="record-item-detail">评估结果：中度营养不良（4分）</view>
+				<view class="record-item-detail">建议内容：需要营养干预及针对症状的治疗手段</view>
+				
+			</view>
+			
+		</view>
+		
+		<view class="line-space"></view>
+		
 		<view class="record-chart-box" v-if="((hasLoadLindData==0)||(lineData.categories.length>0 &&hasLoadLindData ==1))&&(testtype==1)">
 			<view class="record-chart-title">PG-SGA营养状况评估</view>
 			<view class="record-chart-subtitle">分值越小，营养状况越好</view>
@@ -296,8 +323,8 @@
 				latelyData: {},
 				infoData: {},
 				list: [
-					["/static/icon/baseInfoicon.png", "基础信息"],
-					["/static/icon/bingliMangmenticon.png", "病例管理"],
+					["/static/icon/baseInfoicon.png", "病例信息"],
+					["/static/icon/bingliMangmenticon.png", "病例进展"],
 					["/static/icon/testRecordIcon.png", "测评记录"],
 					["/static/icon/food.png", "饮食配餐"]
 				],
@@ -741,7 +768,7 @@
 				} else if (index == 1) {
 					//病例管理
 					uni.navigateTo({
-						url: 'patient-case-manage'
+						url: 'illness-progress'
 					});
 				} else if (index == 2) {
 					//测评记录
@@ -1461,6 +1488,20 @@
 		.line-space {
 			background-color: #F7F8F8;
 			height: 20rpx;
+		}
+		.record-box{
+			.record-item{
+				padding-bottom: 30rpx;
+				.record-item-detail{
+					font-size: 24rpx;
+					padding-left: 50rpx;
+					padding-right: 30rpx;
+					height: 50rpx;
+					line-height: 50rpx;
+				}
+				
+			}
+			
 		}
 
 		.content {
