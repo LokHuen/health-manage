@@ -24,9 +24,6 @@
 				</view>
 			</view>
 			
-			
-			
-			
 		</view>
 		
 		<view class="deatil">

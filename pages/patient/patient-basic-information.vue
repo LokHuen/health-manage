@@ -50,6 +50,13 @@
 				</view>
 			</view>
 			
+			<view class="health-content" v-if="needAge">
+				<view class="health-item">
+					<view class="health-item-title">年龄</view>
+					<view class="health-item-detail">{{infoData.age}}</view>
+				</view>
+			</view>
+			
 			<view class="health-content">
 				<view class="health-item">
 					<view class="health-item-title">疾病诊断</view>
@@ -122,6 +129,7 @@
 				type1:0,
 				list: [],
 				pageNo: 1,
+				needAge:false
 			}
 		},
 		onPullDownRefresh() {
@@ -137,8 +145,16 @@
 		onLoad(props){
 			this.type = props.type ||1;
 			this.getListData();
+			this.inputAgeCheck();
 		},
 		methods:{
+			inputAgeCheck(){
+				app.inputAgeCheck().then(res =>{
+					if(res.status == 1){
+						this.needAge = res.data.ageInput;
+					}
+				})
+			},
 			previewImage(item,imgIndex) {
 				uni.previewImage({
 					urls:item.pathologyUrl,

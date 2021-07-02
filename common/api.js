@@ -530,6 +530,11 @@ var api = {
 	salesmangetIdentity: (data) => {
 		return rq("/wx/salesman/getIdentity", data, "GET");
 	},
+	//检查患者是否需要输入年龄
+	inputAgeCheck: (data) => {
+		return rq("/wx/patient/inpuAgeCheck", data, "GET");
+	},
+	
 }
 
 export {

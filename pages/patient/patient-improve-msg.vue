@@ -29,6 +29,11 @@
 			<view class="name-tips">* 联系电话</view>
 			<input class="name-input" type="number" value="" placeholder="请填写联系电话" v-model="phone" />
 		</view>
+		
+		<view class="name-box" v-if="needAge">
+			<view class="name-tips">* 年龄</view>
+			<input class="name-input" type="number" value="" placeholder="请填写年龄" v-model="age" />
+		</view>
 
 
 		<view class="name-box">
@@ -195,6 +200,7 @@
 
 		onLoad(props) {
 			if (!app.getCache("uid")) return;
+			this.inputAgeCheck();
 			this.getIllnessList();
 			this.type = props.type || 1;
 			this.formQrCode = props.formQrCode || 1;
@@ -242,6 +248,7 @@
 				illnessother:"",
 				height: '',
 				weight: '',
+				age:'',
 				areaList: [
 					[],
 					[]
@@ -258,6 +265,7 @@
 				currentIndex: '',
 				formQrCode: '', //1表示患者扫描医生二维码后，点击公众号消息进入信息完善页 2从基础信息进入
 				selfTest: '', //1表示从评估页面进来，完善信息后直接返回评估页面
+				needAge:false,//检查患者是否需要输入年龄
 			}
 		},
 		onShow() {
@@ -265,6 +273,13 @@
 			this.getInfo();
 		},
 		methods: {
+			inputAgeCheck(){
+				app.inputAgeCheck().then(res =>{
+					if(res.status == 1){
+						this.needAge = res.data.ageInput;
+					}
+				})
+			},
 			selectmicResult(item) {
 				this.illness = item;
 				this.$refs.resultPop.close();
