@@ -16,20 +16,6 @@
 			<view class="right1" style="white-space: pre-wrap;">{{item.dosageDependence?item.dosageDependence:'无'}}</view>
 		</view>
 		
-		
-		<!-- <view class="deatil1">
-			<view class="left1">用药依从性</view>
-			
-			<view class="">
-				<view v-for="(item1,index1) in list1">
-					<view class="right1">药物：奥替尼</view>
-					<view class="right1">用量：一天一次</view>
-					<view style="height: 20rpx;"></view>
-				</view>
-			</view>
-			
-		</view> -->
-		
 		<view class="deatil">
 			<view class="left">其它治疗方式</view>
 			<view class="right">{{item.otherTreatement?item.otherTreatement:'无'}}</view>
