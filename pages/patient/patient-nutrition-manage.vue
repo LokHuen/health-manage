@@ -323,8 +323,8 @@
 				latelyData: {},
 				infoData: {},
 				list: [
-					["/static/icon/baseInfoicon.png", "病例信息"],
-					["/static/icon/bingliMangmenticon.png", "病例进展"],
+					["/static/icon/baseInfoicon.png", "基础信息"],
+					["/static/icon/bingliMangmenticon.png", "病例管理"],
 					["/static/icon/testRecordIcon.png", "测评记录"],
 					["/static/icon/food.png", "饮食配餐"]
 				],
@@ -768,7 +768,7 @@
 				} else if (index == 1) {
 					//病例管理
 					uni.navigateTo({
-						url: 'illness-progress'
+						url: 'patient-case-manage'
 					});
 				} else if (index == 2) {
 					//测评记录

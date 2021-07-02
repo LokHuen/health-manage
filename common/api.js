@@ -536,6 +536,12 @@ var api = {
 		return rq("/wx/patient/inpuAgeCheck", data, "GET");
 	},
 	
+	//病情进展
+	feelingList: (data) => {
+		return rq("/wx/patient/feelingList", data, "GET");
+	},
+	
+	
 }
 
 export {

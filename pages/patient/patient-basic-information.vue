@@ -2,12 +2,12 @@
 
 	<view>
 		
-		<view class="condition-box">
+		<!-- <view class="condition-box">
 			<view :class="type1==0?'item-chose':'item-unchose'" @click="selectType(0)">基础资料</view>
 			<view :class="type1==1?'item-chose':'item-unchose'" @click="selectType(1)">病例管理</view>
-		</view>
+		</view> -->
 		
-		<view v-if="type1==1">
+		<!-- <view v-if="type1==1">
 			<view class="add-case-box">
 				<view class="dashed-box" @click="addCase">+ 新增病例</view>
 				<view class="add-bottom"></view>
@@ -20,9 +20,9 @@
 			</view>
 			<view class="no-data-tips" v-if="list.length ==0">暂无数据</view>
 			<view style="height: 100rpx;"></view>
-		</view>
+		</view> -->
 		
-		<view v-if="type1==0">
+		<view>
 			<view class="health-content">
 				<view class="health-item">
 					<view class="health-item-title">姓名</view>

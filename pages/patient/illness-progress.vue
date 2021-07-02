@@ -2,18 +2,22 @@
 	<view class="container">
 		<view v-for="(item,index) in list" class="list-item">
          <view class="title">
-			 主观感受：恶化
+			 {{'主观感受：'+(item.illnessFeeling?item.illnessFeeling:'无')}}
 			 <view class="time">
-			 	2021/01/09
+			 	{{item.currentVisitTime}}
 			 </view>
 		</view>
 		<view class="deatil">
 			<view class="left">治疗阶段</view>
-			<view class="right">术后、化疗</view>
+			<view class="right">{{item.phase?item.phase:'无'}}</view>
+		</view>
+		<view class="deatil1">
+			<view class="left1">用药依从性</view>
+			<view class="right1" style="white-space: pre-wrap;">{{item.dosageDependence?item.dosageDependence:'无'}}</view>
 		</view>
 		
 		
-		<view class="deatil1">
+		<!-- <view class="deatil1">
 			<view class="left1">用药依从性</view>
 			
 			<view class="">
@@ -24,11 +28,11 @@
 				</view>
 			</view>
 			
-		</view>
+		</view> -->
 		
 		<view class="deatil">
 			<view class="left">其它治疗方式</view>
-			<view class="right">无</view>
+			<view class="right">{{item.otherTreatement?item.otherTreatement:'无'}}</view>
 		</view>
 
 		</view>
@@ -42,15 +46,21 @@
 	export default {
 		data() {
 			return {
-				list: [1, 2, 3],
-				list1: [1, 2]
+				list: []
 			}
 		},
 		methods: {
+			getList(){
+				app.feelingList().then(res =>{
+					if(res.status == 1){
+						this.list = res.data;
+					}
+				})
+			}
 
 		},
 		onLoad(props) {
-
+            this.getList();
 		}
 
 
@@ -114,6 +124,7 @@
 			.deatil1{
 				display: flex;
 				padding-left: 40rpx;
+				padding-bottom: 60rpx;
 				.left1{
 					width: 200rpx;
 					color: rgba(16, 16, 16, 100);
