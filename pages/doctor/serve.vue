@@ -1,18 +1,16 @@
 <template>
 	<view class="container">
 		<view class="pagebackground"></view>
-		<view class="topbox">
-			<view class="item-list unit" @click="clickItem(1)">
-				<view class="left-name">PG-SGA 营养状况评估</view>
-				<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
-				
-			</view>
-			<view class="centerline"></view>
-			<view class="item-list unit" @click="clickItem(2)">
-				<view class="left-name">SGA 营养状况评估</view>
-				<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
-				
-			</view>
+		
+		<view class="item-list other" @click="tootherpage('/pages/doctor/serveList')">
+			<view class="left-name">营养风险筛查工具</view>
+			<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
+			
+		</view>
+		<view class="item-list other" @click="tootherpage('/pages/doctor/serveList1')">
+			<view class="left-name">营养状况评估工具</view>
+			<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
+			
 		</view>
 		<view class="item-list other" @click="toexport">
 			<view class="left-name">患者营养状况评估数据导出</view>
@@ -59,6 +57,11 @@
 			
 		},
 		methods: {
+			tootherpage(url){
+				uni.navigateTo({
+					url:url
+				})
+			},
 			clickItem(index) {
 				uni.navigateTo({
 					url: '../patient/nutritional-self-test?id='+index

@@ -191,6 +191,7 @@ var api = {
 	saleshomepage: (data) => {
 		return rq("/wx/salesman/homepage", data, "GET");
 	}, //首页数据
+	inpuAgeCheck: (data) => {return rq("/wx/patient/inpuAgeCheck", data, "GET");}, //检查患者是否需要输入年龄
 	//账户首页的金额
 	sale_doctorAccountInfo: (data) => {
 		return rq("/wx/salesman/accountInfo", data, "GET");

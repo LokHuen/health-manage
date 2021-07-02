@@ -745,6 +745,36 @@
 		// 		"navigationBarTitleText": "完善信息"
 		// 	}
 		// },
+		{
+			"path": "pages/doctor/serveList",
+			"style": {
+				"navigationBarTitleText": "营养筛查工具"
+			}
+		},
+		{
+			"path": "pages/doctor/serveList1",
+			"style": {
+				"navigationBarTitleText": "营养评估工具"
+			}
+		},
+		{
+			"path": "pages/doctor/select/index",
+			"style": {
+				"navigationBarTitleText": "营养风险筛查"
+			}
+		},
+		{
+			"path": "pages/doctor/select/data",
+			"style": {
+				"navigationBarTitleText": "填写资料"
+			}
+		},
+		{
+			"path": "pages/doctor/select/result",
+			"style": {
+				"navigationBarTitleText": "筛查结果"
+			}
+		},
 
 
 
