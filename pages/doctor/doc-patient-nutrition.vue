@@ -443,7 +443,7 @@
 				loadInfoData:0,
 				list: [
 					["/static/icon/baseInfoicon.png", "病例信息"],
-					["/static/icon/bingliMangmenticon.png", "病情进展"],
+					["/static/icon/felling.png", "病情进展"],
 					["/static/icon/testRecordIcon.png", "测评记录"],
 					["/static/icon/food.png", "饮食配餐"]
 				],
