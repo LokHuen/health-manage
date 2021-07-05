@@ -627,6 +627,7 @@
 						height: this.height,
 						weight: this.weight,
 						detailList: projectList,
+						age:this.age
 					}).then(res => {
 						app.loaded();
 						if (res.status == 1) {
@@ -637,7 +638,7 @@
 								
 							}else{
 							    uni.navigateTo({
-							    	url: 'patient-submit-sucess?type=' + this.type
+							    	url: 'patient-submit-sucess?type=' + this.type+'&age='+this.age
 							    });
 							    	
 							}
@@ -656,11 +657,12 @@
 						weight: this.weight,
 						pathologyUrl: this.pathologyUrl,
 						detailList: projectList,
+						age:this.age
 					}).then(res => {
 						app.loaded();
 						if (res.status == 1) {
 							uni.navigateTo({
-								url: 'patient-submit-sucess?type=' + this.type
+								url: 'patient-submit-sucess?type=' + this.type +'&age='+this.age
 							});
 
 						}

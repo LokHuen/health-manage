@@ -9,7 +9,7 @@
 				<view class="name">
 					{{infoData.patientName||"游客"}}
 				</view>
-				<view class="msg">{{(infoData.patientGender||"")+' '+((infoData.age || infoData.age!=0)?(infoData.age+'岁 '):'')+(infoData.illness||"")}}
+				<view class="msg">{{(infoData.patientGender||"")+' '+((infoData.age || infoData.age!=0)?(infoData.age+'岁 '):'')+(infoData.surveyResult||"")}}
 
 				</view>
 			</view>
@@ -26,24 +26,29 @@
 		
 		<view class="line-space"></view>
 		
-		<view class="record-box">
-			<view class="record-item">
-				<view style="padding-left: 50rpx;height: 80rpx;line-height: 80rpx;font-size: 30rpx;">最近一次营养筛选</view>
-				<view class="record-item-detail">筛查工具：河南省住院成人患者营养风险筛查表...</view>
-				<view class="record-item-detail">筛查时间： 2020/06/23 12:21</view>
-				<view class="record-item-detail">筛查结果：存在营养风险</view>
-				<view class="record-item-detail">建议内容：建议继续进行SGA营养状况评估</view>
+		<view class="record-box" v-if="latelyData.result" @click="toanswerlist">
+			<view class="record-item" v-if="latelyData.surveyType==1">
+				<view style="padding-left: 50rpx;height: 80rpx;line-height: 80rpx;font-size: 30rpx;">最近一次营养筛查</view>
+				<view class="record-item-detail">{{'筛查工具：'+latelyData.surveName}}</view>
+				<view class="record-item-detail">{{'筛查时间： '+latelyData.completeTime}}</view>
+				<view class="record-item-detail">{{'筛查结果：'+latelyData.result}}</view>
+				<view class="record-item-detail" style="display: flex;">建议内容:
+				
+				<rich-text :nodes="latelyData.content" style="margin-left: 15rpx;"></rich-text>
+				</view>
 			</view>
 			
-			<view class="line-space"></view>
-			
-			<view class="record-item">
+
+			<view class="record-item" v-if="latelyData.surveyType==0">
 				<view style="padding-left: 50rpx;height: 80rpx;line-height: 80rpx;font-size: 30rpx;">最近一次营养评估</view>
-				<view class="record-item-detail">评估工具：PG-SGA</view>
-				<view class="record-item-detail">评估时间： 2020/06/23 12:21</view>
-				<view class="record-item-detail">治疗阶段：放疗后 化疗中</view>
-				<view class="record-item-detail">评估结果：中度营养不良（4分）</view>
-				<view class="record-item-detail">建议内容：需要营养干预及针对症状的治疗手段</view>
+				<view class="record-item-detail">{{'评估工具：'+latelyData.surveName}}</view>
+				<view class="record-item-detail">{{'评估时间： '+latelyData.completeTime}}</view>
+				<view class="record-item-detail">{{'治疗阶段：'+latelyData.phase}}</view>
+				<view class="record-item-detail">{{'评估结果：'+latelyData.result}}</view>
+				<view class="record-item-detail" style="display: flex;">建议内容:
+				
+				<rich-text :nodes="latelyData.content" style="margin-left: 15rpx;"></rich-text>
+				</view>
 				
 			</view>
 			
@@ -248,7 +253,7 @@
 		
 
 		<view class="button-box">
-			<button type="default" class="button" @click="beginTest">{{testtype==1?'PG-SGA 营养状况评估':'SGA 营养状况评估'}}</button>
+			<button type="default" class="button" @click="beginTest">{{infoData.surveyName}}</button>
 		</view>
 		<view style="height: 200px;"></view>
 		<uni-popup ref="popup" type="bottom">
@@ -1073,6 +1078,11 @@
 			towarnpage(){
 				uni.navigateTo({
 					url:"/pages/doctor/warn"
+				})
+			},
+			toanswerlist(){
+				uni.navigateTo({
+					url:"/pages/patient/answer?id="+this.latelyData.id+'&surveyId='+this.latelyData.surveyId
 				})
 			},
 		},

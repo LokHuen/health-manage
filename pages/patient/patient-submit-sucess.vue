@@ -4,7 +4,7 @@
 	 <view class="health-content">
 		 <view class="health-image"> <image class="health-status-image" src="../../static/icon/submit_sucess_icon.png"></image></view>
 		 <view class="health-result">提交成功</view>
-		 <button class="health-confirm" v-show="type!=1" @click="complete" style="width:600rpx;">去做{{testtype==1?"PG-":""}}SGA营养状况评估</button>
+		 <button class="health-confirm" v-show="type!=1" @click="complete" style="width:600rpx;">去做{{info.sgaType==1?"PG-":""}}SGA营养状况评估</button>
 		 <button class="health-confirm" v-show="type==1" @click="complete">完成</button>
 	 </view>
  </view>
@@ -16,8 +16,9 @@
 	export default {
 		data() {
 			return {
+				info:'',
 				type:1,//1跳回患者基本信息页面 2跳回患者营养界面
-				testtype:1,
+				age:''
 			}
 		},
 		methods: {
@@ -27,9 +28,18 @@
 						url:'./patient-basic-information'
 					});
 				}else{
-					uni.redirectTo({
-						url:'/pages/patient/nutritional-self-test'
-					});
+					//surveyType  	问卷类型（0：评估，1：筛查）
+					if(this.info.surveyType == 0){
+						uni.redirectTo({
+							url:'/pages/patient/nutritional-self-test'
+						});
+					}else{
+						uni.redirectTo({
+							url:'/pages/doctor/select/index?id='+this.info.surveyId+'&name='+this.info.surveyName
+						});
+						
+					}
+					
 				}
 				
 			}
@@ -37,9 +47,10 @@
 		},
 		onLoad(props){
 			this.type = props.type ||1;
-			app.getSgaType({}).then(res => {
+			//this.age = props.age;
+			app.getSgaType({age:props.age}).then(res => {
 				if (res.status == 1) {
-					this.testtype = res.data.sgaType;
+					this.info = res.data;
 				}
 			});
 		}
