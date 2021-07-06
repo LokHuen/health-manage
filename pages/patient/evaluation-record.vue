@@ -18,11 +18,16 @@
 				</view>
 				<view class="health-list-item-content">
 					<view class="health-list-item-title">{{item.result}}</view>
-					<view class="health-list-item-detail">{{item.phase}} </view>
-					<view class="health-list-item-time">测评时间：{{item.completeTime}}</view>
+					<view class="health-list-item-time">{{(item.surveyType==0?'评估工具：':'筛查工具')+item.surveyName}}</view>
+					<view class="health-list-item-time">{{(item.surveyType==0?'评估时间：':'筛查时间')+item.completeTime}}</view>
+					<view class="health-list-item-detail" v-if="item.surveyType==0">治疗阶段：{{item.phase}} </view>
+					
 					<view class="line" v-if="item.showDetail"></view>
 					<view class="advice-content">
-						<rich-text :nodes="item.content"  v-if="item.showDetail"></rich-text>
+						<view style="width: 140rpx;">
+							建议内容：
+						</view>
+						<rich-text :nodes="item.content"  v-if="item.showDetail" style="line-height: 40rpx;"></rich-text>
 					</view>
 					
 				</view>
@@ -162,14 +167,15 @@
 				.health-list-item-detail {
 					color: #999999;
 					font-size: 26rpx;
-					margin-top: 20rpx;
+					margin-top: 10rpx;
+					padding-bottom: 10rpx;
 				}
 				
 				.health-list-item-time {
 					color: #666666;
 					font-size: 26rpx;
-					margin-top: 20rpx;
-					padding-bottom: 15rpx;
+					margin-top: 10rpx;
+					padding-bottom: 0rpx;
 				}
 				.line{
 					background-color: #CCCCCC;
@@ -177,6 +183,7 @@
 					margin-right: 20rpx;
 				}
 				.advice-content{
+					display: flex;
 					font-size: 24rpx!important;
 					color: #666666;
 					padding: 20rpx 20rpx 0 0;
