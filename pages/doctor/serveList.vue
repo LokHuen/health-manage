@@ -1,8 +1,8 @@
 <template>
 	<view class="container">
 		<view class="pagebackground"></view>
-		<view class="item-list other" v-for="(item,index) in list" :key="index" @click="clickItem(index+1)">
-			<view class="left-name flex">{{item}}</view>
+		<view class="item-list other" v-for="(item,index) in list" :key="index" @click="clickItem(item)">
+			<view class="left-name flex">{{item.surveyName}}</view>
 			<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
 		</view>
 
@@ -17,13 +17,20 @@
 				list:["河南省住院成人患者营养风险筛查表（试行）","河南省住院儿童患者营养不良评估筛查表（试行）"],
 			}
 		},
+		onLoad() {
+			app.questionnairelist({surveyType:1}).then(res => {
+				if (res.data) {
+					this.list = res.data;
+				}
+			})
+		},
 		onShow(){
 			
 		},
 		methods: {
-			clickItem(index) {
+			clickItem(item) {
 				uni.navigateTo({
-					url: '/pages/patient/nutritional-self-test?id='+index
+					url: '/pages/doctor/select/index?id='+item.id+'&name='+item.surveyName
 				});
 			},
 		},

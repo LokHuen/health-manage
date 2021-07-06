@@ -12,7 +12,7 @@
 					<view>
 						<view class="qustion">
 							<text v-if="item.isMust" style="color:red;">*</text>
-							<view style="flex:1;">{{index+seq}}. {{item.title}}
+							<view style="flex:1;">{{params.surveyId>3?nowindex:(index+seq)}}. {{item.title}}
 							<!-- <text v-if="item.description">（{{item.description}}）</text> -->
 							<!-- <image v-if="item.description&&item.description!=emptytext" src="../../static/icon/wenhaoIcon.png" class="questionimg ptitle" mode="widthFix" @click="openinfoframe(item.description)"></image> -->
 							
@@ -152,6 +152,7 @@
 				beginArray: [],   //题目起始数组
 				openareadata:undefined,
 				infodetail:"", //问题描述
+				nowindex:1,
 			}
 		},
 		onLoad(options){
@@ -163,8 +164,85 @@
 			onClickItem(e) {
 				this.current = e.currentIndex;
 			},
+			getseletresult(listdata){
+				app.replySecond(listdata).then(rs=>{
+				    if(rs.status==1){
+				        const{section,field,grade,nomore,recordId,toThird}=rs.data;
+				        this.nomore=nomore;
+				        if(nomore==0){
+							this.nowindex++;
+				            this.params.section=section;
+				            this.params.field=field;
+				            this.params.grade=grade;
+							this.params.recordId=recordId;
+				            this.getQuestions(rs.data.nextQid||"");  //取下一页的题
+							
+				        }else{
+							if(this.params.surveyId>3){
+								uni.navigateTo({
+									url: "/pages/doctor/select/result?id="+this.params.surveyId
+								})
+							}else{
+								localStorage.removeItem("reloadpage");
+								this.$router.push({
+									path:'/pages/patient/evaluation-results?id='+this.params.surveyId
+								})
+							}
+							
+				        }
+				    }else{
+				        app.tip(rs.msg)
+				    }
+				})
+			},
+			
+			getseletlist(id="",recordId=""){
+				app.screenNextPage({surveyId:this.params.surveyId,id,recordId:recordId}).then((res) => {
+					let nowdata = res.data;
+					res.data = [nowdata];
+					if(!this.questionList[0]){
+						this.params.section=1; this.params.field=1; this.params.grade=1;
+					}
+					// else{
+					// 	this.params.section=1; this.params.field=2; this.params.grade=1;
+					// }
+					app.loaded();
+					this.questionList = [];
+					setTimeout(rq=>{
+						this.questionList=res.data;
+						for (var i = 0; i < this.questionList.length; i++) {
+							let type4 = [];
+							if(this.questionList[i].type==4){
+								for (var j = 0; j < this.questionList[i].optionList.length; j++) {
+									type4.push(this.questionList[i].optionList[j].title);
+								}
+								this.$set(this.questionList[i],"alltitle",type4);
+							}
+							if(this.questionList[i].optionId&&this.questionList[i].type==5){
+								
+								this.questionList[i].optionId = String(this.questionList[i].optionId);
+								let optionId = this.questionList[i].optionId.split(",");
+								console.log(optionId)
+								for (var j = 0; j < this.questionList[i].optionList.length; j++) {
+									if(optionId.indexOf(String(this.questionList[i].optionList[j].id))!=-1) this.$set(this.questionList[i].optionList[j],"checked",true);
+								}
+							}
+						}
+						// this.params.recordId=0;  //获取问题后重置回答记录id
+						this.checkedOptions = [];
+						document.body.scrollIntoView();
+						// if(next){
+						// 	this.num++;
+						// 	console.log("num is:" + this.num + "  seq is:---"+this.seq);
+						// }
+					},100);
+				})
+			},
 			getQuestions(next){
 			    app.loading('加载中');
+				if(this.params.surveyId>3){
+					this.getseletlist(next);
+				}else
 			    app.getQuestionSecondList({...this.params}).then((res) => {
 					app.loaded();
 					if(next){
@@ -295,6 +373,9 @@
 					}
 				}
 			    console.log(listdata);
+				if(this.params.surveyId>3){
+					this.getseletresult(listdata);
+				}else
 			    app.replySecond(listdata).then(rs=>{
 			        if(rs.status==1){
 			            const{section,field,grade,nomore,toThird}=rs.data;
@@ -306,10 +387,17 @@
 			                this.getQuestions("next");  //取下一页的题
 			
 			            }else{
-							localStorage.removeItem("reloadpage");
-			                this.$router.push({
-			                    path:'/pages/patient/evaluation-results?id='+this.params.surveyId
-			                })
+							if(this.params.surveyId>3){
+								uni.navigateTo({
+									url: "/pages/doctor/select/result?id="+this.params.surveyId
+								})
+							}else{
+								localStorage.removeItem("reloadpage");
+								this.$router.push({
+									path:'/pages/patient/evaluation-results?id='+this.params.surveyId
+								})
+							}
+							
 			            }
 			        }else{
 			            app.tip(rs.msg)
@@ -331,7 +419,13 @@
 			    console.log("回退开始")
 			    this.num--;
 			    this.seq=this.beginArray[this.num];
-			
+				if(this.params.surveyId>3){
+					app.screenPrevPage({surveyId:this.params.surveyId,id:this.questionList[0].id,recordId:this.params.recordId}).then((res) => {
+						if(this.nowindex>1) this.nowindex--;
+						if(this.nowindex==1){this.params.section=1; this.params.field=1; this.params.grade=1;}
+						this.getseletlist(res.data.id,this.params.recordId);
+					})
+				}else
 			    app.getPreQuestionPage({...this.params}).then((res) => {
 			        if(res.status==1){
 			

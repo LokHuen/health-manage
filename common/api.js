@@ -10,6 +10,21 @@ var api = {
 	getSgaType: (data) => {
 		return rq("/wx/survey/question/getSgaType", data, "GET");
 	}, //sga类型判断
+	screeninroScreen: (data) => {
+		return rq("/wx/patient/screen/intoScreen", data, "GET");
+	}, //进入营养筛查，如果有最近的筛查记录会自动带出筛查信息
+	screensave: (data) => {
+		return rq("/wx/patient/screen/save", data, "POST");
+	},//保存筛查信息
+	questionnairelist: (data) => {
+		return rq("/wx/survey/questionnaire/list", data, "GET");
+	}, //评估或筛查工具列表
+	screenNextPage: (data) => {
+		return rq("/wx/survey/question/screenNextPage", data, "GET");
+	}, //查询下一页
+	screenPrevPage: (data) => {
+		return rq("/wx/survey/question/screenPrevPage", data, "GET");
+	}, //获取营养筛查上一页
 
 	// 自测
 	getQuestionSecondList: (data) => {

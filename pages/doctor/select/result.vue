@@ -8,33 +8,37 @@
 					<view style="font-size:26rpx;color: #666;">筛选时间：{{info.completeTime}}</view>
 				</view>
 			</view>
-			<view class="advicetext">建议继续进行SGA营养状况评估</view>
+			<view class="advicetext">
+				<view class="richtextarea">
+					<rich-text :nodes="info.content"></rich-text>
+				</view>
+			</view>
 		</view>
-		<!-- <button type="default" class="finishbutton" @click="finish">完成</button> -->
+		<button v-if="info.nextSurveyId==0" type="default" class="finishbutton" @click="finish">完成</button>
 		
-		<view class="background-img-box">
+		<view v-if="info.nextSurveyId!=0" class="background-img-box">
 			<view class="left-bg"></view>
 			<view class="background-img">
 				<image src="../../../static/img/nutritional_self_test_bg.png" mode="widthFix" class=""></image>
-				<view @click="videobox" style="color: #01b936;padding-top: 20rpx;" v-show="testtype==1">测评前，建议您观看一次演示视频》</view>
+				<view @click="videobox" style="color: #01b936;padding-top: 20rpx;" v-show="info.nextSurveyId==1">测评前，建议您观看一次演示视频》</view>
 			</view>
 			<view class="content-box">
-				<view class="title" v-if="testtype==1">PG-SGA营养状况评量表</view>
-				<view class="desc" v-if="testtype==1">
+				<view class="title" v-if="info.nextSurveyId==1">PG-SGA营养状况评量表</view>
+				<view class="desc" v-if="info.nextSurveyId==1">
 					PG-SGA（患者主观整体评估）是临床上专门为肿瘤患者设计的营养状况评估方法，该评估方法得到美国营养师协会（ADA）等国际营养机构和中国抗癌协会肿瘤营养专业委员会（CSNO）大力推荐，是目前肿瘤患者营养评测的标准工具。
 				</view>
-				<view class="desc" v-if="testtype==1">
+				<view class="desc" v-if="info.nextSurveyId==1">
 					建议测评周期
 					<view>重度营养不良：1次/1周</view>
 					<view>中度营养不良：1次/1-2周</view>
 					<view>可疑或轻度营养不良： 1次/2周-4周</view>
 					<view>无营养不良： 1次/4周-12周</view>
 				</view>
-				<view class="title" v-if="testtype==2">SGA营养状况评估</view>
-				<view class="desc" v-if="testtype==2">
+				<view class="title" v-if="info.nextSurveyId==2">SGA营养状况评估</view>
+				<view class="desc" v-if="info.nextSurveyId==2">
 					SGA(主观综合性营养评估)是临床常用营养评价方法之一，其通过评估患者体重和膳食变化、消化道症状、活动能力变化以及有无应激反应，并测量三头肌皮褶厚度，检查有无足踝水肿和腹水等指标综合判断病人的营养状态，具有简单性、易重复性、有效性及前瞻性的特点。
 				</view>
-				<view class="desc" v-if="testtype==2">
+				<view class="desc" v-if="info.nextSurveyId==2">
 					建议测评周期
 					<view>重度营养不良：1次/周</view>
 					<view>轻-中度营养不良：1次/1-2周</view>
@@ -43,10 +47,10 @@
 			</view>
 			
 		</view>
-		<view style="padding:200rpx 30rpx 200rpx;" v-if="testtype==1">
+		<view style="padding:200rpx 30rpx 200rpx;" v-if="info.nextSurveyId==1">
 			<video id="myVideo" initial-time="0.01" :src="baseUrl+'/yindao.mp4'" controls style="width:100%;"></video>
 		</view>
-		<view class="button-box">
+		<view v-if="info.nextSurveyId!=0" class="button-box">
 			<button type="default" class="button" @click="test">进入评估</button>
 		</view>
 	</view>
@@ -60,20 +64,22 @@
 			return {
 				baseUrl:app.globalData.baseUrl,
 				showvideo:false,
-				info:{},
+				info:{nextSurveyId:0},
 				videoContext:"",
 				testtype:''
 			}
 		},
 		methods:{
 			test(){
-				app.getReplyRecord({surveyId:this.surveyId,phase:"筛选"}).then(res=>{
-					app.tip("保存成功");
-					uni.navigateTo({
-						url:"/pages/patient/test-questions?id="+this.surveyId
-					})
-				})
-				
+				uni.navigateTo({
+					url:'/pages/patient/testIndex?id='+this.info.nextSurveyId
+				});
+				// app.getReplyRecord({surveyId:this.testtype,phase:"筛选"}).then(res=>{
+				// 	app.tip("保存成功");
+				// 	uni.navigateTo({
+				// 		url:"/pages/patient/test-questions?id="+this.testtype
+				// 	})
+				// })
 			},
 			finish(){
 				uni.reLaunch({
@@ -97,16 +103,21 @@
 				});	
 			},
 			judgeUserAuth() {
-				this.getSgaType();
+				// this.getSgaType();
+				app.questiongetScore({
+					surveyId: this.testtype
+				}).then(res => {
+					this.info = res.data;
+					if (this.info.content) this.info.content = this.info.content.replace(/\<span/gi, '<span class="richtext"');
+				})
 			},
 			
 		},
 		onLoad(option){
 			if(option.id){
 				this.testtype = option.id;
-			}else{
-				this.judgeUserAuth() ;								
 			}
+			this.judgeUserAuth();
 		},
 		
 	}

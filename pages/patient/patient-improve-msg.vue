@@ -630,7 +630,14 @@
 						age:this.age
 					}).then(res => {
 						app.loaded();
-						if (res.status == 1) {
+						if(this.needAge){
+							app.getSgaType({age:this.age}).then(res =>{
+								uni.navigateTo({
+									url:'/pages/doctor/select/index?id='+res.data.surveyId+'&name='+res.data.surveyName,
+								});
+							});	
+						}
+						else if (res.status == 1) {
 							if(this.selfTest==1){
 							    uni.navigateTo({
 							    	url: 'nutritional-self-test'

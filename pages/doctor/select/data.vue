@@ -3,31 +3,31 @@
 		<view class="line-space"></view>
 		<view class="name-box">
 			<view class="name-tips">* 住院号</view>
-			<input class="name-input" type="text" value="" placeholder="请填写住院号" v-model="patientName" />
+			<input class="name-input" type="text" value="" placeholder="请填写住院号" v-model="info.inHospitalNo" />
 		</view>
 		<view class="name-box">
 			<view class="name-tips">* 姓名</view>
-			<input class="name-input" type="text" value="" placeholder="请填写真实名字" v-model="patientName" />
+			<input class="name-input" type="text" value="" placeholder="请填写真实名字" v-model="info.patientName" />
 		</view>
 		<view class="sex-box" @click="selectSex(0)">
 			<view class="sex-tips">* 性别</view>
-			<view :class="patientGender==0?'sex-value':'has-value'">{{patientGender==0?'点击选择':patientGender==1?'男':'女'}}</view>
+			<view :class="info.patientGender==0?'sex-value':'has-value'">{{!info.patientGender?'点击选择':info.patientGender==1?'男':'女'}}</view>
 		</view>
-		<view class="sex-box" >
+		<view class="sex-box">
 			<view class="sex-tips">* 年龄</view>
 			<picker @change="bindDateChange" :value="birthday" :range="array" style="flex: 1;">
-				<view :class="birthday>-1?'has-value':'sex-value'">{{birthday>-1?array[birthday]:'点击选择'}}</view>
+				<view :class="info.age?'has-value':'sex-value'">{{info.age?info.age:'点击选择'}}</view>
 			</picker>
 		</view>
 
 		<view class="name-box">
 			<view class="name-tips">* 病区</view>
-			<input class="name-input" type="text" value="" placeholder="请填写病区" v-model="patientName" />
+			<input class="name-input" type="text" value="" placeholder="请填写病区" v-model="info.icu" />
 		</view>
-		
+
 		<view class="name-box">
 			<view class="name-tips">* 床号</view>
-			<input class="name-input" type="text" value="" placeholder="请填写床位号" v-model="patientName" />
+			<input class="name-input" type="text" value="" placeholder="请填写床位号" v-model="info.bedNo" />
 		</view>
 
 
@@ -40,8 +40,8 @@
 		<uni-popup ref="sexPop" type="bottom">
 			<view class="i-sex-content">
 				<text class="i-sex-title">性别选择</text>
-				<text :class="patientGender==1?'i-sex-item line active':'i-sex-item line'" @click="selectSex(1)">男</text>
-				<text :class="patientGender==2?'i-sex-item active':'i-sex-item'" @click="selectSex(2)">女</text>
+				<text :class="info.patientGender==1?'i-sex-item line active':'i-sex-item line'" @click="selectSex(1)">男</text>
+				<text :class="info.patientGender==2?'i-sex-item active':'i-sex-item'" @click="selectSex(2)">女</text>
 			</view>
 		</uni-popup>
 	</view>
@@ -53,20 +53,30 @@
 	export default {
 		data() {
 			return {
-				surveyId:"",
+				surveyId: "",
+				info: {
+					"patientName": "", // "病患姓名",
+					"patientGender": "", // "病患性别（1：男 2：女）",
+					"age": "", // "病患年龄",
+					"inHospitalNo": "", // "住院号",
+					"icu": "", // "病区",
+					"bedNo": "", // "床号"
+				},
 				patientName: '',
 				patientGender: 0,
-				array:[],
+				array: [],
 				birthday: -1,
-			
+
 				type: 1, //1表示点击更新信息进来，2表示用户未填写信息系统自动跳进来的
-				
-				
+
+
 				formQrCode: '', //1表示患者扫描医生二维码后，点击公众号消息进入信息完善页 2从基础信息进入
 				selfTest: '', //1表示从评估页面进来，完善信息后直接返回评估页面
+				option:{},
 			}
 		},
 		onLoad(props) {
+			this.option = props||this.option;
 			if (!app.getCache("uid")) return;
 			this.type = props.type || 1;
 			this.formQrCode = props.formQrCode || 1;
@@ -76,6 +86,7 @@
 				num.push(i);
 			}
 			this.array = num;
+			this.getInfo();
 		},
 		computed: {
 			startDate() {
@@ -87,6 +98,7 @@
 		},
 		onShow() {
 			if (!app.getCache("uid")) return;
+
 		},
 		methods: {
 			selectmicResult(item) {
@@ -177,21 +189,29 @@
 					if (res.status == 1) {
 						let hasother = false;
 						for (let i = 0; i < res.data.illness.length; i++) {
-							if(res.data.illness[i]=="其它疾病") hasother = true;
+							if (res.data.illness[i] == "其它疾病") hasother = true;
 						}
-						if(!hasother) res.data.illness.push("其它疾病");
+						if (!hasother) res.data.illness.push("其它疾病");
 						this.inllList = res.data.illness;
 					}
 				});
 			},
 			getInfo() {
+				app.screeninroScreen({}).then(res => {
+					if (res.data) {
+						Object.assign(this.info,res.data);
+						// this.info = res.data;
+					}
+				})
+			},
+			getInfo1() {
 				app.patientBasicInfo({}).then(res => {
 					if (res.status == 1) {
 						if (res.data) {
 							this.infoData = res.data;
 							this.patientName = this.infoData.patientName;
 							this.phone = this.infoData.phone;
-							this.patientGender = this.infoData.patientGender?(this.infoData.patientGender == '男' ? 1 : 2):0;
+							this.patientGender = this.infoData.patientGender ? (this.infoData.patientGender == '男' ? 1 : 2) : 0;
 							this.cityId = this.infoData.cityId;
 							this.provinceId = this.infoData.provinceId;
 							this.illness = this.infoData.illness;
@@ -273,6 +293,7 @@
 			},
 			bindDateChange(e) {
 				this.birthday = e.target.value
+				this.info.age = this.array[e.target.value];
 			},
 			getDate(type) {
 				const date = new Date();
@@ -283,7 +304,7 @@
 				if (type === 'start') {
 					year = year - 150;
 				} else if (type === 'end') {
-					year = year ;
+					year = year;
 				}
 				month = month > 9 ? month : '0' + month;;
 				day = day > 9 ? day : '0' + day;
@@ -313,12 +334,10 @@
 				});
 			},
 			submit() {
-				// if (!this.patientName ||
-				// 	this.patientGender == 0 || !this.birthday || !this.cityId || !this.provinceId || !this.illness ||
-				// 	!this.weight || !this.height || !this.phone) {
-				// 	app.tip('请输入完整信息');
-				// 	return;
-				// }
+				if (!this.info.patientName||!this.info.age) {
+					app.tip('请输入完整信息');
+					return;
+				}
 
 				this.submitRequest();
 			},
@@ -352,36 +371,20 @@
 				}
 			},
 			submitRequest() {
+				// return;
 				app.loading("保存中");
-				uni.navigateTo({
-					url:"/pages/doctor/select/result"
-				})
-				return;
-				app.savePatientInfo({
-					patientName: this.patientName,
-					patientGender: this.patientGender,
-					phone: this.phone,
-					illness: this.illness,
-					age:this.agenum,
-					height: this.height,
-					weight: this.weight,
-					detailList: projectList,
-				}).then(res => {
-					app.loaded();
-					if (res.status == 1) {
-						if(this.selfTest==1){
-						    uni.navigateTo({
-						    	url: 'nutritional-self-test'
-						    });
-							
-						}else{
-						    uni.navigateTo({
-						    	url: 'patient-submit-sucess?type=' + this.type
-						    });
-						    	
-						}
-						
-					}
+				var data = JSON.parse(JSON.stringify(this.info));
+				delete data.id;
+				app.screensave(data).then(res => {
+					app.getReplyRecord({surveyId:this.option.id,phase:"筛选"}).then(resq=>{
+						app.loaded();
+						uni.navigateTo({
+							url:"/pages/patient/test-questions?id="+this.option.id
+						})
+					})
+					// uni.navigateTo({
+					// 	url: "/pages/doctor/select/result?id="+this.option.id
+					// })
 				});
 
 			},
@@ -389,7 +392,7 @@
 				if (type == 0) {
 					this.$refs.sexPop.open();
 				} else {
-					this.patientGender = type;
+					this.info.patientGender = type;
 					this.$refs.sexPop.close();
 				}
 			},
@@ -399,7 +402,7 @@
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.i-sex-content {
 		display: flex;
 		flex-direction: column;
@@ -520,7 +523,8 @@
 		.name-box {
 			display: flex;
 			margin-left: 43rpx;
-			margin-right: 43rpx;flex-wrap: wrap;
+			margin-right: 43rpx;
+			flex-wrap: wrap;
 			// height: 100rpx;
 			border-bottom: 2rpx solid #EEEEEE;
 			position: relative;
@@ -717,5 +721,9 @@
 			}
 		}
 	}
-	.otherinput{width:400rpx;flex: unset!important;}
+
+	.otherinput {
+		width: 400rpx;
+		flex: unset !important;
+	}
 </style>

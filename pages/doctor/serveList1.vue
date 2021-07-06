@@ -1,14 +1,10 @@
 <template>
 	<view class="container">
 		<view class="pagebackground"></view>
-		<view class="item-list other" v-for="(item,index) in list" :key="index" @click="clickItem(index+1)">
-			<view class="left-name">{{item}}</view>
+		<view class="item-list other" v-for="(item,index) in list" :key="index" @click="clickItem(item)">
+			<view class="left-name">{{item.surveyName}}营养状况评估</view>
 			<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
 		</view>
-		<!-- <view class="item-list other" @click="clickItem(2)">
-			<view class="left-name">{{list[1]}}</view>
-			<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
-		</view> -->
 
 	</view>
 </template>
@@ -21,13 +17,20 @@
 				list:["PG-SGA 营养状况评估工具","SGA 营养状况评估工具","MMA 营养状况评估工具"],
 			}
 		},
+		onLoad() {
+			app.questionnairelist({surveyType:0}).then(res => {
+				if (res.data) {
+					this.list = res.data;
+				}
+			})
+		},
 		onShow(){
 			
 		},
 		methods: {
-			clickItem(index) {
+			clickItem(item) {
 				uni.navigateTo({
-					url: '/pages/patient/nutritional-self-test?id='+index
+					url: '/pages/patient/nutritional-self-test?id='+item.id
 				});
 			},
 		},

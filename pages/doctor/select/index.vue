@@ -1,7 +1,7 @@
 <template>
 	<!-- 患者营养自测引导页 -->
 	<view class="container">
-		<view class="pagetitle">河南省住院成人患者营养风险筛查表（试行）</view>
+		<view class="pagetitle">{{option.name}}</view>
 		<view class="button-box">
 			<button type="default" class="button" @click="test">进入筛查</button>
 		</view>
@@ -15,6 +15,7 @@
 		data() {
 			return {
 				baseUrl:app.globalData.baseUrl,
+				option:{},
 				testtype:''
 			}
 		},
@@ -34,6 +35,7 @@
 			
 		},
 		onLoad(option){
+			this.option = option||this.option;
 			if(option.id){
 				this.testtype = option.id;
 			}else{
@@ -53,7 +55,7 @@
 		
 		.button-box{
 			position: fixed;padding-top: 26rpx;
-			bottom: 0;background: #fff;
+			bottom: 15px;background: #fff;
 			height: 130rpx;
 			width: 100%;z-index:9;
 			.button{
