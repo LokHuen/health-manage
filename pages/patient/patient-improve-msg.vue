@@ -632,9 +632,15 @@
 						app.loaded();
 						if(this.needAge){
 							app.getSgaType({age:this.age}).then(res =>{
-								uni.navigateTo({
-									url:'/pages/doctor/select/index?id='+res.data.surveyId+'&name='+res.data.surveyName,
-								});
+								if(res.data.surveyType==1){
+									uni.navigateTo({
+										url:'/pages/doctor/select/index?id='+res.data.surveyId+'&name='+res.data.surveyName,
+									});
+								}else{
+									uni.navigateTo({
+										url: 'nutritional-self-test?id='+res.data.surveyId
+									});
+								}
 							});	
 						}
 						else if (res.status == 1) {

@@ -4,7 +4,7 @@
 			<view class="flex">
 				<image src="../../../static/resulticon.png" class="imageicon" mode="widthFix"></image>
 				<view style="flex:1;">
-					<view class="resultname" style="">{{"存在营养风险"}}</view>
+					<view class="resultname" style="">{{info.result}}</view>
 					<view style="font-size:26rpx;color: #666;">筛选时间：{{info.completeTime}}</view>
 				</view>
 			</view>
@@ -38,7 +38,11 @@
 				<view class="desc" v-if="info.nextSurveyId==2">
 					SGA(主观综合性营养评估)是临床常用营养评价方法之一，其通过评估患者体重和膳食变化、消化道症状、活动能力变化以及有无应激反应，并测量三头肌皮褶厚度，检查有无足踝水肿和腹水等指标综合判断病人的营养状态，具有简单性、易重复性、有效性及前瞻性的特点。
 				</view>
-				<view class="desc" v-if="info.nextSurveyId==2">
+				<view class="title" v-if="info.nextSurveyId==3">MNA营养状况评估</view>
+				<view class="desc" v-if="info.nextSurveyId==3">
+					MNA（简易营养评估量表）是专为老年人设计的营养评估方法，通过对老年住院病人进行营养筛查，为进一步营养支持治疗提供参考信息。
+				</view>
+				<view class="desc" v-if="info.nextSurveyId==2||info.nextSurveyId==3">
 					建议测评周期
 					<view>重度营养不良：1次/周</view>
 					<view>轻-中度营养不良：1次/1-2周</view>
