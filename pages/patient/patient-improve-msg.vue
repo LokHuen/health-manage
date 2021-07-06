@@ -638,7 +638,7 @@
 									});
 								}else{
 									uni.navigateTo({
-										url: 'nutritional-self-test?id='+res.data.surveyId
+										url: 'patient-submit-sucess?type=' + this.type+'&age='+this.age
 									});
 								}
 							});	
