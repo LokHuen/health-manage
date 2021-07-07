@@ -25,6 +25,9 @@ var api = {
 	screenPrevPage: (data) => {
 		return rq("/wx/survey/question/screenPrevPage", data, "GET");
 	}, //获取营养筛查上一页
+	questionscreenSave: (data) => {
+		return rq("/wx/survey/question/screenSave", JSON.stringify(data), "POST");
+	},//提交本页筛查问题的回答
 
 	// 自测
 	getQuestionSecondList: (data) => {

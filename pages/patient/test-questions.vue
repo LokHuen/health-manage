@@ -165,15 +165,16 @@
 				this.current = e.currentIndex;
 			},
 			getseletresult(listdata){
-				app.replySecond(listdata).then(rs=>{
+				app.questionscreenSave(listdata).then(rs=>{
 				    if(rs.status==1){
 				        const{section,field,grade,nomore,recordId,toThird}=rs.data;
 				        this.nomore=nomore;
 				        if(nomore==0){
 							this.nowindex++;
-				            this.params.section=section;
-				            this.params.field=field;
-				            this.params.grade=grade;
+				            // this.params.section=section;
+				            // this.params.field=field;
+				            // this.params.grade=grade;
+							this.params.section=1; this.params.field=2; this.params.grade=1;
 							this.params.recordId=recordId;
 				            this.getQuestions(rs.data.nextQid||"");  //取下一页的题
 							
