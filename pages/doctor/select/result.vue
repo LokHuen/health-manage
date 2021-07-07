@@ -42,7 +42,7 @@
 				<view class="desc" v-if="info.nextSurveyId==3">
 					MNA（简易营养评估量表）是专为老年人设计的营养评估方法，通过对老年住院病人进行营养筛查，为进一步营养支持治疗提供参考信息。
 				</view>
-				<view class="desc" v-if="info.nextSurveyId==2||info.nextSurveyId==3">
+				<view class="desc" v-if="info.nextSurveyId==2">
 					建议测评周期
 					<view>重度营养不良：1次/周</view>
 					<view>轻-中度营养不良：1次/1-2周</view>
