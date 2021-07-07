@@ -166,6 +166,7 @@
 			},
 			getseletresult(listdata){
 				app.questionscreenSave(listdata).then(rs=>{
+					app.loaded();
 				    if(rs.status==1){
 				        const{section,field,grade,nomore,recordId,toThird}=rs.data;
 				        this.nomore=nomore;
@@ -374,10 +375,12 @@
 					}
 				}
 			    console.log(listdata);
+				app.loading("加载中");
 				if(this.params.surveyId>3){
 					this.getseletresult(listdata);
 				}else
 			    app.replySecond(listdata).then(rs=>{
+					app.loaded();
 			        if(rs.status==1){
 			            const{section,field,grade,nomore,toThird}=rs.data;
 			            this.nomore=nomore;

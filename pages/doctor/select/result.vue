@@ -76,7 +76,7 @@
 		methods:{
 			test(){
 				uni.navigateTo({
-					url:'/pages/patient/testIndex?id='+this.info.nextSurveyId
+					url:'/pages/testIndex?id='+this.info.nextSurveyId
 				});
 				// app.getReplyRecord({surveyId:this.testtype,phase:"筛选"}).then(res=>{
 				// 	app.tip("保存成功");
