@@ -520,7 +520,7 @@
 				this.$forceUpdate();
 			},
 			download(){
-				if(this.surveyType == 1 && this.testtype == 0){
+				if(this.surveyType == 0 && this.testtype == '1'){
 					uni.navigateTo({
 						url:"/pages/doctor/pdfinfo?id="+this.uid
 					})
