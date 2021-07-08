@@ -524,6 +524,7 @@
 					uni.navigateTo({
 						url:"/pages/doctor/pdfinfo?id="+this.uid
 					})
+					this.$refs.pop1.close();
 				}else{
 					app.tip('患者未进行PG-SGA评估');
 				}
