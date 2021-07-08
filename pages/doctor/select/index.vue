@@ -1,7 +1,16 @@
 <template>
-	<!-- 患者营养自测引导页 -->
 	<view class="container">
-		<view class="pagetitle">{{option.name}}</view>
+		<view class="background-img-box">
+			<view class="left-bg"></view>
+			<view class="background-img">
+				<image src="../../../static/img/nutritional_self_test_bg.png" mode="widthFix" class=""></image>
+			</view>
+			<view class="content-box">
+				<view class="title" >{{option.name}}</view>
+				
+			</view>
+			
+		</view>
 		<view class="button-box">
 			<button type="default" class="button" @click="test">进入筛查</button>
 		</view>
@@ -49,6 +58,40 @@
 
 <style lang="scss">
 	.container{
+		.background-img-box{
+			position: relative;
+			padding-top: 30rpx;
+			width: 750rpx;
+			.left-bg{
+				background-color: #DCECEC;
+				width: 375rpx;
+				height: 860rpx;
+			}
+			.background-img{
+				position: absolute;
+				top: 66rpx;
+				left: 55rpx;
+				right: 55rpx;
+				image{width: 100%;}
+			}
+			.content-box{
+				position: absolute;
+				color: #FFFFFF;
+				top: 146rpx;
+				left: 95rpx;
+				right: 80rpx;
+				.title{
+					font-size: 18px;
+				}
+				.desc{
+					margin-top: 30rpx;
+					font-size: 13px;
+					line-height:45rpx;
+					
+				}
+			}
+			
+		}
 		.pagetitle{
 			font-size:50rpx;text-align:center;padding:30rpx 30rpx 0;
 		}
