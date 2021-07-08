@@ -42,27 +42,31 @@
 		
 		<view class="line-space"></view>
 		
-		<view class="record-box">
-			<view class="record-item">
-				<view style="padding-left: 50rpx;height: 80rpx;line-height: 80rpx;font-size: 30rpx;">最近一次营养筛选</view>
-				<view class="record-item-detail">筛查工具：河南省住院成人患者营养风险筛查表...</view>
-				<view class="record-item-detail">筛查时间： 2020/06/23 12:21</view>
-				<view class="record-item-detail">筛查结果：存在营养风险</view>
-				<view class="record-item-detail">建议内容：建议继续进行SGA营养状况评估</view>
+		<view class="record-box" v-if="latelyData.result" @click="toanswerlist(latelyData)">
+			<view class="record-item" v-if="latelyData.surveyType==1">
+				<view style="padding-left: 50rpx;height: 80rpx;line-height: 80rpx;font-size: 30rpx;">最近一次营养筛查</view>
+				<view class="record-item-detail">{{'筛查工具：'+latelyData.surveName}}</view>
+				<view class="record-item-detail">{{'筛查时间： '+latelyData.completeTime}}</view>
+				<view class="record-item-detail">{{'筛查结果：'+latelyData.result}}</view>
+				<view class="record-item-detail" style="display: flex;">建议内容:
+				
+				<rich-text :nodes="latelyData.content" style="margin-left: 15rpx;"></rich-text>
+				</view>
 			</view>
 			
-			<view class="line-space"></view>
-			
-			<view class="record-item">
+		
+			<view class="record-item" v-if="latelyData.surveyType==0">
 				<view style="padding-left: 50rpx;height: 80rpx;line-height: 80rpx;font-size: 30rpx;">最近一次营养评估</view>
-				<view class="record-item-detail">评估工具：PG-SGA</view>
-				<view class="record-item-detail">评估时间： 2020/06/23 12:21</view>
-				<view class="record-item-detail">治疗阶段：放疗后 化疗中</view>
-				<view class="record-item-detail">评估结果：中度营养不良（4分）</view>
-				<view class="record-item-detail">建议内容：需要营养干预及针对症状的治疗手段</view>
+				<view class="record-item-detail">{{'评估工具：'+latelyData.surveName}}</view>
+				<view class="record-item-detail">{{'评估时间： '+latelyData.completeTime}}</view>
+				<view class="record-item-detail">{{'治疗阶段：'+latelyData.phase}}</view>
+				<view class="record-item-detail">{{'评估结果：'+latelyData.result}}</view>
+				<view class="record-item-detail" style="display: flex;">建议内容:
+				
+				<rich-text :nodes="latelyData.content" style="margin-left: 15rpx;"></rich-text>
+				</view>
 				
 			</view>
-			
 			
 		</view>
 		
@@ -397,7 +401,8 @@
 					<image src="../../static/icon_close.png" mode="aspectFill" @click="closeMore" class="close"></image>
 				</view>
 				<view class="transferButton" @click="transfer">将患者转给同科室的医生</view>
-				<view style="height: 260rpx;"></view>
+				<view class="transferButton" style="margin-top: 40rpx;" @click="download">下载患者营养状况反馈表</view>
+				<view style="height: 160rpx;"></view>
 				
 			</view>
 		</uni-popup>
@@ -473,6 +478,7 @@
 				doctorList:'',
 				showAdvice:1,
 				goodslist:[],
+				surveyType:''
 			}
 		},
 		onLoad(props){
@@ -512,6 +518,16 @@
 				}
 				this.$refs.doctorPop.close();
 				this.$forceUpdate();
+			},
+			download(){
+				if(this.surveyType == 1 && this.testtype == 0){
+					uni.navigateTo({
+						url:"/pages/doctor/pdfinfo?id="+this.uid
+					})
+				}else{
+					app.tip('患者未进行PG-SGA评估');
+				}
+				
 			},
 			transfer(){
 				this.closeMore();
@@ -1078,6 +1094,7 @@
 				app.getSgaType({uid: this.uid}).then(res => {
 					if (res.status == 1) {
 						this.testtype = res.data.sgaType;
+						this.surveyType = res.data.surveyType;
 						if(this.testtype==2){
 							this.getNearlyRecord();
 							this.getLineChartData();
@@ -2158,6 +2175,7 @@
 			color: #FFFFFF;
 			margin-top: 77rpx;
 		}
+		
 		
 	}
 	

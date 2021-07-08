@@ -73,13 +73,14 @@
 				font-size: 32rpx;
 				text-align: left;
 				font-family: PingFangSC-bold;
+				font-weight: 500;
 				padding-left: 20rpx;
 				border-bottom: 2rpx solid rgba(187, 187, 187, 100);
 				position: relative;
 				.time{
 					position: absolute;
 					right: 0rpx;
-					top: 10rpx;
+					top: 0rpx;
 					color: rgba(106, 105, 105, 100);
 					font-size: 28rpx;
 					text-align: right;
@@ -88,19 +89,21 @@
 			}
 			
 			.deatil{
+				margin-top: 20rpx;
 				display: flex;
 				padding-left: 40rpx;
-				height: 80rpx;
-				line-height: 80rpx;
+				height: 60rpx;
+				//line-height: 80rpx;
 				.left{
 					width: 200rpx;
 					color: rgba(16, 16, 16, 100);
 					font-size: 28rpx;
 					text-align: left;
 					font-family: PingFangSC-bold;
+					font-weight: 500;
 				}
 				.right{
-					color: rgba(16, 16, 16, 100);
+					color:#333333;
 					font-size: 28rpx;
 					text-align: left;
 					font-family: PingFangSC-regular;
@@ -110,23 +113,24 @@
 			.deatil1{
 				display: flex;
 				padding-left: 40rpx;
-				padding-bottom: 60rpx;
+				//padding-bottom: 20rpx;
 				.left1{
 					width: 200rpx;
 					color: rgba(16, 16, 16, 100);
 					font-size: 28rpx;
 					text-align: left;
 					font-family: PingFangSC-bold;
-					height: 50rpx;
-					line-height: 50rpx;
+					//height: 50rpx;
+					//line-height: 50rpx;
+					font-weight: 500;
 				}
 				.right1{
-					color: rgba(16, 16, 16, 100);
+					color:#333333;
 					font-size: 28rpx;
 					text-align: left;
 					font-family: PingFangSC-regular;
-					height: 50rpx;
-					line-height: 50rpx;
+					//height: 50rpx;
+					//line-height: 50rpx;
 				}
 			}
         }

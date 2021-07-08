@@ -96,9 +96,9 @@
 				});
 			},
 			toanswerlist(item){
-				if(item.surveyType==1)item.surveyId=3;
+			    let surveyId = item.surveyType==1?3:item.surveyId;
 				uni.navigateTo({
-					url:"/pages/patient/answer?id="+item.id+'&surveyId='+item.surveyId
+					url:"/pages/patient/answer?id="+item.id+'&surveyId='+surveyId
 				})
 			},
 		}

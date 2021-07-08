@@ -9,20 +9,25 @@
         
 		<view class="listContent" v-for="(item, index) in listDatas" :key="index" v-if="listDatas.length!=0">
 			<view class="health-list-item" @click="toanswerlist(item)">
-				<view class="health-list-item-avatar-content">
+				<!-- <view class="health-list-item-avatar-content">
 					<image class="health-list-item-avatar" :src="item.result=='营养良好'?'../../static/icon/smile.png':'../../static/icon/cry_icon.png'"></image>
-				</view>
+				</view> -->
 				<view class="health-list-item-content">
 					<view class="health-list-item-title">{{item.result}}</view>
-					<view class="health-list-item-detail">{{item.phase}} </view>
-					<view class="health-list-item-time">测评时间：{{item.completeTime}}</view>
-					<view class="line" v-if="item.showDetail"></view>
+					<view class="health-list-item-time">{{(item.surveyType==0?'评估工具：':'筛查工具')+item.surveyName}}</view>
+					<view class="health-list-item-time">{{(item.surveyType==0?'评估时间：':'筛查时间')+item.completeTime}}</view>
+					<view class="health-list-item-time" v-if="item.surveyType==0">治疗阶段：{{item.phase}} </view>
+					
+					<!-- <view class="line" v-if="item.showDetail"></view> -->
 					<view class="advice-content">
-						<rich-text :nodes="item.content"  v-if="item.showDetail"></rich-text>
+						<view style="width: 130rpx;">
+							建议内容：
+						</view>
+						<rich-text :nodes="item.content"  v-if="item.showDetail" style="line-height: 40rpx;text-align: left;flex: 1;"></rich-text>
 					</view>
 					
 				</view>
-                <image class="health-list-item-arrow" :src="item.showDetail?'../../static/icon/right_arrow_top.png':'../../static/icon/right_arrow.png'" mode="widthFix" @click.stop="onClickItem(item)" v-show="false"></image>
+		        <image class="health-list-item-arrow" :src="item.showDetail?'../../static/icon/right_arrow_top.png':'../../static/icon/right_arrow.png'" mode="widthFix" @click.stop="onClickItem(item)" v-show="false"></image>
 			</view>
 		</view>
 		<view style="height: 100px;"></view>
@@ -77,10 +82,12 @@
 					uni.stopPullDownRefresh();
 				});
 			},
-			toanswerlist(val){
+			toanswerlist(item){
+				let surveyId = item.surveyType==1?3:item.surveyId;
 				uni.navigateTo({
-					url:"/pages/patient/answer?id="+val.id+"&testtype="+val.surveyId
+					url:"/pages/patient/answer?id="+item.id+'&surveyId='+surveyId
 				})
+				
 			},
 		}
 	}
@@ -89,10 +96,12 @@
 
 
 <style lang="scss">	
+	.testbox{padding:40rpx 40rpx;}
+	.question{width:30rpx;}
     .tips{
 		margin-left: 50rpx;
 		margin-right: 50rpx;
-		display: flex;
+		display: flex;align-items:unset;
 		padding-top: 35rpx;
 		.remind{
 			width: 35rpx;
@@ -100,7 +109,7 @@
 			margin-top: 10rpx;
 		}
 		.remind-tips{
-			margin-left: 10rpx;
+			margin-left: 10rpx;flex:1;
 			color: #333333;
 			font-size: 15px;
 			line-height: 50rpx;
@@ -135,7 +144,7 @@
 				}
 			}
 			.health-list-item-content {
-				margin-left: 15rpx;
+				margin-left: 30rpx;
 				margin-top: 40rpx;
 				padding-bottom: 40rpx;
                 width: 100%;
@@ -147,14 +156,15 @@
 				.health-list-item-detail {
 					color: #999999;
 					font-size: 26rpx;
-					margin-top: 20rpx;
+					margin-top: 10rpx;
+					padding-bottom: 10rpx;
 				}
 				
 				.health-list-item-time {
 					color: #666666;
 					font-size: 26rpx;
-					margin-top: 20rpx;
-					padding-bottom: 15rpx;
+					margin-top: 10rpx;
+					padding-bottom: 0rpx;
 				}
 				.line{
 					background-color: #CCCCCC;
@@ -162,9 +172,10 @@
 					margin-right: 20rpx;
 				}
 				.advice-content{
-					font-size: 24rpx!important;
+					display: flex;
+					font-size: 26rpx!important;
 					color: #666666;
-					padding: 20rpx 20rpx 0 0;
+					padding: 10rpx 20rpx 0 0;
 				}
 			}
 			.health-list-item-arrow {
