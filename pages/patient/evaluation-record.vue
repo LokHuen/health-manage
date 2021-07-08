@@ -13,16 +13,16 @@
         
 		<view class="listContent" v-for="(item, index) in listDatas" :key="index" v-if="listDatas.length!=0">
 			<view class="health-list-item" @click="toanswerlist(item)">
-				<view class="health-list-item-avatar-content">
+				<!-- <view class="health-list-item-avatar-content">
 					<image class="health-list-item-avatar" :src="item.result=='营养良好'?'../../static/icon/smile.png':'../../static/icon/cry_icon.png'"></image>
-				</view>
+				</view> -->
 				<view class="health-list-item-content">
 					<view class="health-list-item-title">{{item.result}}</view>
 					<view class="health-list-item-time">{{(item.surveyType==0?'评估工具：':'筛查工具')+item.surveyName}}</view>
 					<view class="health-list-item-time">{{(item.surveyType==0?'评估时间：':'筛查时间')+item.completeTime}}</view>
-					<view class="health-list-item-detail" v-if="item.surveyType==0">治疗阶段：{{item.phase}} </view>
+					<view class="health-list-item-time" v-if="item.surveyType==0">治疗阶段：{{item.phase}} </view>
 					
-					<view class="line" v-if="item.showDetail"></view>
+					<!-- <view class="line" v-if="item.showDetail"></view> -->
 					<view class="advice-content">
 						<view style="width: 140rpx;">
 							建议内容：
@@ -155,7 +155,7 @@
 				}
 			}
 			.health-list-item-content {
-				margin-left: 15rpx;
+				margin-left: 30rpx;
 				margin-top: 40rpx;
 				padding-bottom: 40rpx;
                 width: 100%;
@@ -186,7 +186,7 @@
 					display: flex;
 					font-size: 24rpx!important;
 					color: #666666;
-					padding: 20rpx 20rpx 0 0;
+					padding: 10rpx 20rpx 0 0;
 				}
 			}
 			.health-list-item-arrow {

@@ -89,7 +89,7 @@
 			</view>
 		</view>
 		
-		<view class="last-one" v-if="latelyData.result">最近一次评价</view>
+		<!-- <view class="last-one" v-if="latelyData.result">最近一次评价</view>
 		
 		<view class="listContent" v-if="latelyData.result">
 			<view class="health-list-item" @click="toanswerlist(latelyData.id)">
@@ -109,7 +109,7 @@
 				<image class="health-list-item-arrow" :src="showDetail?'../../static/icon/right_arrow_top.png':'../../static/icon/right_arrow.png'"
 				 mode="widthFix" @click.stop="showDetailMessage" v-show="false"></image>
 			</view>
-		</view>
+		</view> -->
 		
 		
 		<view class="health-msg-box">

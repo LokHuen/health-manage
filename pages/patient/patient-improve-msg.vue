@@ -386,8 +386,8 @@
 							this.cityId = this.infoData.cityId;
 							this.provinceId = this.infoData.provinceId;
 							this.illness = this.infoData.illness;
-							this.height = this.infoData.height;
-							this.weight = this.infoData.weight;
+							this.height = this.infoData.height==0?'':this.infoData.height;
+							this.weight = this.infoData.weight==0?'':this.infoData.weight;
 							if (this.infoData.birthday) {
 								var year = this.infoData.birthday.split('年')[0];
 								var month = this.infoData.birthday.split('年')[1].split('月')[0];
