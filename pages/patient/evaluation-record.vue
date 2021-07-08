@@ -185,7 +185,7 @@
 				}
 				.advice-content{
 					display: flex;
-					font-size: 24rpx!important;
+					font-size: 26rpx!important;
 					color: #666666;
 					padding: 10rpx 20rpx 0 0;
 				}
