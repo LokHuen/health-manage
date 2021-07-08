@@ -24,10 +24,10 @@
 					
 					<!-- <view class="line" v-if="item.showDetail"></view> -->
 					<view class="advice-content">
-						<view style="width: 140rpx;">
+						<view style="width: 130rpx;">
 							建议内容：
 						</view>
-						<rich-text :nodes="item.content"  v-if="item.showDetail" style="line-height: 40rpx;"></rich-text>
+						<rich-text :nodes="item.content"  v-if="item.showDetail" style="line-height: 40rpx;text-align: left;flex: 1;"></rich-text>
 					</view>
 					
 				</view>
@@ -96,6 +96,7 @@
 				});
 			},
 			toanswerlist(item){
+				if(item.surveyType==1)item.surveyId=3;
 				uni.navigateTo({
 					url:"/pages/patient/answer?id="+item.id+'&surveyId='+item.surveyId
 				})
