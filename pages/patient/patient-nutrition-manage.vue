@@ -764,9 +764,16 @@
 				myChart.setOption(option);
 			},
 			beginTest() {
-				uni.navigateTo({
-					url: 'nutritional-self-test?' +Math.random()
-				});
+				if(this.surveyId<4){
+					uni.navigateTo({
+						url: 'nutritional-self-test?id='+this.surveyId
+					});
+				}else{
+					uni.navigateTo({
+						url:'/pages/doctor/select/index?id='+this.surveyId+'&name='+this.latelyData.surveName
+					})
+				}
+				
 			},
 			clickFuction(index) {
 				if (index == 0) {
