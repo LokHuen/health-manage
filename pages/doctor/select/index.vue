@@ -7,7 +7,9 @@
 			</view>
 			<view class="content-box">
 				<view class="title" >{{option.name}}</view>
-				
+				<view class="desc" >
+					{{info.desc}}
+				</view>
 			</view>
 			
 		</view>
@@ -24,13 +26,14 @@
 		data() {
 			return {
 				baseUrl:app.globalData.baseUrl,
+				info:{},
 				option:{},
 				testtype:''
 			}
 		},
 		methods:{
 			test(){
-				uni.navigateTo({
+				uni.redirectTo({
 					url:'/pages/doctor/select/data?id='+this.testtype
 				});
 			},
@@ -47,6 +50,9 @@
 			this.option = option||this.option;
 			if(option.id){
 				this.testtype = option.id;
+				app.questionnaireget({id:option.id}).then(res =>{
+					this.info = res.data;
+				});
 			}else{
 												
 			}
@@ -85,7 +91,7 @@
 				}
 				.desc{
 					margin-top: 30rpx;
-					font-size: 13px;
+					font-size: 13px;word-break: break-all;
 					line-height:45rpx;
 					
 				}

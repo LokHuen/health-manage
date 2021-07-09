@@ -15,7 +15,7 @@
 		</view>
 		<view class="sex-box">
 			<view class="sex-tips">* 年龄</view>
-			<picker @change="bindDateChange" :value="birthday" :range="array" style="flex: 1;">
+			<picker @change="bindDateChange" :value="birthday1" :range="array" style="flex: 1;">
 				<view :class="info.age?'has-value':'sex-value'">{{info.age?info.age:'点击选择'}}</view>
 			</picker>
 		</view>
@@ -29,7 +29,52 @@
 			<view class="name-tips">* 床号</view>
 			<input class="name-input" type="text" value="" placeholder="请填写床位号" v-model="info.bedNo" />
 		</view>
-
+		<view v-if="showmore">
+		<view class="sex-box" >
+			<view class="sex-tips">* 入院日期</view>
+			<picker mode="date" :value="info.inHospitalDate" :start="startDate" :end="endDate" @change="bindDateChange1" style="flex: 1;">
+				<view :class="info.inHospitalDate?'has-value':'sex-value'">{{info.inHospitalDate?info.inHospitalDate:'点击选择'}}</view>
+			</picker>
+		</view>
+		
+		<view class="name-box">
+			<view class="name-tips">* 当前身高</view>
+			<input class="name-input" type="text" value="" placeholder="请填写数字" v-model="info.height" />
+			<view class="right-tip">cm</view>
+		</view>
+		<view class="name-box">
+			<view class="name-tips">* 当前体重</view>
+			<input class="name-input" type="text" value="" placeholder="请填写数字" v-model="info.weight" />
+			<view class="right-tip">kg</view>
+		</view>
+		<view class="name-box choosebox">
+			<view class="linetitle">* 过去三个月内患者体重下降了吗？</view>
+			<view style="width:100%;" class="edit editdata">
+				<radio-group @change="radiochoose($event,'weightDown')" >
+					<radio value="1" :checked="info.radio==1" >是</radio>
+					<radio value="0" :checked="info.radio==2" >否</radio>
+				</radio-group>
+			</view>
+		</view>
+		<view class="name-box choosebox">
+			<view class="linetitle">* 上周患者饮食摄入减少了吗？</view>
+			<view style="width:100%;" class="edit editdata">
+				<radio-group @change="radiochoose($event,'dietDown')" >
+					<radio value="1" :checked="info.radio==1" >是</radio>
+					<radio value="0" :checked="info.radio==2" >否</radio>
+				</radio-group>
+			</view>
+		</view>
+		<view class="name-box choosebox">
+			<view class="linetitle">* 患者有严重疾病吗？</view>
+			<view style="width:100%;" class="edit editdata">
+				<radio-group @change="radiochoose($event,'illnessSerious')" >
+					<radio value="1" :checked="info.radio==1" >是</radio>
+					<radio value="0" :checked="info.radio==2" >否</radio>
+				</radio-group>
+			</view>
+		</view>
+		</view>
 
 		<view class="button-box">
 			<button type="default" class="button" @click="submit">下一页</button>
@@ -61,22 +106,30 @@
 					"inHospitalNo": "", // "住院号",
 					"icu": "", // "病区",
 					"bedNo": "", // "床号"
+					inHospitalDate:"", //入院日期
+					weightDown:"", //过去3个月体重是否下降（0：否，1：是）
+					dietDown:"", //上周饮食是否减少（0：否，1：是）
+					// bmiQualify:"", //bmi<20.5（0：否，1：是）
+					illnessSerious:"", //疾病严重吗（0：否，1：是）
+					weight:"", //体重（kg)
+					height:"", //身高（cm)
 				},
 				patientName: '',
 				patientGender: 0,
 				array: [],
-				birthday: -1,
+				birthday: "",
+				birthday1: -1,
 
 				type: 1, //1表示点击更新信息进来，2表示用户未填写信息系统自动跳进来的
-
-
 				formQrCode: '', //1表示患者扫描医生二维码后，点击公众号消息进入信息完善页 2从基础信息进入
 				selfTest: '', //1表示从评估页面进来，完善信息后直接返回评估页面
 				option:{},
+				showmore:false,
 			}
 		},
 		onLoad(props) {
 			this.option = props||this.option;
+			if(this.option.id==4) this.showmore = true;
 			if (!app.getCache("uid")) return;
 			this.type = props.type || 1;
 			this.formQrCode = props.formQrCode || 1;
@@ -199,8 +252,10 @@
 			getInfo() {
 				app.screeninroScreen({}).then(res => {
 					if (res.data) {
-						Object.assign(this.info,res.data);
-						// this.info = res.data;
+						res.data.weight = res.data.weight||"";
+						res.data.height = res.data.height||"";
+						this.info = Object.assign(this.info,res.data);
+						console.log(this.info)
 					}
 				})
 			},
@@ -292,7 +347,7 @@
 				}
 			},
 			bindDateChange(e) {
-				this.birthday = e.target.value
+				this.birthday1 = e.target.value
 				this.info.age = this.array[e.target.value];
 			},
 			getDate(type) {
@@ -338,6 +393,12 @@
 					app.tip('请输入完整信息');
 					return;
 				}
+				if(this.showmore){
+					if (!this.info.inHospitalDate||!this.info.weightDown||!this.info.dietDown||!this.info.illnessSerious||!this.info.weight||!this.info.height) {
+						app.tip('请输入完整信息');
+						return;
+					}
+				}
 
 				this.submitRequest();
 			},
@@ -376,12 +437,30 @@
 				var data = JSON.parse(JSON.stringify(this.info));
 				delete data.id;
 				app.screensave(data).then(res => {
-					app.getReplyRecord({surveyId:this.option.id,phase:"筛选"}).then(resq=>{
-						app.loaded();
-						uni.navigateTo({
-							url:"/pages/patient/test-questions?id="+this.option.id
+					if(res.data.hasScreen==1){
+						app.getReplyRecord({surveyId:this.option.id,phase:"筛选"}).then(resq=>{
+							app.loaded();
+							uni.redirectTo({
+								url:"/pages/patient/test-questions?id="+this.option.id
+							})
 						})
-					})
+					}else{
+						app.loaded();
+						uni.showModal({
+						    title: '营养良好',
+							showCancel:false,
+							confirmText:"完成",
+							content: '建议每周重复筛查1次',
+						    success: (res)=>{
+						        if (res.confirm) {
+						            uni.navigateBack({});
+						        } else if (res.cancel) {
+						            
+						        }
+						    }
+						});
+					}
+					
 					// uni.navigateTo({
 					// 	url: "/pages/doctor/select/result?id="+this.option.id
 					// })
@@ -396,13 +475,25 @@
 					this.$refs.sexPop.close();
 				}
 			},
-
+			radiochoose(e,item){
+				this.info[item] = e.detail.value;
+			},
+			bindDateChange1(e) {
+				this.info.inHospitalDate = e.target.value
+			},
 		},
 
 	}
 </script>
 
 <style lang="scss" scoped>
+	.edit uni-radio{
+		display:block;line-height: 1.3;background: #FFFFFF;border-radius: 8rpx;border: 1rpx solid #ddd;margin-bottom:12rpx;text-align: left;color: #272727;padding:20rpx 0;
+	}
+	.choosebox{
+		padding:26rpx 0;
+		.linetitle{width:100%;color: #333333;font-size: 15px;padding-bottom:20rpx;}
+	}
 	.i-sex-content {
 		display: flex;
 		flex-direction: column;

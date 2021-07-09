@@ -4,14 +4,15 @@
 			<view class="flex">
 				<image src="../../static/resulticon.png" class="imageicon" mode="widthFix"></image>
 				<view style="flex:1;">
-					<view class="resultname" style="">{{info.result}} <text v-if="id==1"> ({{info.total||0}}分)</text></view>
+					<view class="resultname" style="">{{info.result}}</view>
 					<view class="resultpath" style="">{{info.phase}}</view>
 					<view style="font-size:26rpx;color: #666;">测评时间：{{info.completeTime}}</view>
 				</view>
 			</view>
 			<view class="advicetext">指南建议：</view>
 			<view class="richtextarea">
-				<rich-text v-show="showDetail" :nodes="info.content"></rich-text>
+				<!-- <rich-text v-show="showDetail" :nodes="info.content"></rich-text> -->
+				<view v-show="showDetail" v-html="info.content"></view>
 			</view>
 
 

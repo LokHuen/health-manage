@@ -5,12 +5,13 @@
 				<image src="../../../static/resulticon.png" class="imageicon" mode="widthFix"></image>
 				<view style="flex:1;">
 					<view class="resultname" style="">{{info.result}}</view>
-					<view style="font-size:26rpx;color: #666;">筛选时间：{{info.completeTime}}</view>
+					<view style="font-size:26rpx;color: #666;">筛查时间：{{info.completeTime}}</view>
 				</view>
 			</view>
 			<view class="advicetext">
 				<view class="richtextarea">
-					<rich-text :nodes="info.content"></rich-text>
+					<!-- <rich-text :nodes="info.content"></rich-text> -->
+					<view v-html="info.content"></view>
 				</view>
 			</view>
 		</view>
@@ -86,9 +87,7 @@
 				// })
 			},
 			finish(){
-				uni.reLaunch({
-					url:"/pages/patient/patient-nutrition-manage"
-				})
+				uni.navigateBack({})
 			},
 			videobox(){
 				if(this.showvideo) {this.showvideo = false;return;}

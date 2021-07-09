@@ -181,7 +181,7 @@
 							
 				        }else{
 							if(this.params.surveyId>3){
-								uni.navigateTo({
+								uni.redirectTo({
 									url: "/pages/doctor/select/result?id="+this.params.surveyId
 								})
 							}else{
@@ -392,7 +392,7 @@
 			
 			            }else{
 							if(this.params.surveyId>3){
-								uni.navigateTo({
+								uni.redirectTo({
 									url: "/pages/doctor/select/result?id="+this.params.surveyId
 								})
 							}else{

@@ -28,6 +28,9 @@ var api = {
 	questionscreenSave: (data) => {
 		return rq("/wx/survey/question/screenSave", JSON.stringify(data), "POST");
 	},//提交本页筛查问题的回答
+	questionnaireget: (data) => {
+		return rq("/wx/survey/questionnaire/get", data, "GET");
+	}, //问卷信息
 
 	// 自测
 	getQuestionSecondList: (data) => {
