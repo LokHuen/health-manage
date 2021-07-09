@@ -6,7 +6,7 @@
 				<image src="../../../static/img/nutritional_self_test_bg.png" mode="widthFix" class=""></image>
 			</view>
 			<view class="content-box">
-				<view class="title" >{{option.name}}</view>
+				<view class="title" >{{info.surveyName}}</view>
 				<view class="desc" >
 					{{info.desc}}
 				</view>

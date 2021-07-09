@@ -3,9 +3,14 @@
  <view>
 	 <view class="health-content">
 		 <view class="health-image"> <image class="health-status-image" src="../../static/icon/submit_sucess_icon.png"></image></view>
+<<<<<<< HEAD
 		 <view class="health-result">提交成功</view>
 		 <!-- <button class="health-confirm" v-show="type!=1" @click="complete" style="width:600rpx;">去做{{info.sgaType==1?"PG-":""}}SGA营养状况评估</button> -->
 		 <button class="health-confirm" v-show="type!=1" @click="complete" style="width:600rpx;">{{info.surveyId==1?('去做PG-SGA营养状况评估'):(info.surveyId==2?('去做SGA营养状况评估'):(info.surveyName+'评估'))}}</button>
+=======
+		 <view class="health-result">提交成功</view>
+		 <button class="health-confirm" v-show="type!=1" @click="complete" style="width:600rpx;">去做{{changetext()}}</button>
+>>>>>>> 59306847c820967fd58953d5ce9043687ddb3841
 		 <button class="health-confirm" v-show="type==1" @click="complete">完成</button>
 	 </view>
  </view>
@@ -19,17 +24,23 @@
 			return {
 				info:'',
 				type:1,//1跳回患者基本信息页面 2跳回患者营养界面
+				testtype:1,
 				age:''
 			}
 		},
 		methods: {
+			changetext(){
+				if(this.testtype==1) return "PG-SGA营养状况评估";
+				if(this.testtype==2) return "SGA营养状况评估";
+				return "MMA营养状况评估";
+			},
 			complete(){
 				if(this.type==1){
 					uni.redirectTo({
 						url:'./patient-basic-information'
 					});
 				}else{
-					//surveyType 问卷类型（0：评估，1：筛查）
+					//surveyType  	问卷类型（0：评估，1：筛查）
 					if(this.info.surveyType == 0){
 						uni.redirectTo({
 							url:'/pages/patient/nutritional-self-test'
@@ -51,6 +62,7 @@
 			//this.age = props.age;
 			app.getSgaType({age:props.age}).then(res => {
 				if (res.status == 1) {
+					this.testtype = res.data.sgaType;
 					this.info = res.data;
 				}
 			});
