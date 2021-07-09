@@ -135,6 +135,7 @@
 					font-size: 28rpx;
 					text-align: left;
 					font-family: PingFangSC-regular;
+					line-height: 33rpx;
 				}
 			}
         }
