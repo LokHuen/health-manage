@@ -1,5 +1,6 @@
 <template>
 	<view class="container">
+		<view class="no-data-tips" v-if="list.length == 0">暂无数据</view>
 		<view v-for="(item,index) in list" class="list-item">
          <view class="title">
 			 {{'主观感受：'+(item.illnessFeeling?item.illnessFeeling:'无')}}
@@ -32,12 +33,13 @@
 	export default {
 		data() {
 			return {
-				list: []
+				list: [],
+				patientId:''
 			}
 		},
 		methods: {
 			getList(){
-				app.feelingList().then(res =>{
+				app.feelingList({patientId:this.patientId}).then(res =>{
 					if(res.status == 1){
 						this.list = res.data;
 					}
@@ -46,6 +48,7 @@
 
 		},
 		onLoad(props) {
+			this.patientId = props.patientId
             this.getList();
 		}
 
@@ -58,6 +61,12 @@
 	.container {
 		background-color: #FFFFFF;
 		padding-bottom: 50rpx;
+		.no-data-tips {
+			margin-top: 100rpx;
+			text-align: center;
+			font-size: 30rpx;
+			color: #666666;
+		}
         .list-item {
         	background-color: #F6F6F6;
         	border-radius: 10rpx;
@@ -93,7 +102,6 @@
 				display: flex;
 				padding-left: 40rpx;
 				height: 60rpx;
-				//line-height: 80rpx;
 				.left{
 					width: 200rpx;
 					color: rgba(16, 16, 16, 100);
@@ -113,15 +121,12 @@
 			.deatil1{
 				display: flex;
 				padding-left: 40rpx;
-				//padding-bottom: 20rpx;
 				.left1{
 					width: 200rpx;
 					color: rgba(16, 16, 16, 100);
 					font-size: 28rpx;
 					text-align: left;
 					font-family: PingFangSC-bold;
-					//height: 50rpx;
-					//line-height: 50rpx;
 					font-weight: 500;
 				}
 				.right1{
@@ -129,8 +134,6 @@
 					font-size: 28rpx;
 					text-align: left;
 					font-family: PingFangSC-regular;
-					//height: 50rpx;
-					//line-height: 50rpx;
 				}
 			}
         }
