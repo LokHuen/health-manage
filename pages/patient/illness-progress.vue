@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<view class="no-data-tips" v-if="list.length == 0">暂无数据</view>
-		<view v-for="(item,index) in list" class="list-item">
+		<view v-for="(item,index) in list" class="list-item" v-if="item.illnessFeeling">
          <view class="title">
 			 {{'主观感受：'+(item.illnessFeeling?item.illnessFeeling:'无')}}
 			 <view class="time">
@@ -15,11 +15,12 @@
 		<view class="deatil1">
 			<view class="left1">用药依从性</view>
 			<view class="right1" style="white-space: pre-wrap;">{{item.dosageDependence?item.dosageDependence:'无'}}</view>
+			
 		</view>
 		
 		<view class="deatil">
 			<view class="left">其它治疗方式</view>
-			<view class="right">{{item.otherTreatement?item.otherTreatement:'无'}}</view>
+			<view class="right">{{item.otheTreatment?item.otheTreatment:'无'}}</view>
 		</view>
 
 		</view>
