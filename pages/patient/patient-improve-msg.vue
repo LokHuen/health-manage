@@ -674,6 +674,20 @@
 					}).then(res => {
 						app.loaded();
 						if (res.status == 1) {
+							if(this.needAge){
+								app.getSgaType({age:this.age}).then(res =>{
+									if(res.data.surveyType==1){
+										uni.navigateTo({
+											url:'/pages/doctor/select/index?id='+res.data.surveyId+'&name='+res.data.surveyName,
+										});
+									}else{
+										uni.navigateTo({
+											url: 'patient-submit-sucess?type=' + this.type+'&age='+this.age
+										});
+									}
+								});	
+							}
+							else
 							uni.navigateTo({
 								url: 'patient-submit-sucess?type=' + this.type +'&age='+this.age
 							});
