@@ -46,7 +46,7 @@
 			<view class="record-item" v-if="latelyData.surveyType==1">
 				<view style="padding-left: 50rpx;height: 80rpx;line-height: 80rpx;font-size: 30rpx;">最近一次营养筛查</view>
 				<view class="record-item-detail">{{'筛查工具：'+latelyData.surveName}}</view>
-				<view class="record-item-detail">{{'筛查时间： '+latelyData.completeTime}}</view>
+				<view class="record-item-detail">{{'筛查时间：'+latelyData.completeTime}}</view>
 				<view class="record-item-detail">{{'筛查结果：'+latelyData.result}}</view>
 				<view class="record-item-detail1" style="display: flex;">
 				
@@ -524,7 +524,7 @@
 				this.$forceUpdate();
 			},
 			download(){
-				if(this.surveyType == 0 && this.testtype == '1'){
+				if(this.testtype == 1){
 					uni.navigateTo({
 						url:"/pages/doctor/pdfinfo?id="+this.uid
 					})
@@ -1098,7 +1098,7 @@
 				
 				app.getSgaType({uid: this.uid}).then(res => {
 					if (res.status == 1) {
-						this.testtype = res.data.sgaType;
+						this.testtype = res.data.surveyId;
 						this.surveyType = res.data.surveyType;
 						if(this.testtype==2){
 							this.getNearlyRecord();

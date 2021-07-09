@@ -822,7 +822,7 @@
 			getSgaType(){
 			    app.getSgaType().then(res =>{
 					if(res.status == 1){
-						this.testtype = res.data.sgaType;
+						this.testtype = res.data.surveyId;
 						this.surveyId = res.data.surveyId;
 						this.getNearlyRecord();
 						this.getLineChartData();

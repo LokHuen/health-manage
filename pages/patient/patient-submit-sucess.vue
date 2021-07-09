@@ -4,7 +4,8 @@
 	 <view class="health-content">
 		 <view class="health-image"> <image class="health-status-image" src="../../static/icon/submit_sucess_icon.png"></image></view>
 		 <view class="health-result">提交成功</view>
-		 <button class="health-confirm" v-show="type!=1" @click="complete" style="width:600rpx;">去做{{info.sgaType==1?"PG-":""}}SGA营养状况评估</button>
+		 <!-- <button class="health-confirm" v-show="type!=1" @click="complete" style="width:600rpx;">去做{{info.sgaType==1?"PG-":""}}SGA营养状况评估</button> -->
+		 <button class="health-confirm" v-show="type!=1" @click="complete" style="width:600rpx;">{{info.surveyId==1?('去做PG-SGA营养状况评估'):(info.surveyId==2?('去做SGA营养状况评估'):(info.surveyName+'评估'))}}</button>
 		 <button class="health-confirm" v-show="type==1" @click="complete">完成</button>
 	 </view>
  </view>
