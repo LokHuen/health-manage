@@ -48,9 +48,11 @@
 				<view class="record-item-detail">{{'筛查工具：'+latelyData.surveName}}</view>
 				<view class="record-item-detail">{{'筛查时间： '+latelyData.completeTime}}</view>
 				<view class="record-item-detail">{{'筛查结果：'+latelyData.result}}</view>
-				<view class="record-item-detail" style="display: flex;">建议内容:
+				<view class="record-item-detail1" style="display: flex;">
 				
-				<rich-text :nodes="latelyData.content" style="margin-left: 15rpx;"></rich-text>
+				<view >建议内容:</view>
+				
+				<view style="text-align:left;flex: 1;margin-left: 15rpx;" v-html="latelyData.content"></view>
 				</view>
 			</view>
 			
@@ -61,9 +63,11 @@
 				<view class="record-item-detail">{{'评估时间： '+latelyData.completeTime}}</view>
 				<view class="record-item-detail">{{'治疗阶段：'+latelyData.phase}}</view>
 				<view class="record-item-detail">{{'评估结果：'+latelyData.result}}</view>
-				<view class="record-item-detail" style="display: flex;">建议内容:
+				<view class="record-item-detail1" style="display: flex;">
 				
-				<rich-text :nodes="latelyData.content" style="margin-left: 15rpx;"></rich-text>
+				<view >建议内容:</view>
+				
+				<view style="text-align:left;flex: 1;margin-left: 15rpx;" v-html="latelyData.content"></view>
 				</view>
 				
 			</view>
@@ -1637,6 +1641,12 @@
 					padding-left: 50rpx;
 					padding-right: 30rpx;
 					height: 50rpx;
+					line-height: 50rpx;
+				}
+				.record-item-detail1{
+					font-size: 24rpx;
+					padding-left: 50rpx;
+					padding-right: 30rpx;
 					line-height: 50rpx;
 				}
 				
