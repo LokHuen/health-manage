@@ -562,6 +562,25 @@ var api = {
 		return rq("/wx/patient/feelingList", data, "GET");
 	},
 	
+	//查询病患适合得赛查工具
+	getPatientScreen: (data) => {
+		return rq("/wx/patient/getPatientScreen", data, "GET");
+	},
+	
+	//获取患者的所有测评记录(只包括sga 和 pg-sga)
+	getPgSgaRada: (data) => {
+		return rq("/wx/survey/question/getPgSgaRada", data, "GET");
+	},
+	
+	//查询患者是否进行过pg-sga评估
+	hasSgaRecord: (data) => {
+		return rq("/wx/survey/question/findPgSgaRecord", data, "GET");
+	},
+	
+	
+	
+    
+	
 	
 }
 

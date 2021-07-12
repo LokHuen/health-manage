@@ -77,9 +77,9 @@
 		
 		<view class="line-space"></view>
 		
-		<view class="record-chart-box" v-if="(hasLoadLindData==0)||(lineData.categories.length>0 &&hasLoadLindData ==1)">
-			<view class="record-chart-title">{{testtype==1?"PG-":""}}SGA营养状况评估</view>
-			<view v-show="testtype==1" class="record-chart-subtitle">分值越小，营养状况越好</view>
+		<view class="record-chart-box" v-if="((hasLoadLindData==0)||(lineData.categories.length>0 &&hasLoadLindData ==1) )&& (sgaType==1 ||sgaType==2)">
+			<view class="record-chart-title">{{sgaType==1?"PG-":""}}SGA营养状况评估</view>
+			<view v-show="sgaType==1" class="record-chart-subtitle">分值越小，营养状况越好</view>
 		
 			<!-- 折线Line纯数字-->
 			<!-- <view class="line-chart-box">
@@ -87,11 +87,11 @@
 			</view> -->
 			<div id="echarts" class="echarts"></div>
 			<view style="font-size:24rpx;padding:0 0 30rpx 40rpx;text-align:left;">
-				<view v-show="testtype==1">
+				<view v-show="sgaType==1">
 			<view ><text class="centerwh"><text class="smallblockleft color1"></text>0~1:无营养不良</text><text class="smallblockleft color2"></text>2~3:可疑营养不良 </view>
 			<view ><text class="centerwh"><text class="smallblockleft color3"></text>4~8:中度营养不良</text><text class="smallblockleft color4"></text>>=9:重度营养不良</view>
 				</view>
-				<view v-show="testtype==2">
+				<view v-show="sgaType==2">
 					<text class="centerwh1"><text class="smallblockleft color1" style="background-color:#a8cd97;"></text>营养良好</text>
 					<text class="centerwh1"><text class="smallblockleft color2"></text>轻-中度营养不良</text>
 					<text class="centerwh1"><text class="smallblockleft color3"></text>重度营养不良</text>
@@ -120,7 +120,7 @@
 				 mode="widthFix" @click.stop="showDetailMessage" v-show="false"></image>
 			</view>
 		</view> -->
-		<view class="item-list" v-show="testtype==1" @click="topgdetail">
+		<view class="item-list" v-show="sgaType==1" @click="topgdetail">
 			<view class="left-name">查看患者营养状况反馈表</view>
 			<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
 		</view>
@@ -405,7 +405,7 @@
 					<image src="../../static/icon_close.png" mode="aspectFill" @click="closeMore" class="close"></image>
 				</view>
 				<view class="transferButton" @click="transfer">将患者转给同科室的医生</view>
-				<view class="transferButton" style="margin-top: 40rpx;" @click="download">下载患者营养状况反馈表</view>
+				<view class="transferButton" style="margin-top: 40rpx;" @click="download">患者营养状况反馈表（PG-SGA评估）</view>
 				<view style="height: 160rpx;"></view>
 				
 			</view>
@@ -482,7 +482,9 @@
 				doctorList:'',
 				showAdvice:1,
 				goodslist:[],
-				surveyType:''
+				surveyType:'',
+				sgaType:'',//用于区分曲线图  测评所属问卷类型 =1，PG-SGA；=2，SGA	
+				hasSgaRecord:false
 			}
 		},
 		onLoad(props){
@@ -524,7 +526,7 @@
 				this.$forceUpdate();
 			},
 			download(){
-				if(this.testtype == 1){
+				if(this.hasSgaRecord){
 					uni.navigateTo({
 						url:"/pages/doctor/pdfinfo?id="+this.uid
 					})
@@ -1094,7 +1096,8 @@
 			getUserData() {
 				this.getData();
 				this.getNearlyRecord();
-				this.getLineChartData();
+				this.getLineChartData1();
+				this.judgehasSgaRecord();
 				
 				app.getSgaType({uid: this.uid}).then(res => {
 					if (res.status == 1) {
@@ -1102,12 +1105,20 @@
 						this.surveyType = res.data.surveyType;
 						if(this.testtype==2){
 							this.getNearlyRecord();
-							this.getLineChartData();
+							this.getLineChartData1();
 						}
 					}
 				});
 				
 			},
+			
+			//判断是否有sga记录
+			judgehasSgaRecord(){
+				app.hasSgaRecord().then(res =>{
+					this.hasSgaRecord = res.data.hasPgsgaRecord;
+				})
+			},
+			
 			//用户信息数据
 			getData() {
 				app.doctorPatientx({id:this.uid}).then(res => {
@@ -1139,8 +1150,9 @@
 			},
 			//最近一次测评的数据
 			getNearlyRecord() {
+				//surveyId: this.testtype,
 				app.patientNearlyRecord({
-					surveyId: this.testtype,
+					
 					userId:this.uid
 				}).then(res => {
 					if (res.status == 1) {
@@ -1151,6 +1163,40 @@
 
 				});
 			},
+			//拿曲线图的数据 new4.0
+			getLineChartData1(){
+				app.getPgSgaRada({
+					pageNo: 1,
+					userId:this.uid
+				}).then(res => {
+					if (res.status == 1) {
+						this.lineData.categories = [];
+						this.lineData.series[0].data = [];
+						let tempArray = []
+						if (res.data && res.data.length > 0) {
+							this.sgaType = res.data[0].surveyId;
+							res.data.reverse()
+							res.data.forEach((item, index) => {
+								var time = item.completeTime.split('/');
+								var date = time[2].split(' ');
+								this.lineData.categories.push(time[1] + '月' + date[0] + '日');
+								//this.lineData.categories.push(item.phase);
+								this.lineData.series[0].data.push(item.total)
+								this.lineData.series[0].name = item.phase
+							})
+							console.log(this.lineData);
+							this.$nextTick(()=>{
+								this.setlinebox();
+							})
+							// this.$refs['lineData'].showCharts();
+						}
+						this.hasLoadLindData = 1;
+					}
+				
+				});
+			},
+			
+			
 			//拿曲线图的数据
 			getLineChartData() {
 				app.memberReplyRecordList({
@@ -1235,7 +1281,7 @@
 						symbolSize: 7,
 						label: {
 							normal: {
-								show: this.testtype==1?true:false,
+								show: this.sgaType==1?true:false,
 								distance: 0,
 								fontSize: 11,
 								color: "#333",
@@ -1300,7 +1346,7 @@
 						},
 					}]
 				};
-				if(this.testtype==2){
+				if(this.sgaType==2){
 					option.yAxis.min = 0.5;
 					option.yAxis.max = 3.5;
 					option.series[0].markArea.data=[
@@ -1430,20 +1476,24 @@
 	
 	.item-list{
 		height: 106rpx;margin:0rpx 30rpx;
-		position: relative;border-top: 1rpx solid #eee;
+		//position: relative;
+		border-top: 1rpx solid #eee;
+		display: flex;
 		.left-name{
 			height: 106rpx;
 			line-height: 106rpx;
-			font-size: 15px;
+			font-size: 30rpx;
 			color: #333333;
 			padding-left: 26rpx;
 		}
 		.right-arrow{
-			position: absolute;
-			right: 20rpx;
+			//position: absolute;
+			//right: 20rpx;
 			width: 15rpx;
 			height: 26rpx;
-			top: 40rpx;
+			margin-left: 20rpx;
+			margin-top: 45rpx;
+			//top: 40rpx;
 			
 		}
 	}

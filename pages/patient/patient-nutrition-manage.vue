@@ -60,7 +60,7 @@
 		
 		<view class="line-space"></view>
 		
-		<view class="record-chart-box" v-if="((hasLoadLindData==0)||(lineData.categories.length>0 &&hasLoadLindData ==1))&&(testtype==1)">
+		<view class="record-chart-box" v-if="((hasLoadLindData==0)||(lineData.categories.length>0 &&hasLoadLindData ==1))&&(sgaType==1)">
 			<view class="record-chart-title">PG-SGA营养状况评估</view>
 			<view class="record-chart-subtitle">分值越小，营养状况越好</view>
 		
@@ -77,7 +77,7 @@
 		</view>
 		
 		
-		<view class="record-chart-box" v-if="((hasLoadLindData==0)||(lineData.categories.length>0 &&hasLoadLindData ==1))&&(testtype==2)">
+		<view class="record-chart-box" v-if="((hasLoadLindData==0)||(lineData.categories.length>0 &&hasLoadLindData ==1))&&(sgaType==2)">
 			<view class="record-chart-title">SGA 营养状况评估</view>
 			<!-- <view class="record-chart-subtitle">分值越小，营养状况越好</view> -->
 		
@@ -315,6 +315,19 @@
 				</view>
 			</view>
 		</uni-popup>
+		
+		<uni-popup ref="popup1" type="bottom">
+			<!-- 留存值 -->
+			<view class="white-background">
+				<view style="height: 40rpx;"></view>
+				
+				<button type="default" class="button1" v-for="(item,index) in patientScreenItems" @click="beginTest1(item)">{{item.name}}</button>
+				
+				<button type="default" class="button2" @click="cancel">取消</button>
+				<view style="height: 40rpx;"></view>
+				
+			</view>
+		</uni-popup>
 
 	</view>
 </template>
@@ -354,9 +367,10 @@
 				enptylist: ["总能量", "脂肪", "蛋白质", "碳水化合物"],
 				enptyindex: 0,
 				tlinedata: {},
-				// PG-SGA   testtype=1 testtype=2  SGA
 				testtype: '',
-				surveyId:''
+				surveyId:'',
+				patientScreenItems:[],
+				sgaType:'',//用于区分曲线图  测评所属问卷类型 =1，PG-SGA；=2，SGA	
 			}
 		},
 		methods: {
@@ -763,18 +777,28 @@
 				myChart.clear();
 				myChart.setOption(option);
 			},
+			cancel(){
+				this.$refs.popup1.close();
+			},
 			beginTest() {
-				if(this.surveyId<4){
-					uni.navigateTo({
-						url: 'nutritional-self-test?id='+this.surveyId
-					});
-				}else{
-					uni.navigateTo({
-						url:'/pages/doctor/select/index?id='+this.surveyId+'&name='+this.latelyData.surveName
-					})
-				}
+				this.$refs.popup1.open();
+				
 				
 			},
+			beginTest1(item){
+				
+					if(item.id<4){
+						uni.navigateTo({
+							url: 'nutritional-self-test?id='+item.id
+						});
+					}else{
+						uni.navigateTo({
+							url:'/pages/doctor/select/index?id='+item.id+'&name='+item.name
+						})
+					}
+					this.$refs.popup1.close();
+			},
+			
 			clickFuction(index) {
 				if (index == 0) {
 					//基础信息
@@ -819,13 +843,20 @@
 			closeEnergyTips() {
 				this.$refs.popupEnergy.close();
 			},
+			getPatientScreen(){
+				app.getPatientScreen().then(res =>{
+					if(res.status == 1){
+						this.patientScreenItems = res.data;
+					}
+				});
+			},
 			getSgaType(){
 			    app.getSgaType().then(res =>{
 					if(res.status == 1){
 						this.testtype = res.data.surveyId;
 						this.surveyId = res.data.surveyId;
 						this.getNearlyRecord();
-						this.getLineChartData();
+						this.getLineChartData1();
 					}
 				});	
 			},
@@ -854,6 +885,7 @@
 				this.loadCount = 0;
 				this.getData();
 				this.getSgaType();
+				this.getPatientScreen();
 			},
 			//用户信息数据
 			getData() {
@@ -877,9 +909,7 @@
 			},
 			//最近一次测评的数据
 			getNearlyRecord() {
-				app.patientNearlyRecord({
-					surveyId: this.surveyId
-				}).then(res => {
+				app.patientNearlyRecord().then(res => {
 					if (res.status == 1) {
 						this.latelyData = res.data;
 						if (this.latelyData.content) this.latelyData.content = this.latelyData.content.replace(/\<span/gi,
@@ -888,6 +918,39 @@
 
 				});
 			},
+			//拿曲线图的数据 new4.0
+			getLineChartData1(){
+				app.getPgSgaRada({
+					pageNo: 1,
+					userId:localStorage.getItem("uid")
+				}).then(res => {
+					if (res.status == 1) {
+						this.lineData.categories = [];
+						this.lineData.series[0].data = [];
+						let tempArray = []
+						if (res.data && res.data.length > 0) {
+							this.sgaType = res.data[0].surveyId;
+							res.data.reverse()
+							res.data.forEach((item, index) => {
+								var time = item.completeTime.split('/');
+								var date = time[2].split(' ');
+								this.lineData.categories.push(time[1] + '月' + date[0] + '日');
+								//this.lineData.categories.push(item.phase);
+								this.lineData.series[0].data.push(item.total)
+								this.lineData.series[0].name = item.phase
+							})
+							console.log(this.lineData);
+							this.$nextTick(()=>{
+								this.setlinebox();
+							})
+							// this.$refs['lineData'].showCharts();
+						}
+						this.hasLoadLindData = 1;
+					}
+				
+				});
+			},
+			
 			//拿曲线图的数据
 			getLineChartData() {
 				app.memberReplyRecordList({
@@ -958,8 +1021,8 @@
 						axisLine: {
 							show: false
 						},
-						min: this.testtype==1?0:0.5,
-						max: this.testtype==1?36:3.5,
+						min: this.sgaType==1?0:0.5,
+						max: this.sgaType==1?36:3.5,
 						axisTick: {
 							show: false
 						},
@@ -977,7 +1040,7 @@
 						symbolSize: 7,
 						label: {
 							normal: {
-								show: this.testtype==1?true:false,
+								show: this.sgaType==1?true:false,
 								distance: 0,
 								fontSize: 11,
 								color: "#333",
@@ -1043,7 +1106,7 @@
 					}]
 				};
                
-				if (this.testtype == 2) {
+				if (this.sgaType == 2) {
 					option.series[0].markArea.data = [
 						[{
 							yAxis: '0.5', //y轴坐标控制
@@ -1739,6 +1802,24 @@
 			text-align: center;
 			background-color: #FFFFFF;
 			border-radius: 10px 10px 0px 0px;
+			
+			.button1{
+				margin-top: 40rpx;
+				background-color: #52A29E !important;
+				color: #FFFFFF;
+				margin-left: 50rpx;
+				margin-right: 50rpx;
+				//font-size: 28rpx;
+			}
+			.button2{
+				margin-top: 40rpx;
+				color: #999999;
+				border: 2rpx solid #999999;
+				background-color: #FFFFFF !important;
+				margin-left: 250rpx;
+			    margin-right: 250rpx;
+				font-size: 28rpx;
+			}
 
 			.white-background-title {
 				font-size: 14px;
