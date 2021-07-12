@@ -14,8 +14,8 @@
 				</view> -->
 				<view class="health-list-item-content">
 					<view class="health-list-item-title">{{item.result}}</view>
-					<view class="health-list-item-time">{{(item.surveyType==0?'评估工具：':'筛查工具')+item.surveyName}}</view>
-					<view class="health-list-item-time">{{(item.surveyType==0?'评估时间：':'筛查时间')+item.completeTime}}</view>
+					<view class="health-list-item-time">{{(item.surveyType==0?'评估工具：':'筛查工具：')+item.surveyName}}</view>
+					<view class="health-list-item-time">{{(item.surveyType==0?'评估时间：':'筛查时间：')+item.completeTime}}</view>
 					<view class="health-list-item-time" v-if="item.surveyType==0">治疗阶段：{{item.phase}} </view>
 					
 					<!-- <view class="line" v-if="item.showDetail"></view> -->
