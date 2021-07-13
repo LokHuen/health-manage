@@ -53,7 +53,7 @@
 			<view class="health-content" v-if="needAge">
 				<view class="health-item">
 					<view class="health-item-title">年龄</view>
-					<view class="health-item-detail">{{infoData.age}}</view>
+					<view class="health-item-detail">{{infoData.age||'暂未填写'}}</view>
 				</view>
 			</view>
 			

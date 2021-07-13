@@ -389,6 +389,7 @@
 							this.cityId = this.infoData.cityId;
 							this.provinceId = this.infoData.provinceId;
 							this.illness = this.infoData.illness;
+							this.age = this.infoData.age||"";
 							this.height = this.infoData.height==0?'':this.infoData.height;
 							this.weight = this.infoData.weight==0?'':this.infoData.weight;
 							if (this.infoData.birthday) {
