@@ -30,7 +30,7 @@
 			<view class="health-content">
 				<view class="health-item">
 					<view class="health-item-title">联系电话</view>
-					<view class="health-item-detail">13800138000</view>
+					<view class="health-item-detail">{{infoData.phone}}</view>
 				</view>
 			</view>
 			
