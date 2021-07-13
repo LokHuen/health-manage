@@ -8,7 +8,7 @@
 			<view class="content-box">
 				<view class="title" >{{info.surveyName}}</view>
 				<view class="desc" >
-					{{info.desc}}
+					{{info.description}}
 				</view>
 			</view>
 			

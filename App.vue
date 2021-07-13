@@ -8,49 +8,50 @@
 			imageUrl: "https://bgjdapi-test.ttxyw.cn/upload/mini",
 			mydata: 1,
 			channel: 1,
-			isSales:false,
+			isSales: false,
 		},
 		onLaunch: function(option) {
 
 			console.log('App Launch', option);
 			uni.baseImageUrl = 'https://bgjdapi-test.ttxyw.cn/upload/mini'
-			
+
 			let timeStamp = new Date()
 			let windowUrl = window.location.href;
-			
-			let passurl = ["/pages/sales/register","/pages/sales"]; //路径白名单
+
+			let passurl = ["/pages/sales/register", "/pages/sales"]; //路径白名单
 			for (var i = 0; i < passurl.length; i++) {
-				if(passurl[i]==window.location.pathname) return;
+				if (passurl[i] == window.location.pathname) return;
 			}
-			
-			if(option.query.isSales||this.globalData.isSales){ //判断业务员
+
+			if (option.query.isSales || this.globalData.isSales) { //判断业务员
 				this.globalData.isSales = true;
-				if(!this.getCache("salesToken")) 
-				uni.reLaunch({
-					url:"/pages/sales/register"
-				})
+				if (!this.getCache("salesToken"))
+					uni.reLaunch({
+						url: "/pages/sales/register"
+					})
 				return;
 			}
-			
+
 			let nowtime = new Date().getTime();
 			let pretime = this.getCache("time") || nowtime;
-			
-			if((nowtime - pretime) > 172800000) {
+
+			if ((nowtime - pretime) > 172800000) {
 				localStorage.removeItem("uid");
-				localStorage.setItem("time",nowtime);
-			}else if(nowtime == pretime){
-				localStorage.setItem("time",nowtime);
+				localStorage.setItem("time", nowtime);
+			} else if (nowtime == pretime) {
+				localStorage.setItem("time", nowtime);
 			}
-			
+
 			let optionuid = option.query.uid;
-			if(optionuid&&(optionuid instanceof Array)) option.query.uid = optionuid[optionuid.length-1]; //多次登录，uid会变成数组
+			if (optionuid && (optionuid instanceof Array)) option.query.uid = optionuid[optionuid.length - 1]; //多次登录，uid会变成数组
 			var uid = option.query.uid || this.getCache("uid");
 			console.log('uid==' + uid);
 			uid = parseInt(uid);
-			if(!uid||isNaN(uid)){
-				 window.location.href = this.globalData.baseUrl + '/wx/fwh/user/auth/index?returnUrl=' + encodeURIComponent(windowUrl)+"&channel=1";
-			}else{
-				localStorage.setItem('uid',uid);
+			if (!uid || isNaN(uid)) {
+				window.location.href = this.globalData.baseUrl + '/wx/fwh/user/auth/index?returnUrl=' + encodeURIComponent(
+					windowUrl) + "&channel=1";
+			} else {
+				localStorage.setItem('uid', uid);
 			}
 		},
 		onShow: function() {
@@ -173,18 +174,58 @@
 </script>
 
 <style lang="scss">
-	.pagenodata{text-align:center;color:#999;font-size:28rpx;padding:30rpx 0 42rpx;}
-	img {margin: 0; padding: 0; width: 100%; height: 100%; object-fit: cover;}
+	.pagenodata {
+		text-align: center;
+		color: #999;
+		font-size: 28rpx;
+		padding: 30rpx 0 42rpx;
+	}
+
+	img {
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
 	.edit {
-		.uni-radio-wrapper{width:100%;display: block;padding:0 30rpx;box-sizing:border-box;}
-		.uni-radio-input{float:right;margin:-6rpx 0 0 10rpx;width: 40rpx;height:40rpx;}
-		&.editdata .uni-radio-input{margin: -1px 0 0 0;}
-		.uni-radio-input-checked{background-color:#52A29E!important;border-color:#52A29E!important;}
-		
-		.uni-checkbox-wrapper{width:100%;display: block;padding:0 30rpx;box-sizing:border-box;}
+		.uni-radio-wrapper {
+			width: 100%;
+			display: block;
+			padding: 0 30rpx;
+			box-sizing: border-box;
+		}
+
+		.uni-radio-input {
+			float: right;
+			margin: -6rpx 0 0 10rpx;
+			width: 40rpx;
+			height: 40rpx;
+		}
+
+		&.editdata .uni-radio-input {
+			margin: -1px 0 0 0;
+		}
+
+		.uni-radio-input-checked {
+			background-color: #52A29E !important;
+			border-color: #52A29E !important;
+		}
+
+		.uni-checkbox-wrapper {
+			width: 100%;
+			display: block;
+			padding: 0 30rpx;
+			box-sizing: border-box;
+		}
+
 		uni-checkbox .uni-checkbox-input {
-			height: 40rpx;float:right;margin:-2rpx 0 0 0;
-			width: 40rpx;box-sizing:border-box;
+			height: 40rpx;
+			float: right;
+			margin: -2rpx 0 0 0;
+			width: 40rpx;
+			box-sizing: border-box;
 			border-radius: 4rpx;
 			margin-right: 0;
 		}
@@ -193,7 +234,7 @@
 			color: #FFFFFF;
 			// content:"\2714";
 			// top: 35%;
-			
+
 		}
 
 		uni-checkbox:not([disabled]) .uni-checkbox-input:hover {
@@ -201,14 +242,16 @@
 		}
 
 		uni-checkbox .uni-checkbox-input.uni-checkbox-input-checked {
-			background-color: #52A29E;border-color:#52A29E;
+			background-color: #52A29E;
+			border-color: #52A29E;
 		}
 	}
 
 	html,
 	body,
 	page {
-		font-family: PingFang SC;font-size:32rpx;
+		font-family: PingFang SC;
+		font-size: 32rpx;
 	}
 
 	image {
@@ -238,16 +281,37 @@
 		top: -6rpx;
 		right: -6rpx;
 	}
-	.richtext{
-		font-size: 26rpx!important;
+
+	.richtext {
+		font-size: 26rpx !important;
 		color: #666666;
 	}
-	.commonframebox{
-		height:55vh;overflow-y:auto;background:#fff;border-radius:20rpx 20rpx 0 0;padding:30rpx 24rpx 30rpx;box-sizing: border-box;
+
+	.commonframebox {
+		height: 55vh;
+		overflow-y: auto;
+		background: #fff;
+		border-radius: 20rpx 20rpx 0 0;
+		padding: 30rpx 24rpx 30rpx;
+		box-sizing: border-box;
 	}
-	.richtextarea{
+
+	.richtextarea {
 		font-size: 30rpx;
-		img{max-width:100%;height:auto;}
+
+		img {
+			max-width: 100%;
+			height: auto;
+		}
 	}
-	.pagebackground{position:fixed;top:0;left:0;right:0;bottom:0;background:#F7F8F8;z-index:-1;}
+
+	.pagebackground {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: #F7F8F8;
+		z-index: -1;
+	}
 </style>
