@@ -87,6 +87,13 @@
 				// })
 			},
 			finish(){
+				if(localStorage.getItem("newuser")){
+					localStorage.removeItem("newuser");
+					uni.reLaunch({
+						url:"/pages/patient/patient-nutrition-manage"
+					});
+					return;
+				}
 				uni.navigateBack({})
 			},
 			videobox(){
