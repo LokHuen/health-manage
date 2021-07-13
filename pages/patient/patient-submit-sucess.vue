@@ -5,7 +5,7 @@
 		 <view class="health-image"> <image class="health-status-image" src="../../static/icon/submit_sucess_icon.png"></image></view>
 
 		 <view class="health-result">提交成功</view>
-		 <button class="health-confirm" v-show="type!=1" @click="complete" style="width:600rpx;">去做{{changetext()}}</button
+		 <button class="health-confirm" v-show="type!=1" @click="complete" style="width:600rpx;">去做{{changetext()}}</button>
 		 <button class="health-confirm" v-show="type==1" @click="complete">完成</button>
 	 </view>
  </view>
