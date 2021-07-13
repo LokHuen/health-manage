@@ -51,7 +51,7 @@
 									v-if="item.surveyResultValue&&item.surveyResultValue!='/'">{{item.surveyResultValue}}
 								</text>
 								<text v-if="item.surveyScore&&item.surveyScore!='/'">{{'（'+item.surveyScore+'）'}}</text>
-								<text v-if="item.surveyResult&&item.surveyResult!='/'">{{item.isBuy}}</text>
+								<text v-if="item.surveyResult&&item.surveyResult!='/'" style="padding-left: 10rpx;"> {{item.isBuy}}</text>
 							</view>
 
 						</view>

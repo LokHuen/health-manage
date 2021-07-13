@@ -321,7 +321,9 @@
 			<view class="white-background">
 				<view style="height: 40rpx;"></view>
 				
-				<button type="default" class="button1" v-for="(item,index) in patientScreenItems" @click="beginTest1(item)">{{item.name}}</button>
+<!-- 				<button type="default" class="button1" v-for="(item,index) in patientScreenItems" @click="beginTest1(item)">{{item.name}}</button>
+ -->				
+				<view type="default" class="button1" v-for="(item,index) in patientScreenItems" @click="beginTest1(item)">{{item.name}}</view>
 				
 				<button type="default" class="button2" @click="cancel">取消</button>
 				<view style="height: 40rpx;"></view>
@@ -1809,6 +1811,13 @@
 				color: #FFFFFF;
 				margin-left: 50rpx;
 				margin-right: 50rpx;
+				text-align: center;
+				line-height: 60rpx;
+				padding-top: 15rpx;
+				padding-bottom: 15rpx;
+				padding-left: 15rpx;
+				padding-right: 15rpx;
+				border-radius: 10rpx;
 				//font-size: 28rpx;
 			}
 			.button2{
