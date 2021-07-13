@@ -204,6 +204,9 @@
 			this.getIllnessList();
 			this.type = props.type || 1;
 			this.formQrCode = props.formQrCode || 1;
+			if(this.type==2&&this.formQrCode==1){
+				localStorage.setItem("newuser",1);
+			}
 			this.selfTest = props.selfTest || 0;
 			http.get(http.urls.get_all_province).then((res) => {
 				this.areaList[0] = res.data;
