@@ -200,6 +200,6 @@
 		}
 	}
 	.choosebtbox{
-		margin:0 60rpx;min-height: 200rpx;
+		margin:0 60rpx;min-height: 200rpx;max-height:75vh;overflow-y:auto;
 	}
 </style>
