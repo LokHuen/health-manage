@@ -171,27 +171,28 @@
 				</swiper-item>
 				<!-- 推广 -->
 				<!-- logo -->
-				<swiper-item v-if="info.templateCode=='0901'||info.templateCode=='0902'">
+				<swiper-item v-if="info.templateCode=='0901'||info.templateCode=='0902'||info.templateCode=='0903'||info.templateCode=='0904'">
+					<!-- 0901肿瘤无医生；0902肿瘤有医生；0903不是肿瘤无医生；0904不是肿瘤有医生 -->
 					<view :class="'swiperimgbox '+(create?'big':'')" @click="getallimg" id="doctorcode">
 						<image v-if="info.cardFrontPic" :src="'/api'+info.cardFrontPic" class="swiperimg" mode="widthFix"></image>
-						<view :class="'logoinfobox '+(create?'big':'') +(info.templateCode=='0902'?' noname':'')">
+						<view :class="'logoinfobox '+(create?'big ':'')+((info.templateCode=='0901'||info.templateCode=='0902')?'cancertop ':'') +((info.templateCode=='0902'||info.templateCode=='0904')?' noname':'')">
 							<!-- noname:0902有名字 -->
-							<view class="toptitle">NUTRITION MANAGEMENT PLATFORM {{info.templateCode=='0901'?info.pinyin:''}}</view>
+							<view class="toptitle">{{(info.templateCode=='0901'||info.templateCode=='0902')?"CANCER":""}} NUTRITION MANAGEMENT PLATFORM {{info.templateCode=='0901'?info.pinyin:''}}</view>
 							
 							<view class="prelative">
 								<image :src="'/api'+info.qrCode" class="logoimg"></image>
 								<view class="imginfobox">扫码关注 - 信息注册 - 营养评测</view>
 							</view>
-							<view v-show="info.templateCode=='0901'" class="centerwhite"></view>
+							<view v-show="info.templateCode=='0901'||info.templateCode=='0903'" class="centerwhite"></view>
 							<view class="teamtext">{{info.userHospital}}</view>
 							<view class="depttext">
 								<view :class="create?'movetext':''">{{info.userDepartment}}</view>
 							</view>
-							<view v-show="(info.templateCode=='0902')" class="doctortext">{{info.userName}}  {{info.userTitle||""}}</view>
+							<view v-show="(info.templateCode=='0902'||info.templateCode=='0904')" class="doctortext">{{info.userName}}  {{info.userTitle||""}}</view>
 						</view>
 					</view>
 				</swiper-item>
-				<swiper-item v-if="info.templateCode=='0901'||info.templateCode=='0902'">
+				<swiper-item v-if="info.templateCode=='0901'||info.templateCode=='0902'||info.templateCode=='0903'||info.templateCode=='0904'">
 					<view class="swiperimgbox" @click="getsecondimg(baseUrl+info.cardBackPic)">
 						<image :src="baseUrl+info.cardBackPic" class="swiperimg" mode="widthFix"></image>
 					</view>
@@ -709,7 +710,7 @@
 	}
 	
 	.logoinfobox{
-		position:absolute;z-index:3;top:120rpx;left:0;right:0;text-align:center;
+		position:absolute;z-index:3;top:140rpx;left:0;right:0;text-align:center;
 		.toptitle{color:#fff;font-size:20rpx;}
 		.logoimg{border: 12rpx solid #0063B3;box-sizing: border-box;width: 262rpx;height: 262rpx;margin-top:40rpx;}
 		.centerwhite{height:32rpx;}
@@ -723,17 +724,18 @@
 		}
 		.movetext{margin-top:-20*5rpx;padding-top:10*5rpx;}
 		.doctortext{font-size: 32rpx;color: #5b9bdc;padding:12rpx 15rpx;}
+		&.cancertop{top:140rpx;}
 		&.noname{
 			.logoimg{margin-top:40rpx;}
 			.teamtext{padding:40rpx 0 28rpx;}
 			// .depttext{padding:12rpx 60rpx;display: inline-block;width:unset;}
 		}
 		&.big{
-			top:118*5rpx;
+			.imginfobox{font-size: 16*5rpx;bottom:-14*5rpx;}
+			top:140*5rpx;
 			.toptitle{font-size:20*5rpx;}
 			.logoimg{border: 12*5rpx solid #0063B3;width: 262*5rpx;height: 262*5rpx;margin-top:40*5rpx;}
 			.centerwhite{height:32*5rpx;}
-			.imginfobox{font-size: 16*5rpx;bottom:-14*5rpx;}
 			.teamtext{font-size: 32*5rpx;padding:26*5rpx 0 40*5rpx;}
 			.depttext{
 				padding:12*5rpx 0;
@@ -741,10 +743,10 @@
 				width: 296*5rpx;
 			}
 			.doctortext{font-size: 32*5rpx;padding:12*5rpx 15*5rpx;}
+			&.cancertop{top:138*5rpx;}
 			&.noname{
 				.logoimg{margin-top:40*5rpx;}
 				.teamtext{padding:40*5rpx 0 28*5rpx;}
-				// .depttext{padding:12*5rpx 60*5rpx;}
 			}
 		}
 	}
