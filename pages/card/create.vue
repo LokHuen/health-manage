@@ -717,7 +717,7 @@
 		.depttext{
 			line-height:1;padding:12rpx 0;
 			border-radius: 60rpx;font-size: 32rpx;
-			background:#5b9bdc;
+			background:#2E75B6;
 			width: 296rpx;color:#fff;margin:auto;
 			text-align: center;
 		}
