@@ -176,7 +176,7 @@
 						<image v-if="info.cardFrontPic" :src="'/api'+info.cardFrontPic" class="swiperimg" mode="widthFix"></image>
 						<view :class="'logoinfobox '+(create?'big':'') +(info.templateCode=='0902'?' noname':'')">
 							<!-- noname:0902有名字 -->
-							<view class="toptitle">CANCER NUTRITION MANAGEMENT PLATFORM {{info.templateCode=='0901'?info.pinyin:''}}</view>
+							<view class="toptitle">NUTRITION MANAGEMENT PLATFORM {{info.templateCode=='0901'?info.pinyin:''}}</view>
 							
 							<view class="prelative">
 								<image :src="'/api'+info.qrCode" class="logoimg"></image>
@@ -713,16 +713,16 @@
 		.toptitle{color:#fff;font-size:20rpx;}
 		.logoimg{border: 12rpx solid #0063B3;box-sizing: border-box;width: 262rpx;height: 262rpx;margin-top:40rpx;}
 		.centerwhite{height:32rpx;}
-		.teamtext{font-size: 32rpx;color: #2E75B6;line-height: 1;padding:26rpx 0 40rpx;}
+		.teamtext{font-size: 32rpx;color: #5b9bdc;line-height: 1;padding:26rpx 0 40rpx;}
 		.depttext{
 			line-height:1;padding:12rpx 0;
 			border-radius: 60rpx;font-size: 32rpx;
-			background:#2E75B6;
+			background:#5b9bdc;
 			width: 296rpx;color:#fff;margin:auto;
 			text-align: center;
 		}
 		.movetext{margin-top:-20*5rpx;padding-top:10*5rpx;}
-		.doctortext{font-size: 32rpx;color: #2E75B6;padding:12rpx 15rpx;}
+		.doctortext{font-size: 32rpx;color: #5b9bdc;padding:12rpx 15rpx;}
 		&.noname{
 			.logoimg{margin-top:40rpx;}
 			.teamtext{padding:40rpx 0 28rpx;}
