@@ -535,9 +535,7 @@
 					}
 
 				} else {
-					if (!this.patientName ||
-						this.patientGender == 0 || !this.birthday || !this.cityId || !this.provinceId || !this.illness ||
-						!this.weight || !this.height || !this.phone) {
+					if (!this.patientName || !this.weight || !this.height || !this.phone) {
 						app.tip('请输入完整信息');
 						return;
 					}
