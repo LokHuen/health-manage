@@ -177,7 +177,7 @@
 						<image v-if="info.cardFrontPic" :src="'/api'+info.cardFrontPic" class="swiperimg" mode="widthFix"></image>
 						<view :class="'logoinfobox '+(create?'big ':'')+((info.templateCode=='0901'||info.templateCode=='0902')?'cancertop ':'') +((info.templateCode=='0902'||info.templateCode=='0904')?' noname':'')">
 							<!-- noname:0902有名字 -->
-							<view class="toptitle">{{(info.templateCode=='0901'||info.templateCode=='0902')?"CANCER":""}} NUTRITION MANAGEMENT PLATFORM {{(info.templateCode=='0901'||info.templateCode=='0903')?info.pinyin:''}}</view>
+							<view class="toptitle">{{(info.templateCode=='0901'||info.templateCode=='0902')?"CANCER":"CLINICAL"}} NUTRITION MANAGEMENT PLATFORM {{(info.templateCode=='0901'||info.templateCode=='0903')?info.pinyin:''}}</view>
 							
 							<view class="prelative">
 								<image :src="'/api'+info.qrCode" class="logoimg"></image>
