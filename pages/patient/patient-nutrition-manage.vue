@@ -373,6 +373,7 @@
 				surveyId:'',
 				patientScreenItems:[],
 				sgaType:'',//用于区分曲线图  测评所属问卷类型 =1，PG-SGA；=2，SGA	
+		
 			}
 		},
 		methods: {
@@ -783,12 +784,16 @@
 				this.$refs.popup1.close();
 			},
 			beginTest() {
-				this.$refs.popup1.open();
-				
+				if(this.infoData.surveyName == '营养风险筛查或评估'){
+					this.$refs.popup1.open();
+				}else{
+					uni.navigateTo({
+						url: 'nutritional-self-test?id='+this.surveyId
+					});
+				}
 				
 			},
 			beginTest1(item){
-				
 					if(item.id<4){
 						uni.navigateTo({
 							url: 'nutritional-self-test?id='+item.id
@@ -887,13 +892,18 @@
 				this.loadCount = 0;
 				this.getData();
 				this.getSgaType();
-				this.getPatientScreen();
+				
 			},
+			
 			//用户信息数据
 			getData() {
 				app.patientNutrition({}).then(res => {
 					if (res.status == 1) {
 						this.infoData = res.data;
+					}
+					
+					if(this.infoData.surveyName == '营养风险筛查或评估'){
+						this.getPatientScreen();
 					}
 					this.infoData.protein = this.infoData.protein > 0 ? this.infoData.protein : 1.01;
 					this.infoData.fat = this.infoData.fat > 0 ? this.infoData.fat : 1.01;

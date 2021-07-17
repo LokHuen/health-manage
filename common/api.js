@@ -576,6 +576,9 @@ var api = {
 	hasSgaRecord: (data) => {
 		return rq("/wx/survey/question/findPgSgaRecord", data, "GET");
 	},
+
+	
+
 	
 	
 	
