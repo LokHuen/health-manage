@@ -466,20 +466,20 @@ var api = {
 		return rq("/wx/doctor/getDepartmentAllDoctors", data, "GET");
 	},
 	//演示数据，营养主页
-	 doctorShowInfo: (data) => {
-	 	return rq("/wx/doctor/showInfo", data, "GET");
-	 },
-	
+	doctorShowInfo: (data) => {
+		return rq("/wx/doctor/showInfo", data, "GET");
+	},
+
 	//获取患者列表
 	getPatientList: (data) => {
 		return rq("/wx/doctor/getPatientList", data, "GET");
 	},
-	
+
 	//判断科室权限
 	departPermission: (data) => {
 		return rq("/wx/doctor/getDepartmentAllDoctors", data, "GET");
 	},
-	
+
 	//获取病种
 	getDepartmentAllIlls: (data) => {
 		return rq("/wx/doctor/getDepartmentAllIlls", data, "GET");
@@ -492,53 +492,59 @@ var api = {
 	templateList: (data) => {
 		return rq("/wx/patient/templateList", data, "GET");
 	},
-	
+
 	//卡片
 	cardlist: (data) => {
 		return rq("/wx/card/list", data, "GET");
-	},//卡片列表
+	}, //卡片列表
 	cardtemplateList: (data) => {
 		return rq("/wx/card/templateList", data, "GET");
-	},//卡片规格列表
+	}, //卡片规格列表
 	cardapplysave: (data) => {
 		return rq("/wx/card/apply/save", data, "POST");
-	},//保存卡片申请信息（点“确认无误”或选中业务员卡片模版后调用）
+	}, //保存卡片申请信息（点“确认无误”或选中业务员卡片模版后调用）
 	hospitalgetOne: (data) => {
 		return rq("/wx/service/hospital/getOne", data, "GET");
-	},//通过名字找到医院
+	}, //通过名字找到医院
 	dictgetOne: (data) => {
 		return rq("/wx/system/dict/getOne", data, "GET");
-	},//通过名字找到科室
+	}, //通过名字找到科室
 	applygetDetail: (data) => {
 		return rq("/wx/card/apply/getDetail", data, "GET");
-	},//获得生成卡片所需的资料
+	}, //获得生成卡片所需的资料
 	applyuploadPic: (data) => {
 		return rq("/wx/card/apply/uploadPic", data, "POST");
-	},//保存前端生成的卡片图
+	}, //保存前端生成的卡片图
 	sendEmail: (data) => {
 		return rq("/wx/card/apply/sendEmail", data, "POST");
-	},//发送卡片图到邮箱
+	}, //发送卡片图到邮箱
 	getMakeUnit: (data) => {
 		return rq("/wx/card/apply/getMakeUnit", data, "GET");
-	},//卡片的制作单位
+	}, //卡片的制作单位
 	applytoMake: (data) => {
 		return rq("/wx/card/apply/toMake", data, "POST");
-	},//保存实体卡制作申请
+	}, //保存实体卡制作申请
 	getRecordPage: (data) => {
 		return rq("/wx/card/apply/getRecordPage", data, "GET");
-	},//卡片的制作记录（分页）
-	
+	}, //卡片的制作记录（分页）
+
 	//cnmi
 	salesmangetOne: (data) => {
 		return rq("/wx/salesman/getOne", data, "GET");
-	},//获取业务员账号信息详情
+	}, //获取业务员账号信息详情
 	doctorsaveInfo: (data) => {
 		return rq("/wx/doctor/saveInfo", data, "POST");
-	},//修改个人资料
+	}, //修改个人资料
 	//获得答题记录列表
-	getPatientReplyList:(data)=>{return rq("/pc/doctor/survey/getPatientReplyList",data,"GET");},
-	getPatientScoreDetail:(data)=>{return rq("/pc/doctor/survey/getPatientScoreDetail",data,"GET");},//导出PG-SGA评测结果——个人信息及评测得分
-	getPatientScorePage:(data)=>{return rq("/pc/doctor/survey/getPatientScorePage",data,"GET");},//导出PG-SGA评测结果——各项得分及体格得分记录列表
+	getPatientReplyList: (data) => {
+		return rq("/pc/doctor/survey/getPatientReplyList", data, "GET");
+	},
+	getPatientScoreDetail: (data) => {
+		return rq("/pc/doctor/survey/getPatientScoreDetail", data, "GET");
+	}, //导出PG-SGA评测结果——个人信息及评测得分
+	getPatientScorePage: (data) => {
+		return rq("/pc/doctor/survey/getPatientScorePage", data, "GET");
+	}, //导出PG-SGA评测结果——各项得分及体格得分记录列表
 	surveysendEmail: (data) => {
 		return rq("/pc/doctor/survey/sendEmail", data, "POST");
 	},//营养状况反馈表——发送到邮箱
@@ -585,6 +591,12 @@ var api = {
     
 	
 	
+
+	//服务号消息模板信息
+	getFwhMessage: (data) => {
+		return rq("/wx/salesman/getFwhMessage", data, "GET");
+	},
+
 }
 
 export {
