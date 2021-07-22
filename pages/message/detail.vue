@@ -13,6 +13,8 @@
 		},
 		onLoad(props) {
 			this.id = props.id
+			// this.id = 23
+			this.getFwhMessage()
 		},
 		methods: {
 			getFwhMessage() {
