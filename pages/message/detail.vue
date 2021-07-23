@@ -32,6 +32,7 @@
 <style scoped lang="scss">
 	.container {
 		height: 100vh;
-		width: 100vw;
+		// width: 100vw;
+		padding: 0 24rpx;
 	}
 </style>
