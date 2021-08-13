@@ -22,7 +22,7 @@
 			</view>
 			<view class="desc">{{'医生名字：'+item.docotorName+' ('+item.hospital+' '+item.department+')'}}</view>
 			<view class="desc" v-if="item.surveyResult">{{'最近一次测评结果：'+item.surveyResult}}
-				{{item.surveyId==1?(' ('+item.surveyScore+'分)'):""}}
+				<!-- {{item.surveyId==1?(' ('+item.surveyScore+'分)'):""}} -->
 			</view>
 			<view class="desc" v-if="item.lastSurveyTime">{{'最近一次测评时间：'+item.lastSurveyTime}}</view>
 			<view class="desc" v-if="!item.surveyResult">暂无营养评估记录</view>
