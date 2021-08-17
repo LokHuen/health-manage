@@ -22,7 +22,7 @@
 				</view>
 			</view>
 			<view class="desc">
-				{{(item.patientGender || item.age || item.illness)?((item.patientGender==1?('男 '):'女 ')+(item.age?(item.age+' '):'')+(item.illness?item.illness:'')):'患者未完善资料'}}
+				{{(item.patientGender || item.age || item.illness)?((item.patientGender?(item.patientGender+' '):'')+(item.age?(item.age+' '):'')+(item.illness?item.illness:'')):'患者未完善资料'}}
 			</view>
 			<view class="desc">{{'医生名字：'+item.docotorName+' ('+item.hospital+' '+item.department+')'}}</view>
 			<view class="desc" v-if="item.surveyResult">
