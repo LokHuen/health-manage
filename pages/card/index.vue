@@ -23,9 +23,11 @@
 					请选择规格
 					<image src="../../static/icon_close.png" mode="aspectFill" @click="closeMore" class="close"></image>
 				</view>
-				<view class="choosebtbox flex">
-				<view v-for="(item,index) in typelist" :key="index" class="transferButton" @click="transfer(item)">{{item.templateName}}</view>
-				</view>
+				<scroll-view scroll-y="true" style="max-height:75vh;">
+					<view class="choosebtbox flex">
+						<view v-for="(item,index) in typelist" :key="index" class="transferButton" @click="transfer(item)">{{item.templateName}}</view>
+					</view>
+				</scroll-view>
 			</view>
 		</uni-popup>
 		
@@ -200,6 +202,6 @@
 		}
 	}
 	.choosebtbox{
-		margin:0 60rpx;min-height: 200rpx;max-height:75vh;overflow-y:auto;
+		margin:0 60rpx;min-height: 200rpx;padding-bottom:10rpx;
 	}
 </style>

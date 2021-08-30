@@ -582,20 +582,25 @@ var api = {
 	hasSgaRecord: (data) => {
 		return rq("/wx/survey/question/findPgSgaRecord", data, "GET");
 	},
-
-	
-
-	
-	
-	
-    
-	
-	
-
 	//服务号消息模板信息
 	getFwhMessage: (data) => {
 		return rq("/wx/salesman/getFwhMessage", data, "GET");
 	},
+	recommendPatientPage: (data) => {
+		return rq("/wx/patient/recommend/doctorPatientPage", data, "GET");
+	},//医生名下的患者可能适用的产品——分页列表
+	recommendProductList: (data) => {
+		return rq("/wx/patient/recommendProductList", data, "GET");
+	},//患者可能适用的产品——患者详情
+	recommendsave: (data) => {
+		return rq("/wx/patient/recommend/save", data, "POST");
+	},//业务员添加推荐给患者的产品
+	recommendremove: (data) => {
+		return rq("/wx/patient/recommend/remove", data, "POST");
+	},//删除给患者的产品推荐记录
+	getRecommendPage: (data) => {
+		return rq("/wx/patient/recommend/getRecommendPage", data, "GET");
+	},//查找可以添加给患者的产品--由业务员添加
 
 }
 

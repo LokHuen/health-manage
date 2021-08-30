@@ -8,6 +8,30 @@
 			}
 		},
 		{
+			"path": "pages/medical/recommend",
+			"style": {
+				"navigationBarTitleText": "产品推荐"
+			}
+		},
+		{
+			"path": "pages/medical/detail",
+			"style": {
+				"navigationBarTitleText": "患者详情"
+			}
+		},
+		{
+			"path": "pages/medical/project",
+			"style": {
+				"navigationBarTitleText": "医疗支持"
+			}
+		},
+		{
+			"path": "pages/medical/study",
+			"style": {
+				"navigationBarTitleText": "科研支持"
+			}
+		},
+		{
 			"path": "pages/doctor/pdfresult",
 			"style": {
 				"navigationBarTitleText": "提示"

@@ -38,6 +38,10 @@
 			<view style="height: 20rpx;"></view>
 			<view class="desc">{{'和医生绑定时间：'+item.bindTime}}</view>
 			<view style="height: 40rpx;"></view>
+			<view class="actionbox flex">
+				<view class="actionitem other" @click="tootherpage(1,item)">添加推荐</view>
+				<view class="actionitem" @click="tootherpage(2,item)">推荐详情</view>
+			</view>
 		</view>
 		<view class="no-data-tips" v-if="list.length == 0">暂无患者</view>
 		<uni-popup ref="qrPopup" @change="qrPopupChange">
@@ -165,6 +169,20 @@
 					this.getListData();
 				}
 			},
+			tootherpage(index,item){
+				switch(index){
+					case 1:
+					uni.navigateTo({
+						url:"/pages/medical/recommend?id="+item.id
+					})
+					break;
+					case 2:
+					uni.navigateTo({
+						url:"/pages/medical/detail?id="+item.id
+					})
+					break;
+				}
+			},
 		},
 		onLoad(props) {
 			this.qrCode = app.globalData.baseUrl+props.qrCode
@@ -177,6 +195,13 @@
 </script>
 
 <style lang="scss" scoped>
+	.actionbox{
+		border-top:2rpx solid #ddd;padding:20rpx 0 30rpx;
+		.actionitem{
+			width:50%;text-align:center;color:#2894EC;font-size:28rpx;box-sizing:border-box;
+			&.other{border-right:2rpx solid #ddd;}
+		}
+	}
 	page {
 		background: #F5F6F6;
 	}
