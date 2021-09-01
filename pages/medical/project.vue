@@ -1,16 +1,16 @@
 <template>
 	<view class="">
-		<swiper class="swiper" indicator-dots autoplay interval="3600" current="0" >
+		<swiper v-if="imglist[0]" class="swiper" indicator-dots autoplay interval="3600" current="0" >
 			<swiper-item v-for="(item,index) in imglist" :key="index">
 				<view @click="tooterurl(item.url)">
 					<image :src="baseUrl+item.filePath" mode="aspectFill"  ></image>
 				</view>
 			</swiper-item>
-			<swiper-item >
+			<!-- <swiper-item >
 				<view>
 					<image src="../../static/warnshow.jpg" mode="aspectFill"  @click="towarnpage"></image>
 				</view>
-			</swiper-item>
+			</swiper-item> -->
 		</swiper>
 		<view class="lineblock"></view>
 		<view class="flex projectbox">
