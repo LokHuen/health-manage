@@ -1,6 +1,6 @@
 <template>
 	<view class="">
-		<turnback> </turnback>
+		<turnback :url="backurl"> </turnback>
 		<view class="lineblock"></view>
 		<view class="boxlist">
 			<view class="flex">
@@ -123,6 +123,7 @@
 					fourCate: [],
 				},
 				isMiniProgram: false,
+				backurl:sessionStorage.getItem("backurl"),
 			}
 		},
 		onLoad(options) {
@@ -344,7 +345,7 @@
 
 			.goodsimg {
 				width: 200rpx;
-				height: 200rpx;
+				height: 200rpx;box-sizing:border-box;padding:10rpx;
 				margin-right: 10rpx;
 			}
 

@@ -10,6 +10,11 @@
 <script>
 	import wx from '../plugins/jweixin.js'
 	export default {
+		props:{
+			url:{
+				default:"",
+			}
+		},
 		data() {
 			return {
 				isMiniProgram:false
@@ -20,7 +25,15 @@
 		},
 		methods:{
 			back(){
-				uni.navigateBack({});
+				var u = navigator.userAgent;
+				let isios = /(iPhone|mac|iPod|iPad|iOS)/i.test(u);
+				let iosjump = sessionStorage.getItem("iosjump");
+				if(this.url&&isios&&iosjump){
+					uni.redirectTo({
+						url:this.url
+					})
+				}
+				else uni.navigateBack({});
 				// this.$emit('back')
 			},
 			getMiniProgramStatic(){

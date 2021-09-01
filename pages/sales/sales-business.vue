@@ -1,6 +1,6 @@
 <template>
 	<view class="container flexc">
-		<turnback @back="back" v-if="isMiniProgram"> </turnback>
+		<turnback v-if="isMiniProgram" url="/pages/sales/index"> </turnback>
 		<view class="head flexc">
 			<text class="sales-name" v-if="sales.salesName">{{sales.salesName}}</text>
 			<view class="flex head-data" @click="toOrder">

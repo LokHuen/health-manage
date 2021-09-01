@@ -601,6 +601,9 @@ var api = {
 	getRecommendPage: (data) => {
 		return rq("/wx/patient/recommend/getRecommendPage", data, "GET");
 	},//查找可以添加给患者的产品--由业务员添加
+	gallerylist: (data) => {
+		return rq("/wx/web/gallery/list", data, "GET");
+	},//轮播图列表
 
 }
 

@@ -1,8 +1,31 @@
 <template>
 	<view class="">
-		<image src="../../static/warnshow.jpg" class="headbg" mode="widthFix" @click="towarnpage"></image>
+		<swiper class="swiper" indicator-dots autoplay interval="3600" current="0" >
+			<swiper-item v-for="(item,index) in imglist" :key="index">
+				<view @click="tooterurl(item.url)">
+					<image :src="baseUrl+item.filePath" mode="aspectFill"  ></image>
+				</view>
+			</swiper-item>
+			<swiper-item >
+				<view>
+					<image src="../../static/warnshow.jpg" mode="aspectFill"  @click="towarnpage"></image>
+				</view>
+			</swiper-item>
+		</swiper>
 		<view class="lineblock"></view>
 		<view class="flex projectbox">
+			<view class="projectitem">
+				<wx-open-launch-weapp username="gh_e44479db8d50" path="pages/index/goods.html" style="" class="otherbox">
+					<script type="text/wxtag-template">
+						<style>
+							.otherbox{position: absolute;top:0;left:0;right:0;bottom:0;z-index: 9;}
+						</style>
+						<div class="otherbox"></div>
+					</script>
+				</wx-open-launch-weapp>
+				<image class="itemicon" src="../../static/medical/7.png" mode="aspectFill"></image>
+				<view>营养补充</view>
+			</view>
 			<view class="projectitem">
 				<wx-open-launch-weapp username="gh_e44479db8d50" path="pages/index/check.html" style="" class="otherbox">
 					<script type="text/wxtag-template">
@@ -15,14 +38,15 @@
 				<image class="itemicon" src="../../static/medical/1.png" mode="aspectFill"></image>
 				<view>基因检测</view>
 			</view>
-			<view class="projectitem" @click="tootherpage(1)">
-				<image class="itemicon" src="../../static/medical/2.png" mode="aspectFill"></image>
-				<view>海外药物</view>
-			</view>
 			<view class="projectitem" @click="tootherpage(2)">
 				<image class="itemicon" src="../../static/medical/3.png" mode="aspectFill"></image>
 				<view>临床招募</view>
 			</view>
+			<view class="projectitem" @click="tootherpage(1)">
+				<image class="itemicon" src="../../static/medical/2.png" mode="aspectFill"></image>
+				<view>海外药物</view>
+			</view>
+			
 			<!-- <view class="projectitem">
 				<image class="itemicon" src="../../static/medical/4.png" mode="aspectFill"></image>
 				<view>科研支持</view>
@@ -68,6 +92,7 @@
 				page:1,
 				pageCount:1,
 				list:[],
+				imglist:[],
 			}
 		},
 		onLoad(options){
@@ -82,6 +107,7 @@
 					}
 				}
 			});
+			this.getimglist();
 		},
 		onShow(){
 			
@@ -94,6 +120,11 @@
 					if(this.page==1) this.list = res.data.list;
 					else this.list = this.list.concat(res.data.list);
 					if(res.data.list.length>0) this.page++; 
+				});
+			},
+			getimglist(){
+				app.gallerylist({goalType:2}).then(res => {
+					this.imglist = res.data;
 				});
 			},
 			towarnpage(){
@@ -116,6 +147,9 @@
 					break;
 				}
 			},
+			tooterurl(url){
+				if(url) location.href = url;
+			},
 		},
 		onReachBottom(){
 			this.init();
@@ -136,9 +170,9 @@
 	}
 	.tips{line-height:80rpx;padding-left:30rpx;}
 	.projectbox{
-		padding:30rpx 20rpx 0;box-sizing:border-box;background:#fff;
+		padding:30rpx 56rpx 0;box-sizing:border-box;background:#fff;
 		.projectitem{
-			width:33%;padding-bottom:30rpx;text-align:center;font-size:32rpx;position:relative;
+			width:50%;padding-bottom:30rpx;text-align:center;font-size:32rpx;position:relative;
 			.itemicon{width:80rpx;height:80rpx;padding:20rpx 20rpx 16rpx;}
 		}
 	}
@@ -149,4 +183,17 @@
 		background:#F5F5F5;
 	}
 	.otherbox{position: absolute;top:0;left:0;right:0;bottom:0;z-index: 9;}
+	swiper {
+		height: 270rpx;
+	
+		swiper-item {
+			width: 100%;
+			height: 100%;
+	
+			image {
+				width: 100%;
+				height: 270rpx;
+			}
+		}
+	}
 </style>

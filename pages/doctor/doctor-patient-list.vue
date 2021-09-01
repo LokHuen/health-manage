@@ -1,6 +1,6 @@
 <template>
 	<view class="container flexc">
-		<turnback @back="back" v-if="isMiniProgram"> </turnback>
+		<turnback v-if="isMiniProgram" url="/pages/sales/user"> </turnback>
 		
 		<view class="screen-box">
 			<view class="flex head" @click="showQrCode">
@@ -177,6 +177,8 @@
 					})
 					break;
 					case 2:
+					sessionStorage.setItem("backurl",location.pathname+location.search);
+					sessionStorage.setItem("iosjump",1);
 					uni.navigateTo({
 						url:"/pages/medical/detail?id="+item.id
 					})
