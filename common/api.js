@@ -604,6 +604,9 @@ var api = {
 	gallerylist: (data) => {
 		return rq("/wx/web/gallery/list", data, "GET");
 	},//轮播图列表
+	visitgetLastRecord: (data) => {
+		return rq("/wx/patient/visit/getLastRecord", data, "GET");
+	},//根据病患id查询回访记录（疾病进展情况）
 
 }
 

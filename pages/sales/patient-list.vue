@@ -30,6 +30,10 @@
 			</view>
 			<view style="height: 20rpx;"></view>
 			<view class="desc">{{'和医生绑定时间：'+item.bindTime}}</view>
+			<view class="desc flex" v-show="item.currentVisitTime">
+				<view style="flex:1;">最近回访时间：{{item.currentVisitTime}}</view>
+				<view class="watchbt" @click="opendetailbox(item)">查看详情</view>
+			</view>
 			<view style="height: 40rpx;"></view>
 		</view>
 		<view class="no-data-tips" v-if="list.length == 0">暂无数据</view>
@@ -45,7 +49,13 @@
 				<view class="cancel" @click="closePatienScreen">取消</view>
 			</view>
 		</uni-popup>
-
+		
+		<uni-popup ref="detailbox" type="center">
+			<view class="detailbox">
+				<view class="title">回访备注</view>
+				<view class="detailcontent">{{tipdata.remark||"暂无备注"}}</view>
+			</view>
+		</uni-popup>
 
 	</view>
 </template>
@@ -67,9 +77,8 @@
 					salesManId: ''
 				},
 				pageCount: 1,
-				isMiniProgram:false
-				
-				
+				isMiniProgram:false,
+				tipdata:{},
 			}
 		},
 		onLoad(props) {
@@ -78,6 +87,14 @@
 			this.getMiniProgramStatic();
 		},
 		methods: {
+			opendetailbox(item){
+				this.tipdata = {remark:item.visitRemark};
+				this.$refs.detailbox.open();
+				// app.visitgetLastRecord({patientId:item.id}).then(res => {
+				// 	this.tipdata = res.data;
+				// 	this.$refs.detailbox.open();
+				// });
+			},
 			getMiniProgramStatic(){
 			 wx.miniProgram.getEnv((res)=>{
 			    this.isMiniProgram = res.miniprogram?true:false;
@@ -153,7 +170,21 @@
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+	.detailbox{
+		background:#fff;width:90vw;box-sizing:border-box;padding:30rpx;border-radius:16rpx;
+		.title{padding-bottom:30rpx;text-align:center;border-bottom:2rpx solid #eee;font-size:34rpx;}
+		.detailcontent{box-sizing:border-box;padding:30rpx 20rpx 20rpx 20rpx;white-space:pre-wrap;font-size:30rpx;}
+	}
+	.watchbt{
+		font-size: 28rpx;
+		// padding: 12rpx 12rpx;
+		color: #333;
+		padding-right:16rpx;
+		// background: #2894EC;
+		// border-radius: 6rpx;
+		// line-height: 1;
+	}
 	page {
 		background-color: $uni-defautt-bg-color;
 	}
@@ -169,7 +200,7 @@
 			color: #333333;
 			font-size: 15px;
 			background-color: #FFFFFF;
-			z-index: 999;
+			z-index: 99;
 			position: sticky;
 			top: 0;
 

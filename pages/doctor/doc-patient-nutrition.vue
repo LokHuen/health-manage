@@ -284,6 +284,22 @@
 				<view v-if="!recordList.length" class="pagenodata">暂无数据</view>
 			</scroll-view>
 		</view>
+		<view class="line-space"></view>
+		<view class="itemboxtitle">疾病进展</view>
+		<view class="recordbox" style="padding-bottom:20rpx;">
+			<view v-show="visitinfo.illnessFeeling">
+				<view class="ptb10">主观感受：<text class="fontcolor">{{visitinfo.illnessFeeling}}</text></view>
+				<view class="ptb10">用药依从性：
+					<view class="flex" v-for="(item,index) in visitinfo.dosageDependence" :key="index">
+						<view class="pr20">药物：<text class="fontcolor">{{item.medicine}}</text></view>
+						<view class="pr20">用量：<text class="fontcolor">{{item.usage}}</text></view>
+						<view >效果：<text class="fontcolor">{{item.effect}}</text></view>
+					</view>
+				</view>
+				<view class="ptb10">其他治疗方式：<text class="fontcolor">{{visitinfo.otherTreatment}}</text></view>
+			</view>
+			<view class="pagenodata" v-show="!visitinfo.illnessFeeling">暂无数据</view>
+		</view>
 		<view style="height:200rpx;background:#F7F8F8;"></view>
 		</view>
 
@@ -484,7 +500,8 @@
 				goodslist:[],
 				surveyType:'',
 				sgaType:'',//用于区分曲线图  测评所属问卷类型 =1，PG-SGA；=2，SGA	
-				hasSgaRecord:false
+				hasSgaRecord:false,
+				visitinfo:{},
 			}
 		},
 		onLoad(props){
@@ -1110,6 +1127,16 @@
 					}
 				});
 				
+				app.visitgetLastRecord({patientId: this.uid}).then(res => {
+					if(res.data.dosageDependence){
+						let usedata = JSON.parse(res.data.dosageDependence);
+						res.data.dosageDependence = usedata;
+					}else{
+						res.data.dosageDependence = [];
+					}
+					this.visitinfo = res.data;
+				});
+				
 			},
 			
 			//判断是否有sga记录
@@ -1410,6 +1437,8 @@
 </script>
 
 <style lang="scss" scoped>
+	.fontcolor{color:#666;}
+	.ptb10{padding:10rpx 0;}
 	.recordbox{
 		margin:0 50rpx;
 		.recordimg{width:30rpx;margin:8rpx 12rpx 0 0;}
@@ -2296,5 +2325,5 @@
 	   }
 		
 	}
-	
+	.pr20{padding-right:20rpx;}
 </style>

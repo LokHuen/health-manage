@@ -170,10 +170,10 @@
 	}
 	.tips{line-height:80rpx;padding-left:30rpx;}
 	.projectbox{
-		padding:30rpx 56rpx 0;box-sizing:border-box;background:#fff;
+		padding:30rpx 0rpx 0;box-sizing:border-box;background:#fff;
 		.projectitem{
-			width:50%;padding-bottom:30rpx;text-align:center;font-size:32rpx;position:relative;
-			.itemicon{width:80rpx;height:80rpx;padding:20rpx 20rpx 16rpx;}
+			width:25%;padding-bottom:30rpx;text-align:center;font-size:28rpx;position:relative;
+			.itemicon{width:70rpx;height:70rpx;padding:20rpx 20rpx 16rpx;}
 		}
 	}
 	
