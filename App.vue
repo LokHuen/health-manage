@@ -31,6 +31,8 @@
 					})
 				return;
 			}
+			
+			if (option.query.nologin) return;
 
 			let nowtime = new Date().getTime();
 			let pretime = this.getCache("time") || nowtime;

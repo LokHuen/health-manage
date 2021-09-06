@@ -180,7 +180,7 @@
 					sessionStorage.setItem("backurl",location.pathname+location.search);
 					sessionStorage.setItem("iosjump",1);
 					uni.navigateTo({
-						url:"/pages/medical/detail?id="+item.id
+						url:"/pages/medical/detail?id="+item.id+"&nologin=1"
 					})
 					break;
 				}

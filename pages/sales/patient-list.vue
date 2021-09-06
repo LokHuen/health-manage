@@ -35,6 +35,10 @@
 				<view class="watchbt" @click="opendetailbox(item)">查看详情</view>
 			</view>
 			<view style="height: 40rpx;"></view>
+			<view class="actionbox flex">
+				<view class="actionitem other" @click="tootherpage(1,item)">添加推荐</view>
+				<view class="actionitem" @click="tootherpage(2,item)">推荐详情</view>
+			</view>
 		</view>
 		<view class="no-data-tips" v-if="list.length == 0">暂无数据</view>
 		<!-- <view style="height: 30rpx;"></view> -->
@@ -155,7 +159,23 @@
 						app.tip('调用失败');
 					}
 				});
-			}
+			},
+			tootherpage(index,item){
+				switch(index){
+					case 1:
+					uni.navigateTo({
+						url:"/pages/medical/recommend?id="+item.id
+					})
+					break;
+					case 2:
+					sessionStorage.setItem("backurl",location.pathname+location.search);
+					sessionStorage.setItem("iosjump",1);
+					uni.navigateTo({
+						url:"/pages/medical/detail?id="+item.id+"&nologin=1"
+					})
+					break;
+				}
+			},
 
 		},
 
@@ -171,6 +191,13 @@
 </script>
 
 <style lang="scss" scoped>
+	.actionbox{
+		border-top:2rpx solid #ddd;padding:20rpx 0 30rpx;
+		.actionitem{
+			width:50%;text-align:center;color:#2894EC;font-size:28rpx;box-sizing:border-box;
+			&.other{border-right:2rpx solid #ddd;}
+		}
+	}
 	.detailbox{
 		background:#fff;width:90vw;box-sizing:border-box;padding:30rpx;border-radius:16rpx;
 		.title{padding-bottom:30rpx;text-align:center;border-bottom:2rpx solid #eee;font-size:34rpx;}
