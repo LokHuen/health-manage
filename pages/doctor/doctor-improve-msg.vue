@@ -206,8 +206,11 @@
 								url: 'doctor-center'
 							});
 						}else{
-							uni.navigateTo({
-								url: 'doctor-submit-result'
+							// uni.navigateTo({
+							// 	url: 'doctor-submit-result'
+							// });
+							uni.redirectTo({
+								url: 'doctor-center'
 							});
 						}
 						
