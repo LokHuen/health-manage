@@ -63,7 +63,7 @@
 				let data={
 					pageNo:this.page,
 				}
-				data.status = 3;
+				data.group = 1;
 				app.getorderlist(data).then(res => {
 					this.pageCount = res.data.pageCount;
 					if(this.page==1) this.list = res.data.list;
