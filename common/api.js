@@ -607,6 +607,9 @@ var api = {
 	visitgetLastRecord: (data) => {
 		return rq("/wx/patient/visit/getLastRecord", data, "GET");
 	},//根据病患id查询回访记录（疾病进展情况）
+	getorderlist: (data) => {
+		return rq("/wx/order/list", data, "GET");
+	}, //订单列表（分页）
 
 }
 

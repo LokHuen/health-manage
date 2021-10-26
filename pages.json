@@ -8,6 +8,18 @@
 			}
 		},
 		{
+			"path": "pages/patient/order",
+			"style": {
+				"navigationBarTitleText": "营养干预记录"
+			}
+		},
+		{
+			"path": "pages/patient/center",
+			"style": {
+				"navigationBarTitleText": "个人中心"
+			}
+		},
+		{
 			"path": "pages/medical/recommend",
 			"style": {
 				"navigationBarTitleText": "产品推荐"

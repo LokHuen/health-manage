@@ -1,6 +1,6 @@
 {
     "name" : "wxsw_fwh",
-    "appid" : "",
+    "appid" : "__UNI__55D564B",
     "description" : "",
     "versionName" : "1.0.0",
     "versionCode" : "100",
@@ -63,14 +63,14 @@
                         "^/api" : ""
                     }
                 },
-				"/otherapi" : {
-								    "target" : "http://view.officeapps.live.com", //目标接口域名
-								    "changeOrigin" : true, //是否跨域
-								    "secure" : false, // 设置支持https协议的代理
-								    "pathRewrite" : {
-								        "^/otherapi" : ""
-								    }
-								}
+                "/otherapi" : {
+                    "target" : "http://view.officeapps.live.com", //目标接口域名
+                    "changeOrigin" : true, //是否跨域
+                    "secure" : false, // 设置支持https协议的代理
+                    "pathRewrite" : {
+                        "^/otherapi" : ""
+                    }
+                }
             }
         },
         "title" : "肿瘤患者营养管理平台"
