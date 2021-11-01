@@ -18,6 +18,41 @@
 				</view>
 			</view>
 		</view>
+		<view class="flex projectbox">
+			<view class="projectitem">
+				<wx-open-launch-weapp username="gh_e44479db8d50" path="pages/index/goods.html" style="" class="otherbox">
+					<script type="text/wxtag-template">
+						<style>
+							.otherbox{position: absolute;top:0;left:0;right:0;bottom:0;z-index: 9;}
+						</style>
+						<div class="otherbox"></div>
+					</script>
+				</wx-open-launch-weapp>
+				<image class="itemicon" src="../../static/medical/7.png" mode="aspectFill"></image>
+				<view>营养补充</view>
+			</view>
+			<view class="projectitem">
+				<wx-open-launch-weapp username="gh_e44479db8d50" path="pages/index/check.html" style="" class="otherbox">
+					<script type="text/wxtag-template">
+						<style>
+							.otherbox{position: absolute;top:0;left:0;right:0;bottom:0;z-index: 9;}
+						</style>
+						<div class="otherbox"></div>
+					</script>
+				</wx-open-launch-weapp>
+				<image class="itemicon" src="../../static/medical/1.png" mode="aspectFill"></image>
+				<view>基因检测</view>
+			</view>
+			<view class="projectitem" @click="tootherpage(1)">
+				<image class="itemicon" src="../../static/medical/2.png" mode="aspectFill"></image>
+				<view>海外药物</view>
+			</view>
+			<view class="projectitem" @click="tootherpage(2)">
+				<image class="itemicon" src="../../static/medical/3.png" mode="aspectFill"></image>
+				<view>临床招募</view>
+			</view>
+		</view>
+		<view class="lineblock"></view>
 		<view v-show="info.firstCate[0]||info.secondCate[0]||info.thirdCate[0]||info.fourCate[0]" class="tips">患者可能适用的产品</view>
 		<view v-show="info.firstCate[0]" class="boxlist">
 			<view class="boxtitle">口服营养补充剂</view>
@@ -382,5 +417,12 @@
 		right: 0;
 		bottom: 0;
 		z-index: 9;
+	}
+	.projectbox{
+		padding:26rpx 0rpx 0;box-sizing:border-box;background:#fff;
+		.projectitem{
+			width:25%;padding-bottom:30rpx;text-align:center;font-size:28rpx;position:relative;
+			.itemicon{width:70rpx;height:70rpx;padding:20rpx 20rpx 16rpx;}
+		}
 	}
 </style>

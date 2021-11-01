@@ -38,14 +38,15 @@
 				<image class="itemicon" src="../../static/medical/1.png" mode="aspectFill"></image>
 				<view>基因检测</view>
 			</view>
-			<view class="projectitem" @click="tootherpage(2)">
-				<image class="itemicon" src="../../static/medical/3.png" mode="aspectFill"></image>
-				<view>临床招募</view>
-			</view>
 			<view class="projectitem" @click="tootherpage(1)">
 				<image class="itemicon" src="../../static/medical/2.png" mode="aspectFill"></image>
 				<view>海外药物</view>
 			</view>
+			<view class="projectitem" @click="tootherpage(2)">
+				<image class="itemicon" src="../../static/medical/3.png" mode="aspectFill"></image>
+				<view>临床招募</view>
+			</view>
+			
 			
 			<!-- <view class="projectitem">
 				<image class="itemicon" src="../../static/medical/4.png" mode="aspectFill"></image>
