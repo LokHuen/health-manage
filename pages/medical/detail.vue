@@ -229,6 +229,16 @@
 					url: '/pages/minapp?id=' + id
 				});
 			},
+			tootherpage(index){
+				switch(index){
+					case 1:
+					location.href = "http://gzh.healthme.cn/drug/firstCancer?pid=0&id=45&name=%E6%B5%B7%E5%A4%96%E8%8D%AF";
+					break;
+					case 2:
+					location.href = "http://zhm.healthme.cn/";
+					break;
+				}
+			},
 		}
 	}
 </script>
