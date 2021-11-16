@@ -198,6 +198,28 @@
 					</view>
 				</swiper-item>
 				<!-- logo -->
+				<!-- logo大码 -->
+				<swiper-item v-if="info.templateCode=='0905'||info.templateCode=='0906'">
+					<!-- 0905肿瘤大码；0906非肿瘤大码 -->
+					<view :class="'swiperimgbox '+(create?'big':'')" @click="getallimg" id="doctorcode">
+						<image v-if="info.cardFrontPic" :src="'/api'+info.cardFrontPic" class="swiperimg" mode="widthFix"></image>
+						<view :class="'logoinfobox '+(create?'big ':'')">
+							<view class="toptitle">{{(info.templateCode=='0905')?"CANCER":"CLINICAL"}} NUTRITION MANAGEMENT PLATFORM {{(info.templateCode=='0905'||info.templateCode=='0906')?info.pinyin:''}}</view>
+							
+							<view class="prelative">
+								<image :src="'/api'+info.qrCode" class="logoimg1"></image>
+								<view class="imginfobox imginfobox1">扫码关注 - 信息注册 - 营养评测</view>
+							</view>
+							
+						</view>
+					</view>
+				</swiper-item>
+				<swiper-item v-if="info.templateCode=='0905'||info.templateCode=='0906'">
+					<view class="swiperimgbox" @click="getsecondimg(baseUrl+info.cardBackPic)">
+						<image :src="baseUrl+info.cardBackPic" class="swiperimg" mode="widthFix"></image>
+					</view>
+				</swiper-item>
+				<!-- logo大码 -->
 			</swiper>
 		</view>
 		<view class="foottips">点击上图后长按保存</view>
@@ -713,6 +735,7 @@
 		position:absolute;z-index:3;top:140rpx;left:0;right:0;text-align:center;
 		.toptitle{color:#fff;font-size:20rpx;}
 		.logoimg{border: 12rpx solid #0063B3;box-sizing: border-box;width: 262rpx;height: 262rpx;margin-top:40rpx;}
+		.logoimg1{border: 12rpx solid #0063B3;box-sizing: border-box;width: 340rpx;height: 340rpx;margin-top:80rpx;}
 		.centerwhite{height:32rpx;}
 		.teamtext{font-size: 32rpx;color: #5b9bdc;line-height: 1;padding:26rpx 0 40rpx;}
 		.depttext{
@@ -730,11 +753,14 @@
 			.teamtext{padding:40rpx 0 28rpx;}
 			// .depttext{padding:12rpx 60rpx;display: inline-block;width:unset;}
 		}
+		.imginfobox1{font-size: 22rpx;bottom:-22rpx;}
 		&.big{
 			.imginfobox{font-size: 16*5rpx;bottom:-14*5rpx;}
+			.imginfobox1{font-size: 22*5rpx;bottom:-22*5rpx;}
 			top:140*5rpx;
 			.toptitle{font-size:20*5rpx;}
 			.logoimg{border: 12*5rpx solid #0063B3;width: 262*5rpx;height: 262*5rpx;margin-top:40*5rpx;}
+			.logoimg1{border: 12*5rpx solid #0063B3;width: 340*5rpx;height: 340*5rpx;margin-top:80*5rpx;}
 			.centerwhite{height:32*5rpx;}
 			.teamtext{font-size: 32*5rpx;padding:26*5rpx 0 40*5rpx;}
 			.depttext{
