@@ -29,6 +29,11 @@
 			<view class="name-tips">* 联系电话</view>
 			<input class="name-input" type="number" value="" placeholder="请填写联系电话" v-model="phone" />
 		</view>
+		<view class="name-box">
+			<view class="name-tips">* 验证码</view>
+			<input class="name-input" type="text" value="" placeholder="请填写手机验证码" v-model="code" />
+			<button type="default" class="code-button" @click="getCode">{{codetext}}</button>
+		</view>
 		
 		<view class="name-box" v-if="needAge">
 			<view class="name-tips">* 年龄</view>
@@ -117,7 +122,10 @@
 					<view class="tips-common">根据法律规定，开发者仅收集实现肿瘤营养管理与干预功能所必要的信息。</view>
 					<view class="tips-common">• 开发者收集你的用户信息（微信昵称、头像、性别、地区），用于注册、登录服务系统。</view>
 					<view class="tips-common">• 开发者收集你的病例信息（姓名、性别、出生日期、所患疾病、所在城市、身高、体重、病例照片等），用于给您提供营养管理与干预服务、营养测评服务。</view>
-					<view style="height: 50rpx;"></view>
+					<view style="height: 40rpx;"></view>
+					
+					<view class="tips-common">同意接受开发者语音类随访，跟进疾病进展及营养状况。</view>
+					<view style="height: 40rpx;"></view>
 					<view class="tips-common">开发者对信息的存储</view>
 					<view class="tips-common">存储地点：境内 </view>
 					<view class="tips-common">存储期限：项目停止运营后及时删除 </view>
@@ -227,6 +235,7 @@
 					})
 				}
 			})
+			this.getInfo();
 		},
 		computed: {
 			startDate() {
@@ -269,13 +278,46 @@
 				formQrCode: '', //1表示患者扫描医生二维码后，点击公众号消息进入信息完善页 2从基础信息进入
 				selfTest: '', //1表示从评估页面进来，完善信息后直接返回评估页面
 				needAge:false,//检查患者是否需要输入年龄
+				code: '',
+				codetext: '获取验证码',
+				isSend: false, // 是否发送验证码
 			}
 		},
 		onShow() {
 			if (!app.getCache("uid")) return;
-			this.getInfo();
+			
 		},
 		methods: {
+			getCode() {
+				if (this.isSend) return;
+				if (!this.phone) {
+					app.tip('请输入手机号码');
+					return;
+				} else if (!/^1[0-9]{10}$/.test(this.phone)) {
+					app.tip('请填写正确的手机号码')
+					return;
+				}
+				app.getCode({
+					mobile: this.phone
+				}).then(res => {
+					if (res.status == 1) {
+						app.tip(res.msg);
+						this.isSend = true
+						let ss = 60
+						this.codeTimer = setInterval(() => { // 倒计时
+							if (ss <= 1) {
+								this.codetext = '重新获取'
+								this.isSend = false
+								clearInterval(this.codeTimer)
+								this.isSend = false
+							} else {
+								ss--
+								this.codetext = ss + 's'
+							}
+						}, 1000)
+					}
+				});
+			},
 			inputAgeCheck(){
 				app.inputAgeCheck().then(res =>{
 					if(res.status == 1){
@@ -380,6 +422,7 @@
 			},
 			getInfo() {
 				app.patientBasicInfo({}).then(res => {
+					// this.showTipPopup();
 					if (res.status == 1) {
 						if (res.data) {
 							this.infoData = res.data;
@@ -546,6 +589,9 @@
 				if(this.illness=="其它疾病"){
 					this.illness=this.illnessother;
 				}
+				if(!this.code){
+					app.tip('请输入验证码');return;
+				}
 				
 
 				if (this.imgList.length > 0) {
@@ -628,6 +674,7 @@
 						illness: this.illness,
 						height: this.height,
 						weight: this.weight,
+						verifyCode: this.code,
 						detailList: projectList,
 						age:this.age
 					}).then(res => {
@@ -674,6 +721,7 @@
 						illness: this.illness,
 						height: this.height,
 						weight: this.weight,
+						verifyCode: this.code,
 						pathologyUrl: this.pathologyUrl,
 						detailList: projectList,
 						age:this.age
@@ -879,6 +927,17 @@
 				font-size: 30rpx;
 				right: 0;
 				top: 30rpx;
+			}
+			
+			.code-button {
+				position: absolute;
+				color: #FFFFFF;
+				background-color: #52A29E !important;
+				height: 60rpx;
+				line-height: 60rpx;
+				font-size: 13px;
+				right: 10rpx;
+				top: 20rpx;
 			}
 		}
 
