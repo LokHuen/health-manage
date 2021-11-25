@@ -20,7 +20,7 @@ export default function setconfig() {
 					"previewImage",
 					"uploadImage",
 					"chooseWXPay",'wx-open-launch-weapp',
-					"hideAllNonBaseMenuItem"
+					"hideAllNonBaseMenuItem","scanQRCode"
 				], // 必填，需要使用的JS接口列表
 				"openTagList": [
 					"wx-open-launch-weapp"

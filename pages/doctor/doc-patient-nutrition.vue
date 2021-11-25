@@ -268,6 +268,19 @@
 			<image src="../../static/doctor/warn.png" mode="widthFix" class="tips" ></image>干预情况依据本平台数据判断，存在局限性
 		</view> -->
 		<view class="line-space"></view>
+		<view class="itemboxtitle">基因检测记录</view>
+		<view class="goodsbox">
+			<view class="reportlist" v-for="(item,index) in reportlist" :key="index" >
+				<view class="ltime">检测产品：{{item.orderDetailList[0].commodity}}</view>
+				<view class="lname">检测时间：{{item.createTime}}</view>
+				<view v-for="(item1,index1) in item.reportList" :key="index1">
+					<view class="linfo" @click="toorderdetail(item1)">{{item1.reportFile}}</view>
+				</view>
+				<view class="lname" v-if="!item.reportList">报告未出</view>
+			</view>
+			<view v-if="!reportlist.length" class="pagenodata">暂无检测记录</view>
+		</view>
+		<view class="line-space"></view>
 		<view class="itemboxtitle">医嘱记录</view>
 		<view class="recordbox">
 			<scroll-view scroll-y="true" style="max-height:1000rpx;">
@@ -461,6 +474,7 @@
 		},
 		data() {
 			return {
+				baseUrl: app.globalData.baseUrl,
 				isMy:true, //是否我的病人
 				nodata:false,
 				latelyData: {},
@@ -502,6 +516,7 @@
 				sgaType:'',//用于区分曲线图  测评所属问卷类型 =1，PG-SGA；=2，SGA	
 				hasSgaRecord:false,
 				visitinfo:{},
+				reportlist:[],
 			}
 		},
 		onLoad(props){
@@ -1137,6 +1152,10 @@
 					this.visitinfo = res.data;
 				});
 				
+				app.orderpatientReport({patientId: this.uid}).then(res => {
+					this.reportlist = res.data.list;
+				});
+				
 			},
 			
 			//判断是否有sga记录
@@ -1427,6 +1446,16 @@
 					url:"/pages/doctor/pdfinfo?id="+this.uid
 				})
 			},
+			toorderdetail(item){
+				let phone = uni.getSystemInfoSync();
+				if(phone.platform == "ios"){
+					location.href = this.baseUrl+item.reportUrl;
+				}else{
+					uni.navigateTo({
+						url: '/pages/pdf?url='+"/api"+item.reportUrl,
+					});
+				}
+			},
 		},
 		onShow() {
 			this.getUserData();
@@ -1492,6 +1521,13 @@
 			.ltime{font-size: 26rpx;color: #999999;}
 			.lname{padding:20rpx 0;font-size: 30rpx;font-weight: 600;color: #333333;}
 			.linfo{font-size: 26rpx;color: #666666;}
+			&:last-child{border:none;margin:0;}
+		}
+		.reportlist{
+			padding-bottom:30rpx;margin-bottom:30rpx;border-bottom: 1rpx solid #DCDCDC;
+			.ltime{font-size: 30rpx;color: #333;}
+			.lname{padding:20rpx 0;font-size: 30rpx;color: #333333;}
+			.linfo{padding:10rpx 0;font-size: 30rpx;color: #007AFF;word-break: break-all;}
 			&:last-child{border:none;margin:0;}
 		}
 	}

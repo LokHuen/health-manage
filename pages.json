@@ -8,6 +8,36 @@
 			}
 		},
 		{
+			"path": "pages/sales/gene/new",
+			"style": {
+				"navigationBarTitleText": "编辑样本"
+			}
+		},
+		{
+			"path": "pages/sales/gene/detail",
+			"style": {
+				"navigationBarTitleText": "样本详情"
+			}
+		},
+		{
+			"path": "pages/sales/gene/order",
+			"style": {
+				"navigationBarTitleText": "基因检测订单"
+			}
+		},
+		{
+			"path": "pages/pdf",
+			"style": {
+				"navigationBarTitleText": "pdf"
+			}
+		},
+		{
+			"path": "pages/patient/report",
+			"style": {
+				"navigationBarTitleText": "基因检测报告查询"
+			}
+		},
+		{
 			"path": "pages/patient/order",
 			"style": {
 				"navigationBarTitleText": "营养干预记录"

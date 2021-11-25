@@ -610,7 +610,27 @@ var api = {
 	getorderlist: (data) => {
 		return rq("/wx/order/list", data, "GET");
 	}, //订单列表（分页）
-
+	ordermyList: (data) => {
+		return rq("/wx/sample/order/myList", data, "GET");
+	}, //业务员的基因检测订单列表（分页）
+	orderreportList: (data) => {
+		return rq("/wx/sample/order/reportList", data, "GET");
+	}, //业务员基因检测订单的报告列表
+	orderconfirmReport: (data) => {
+		return rq("/wx/sample/order/confirmReport", data, "POST");
+	},//业务员确认报告
+	ordergetInfo: (data) => {
+		return rq("/wx/sample/order/getInfo", data, "GET");
+	}, //业务员进行样本登记——样本详情
+	sampleordersave: (data) => {
+		return rq("/wx/sample/order/save", data, "POST");
+	},//业务员进行样本登记——新增
+	orderupdateInfo: (data) => {
+		return rq("/wx/sample/order/updateInfo", data, "POST");
+	},//业务员进行样本登记——修改保存
+	orderpatientReport: (data) => {
+		return rq("/wx/sample/order/patientReport", data, "GET");
+	}, //患者的基因检测报告列表（分页）
 }
 
 export {

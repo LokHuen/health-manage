@@ -56,7 +56,10 @@
 						})
 						break;
 					case 3:
-						location.href = "http://gzh.healthme.cn/reportLogin";
+						// location.href = "http://gzh.healthme.cn/reportLogin";
+						uni.navigateTo({
+							url:"/pages/patient/report"
+						})
 						break;
 					case 4:
 						location.href = "http://zhm.healthme.cn/mineIndex";

@@ -68,7 +68,7 @@
 		},
 		computed: {
 			list: function() {
-				return ["按月统计订单数据", this.sales.salesId ? "" : '名片码', "医生列表", "患者列表", "资源报备", this.info.sampleAgentId?"样本登记":""]
+				return ["按月统计订单数据", this.sales.salesId ? "" : '名片码', "医生列表", "患者列表", "资源报备", this.info.sampleAgentId?"样本登记":"样本登记"]
 			}
 		},
 		methods: {
@@ -106,7 +106,10 @@
 						url: '../sales/resource-report-list?salesId=' + this.sales.salesId
 					});
 				} else if (index == 5) {
-					location.href = "http://gzhtest.itopone.com/#/jump?id="+this.info.sampleAgentId;
+					uni.navigateTo({
+						url: "/pages/sales/gene/order"
+					});
+					// location.href = "http://gzhtest.itopone.com/#/jump?id="+this.info.sampleAgentId;
 				}
 			},
 			getData() {
