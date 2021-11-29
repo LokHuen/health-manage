@@ -148,7 +148,10 @@
 
 		},
 		onShow() {
-			// this.getmyinfo();
+			if(app.reloadgeneorder){
+				app.reloadgeneorder = false;
+				this.refreshData();
+			}
 		},
 		methods: {
 			copytext(index){

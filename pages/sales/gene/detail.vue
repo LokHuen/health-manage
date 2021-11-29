@@ -346,6 +346,7 @@
 					}else{
 						app.sampleordersave(senddata).then(res => {
 							app.tip(res.msg);
+							app.reloadgeneorder = true;
 							uni.redirectTo({
 								url: "/pages/sales/gene/detail?id=" + this.info.orderId
 							})
