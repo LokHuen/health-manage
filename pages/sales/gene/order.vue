@@ -1,6 +1,6 @@
 <template>
 	<view class="containter">
-		<turnback> </turnback>
+		<turnback url="/pages/sales/sales-business"> </turnback>
 		<view @click="$refs.tipsframe.open()" class="headtips">样本寄送地址，点击查看>></view>
 		<view class="inputbox">
 			<!-- :val="goodname" -->

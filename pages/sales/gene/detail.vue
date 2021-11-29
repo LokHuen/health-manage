@@ -357,12 +357,20 @@
 			removerecommend() {
 				if(this.options.back) uni.navigateBack({delta:1});
 				else{
-					let pdata = getCurrentPages();
-					for (let i = 0; i < pdata.length; i++) {
-						if(pdata[i].route=="pages/sales/gene/order"){
-							uni.navigateBack({delta:pdata.length-1-i});return;
+					let phone = uni.getSystemInfoSync();
+					if(phone.platform == "ios"){
+						uni.redirectTo({
+							url:"/pages/sales/gene/order"
+						})
+					}else{
+						let pdata = getCurrentPages();
+						for (let i = 0; i < pdata.length; i++) {
+							if(pdata[i].route=="pages/sales/gene/order"){
+								uni.navigateBack({delta:pdata.length-1-i});return;
+							}
 						}
 					}
+					
 				}
 			},
 			previewimg(url){
