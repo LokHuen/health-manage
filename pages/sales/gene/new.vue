@@ -400,7 +400,7 @@
 			}
 		},
 		onLoad(props) {
-			if (!app.getCache("uid")) return;
+			if (!app.getCache("salesToken")) return;
 			// this.getIllnessList();
 			if(props&&props.id){
 				this.id = props.id;
@@ -432,7 +432,7 @@
 		},
 		
 		onShow() {
-			if (!app.getCache("uid")) return;
+			if (!app.getCache("salesToken")) return;
 		},
 		methods: {
 			bindlymphTransOptions(e){
