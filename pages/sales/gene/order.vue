@@ -1,6 +1,7 @@
 <template>
 	<view class="containter">
 		<turnback> </turnback>
+		<view @click="$refs.tipsframe.open()" class="headtips">样本寄送地址，点击查看>></view>
 		<view class="inputbox">
 			<!-- :val="goodname" -->
 			<uni-search-bar @confirm="search" @cancel="search" cancelButton="none" placeholder="按医生/患者/检测产品等查找"
@@ -77,6 +78,19 @@
 				</scroll-view>
 			</view>
 		</uni-popup>
+		<uni-popup ref="tipsframe" type="bottom">
+			<view class="white-background-pop1 tipsframe" style="" >
+				<view @click="copytext(1)">
+					<view class="tipshead">拓普【实验室收件地址】</view>
+					广东省广州市海珠区官洲国际生物岛标产三期2栋802单元   拓普基因样本组    18022423929
+				</view>
+				<view @click="copytext(2)">
+					<view class="tipshead">允英【实验室收件地址】</view>
+					浙江省嘉兴市南湖区汇信路153号允英医学检验所三楼  夏路平收  15751725877
+				</view>
+			</view>
+		</uni-popup>
+		
 	</view>
 </template>
 
@@ -137,6 +151,17 @@
 			// this.getmyinfo();
 		},
 		methods: {
+			copytext(index){
+				let text = "拓普【实验室收件地址】 广东省广州市海珠区官洲国际生物岛标产三期2栋802单元  拓普基因样本组 18022423929";
+				if(index==2) text="允英【实验室收件地址】 浙江省嘉兴市南湖区汇信路153号允英医学检验所三楼  夏路平收 15751725877";
+				let oInput = document.createElement('input');
+				oInput.value = text;
+				document.body.appendChild(oInput);
+				oInput.select(); // 选择对象;
+				document.execCommand("Copy"); // 执行浏览器复制命令
+				oInput.remove();
+				app.tip("复制成功");
+			},
 			transfer(url){
 				let phone = uni.getSystemInfoSync();
 				if(phone.platform == "ios"){
@@ -284,6 +309,10 @@
 </script>
 
 <style scoped lang="scss">
+	.tipsframe{
+		padding:10rpx 30rpx 40rpx 30rpx!important;font-size:30rpx;
+		.tipshead{padding:50rpx 0 16rpx;}
+	}
 	page {
 		background-color: $uni-bg-color;
 	}
@@ -631,4 +660,5 @@
 		border-bottom: 2rpx solid #e5e5e5;
 		margin-bottom: 24rpx;
 	}
+	.headtips{text-align:center;font-size:28rpx;color:#888;padding:20rpx 0 0rpx;color:#007AFF;}
 </style>
