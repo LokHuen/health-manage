@@ -8,6 +8,24 @@
 			}
 		},
 		{
+			"path": "pages/sales/reply/list",
+			"style": {
+				"navigationBarTitleText": "申请记录"
+			}
+		},
+		{
+			"path": "pages/sales/reply/input",
+			"style": {
+				"navigationBarTitleText": "寄送方式"
+			}
+		},
+		{
+			"path": "pages/sales/reply/choose",
+			"style": {
+				"navigationBarTitleText": "样品及物料申请"
+			}
+		},
+		{
 			"path": "pages/sales/gene/new",
 			"style": {
 				"navigationBarTitleText": "编辑样本"

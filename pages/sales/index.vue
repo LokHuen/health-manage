@@ -69,6 +69,13 @@
 					<image src="../../static/icon/more_icon.png"></image>
 				</view>
 			</view>
+			<view class="item flexc" @click="toreply" style="margin-top: 30rpx;">
+				<view class="flex text-box">
+					<text class="item-text">样品及物料申请</text>
+					<image src="../../static/icon/more_icon.png"></image>
+				</view>
+			</view>
+			
 
 			<view class="auth-box flexc" style="margin-top: 30rpx;">
 				<view @click="toAccount">
@@ -264,6 +271,11 @@
 			tocardmake(){
 				uni.navigateTo({
 					url: "/pages/card/index"
+				})
+			},
+			toreply(){
+				uni.navigateTo({
+					url: "/pages/sales/reply/choose"
 				})
 			},
 			hasMesage() {

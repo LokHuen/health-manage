@@ -12,7 +12,7 @@
 			<picker-view-column>
 				<view class="item" :style="{'font-size': fStyles.columnFontSize}" v-for="city in cities" :key="city.code">{{city.name}}</view>
 			</picker-view-column>
-			<picker-view-column v-show="districts.length">
+			<picker-view-column v1-show="districts.length">
 				<view class="item" :style="{'font-size': fStyles.columnFontSize}" v-for="district in districts" :key="district.code">{{district.name}}</view>
 			</picker-view-column>
 		</picker-view>
@@ -60,7 +60,7 @@
 			return {
 				titleText:this.title,
 				provinces,
-				cities: [],
+				cities: [{"code": "110100","name": "市辖区"}],
 				districts: [],
 				value:this.fValue,
 				indicatorStyle: `height: ${Math.round(uni.getSystemInfoSync().screenWidth/(750/100))}px; 
@@ -117,6 +117,7 @@
 			 * @param {Array} oldVal
 			 */
 			initList (newVal,oldVal) {
+				// console.log(newVal,oldVal)
 				let [pIdx,cIdx,dIdx] = newVal
 				let opIdx,ocIdx,odIdx
 				if (oldVal instanceof Array) {
@@ -125,17 +126,19 @@
 						this.value = [pIdx,0,0]
 					} 
 					if (cIdx !== ocIdx) { //更改城市
+						let city = cities[provinces[pIdx].code]
+						if(!city[cIdx]) cIdx = 0;
 						this.value = [pIdx,cIdx,0]
 					}
 				}
 				try{
-					const city = cities[provinces[pIdx].code]
+					var city = cities[provinces[pIdx].code]
 					this.cities = city
 					this.districts = city[cIdx] && districts[city[cIdx].code] || []
 				}catch(e){
-					//TODO handle the exception
 					console.log(e)
 				}
+				
 			}
 		}
 	}

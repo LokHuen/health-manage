@@ -631,6 +631,18 @@ var api = {
 	orderpatientReport: (data) => {
 		return rq("/wx/sample/order/patientReport", data, "GET");
 	}, //患者的基因检测报告列表（分页）
+	materiallist: (data) => {
+		return rq("/wx/material/list", data, "GET");
+	}, //获取可申请物料的分页列表
+	materialapply: (data) => {
+		return rq("/wx/material/apply", data, "POST");
+	},//保存申请记录
+	materialapplyList: (data) => {
+		return rq("/wx/material/applyList", data, "GET");
+	}, //物料申请记录的分页列表
+	materialdeleteApply: (data) => {
+		return rq("/wx/material/deleteApply", data, "POST");
+	},//删除申请记录
 }
 
 export {
