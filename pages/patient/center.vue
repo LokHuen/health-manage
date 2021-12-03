@@ -62,10 +62,10 @@
 						})
 						break;
 					case 4:
-						location.href = "http://zhm.healthme.cn/mineIndex";
+						location.href = "http://zhm.healthme.cn/jumpLogin?id="+app.getCache('uid')+"&p="+this.infoData.phone+"&url="+encodeURIComponent("http://zhm.healthme.cn/mineIndex");
 						break;
 					case 5:
-						location.href = "http://gzh.healthme.cn/drug/myDrugs";
+						location.href = "http://gzh.healthme.cn/jumpLogin?id="+app.getCache('uid')+"&p="+this.infoData.phone+"&url="+encodeURIComponent("http://gzh.healthme.cn/drug/myDrugs");
 						break;
 				}
 			},
