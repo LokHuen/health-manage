@@ -159,6 +159,7 @@
 				},
 				isMiniProgram: false,
 				backurl:sessionStorage.getItem("backurl"),
+				infoData:{},
 			}
 		},
 		onLoad(options) {
@@ -213,14 +214,19 @@
 						}
 					}
 				});
+				app.patientBasicInfo({}).then(res =>{
+					if(res.status==1){
+						this.infoData = res.data;
+					}
+				});
 			},
 			todetailpage(index, item) {
 				switch (index) {
 					case 1:
-						location.href = "http://gzh.healthme.cn/drug/orderDeail?id=" + item.relateId;
+						location.href = "http://gzh.healthme.cn/jumpLogin?id="+app.getCache('uid')+"&p="+this.infoData.phone+"&url="+encodeURIComponent("http://gzh.healthme.cn/drug/orderDeail?id=" + item.relateId);
 						break;
 					case 2:
-						location.href = "http://zhm.healthme.cn/clinicalTrialDeail?id=" + item.relateId;
+						location.href = "http://zhm.healthme.cn/jumpLogin?id="+app.getCache('uid')+"&p="+this.infoData.phone+"&url="+encodeURIComponent("http://zhm.healthme.cn/clinicalTrialDeail?id=" + item.relateId);
 						break;
 				}
 			},
@@ -232,10 +238,10 @@
 			tootherpage(index){
 				switch(index){
 					case 1:
-					location.href = "http://gzh.healthme.cn/drug/firstCancer?pid=0&id=45&name=%E6%B5%B7%E5%A4%96%E8%8D%AF";
+					location.href = "http://gzh.healthme.cn/jumpLogin?id="+app.getCache('uid')+"&p="+this.infoData.phone+"&url="+encodeURIComponent("http://gzh.healthme.cn/drug/firstCancer?pid=0&id=45&name=%E6%B5%B7%E5%A4%96%E8%8D%AF");
 					break;
 					case 2:
-					location.href = "http://zhm.healthme.cn/";
+					location.href = "http://zhm.healthme.cn/jumpLogin?id="+app.getCache('uid')+"&p="+this.infoData.phone+"&url="+encodeURIComponent("http://zhm.healthme.cn/");
 					break;
 				}
 			},
