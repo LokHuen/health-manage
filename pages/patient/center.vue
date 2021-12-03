@@ -27,6 +27,7 @@
 				baseUrl:app.globalData.baseUrl,
 				infoData:{},
 				pitem:["基础信息","营养评估记录","营养干预记录","基因检测报告查询","免费用药匹配结果","海外用药评估结果"],
+				info:{},
 			}
 		},
 		onLoad(options){
@@ -62,10 +63,10 @@
 						})
 						break;
 					case 4:
-						location.href = "http://zhm.healthme.cn/jumpLogin?id="+app.getCache('uid')+"&p="+this.infoData.phone+"&url="+encodeURIComponent("http://zhm.healthme.cn/mineIndex");
+						location.href = "http://zhm.healthme.cn/jumpLogin?id="+app.getCache('uid')+"&p="+this.info.phone+"&url="+encodeURIComponent("http://zhm.healthme.cn/mineIndex");
 						break;
 					case 5:
-						location.href = "http://gzh.healthme.cn/jumpLogin?id="+app.getCache('uid')+"&p="+this.infoData.phone+"&url="+encodeURIComponent("http://gzh.healthme.cn/drug/myDrugs");
+						location.href = "http://gzh.healthme.cn/jumpLogin?id="+app.getCache('uid')+"&p="+this.info.phone+"&url="+encodeURIComponent("http://gzh.healthme.cn/drug/myDrugs");
 						break;
 				}
 			},
@@ -73,6 +74,11 @@
 				app.patientNutrition({}).then(res => {
 					if (res.status == 1) {
 						this.infoData = res.data;
+					}
+				});
+				app.patientBasicInfo({}).then(res =>{
+					if(res.status==1){
+						this.info = res.data;
 					}
 				});
 			},
