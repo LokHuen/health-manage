@@ -31,6 +31,7 @@
 					})
 				return;
 			}
+			if(this.getCache("salesToken")&&window.location.pathname.indexOf("/pages/sales/")!=-1) return;
 			
 			if (option.query.nologin) return;
 
