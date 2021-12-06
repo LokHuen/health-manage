@@ -6,7 +6,7 @@
 				<view class="name">
 					{{infoData.patientName||"游客"}}
 				</view>
-				<view class="msg">{{(infoData.patientGender||"")+' '+((infoData.age || infoData.age!=0)?(infoData.age+'岁 '):'')+(infoData.illness||"")}}
+				<view class="msg">{{(infoData.patientGender||"")+' '+((infoData.age || infoData.age!=0)?((infoData.age||0)+'岁 '):'')+(infoData.illness||"")}}
 		
 				</view>
 			</view>
@@ -26,7 +26,7 @@
 			return {
 				baseUrl:app.globalData.baseUrl,
 				infoData:{},
-				pitem:["基础信息","营养评估记录","营养干预记录","基因检测报告查询","免费用药匹配结果","海外用药评估结果"],
+				pitem:["基础信息","邀请码","我的邀请记录","营养评估记录","营养干预记录","基因检测报告查询","免费用药匹配结果","海外用药评估结果"],
 				info:{},
 			}
 		},
@@ -48,24 +48,34 @@
 						break;
 					case 1:
 						uni.navigateTo({
-							url:"/pages/patient/evaluation-record"
+							url:"/pages/invite/code"
 						})
 						break;
 					case 2:
 						uni.navigateTo({
-							url:"/pages/patient/order"
+							url:"/pages/invite/myInvite"
 						})
 						break;
 					case 3:
+						uni.navigateTo({
+							url:"/pages/patient/evaluation-record"
+						})
+						break;
+					case 4:
+						uni.navigateTo({
+							url:"/pages/patient/order"
+						})
+						break;
+					case 5:
 						// location.href = "http://gzh.healthme.cn/reportLogin";
 						uni.navigateTo({
 							url:"/pages/patient/report"
 						})
 						break;
-					case 4:
+					case 6:
 						location.href = "http://zhm.healthme.cn/jumpLogin?id="+app.getCache('uid')+"&p="+this.info.phone+"&url="+encodeURIComponent("http://zhm.healthme.cn/mineIndex");
 						break;
-					case 5:
+					case 7:
 						location.href = "http://gzh.healthme.cn/jumpLogin?id="+app.getCache('uid')+"&p="+this.info.phone+"&url="+encodeURIComponent("http://gzh.healthme.cn/drug/myDrugs");
 						break;
 				}

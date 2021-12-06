@@ -643,6 +643,12 @@ var api = {
 	materialdeleteApply: (data) => {
 		return rq("/wx/material/deleteApply", data, "POST");
 	},//删除申请记录
+	userinviteCode: (data) => {
+		return rq("/wx/user/inviteCode", data, "GET");
+	}, //获取用户的邀请码，扫码后跳转到公众号，完善信息后记录邀请人
+	usermyInviteList: (data) => {
+		return rq("/wx/user/myInviteList", data, "GET");
+	}, //我的邀请记录
 }
 
 export {

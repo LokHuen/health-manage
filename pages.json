@@ -8,6 +8,18 @@
 			}
 		},
 		{
+			"path": "pages/invite/code",
+			"style": {
+				"navigationBarTitleText": "我的邀请码"
+			}
+		},
+		{
+			"path": "pages/invite/myInvite",
+			"style": {
+				"navigationBarTitleText": "我的邀请记录"
+			}
+		},
+		{
 			"path": "pages/sales/reply/list",
 			"style": {
 				"navigationBarTitleText": "申请记录"
