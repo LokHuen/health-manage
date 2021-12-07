@@ -4,9 +4,9 @@
 			<view :class="'category-item-notchose '+(choseCategory==index?'chose':'')" v-for="(item,index) in subCategoryItms" :key="index" @click="choseCate(index)">
 				<text :class="(choseCategory==index?'chose':'')">{{item}}</text>
 			</view>
-		</view>
+		</view> -->
 		
-		<view style="height: 20rpx; background-color: #F5F5F5;"></view> -->
+		<view style="height: 20rpx; background-color: #F5F5F5;"></view>
 
 		<view class="list-box">
 			<view v-for="(item,index) in list" :key="index" click="select(item)">

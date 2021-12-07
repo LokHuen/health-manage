@@ -1,7 +1,7 @@
 <template>
 	<view style="">
 		<view class="container1" >
-			<view class="i-content-box" @click="saveimg" id="doctorcode">
+			<view :class="'i-content-box '+(create?'make':'')" @click="saveimg" id="doctorcode">
 				<view class="flex userinfo">
 					<image src="../../static/haitao.png" mode="widthFix" class="content-bg"></image>
 					<view style="flex:1;">
@@ -10,24 +10,12 @@
 					</view>
 				</view>
 				<view class="username">
-					<view>{{info.patientName}}</view>
+					<view class="name">{{info.patientName}}</view>
 					<view>邀请您一起加入</view>
+					<view>{{infoData.upVal}}</view>
 				</view>
 				<image :src="'/api'+infoData.qrCode" mode="widthFix" class="usercode"></image>
-				<!-- <view class="flex imglist">
-					<view class="imglistitem">
-						<image src="../../static/index/info1.png" mode="widthFix" class="listimg"></image>
-						<view>正品保证</view>
-					</view>
-					<view class="imglistitem">
-						<image src="../../static/index/info2.png" mode="widthFix" class="listimg"></image>
-						<view>价格优势</view>
-					</view>
-					<view class="imglistitem">
-						<image src="../../static/index/info3.png" mode="widthFix" class="listimg"></image>
-						<view>优质服务</view>
-					</view>
-				</view> -->
+				<view class="mintips">{{infoData.downVal}}</view>
 
 			</view>
 			<view class="i-sava-tip">点击上方二维码，保存或分享</view>
@@ -42,7 +30,7 @@
 				</scroll-view>
 			</uni-popup>
 		</view>
-		
+		<view v-show="create" class="fullwhite"></view>
 	</view>
 </template>
 
@@ -114,7 +102,7 @@
 						scale: 1,
 						width: w,
 						height: h,
-						dpi: window.devicePixelRatio * 4,
+						// dpi: window.devicePixelRatio * 4,
 						allowTaint: false,
 						taintTest: false,
 						useCORS: true,
@@ -152,6 +140,89 @@
 </script>
 
 <style lang="scss" scoped>
+	.container1 {
+	
+		.i-content-box {
+			width: 648rpx;
+			box-sizing: border-box;
+			margin: 50rpx auto 0;
+			padding: 36rpx 36rpx 60rpx 36rpx;
+			background: #fff;
+			border-radius: 20rpx;box-shadow: 0px 0px 16rpx #ddd;
+			font-size: 30rpx;
+			position: relative;
+	
+			.userinfo {
+				.content-bg {
+					margin-right: 16rpx;
+					height: 80rpx;
+					font-size: 30rpx;
+					width: 80rpx;
+				}
+			}
+	
+			.usercode {
+				width: 400rpx;
+				height: 400rpx;
+				margin: 0rpx auto 10rpx;
+				display: block;
+			}
+			.username{
+				text-align:center;padding:30rpx 0 20rpx;line-height:2;color: #666666;font-size: 26rpx;
+				.name{font-size:38rpx;color: #333333;}
+			}
+			.mintips{font-size: 24rpx;color: #55A29E;text-align:center;}
+	
+			.imglist {
+				justify-content: space-around;
+			}
+	
+			.imglistitem {
+				font-size: 26rpx;
+				color: #008ED8;
+	
+				.listimg {
+					width: 66rpx;
+					height: 66rpx;
+					margin: 0rpx auto 10rpx;
+					display: block;
+				}
+			}
+			&.make{
+				width: 648*3rpx;
+				margin: 50*3rpx auto 0;
+				padding: 36*3rpx 36*3rpx 60*3rpx 36*3rpx;
+				border-radius: 20*3rpx;box-shadow: 0px 0px 16*3rpx #ddd;
+				font-size: 30*3rpx;
+				.userinfo {
+					.content-bg {
+						margin-right: 16*3rpx;
+						height: 80*3rpx;
+						font-size: 30*3rpx;
+						width: 80*3rpx;
+					}
+				}
+				.usercode {
+					width: 400*3rpx;
+					height: 400*3rpx;
+					margin: 0*3rpx auto 10*3rpx;
+				}
+				.username{
+					padding:30*3rpx 0 20*3rpx;font-size: 26*3rpx;
+					.name{font-size:38*3rpx;}
+				}
+				.mintips{font-size:24*3rpx;}
+			}
+		}
+	
+		.i-sava-tip {
+			margin: 50rpx auto 50rpx;
+			color: #999999;
+			text-align: center;
+		}
+	
+	}
+	.fullwhite{position:fixed;top:0;left:0;right:0;bottom:0;background:#fff;z-index:2;}
 	page {
 		background: #F8F8F8;
 	}
@@ -481,62 +552,6 @@
 	.otherinput {
 		width: 400rpx;
 		flex: unset !important;
-	}
-
-	.container1 {
-
-		.i-content-box {
-			width: 648rpx;
-			box-sizing: border-box;
-			margin: 50rpx auto 0;
-			padding: 36rpx 36rpx 60rpx 36rpx;
-			background: #fff;
-			border-radius: 20rpx;box-shadow: 0px 0px 16rpx #ddd;
-			font-size: 30rpx;
-			position: relative;
-
-			.userinfo {
-				.content-bg {
-					margin-right: 16rpx;
-					height: 80rpx;
-					font-size: 30rpx;
-					width: 80rpx;
-				}
-			}
-
-			.usercode {
-				width: 400rpx;
-				height: 400rpx;
-				margin: 10rpx auto 10rpx;
-				display: block;
-			}
-			.username{
-				text-align:center;padding:30rpx 0 30rpx;line-height:2;
-			}
-
-			.imglist {
-				justify-content: space-around;
-			}
-
-			.imglistitem {
-				font-size: 26rpx;
-				color: #008ED8;
-
-				.listimg {
-					width: 66rpx;
-					height: 66rpx;
-					margin: 0rpx auto 10rpx;
-					display: block;
-				}
-			}
-		}
-
-		.i-sava-tip {
-			margin: 50rpx auto 50rpx;
-			color: #999999;
-			text-align: center;
-		}
-
 	}
 	.item-tip{
 		color: #333333;
