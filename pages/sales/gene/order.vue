@@ -37,6 +37,8 @@
 							<view v-show="choseCategory==2&&!item.isFinished" class="cardicon delete" @click="removerecommend(item)">确认报告
 							</view>
 							<view v-show="choseCategory==2&&item.isFinished" class="cardicon delete finish">已确认</view>
+							<view v-show="choseCategory==2" class="cardicon delete" @click="addrecommend(4,item)">转发到邮箱
+</view>
 						</view>
 						<!-- <view class="actionbox flex">
 							<view class="actionitem other" @click="tootherpage(1,item)">添加推荐</view>
@@ -90,7 +92,18 @@
 				</view>
 			</view>
 		</uni-popup>
-		
+		<uni-popup ref="popemail" type="center">
+			<view class="white-background-pop">
+				<view class="white-background-pop-title">
+					发送到邮箱
+					<image src="../../../static/icon_close.png" mode="aspectFill" @click="$refs.popemail.close()" class="close"></image>
+				</view>
+				<view>
+					<input type="text" v-model="form.email" placeholder="请输入邮箱地址" class="emailinput">
+				</view>
+				<view class="sendemail" @click="sendemail">确认无误</view>
+			</view>
+		</uni-popup>
 	</view>
 </template>
 
@@ -131,6 +144,9 @@
 				buyid: "",
 				buyshow: false,
 				reportlist:[],
+				form:{
+					email:localStorage.getItem("email")||"",
+				},
 			}
 		},
 		onLoad(options) {
@@ -154,6 +170,15 @@
 			}
 		},
 		methods: {
+			sendemail(){
+				if(!this.form.email){app.tip("请输入邮箱");return;}
+				localStorage.setItem("email",this.form.email);
+				app.loading("发送中");
+				app.ordersendmail(this.form).then((res) => {
+						app.tip("已发送，请待会查看邮箱");
+						this.$refs.popemail.close();
+				})
+			},
 			copytext(index){
 				let text = "拓普【实验室收件地址】 广东省广州市海珠区官洲国际生物岛标产三期2栋802单元  拓普基因样本组 18022423929";
 				if(index==2) text="允英【实验室收件地址】 浙江省嘉兴市南湖区汇信路153号允英医学检验所三楼  夏路平收 15751725877";
@@ -280,7 +305,16 @@
 							this.reportlist = res.data;
 							this.$refs.pop1.open();
 						})
-						
+						break;
+					case 4:
+						this.form.geneOrderId = item.geneOrderId;
+						this.$refs.popemail.open();
+						if(!this.form.email)
+						app.salesmangetOne({}).then(res => {
+							if (res.status == 1) {
+								this.form.email = res.data.email;
+							}
+						});
 						break;
 				}
 			},
@@ -312,6 +346,14 @@
 </script>
 
 <style scoped lang="scss">
+	.sendemail{
+		line-height:1;padding:24rpx 0;
+		border-radius: 60rpx;font-size: 32rpx;
+		background:#4789EB;
+		width: 74%;color:#fff;margin:40rpx auto 20rpx;
+		text-align: center;
+	}
+	.emailinput{width: 80%;background: #F5F5F5;border-radius:8rpx;padding:18rpx 24rpx;text-align: left;margin:auto;}
 	.tipsframe{
 		padding:10rpx 30rpx 40rpx 30rpx!important;font-size:30rpx;
 		.tipshead{padding:50rpx 0 16rpx;}
@@ -321,6 +363,25 @@
 	}
 	.choosebtbox{
 		margin:0 60rpx;min-height: 200rpx;padding-bottom:10rpx;text-align: left;
+	}
+	.white-background-pop {
+		text-align: center;width:90vw;
+		background-color: #FFFFFF;padding:0 0 30rpx 0;
+		border-radius: 10px;
+	
+		.white-background-pop-title {
+			font-size: 30rpx;
+			color: #333;font-weight:bold;
+			padding: 35rpx 0;
+			position: relative;
+			.close{
+				position: absolute;
+				right: 50rpx;
+				width: 30rpx;
+				height: 30rpx;
+				top: 40rpx;
+			}
+		}
 	}
 	.white-background-pop1 {
 		text-align: center;

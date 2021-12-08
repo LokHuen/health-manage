@@ -649,6 +649,9 @@ var api = {
 	usermyInviteList: (data) => {
 		return rq("/wx/user/myInviteList", data, "GET");
 	}, //我的邀请记录
+	ordersendmail: (data) => {
+		return rq("/wx/sample/order/sendmail", data, "POST");
+	},//业务员转发报告到邮箱
 }
 
 export {
