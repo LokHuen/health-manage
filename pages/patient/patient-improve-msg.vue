@@ -37,18 +37,18 @@
 		
 		<view class="name-box" v-if="needAge">
 			<view class="name-tips">* 年龄</view>
-			<input class="name-input" type="number" value="" placeholder="请填写年龄" v-model="age" />
+			<input class="name-input" type="number" value="" placeholder="请填写年龄,例如 30" v-model="age" />
 		</view>
 
 
 		<view class="name-box">
 			<view class="name-tips">* 当前身高</view>
-			<input class="name-input" type="text" value="" placeholder="请填写身高" v-model="height" />
+			<input class="name-input" type="number" value="" placeholder="请填写整数,例如 170" v-model="height" @blur="checknum($event,1)" />
 			<view class="right-tip">cm</view>
 		</view>
 		<view class="name-box">
 			<view class="name-tips">* 当前体重</view>
-			<input class="name-input" type="text" value="" placeholder="请填写体重" v-model="weight" />
+			<input class="name-input" type="number" value="" placeholder="请填写整数,例如 50" v-model="weight" @blur="checknum($event,2)" />
 			<view class="right-tip">kg</view>
 		</view>
 
@@ -583,6 +583,9 @@
 						return;
 					}
 				}
+				if(this.height<10){
+					app.tip('请填写正确的身高，例如170',2000);return;
+				}
 				if(this.illness=="其它疾病"&&!this.illnessother){
 					app.tip('请输入疾病名称');return;
 				}
@@ -762,7 +765,13 @@
 					this.$refs.sexPop.close();
 				}
 			},
-
+			checknum(val,index){
+				if(index==1){
+					this.height = val.detail.value?parseInt(val.detail.value):"";
+				}else{
+					this.weight = val.detail.value?parseInt(val.detail.value):"";
+				}
+			},
 		},
 
 	}
