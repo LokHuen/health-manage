@@ -441,6 +441,7 @@
 								var day = this.infoData.birthday.split('年')[1].split('月')[1].split('日')[0];
 								this.birthday = year + '-' + month + '-' + day;
 							}
+							if(!this.patientName) this.showTipPopup();
 						} else {
 							this.showTipPopup();
 						}
