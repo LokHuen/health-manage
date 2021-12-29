@@ -1,6 +1,7 @@
 <template>
 	<view class="container flexc">
-		<turnback v-if="isMiniProgram" url="/pages/sales/index"> </turnback>
+		<turnback v-if="!reback" @back="backaction" isback="1" :title="hio==1?'肿瘤营养与干预的业务':'健康国际在线的业务'"></turnback>
+		<turnback v-if="reback"></turnback>
 		<view class="head flexc">
 			<text class="sales-name" v-if="sales.salesName">{{sales.salesName}}</text>
 			<view class="flex head-data" @click="toOrder">
@@ -29,6 +30,55 @@
 				</view>
 			</view>
 		</view>
+		<!-- <view class="pageselect" v-show="showselet">
+			<turnback url="/pages/sales/index"> </turnback>
+			<view class="flexc">
+				<view class="item-outer" @click="selecttype(1)" >
+					<view class="item flex">
+						<text class="left-name">肿瘤营养与干预业务</text>
+						<view class="flex">
+							<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
+						</view>
+					</view>
+				</view>
+				<view class="item-outer" @click="selecttype(2)" >
+					<view class="item flex">
+						<text class="left-name">健康国际在线业务</text>
+						<view class="flex">
+							<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view> -->
+		<view class="pageselect" v-show="showselet">
+			<turnback url="/pages/sales/index"> </turnback>
+			<view class="flex projectbox" >
+				<view class="projectitem" @click="selecttype(1)">
+					<image class="itemicon" src="../../static/haitao.png" mode="aspectFill"></image>
+					<view>肿瘤营养与干预</view>
+				</view>
+				<view class="centerline"></view>
+				<view class="projectitem" @click="selecttype(2)">
+					<image class="itemicon" src="../../static/haitao1.png" mode="aspectFill" style="width:180rpx;"></image>
+					<view>健康国际在线</view>
+				</view>
+			</view>
+		</view>
+		<uni-popup ref="pop1" type="center">
+			<view class="white-background-pop1">
+				<view class="white-background-pop1-title">
+					<image src="../../static/icon_close.png" mode="aspectFill" @click="$refs.pop1.close()" class="close"></image>
+				</view>
+				<view v-show="hio==1" class="bindtips">
+					请绑定微信帐号，便于及时收取患者中、<br>重度营养评估数据；收取待付款订单通知。
+				</view>
+				<view v-show="hio==2" class="bindtips">
+					请绑定微信帐号，便于及时收取通知。
+				</view>
+				<view class="sendemail" @click="toapplication">去绑定</view>
+			</view>
+		</uni-popup>
 	</view>
 </template>
 
@@ -46,7 +96,10 @@
 					salesName: ''
 				},
 				info: {},
-				isMiniProgram:false
+				isMiniProgram:false,
+				showselet:true,
+				hio:1, //1维新 2hio
+				reback:false,
 			}
 		},
 		onLoad(props) {
@@ -54,10 +107,15 @@
 				this.sales.salesId = props.salesId
 			}
 			this.sales.salesName = props.salesName
+			if(props.hio){
+				this.hio = props.hio;
+				this.showselet = false;
+				this.reback = true;
+			}
 			this.getMiniProgramStatic();
 		},
 		onShow() {
-			this.getData();
+			if(!this.showselet) this.getData();
 		},
 		onReady() {
 			if (this.sales.salesId) {
@@ -68,10 +126,34 @@
 		},
 		computed: {
 			list: function() {
-				return ["按月统计订单数据", this.sales.salesId ? "" : '名片码', "医生列表", "患者列表", "资源报备", this.info.sampleAgentId?"样本登记":"样本登记"]
+				return ["按月统计订单数据", this.hio==2 ? "" : (this.sales.salesId ? "" : '名片码'), this.hio==2 ? "" : "医生列表", this.hio==2 ? "" : "患者列表", this.hio==2 ? "" : "资源报备", this.info.sampleAgentId?"样本登记":"样本登记"]
 			}
 		},
 		methods: {
+			hasMesage() {
+				app.hasMessage({channel:this.hio==1?1:6}).then((res) => {
+					this.msgInfo = res.data;
+			        if(!this.msgInfo.fwOpenid){
+			        	this.$nextTick(()=>{
+			        		this.$refs.pop1.open();
+			        	})
+			        }
+				})
+			},
+			toapplication(){
+				this.$refs.pop1.close();
+				wx.miniProgram.navigateTo({url:"/pages/right?t="+localStorage.getItem("salesToken")+"&c="+(this.hio==1?1:6)});
+			},
+			backaction(){
+				this.showselet = true;
+			},
+			selecttype(index){
+				localStorage.setItem("hio",index);
+				this.hio = index;
+				this.getData();
+				this.showselet = false;
+				this.hasMesage();
+			},
 			getMiniProgramStatic(){
 			 wx.miniProgram.getEnv((res)=>{
 			    this.isMiniProgram = res.miniprogram?true:false;
@@ -114,7 +196,8 @@
 			},
 			getData() {
 				app.saleshomepage({
-					salesManId: this.sales.salesId
+					salesManId: this.sales.salesId,
+					channel:this.hio==1?1:6
 				}).then(res => {
 					console.log(res);
 					if (res.status == 1) {
@@ -135,6 +218,44 @@
 </script>
 
 <style lang="scss" scoped>
+	.projectbox{
+		padding:26rpx 0rpx 0;box-sizing:border-box;background:#fff;
+		.projectitem{
+			width:49%;padding:40rpx 0 60rpx;text-align:center;font-size:34rpx;position:relative;
+			.itemicon{width:130rpx;height:130rpx;margin-bottom:10rpx;}
+		}
+		.centerline{width:2rpx;height:230rpx;background:#ccc;}
+	}
+	.white-background-pop1 {
+		text-align: center;width:90vw;
+		background-color: #FFFFFF;padding:0 0 30rpx 0;
+		border-radius: 10px;
+	
+		.white-background-pop1-title {
+			font-size: 30rpx;
+			color: #333;font-weight:bold;
+			padding: 35rpx 0;
+			position: relative;
+			.close{
+				position: absolute;
+				right: 50rpx;
+				width: 30rpx;
+				height: 30rpx;
+				top: 40rpx;
+			}
+		}
+		.bindtips{font-size:30rpx;padding:50rpx 0 30rpx;}
+		.sendemail{
+			line-height:1;padding:24rpx 0;
+			border-radius: 60rpx;font-size: 32rpx;
+			background:#4789EB;
+			width: 74%;color:#fff;margin:40rpx auto 20rpx;
+			text-align: center;
+		}
+	}
+	.pageselect{
+		position:fixed;top:0;left:0;right:0;bottom:0;z-index:3;background:#f5f5f5;
+	}
 	.container {
 		height: 100vh;
 		background-color: #F5F6F6;

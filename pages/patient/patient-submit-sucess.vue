@@ -32,7 +32,7 @@
 			complete(){
 				if(this.type==1){
 					uni.redirectTo({
-						url:'./patient-basic-information'
+						url:'/pages/patient/patient-basic-information'
 					});
 				}else{
 					//surveyType  	问卷类型（0：评估，1：筛查）

@@ -51,7 +51,8 @@
 					pageNo: 1,
 					salesId: '',
 					deptId: '',
-					pageResource: 1
+					pageResource: 1,
+					channel:localStorage.getItem("hio")==1?1:6
 				},
 				info: {
 					pageCount: 1

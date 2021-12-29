@@ -1,6 +1,6 @@
 <template>
 	<view class="container flexc">
-		<turnback @back="back" v-if="isMiniProgram"> </turnback>
+		<turnback @back="backaction" isback="1" :title="hio==1?'下属团队开展的院线业务':'下属团队开展的健康业务'"> </turnback>
 		<view class="flexc head">
 			<view v-if="!showgetmoney" class="flexc order-count-box">
 				<view class="content flex" @click="toOrder">
@@ -54,6 +54,41 @@
 				</view>
 			</view>
 		</view>
+		<!-- <view class="pageselect" v-show="showselet">
+			<turnback > </turnback>
+			<view class="flexc">
+				<view class="item-outer" @click="selecttype(1)" >
+					<view class="item flex">
+						<text class="left-name">肿瘤营养与干预——下属团队业务</text>
+						<view class="flex">
+							<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
+						</view>
+					</view>
+				</view>
+				<view class="item-outer" @click="selecttype(2)" >
+					<view class="item flex">
+						<text class="left-name">健康国际在线——下属团队业务</text>
+						<view class="flex">
+							<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view> -->
+		<view class="pageselect" v-show="showselet">
+			<turnback > </turnback>
+			<view class="flex projectbox" >
+				<view class="projectitem" @click="selecttype(1)">
+					<image class="itemicon" src="../../static/haitao.png" mode="aspectFill"></image>
+					<view>肿瘤营养与干预</view>
+				</view>
+				<view class="centerline"></view>
+				<view class="projectitem" @click="selecttype(2)">
+					<image class="itemicon" src="../../static/haitao1.png" mode="aspectFill" style="width:180rpx;"></image>
+					<view>健康国际在线</view>
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -74,6 +109,8 @@
 				info: {},
 				isMiniProgram:false,
 				showgetmoney:false,
+				showselet:true,
+				hio:1, //1维新 2hio
 			}
 		},
 		onLoad(props) {
@@ -84,6 +121,15 @@
 			this.getMiniProgramStatic();
 		},
 		methods: {
+			backaction(){
+				this.showselet = true;
+			},
+			selecttype(index){
+				localStorage.setItem("hio",index);
+				this.hio = index;
+				this.getAgentInfo();
+				this.showselet = false;
+			},
 			getMiniProgramStatic(){
 				wx.miniProgram.getEnv((res)=>{
 				   this.isMiniProgram = res.miniprogram?true:false;
@@ -114,7 +160,7 @@
 				})
 			},
 			getAgentInfo() {
-				app.agentInfo({}).then((res) => {
+				app.agentInfo({channel:this.hio==1?1:6}).then((res) => {
 					this.info = res.data
 				})
 				app.salesmangetIdentity({}).then(res => {
@@ -129,6 +175,17 @@
 </script>
 
 <style lang="scss" scoped>
+	.projectbox{
+		padding:26rpx 0rpx 0;box-sizing:border-box;background:#fff;
+		.projectitem{
+			width:49%;padding:40rpx 0 60rpx;text-align:center;font-size:34rpx;position:relative;
+			.itemicon{width:130rpx;height:130rpx;margin-bottom:10rpx;}
+		}
+		.centerline{width:2rpx;height:230rpx;background:#ccc;}
+	}
+	.pageselect{
+		position:fixed;top:0;left:0;right:0;bottom:0;z-index:3;background:#f5f5f5;
+	}
 	.container {
 		height: 100vh;
 		background-color: #F5F6F6;

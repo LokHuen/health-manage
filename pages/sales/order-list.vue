@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<turnback @back="back" v-if="isMiniProgram"> </turnback>
+		<turnback @back="back" v1-if="isMiniProgram"> </turnback>
 		<view style="height: 10rpx; background-color: #F5F6F6;"></view>
 		<view class="list-box" v-for="(item,index) in list">
 			<view style="height: 10rpx;"></view>
@@ -10,8 +10,9 @@
 			<view class="common">{{'实付款:'+item.pay_amount+'元'}}</view>
 			<view class="common">{{'业务员:'+item.sale}}</view>
 			<view class="common">{{'业务员收益:'+item.salesMoney+'元'}}</view>
-			<view class="common">{{'患者名字:'+item.patient}}</view>
-			<view class="common">{{'医生名字:'+item.doctorName}}</view>
+			<view v-show="hio==2" class="common">{{'买家:'+item.patient}}</view>
+			<view v-show="hio==1" class="common">{{'患者名字:'+item.patient}}</view>
+			<view v-show="hio==1" class="common">{{'医生名字:'+item.doctorName}}</view>
 
 			<view style="height: 20rpx;"></view>
 		</view>
@@ -41,10 +42,10 @@
 					deptId: '',
 					month: '',
 					pageResource: '',
-					isMiniProgram:false
-					
-					
-				}
+					isMiniProgram:false,
+					channel:localStorage.getItem("hio")==1?1:6
+				},
+				hio:localStorage.getItem("hio")||1,
 
 			}
 		},

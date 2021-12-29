@@ -9,7 +9,11 @@
 				<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
 			</view>
 			<view class="item-list1 flex other" @click="torecord(3)">
-				<view class="left-name">绑定微信</view>
+				<view class="left-name">肿瘤营养与干预——绑定微信</view>
+				<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
+			</view>
+			<view class="item-list1 flex other" @click="torecord(4)">
+				<view class="left-name">健康国际在线——绑定微信</view>
 				<image src="../../static/icon/more_icon.png" mode="widthFix" class="right-arrow"></image>
 			</view>
 			
@@ -69,6 +73,10 @@
 				if(index==2) url = "/pages/sales/changeAvater";
 				if(index==3) {
 					wx.miniProgram.navigateTo({url:"/pages/right?t="+localStorage.getItem("salesToken")+"&c="+app.globalData.channel});
+					return;
+				}
+				if(index==4) {
+					wx.miniProgram.navigateTo({url:"/pages/right?t="+localStorage.getItem("salesToken")+"&c=6"});
 					return;
 				}
 				uni.navigateTo({

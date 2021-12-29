@@ -1,7 +1,7 @@
 <template>
 	<!-- 团队成员 -->
 	<view class="container">
-		<turnback @back="back" v-if="isMiniProgram"> </turnback>
+		<turnback @back="back" v1-if="isMiniProgram"> </turnback>
 		<view class="list-box" v-for="(item,index) in list" :key="index">
 			<view class="name">{{item.name}}</view>
 			<view :class="item.isParent==0?'item-box':'item-box team'" @click="toBusiness(item)">
@@ -54,7 +54,7 @@
 			},
 			toBusiness(item) {
 				uni.navigateTo({
-					url: 'sales-business?salesId=' + item.id+'&salesName='+item.name
+					url: 'sales-business?salesId=' + item.id+'&salesName='+item.name+'&hio='+localStorage.getItem("hio")
 				})
 			},
 			toTeamBusiness(item) {

@@ -1,10 +1,10 @@
 <template>
 	<view class="container">
-		<turnback @back="back" v-if="isMiniProgram"> </turnback>
+		<turnback @back="back" v1-if="isMiniProgram"> </turnback>
 		<view class="list flexc">
 			<view class="list-item" v-for="(item,index) in list" @click="selectItem(item)">
 				<view class="name">{{item.name}}</view>
-				<view class="desc">{{item.hasDoctors+' 医生'+' '+item.hasPatients+' 患者'}}</view>
+				<view v-show="hio==1" class="desc">{{item.hasDoctors+' 医生'+' '+item.hasPatients+' 患者'}}</view>
 			</view>
 		</view>
 		<view class="no-data-tips" v-if="list.length == 0">暂无数据</view>
@@ -25,7 +25,8 @@ components: {turnback},
 				params: {
 					orgId: '',
 				},
-				isMiniProgram:false
+				isMiniProgram:false,
+				hio:localStorage.getItem("hio")||1,
 			}
 		},
 		onLoad(props) {
@@ -79,7 +80,7 @@ components: {turnback},
 			selectItem(item) {
 				console.log(item.name)
 				uni.navigateTo({
-					url: 'sales-business?salesId=' + item.id + '&salesName=' + item.name
+					url: 'sales-business?salesId=' + item.id + '&salesName=' + item.name+'&hio='+localStorage.getItem("hio")
 				})
 			}
 

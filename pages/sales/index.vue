@@ -281,11 +281,11 @@
 			hasMesage() {
 				app.hasMessage().then((res) => {
 					this.msgInfo = res.data;
-                    if(!this.msgInfo.fwOpenid){
-                    	this.$nextTick(()=>{
-                    		this.$refs.pop1.open();
-                    	})
-                    }
+                    // if(!this.msgInfo.fwOpenid){
+                    // 	this.$nextTick(()=>{
+                    // 		this.$refs.pop1.open();
+                    // 	})
+                    // }
 				})
 			}
 		}
