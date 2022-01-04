@@ -389,7 +389,7 @@
 				},
 				sampleType:1,//1主样本类型 2备用采样类型
 				reportAddress:1, //1报告邮寄地址 2最近五年居住城市
-				typelist:[{"value":"新鲜组织","key":9},{"value":"EDTA管","key":8},{"value":"streck管","key":7},{"value":"石蜡切片","key":6},{"value":"蜡块","key":5},{"value":"蜡卷","key":4},{"value":"胸腹水","key":3},{"value":"脑积液","key":2},{"value":"唾液","key":1},{"value":"口腔拭子","key":0}],
+				typelist:[{"value":"一次性使用取样器","key":10},{"value":"新鲜组织","key":9},{"value":"EDTA管","key":8},{"value":"streck管","key":7},{"value":"石蜡切片","key":6},{"value":"蜡块","key":5},{"value":"蜡卷","key":4},{"value":"胸腹水","key":3},{"value":"脑积液","key":2},{"value":"唾液","key":1},{"value":"口腔拭子","key":0}],
 				type1list:[{"value":"EDTA管","key":1},{"value":"streck管","key":0},{"value":"唾液","key":2}],
 				genelist:[{"value":"0","key":0},{"value":"I","key":1},{"value":"II","key":2},{"value":"III","key":3},{"value":"IV","key":4}],
 				showgroup:false,//免疫组化
