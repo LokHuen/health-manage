@@ -65,11 +65,13 @@
 				pageNo:1,
 				currentItem:'',//操作的对象，分享/发邮件
 				email:'',
+				pid:"",
 				isMiniProgram:false
                 
 			}
 		},
 		onLoad(props) {
+			this.pid = props.pid;
 			this.refreshData();
 			this.getMiniProgramStatic();
 		},
@@ -156,7 +158,7 @@
 			
 			toproduct(item){
 				uni.navigateTo({
-					url:'/pages/sales/database1?pid='+item.id
+					url:'file-list?directoryId='+this.pid+'&directorySecId='+item.id
 				})
 			},
 			// todetail(item){
@@ -174,9 +176,13 @@
 				this.getData();
 			},
 			getData(){
-				app1.fileFindDir({pageNo:this.pageNo,pageSize:100,pid:0}).then(res =>{
+				app1.fileFindDir({pageNo:this.pageNo,pageSize:100,pid:this.pid}).then(res =>{
 					if (res.status == 1) {
 						this.dirList = res.data.dirList;
+						if(!this.dirList[0]) 
+						uni.redirectTo({
+							url:'file-list?directoryId='+this.pid+'&directorySecId=0'
+						})
 						if (this.pageNo == 1) {
 							this.bottomList = res.data.filePage.list;
 						} else {

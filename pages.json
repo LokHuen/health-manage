@@ -205,6 +205,13 @@
 			"enablePullDownRefresh": true
 		},
 		{
+			"path": "pages/sales/database1",
+			"style": {
+				"navigationBarTitleText": "二级目录"
+			},
+			"enablePullDownRefresh": true
+		},
+		{
 			"path": "pages/sales/data-center",
 			"style": {
 				"navigationBarTitleText": "跨渠道数据中心"

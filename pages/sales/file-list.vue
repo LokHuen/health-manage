@@ -26,7 +26,7 @@
 					</view>
 				</view>
 			</view>
-			
+			<view v-if="!list[0]" class="nofiles">暂无文件</view>
 		</view>
 	
 	
@@ -60,6 +60,7 @@
 			return {
 				list:[],
                 directoryId:'',
+				directorySecId:"",
 				pageNo:1,
 				currentItem:'',//操作的对象，分享/发邮件
 				email:'',
@@ -68,6 +69,7 @@
 		},
 		onLoad(props) {
 			this.directoryId = props.directoryId;
+			this.directorySecId = props.directorySecId;
 			this.refreshData();
 			//this.setwxconfig();
 			this.getMiniProgramStatic();
@@ -170,7 +172,9 @@
 				this.getData();
 			},
 			getData(){
-				app1.fileList({directoryId:this.directoryId,pageNo:this.pageNo}).then(res =>{
+				app1.loading();
+				app1.fileList({directoryId:this.directoryId,directorySecId:this.directorySecId,pageNo:this.pageNo}).then(res =>{
+					app1.loaded();
 					if (res.status == 1) {
 						if (this.pageNo == 1) {
 							this.list = res.data.list;
@@ -195,7 +199,8 @@
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+	.nofiles{text-align: center;padding-top:30vh;background:#f8f8f8;}
 	page {
 		background-color: $uni-bg-color-grey;
 	}
