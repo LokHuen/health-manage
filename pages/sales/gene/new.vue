@@ -421,6 +421,9 @@
 					}
 				}
 			});
+			if(props&&props.orderid){
+				this.getorderinfo();
+			}
 		},
 		computed: {
 			startDate() {
@@ -479,6 +482,16 @@
 						}
 						if(!hasother) res.data.illness.push("其它疾病");
 						this.inllList = res.data.illness;
+					}
+				});
+			},
+			getorderinfo() {
+				app.addressgetDetail({orderId:this.form.orderId}).then(res => {
+					if (res.data) {
+						let region = [];
+						if(res.data.region) region = res.data.region.split(" ");
+						this.form.reportAddress = region;
+						this.form.reportAddressDetail = res.data.address+"/"+res.data.contactPerson+"/"+res.data.contactPhone;
 					}
 				});
 			},

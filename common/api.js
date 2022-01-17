@@ -652,6 +652,9 @@ var api = {
 	ordersendmail: (data) => {
 		return rq("/wx/sample/order/sendmail", data, "POST");
 	},//业务员转发报告到邮箱
+	addressgetDetail: (data) => {
+		return rq("/wx/receiverAddress/getDetail", data, "GET");
+	}, //获取用户填写订单时的寄送地址
 }
 
 export {
