@@ -630,6 +630,10 @@
 					if(!this.form.reportAddressDetail) {app.tip("请填写报告邮寄详细地址和联系方式",2000);return;}
 					if(!this.form.reportAddress[0]) {app.tip("请选择报告邮寄地址",2000);return;}
 				}
+				if(this.form.sendReport==0){
+					this.form.reportAddressDetail = "";
+					this.form.reportAddress = [];
+				}
 				app.newapplydata = this.form;
 				// console.log(this.form)
 				uni.navigateTo({
