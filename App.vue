@@ -4,8 +4,8 @@
 	} from "common/api";
 	export default {
 		globalData: {
-			baseUrl: "http://weixinapi-test.cvddr.com",
-			imageUrl: "https://bgjdapi-test.ttxyw.cn/upload/mini",
+			baseUrl: "http://weixinapi.cvddr.com",
+			imageUrl: "https://bgjdapi.ttxyw.cn/upload/mini",
 			mydata: 1,
 			channel: 1,
 			isSales: false,
@@ -13,7 +13,7 @@
 		onLaunch: function(option) {
 
 			console.log('App Launch', option);
-			uni.baseImageUrl = 'https://bgjdapi-test.ttxyw.cn/upload/mini'
+			uni.baseImageUrl = 'https://bgjdapi.ttxyw.cn/upload/mini'
 
 			let timeStamp = new Date()
 			let windowUrl = window.location.href;

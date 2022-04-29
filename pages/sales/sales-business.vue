@@ -1,6 +1,6 @@
 <template>
 	<view class="container flexc">
-		<turnback v-if="!reback" @back="backaction" isback="1" :title="hio==1?'肿瘤营养与干预的业务':'健康国际在线的业务'"></turnback>
+		<turnback v-if="!reback" @back="backaction" :isback="bindchannel?'':1" :title="hio==1?'肿瘤营养与干预的业务':'健康国际在线的业务'"></turnback>
 		<turnback v-if="reback"></turnback>
 		<view class="head flexc">
 			<text class="sales-name" v-if="sales.salesName">{{sales.salesName}}</text>
@@ -100,6 +100,7 @@
 				showselet:true,
 				hio:1, //1维新 2hio
 				reback:false,
+				bindchannel:false,
 			}
 		},
 		onLoad(props) {
@@ -107,6 +108,19 @@
 				this.sales.salesId = props.salesId
 			}
 			this.sales.salesName = props.salesName
+			if(app.getCache('bindchannel')){
+				let bindchannel = app.getCache('bindchannel');
+				if(bindchannel==1){
+					this.bindchannel = true;
+					this.selecttype(1);
+				}else if(bindchannel==6){
+					this.bindchannel = true;
+					this.selecttype(2);
+				}else if(bindchannel==16){
+					this.bindchannel = false;
+					this.showselet = true;
+				}
+			}
 			if(props.hio){
 				this.hio = props.hio;
 				this.showselet = false;

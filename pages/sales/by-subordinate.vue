@@ -1,6 +1,6 @@
 <template>
 	<view class="container flexc">
-		<turnback @back="backaction" isback="1" :title="hio==1?'下属团队开展的院线业务':'下属团队开展的健康业务'"> </turnback>
+		<turnback @back="backaction" :isback="bindchannel?'':1" :title="hio==1?'下属团队开展的院线业务':'下属团队开展的健康业务'"> </turnback>
 		<view class="flexc head">
 			<view v-if="!showgetmoney" class="flexc order-count-box">
 				<view class="content flex" @click="toOrder">
@@ -111,11 +111,25 @@
 				showgetmoney:false,
 				showselet:true,
 				hio:1, //1维新 2hio
+				bindchannel:false,
 			}
 		},
 		onLoad(props) {
 			if(props.salesId){
 				this.salesId = props.salesId
+			}
+			if(app.getCache('bindchannel')){
+				let bindchannel = app.getCache('bindchannel');
+				if(bindchannel==1){
+					this.bindchannel = true;
+					this.selecttype(1);
+				}else if(bindchannel==6){
+					this.bindchannel = true;
+					this.selecttype(2);
+				}else if(bindchannel==16){
+					this.bindchannel = false;
+					this.showselet = true;
+				}
 			}
 			this.getAgentInfo();
 			this.getMiniProgramStatic();

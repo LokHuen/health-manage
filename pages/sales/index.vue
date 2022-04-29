@@ -143,7 +143,9 @@
 			this.user.name = app.getCache('name')
 			this.user.orgId = app.getCache('orgId')
 			this.user.orgName = app.getCache('orgName');
-			
+			app.salesmandistingChannel({}).then((res) => {
+				app.setCache("bindchannel",res.data);
+			})
 		},
 		onShow() {
 		    this.judgeNew();

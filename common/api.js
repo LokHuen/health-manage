@@ -655,6 +655,9 @@ var api = {
 	addressgetDetail: (data) => {
 		return rq("/wx/receiverAddress/getDetail", data, "GET");
 	}, //获取用户填写订单时的寄送地址
+	salesmandistingChannel: (data) => {
+		return rq("/wx/salesman/distingChannel", data, "GET");
+	}, //区分用户渠道
 }
 
 export {

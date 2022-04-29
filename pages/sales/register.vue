@@ -66,6 +66,7 @@
 					app.setCache("orgId",res.data.orgId);//业务id
 					app.setCache("orgName",res.data.orgName);//部门名称
 					app.setCache("fwOpenid",res.data.fwOpenid||"");//绑定微信
+					app.setCache("salephone",this.form.username);
 					
 					uni.reLaunch({
 						url: "/pages/sales/index?isSales=1",

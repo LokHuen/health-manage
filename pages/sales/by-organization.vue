@@ -1,6 +1,6 @@
 <template>
 	<view class="container flexc">
-		<turnback @back="backaction" isback="1" :title="hio==1?'按组织架构查看院线业务':'按组织架构查看健康业务'"> </turnback>
+		<turnback @back="backaction" :isback="bindchannel?'':1" :title="hio==1?'按组织架构查看院线业务':'按组织架构查看健康业务'"> </turnback>
 		
 		<view class="flexc head">
 			<view class="organization-box flex">
@@ -148,6 +148,7 @@
 				showgetmoney:false,
 				showselet:true,
 				hio:1, //1维新 2hio
+				bindchannel:false,
 			}
 		},
 		onLoad(props) {
@@ -155,6 +156,19 @@
 				this.orgId = props.orgId||this.orgId
 			}
 			this.orgName = props.orgName
+			if(app.getCache('bindchannel')){
+				let bindchannel = app.getCache('bindchannel');
+				if(bindchannel==1){
+					this.bindchannel = true;
+					this.selecttype(1);
+				}else if(bindchannel==6){
+					this.bindchannel = true;
+					this.selecttype(2);
+				}else if(bindchannel==16){
+					this.bindchannel = false;
+					this.showselet = true;
+				}
+			}
 			// this.getSalesManOrg()
 			// this.getOrgInfo(this.orgId)
 			// this.getOrgMembers()

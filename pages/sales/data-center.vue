@@ -123,7 +123,9 @@
 			  })
 			},
 			getData(){
+				app.loading();
 				app.platformInfo().then(res =>{
+					app.loaded();
 					if(res.status == 1){
 						this.doctorList = res.data.doctor.doctorList;
 						this.totaldoctorNum = res.data.doctor.totaldoctorNum;
