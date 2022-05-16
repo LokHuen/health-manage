@@ -50,6 +50,7 @@
 			var uid = option.query.uid || this.getCache("uid");
 			console.log('uid==' + uid);
 			uid = parseInt(uid);
+			if(option.query.visitor) return;
 			if (!uid || isNaN(uid)) {
 				window.location.href = this.globalData.baseUrl + '/wx/fwh/user/auth/index?returnUrl=' + encodeURIComponent(
 					windowUrl) + "&channel=1";
