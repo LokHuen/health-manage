@@ -39,6 +39,7 @@
 							<view v-show="choseCategory==2&&item.isFinished" class="cardicon delete finish">已确认</view>
 							<view v-show="choseCategory==2" class="cardicon delete" @click="addrecommend(4,item)">转发到邮箱
 </view>
+                            <view v-show="choseCategory==2&&item.reportInterpretation" class="cardicon delete" @click="openintro(item)">查看解读</view>
 						</view>
 						<!-- <view class="actionbox flex">
 							<view class="actionitem other" @click="tootherpage(1,item)">添加推荐</view>
@@ -90,6 +91,13 @@
 					<view class="tipshead">允英【实验室收件地址】</view>
 					浙江省嘉兴市南湖区汇信路153号允英医学检验所三楼  夏路平收  15751725877
 				</view>
+			</view>
+		</uni-popup>
+		<uni-popup ref="introframe" type="bottom">
+			<view class="white-background-pop1 tipsframe" style="white-space:pre-wrap;" @click="copyintro">
+				<scroll-view scroll-y="true" >
+					<view style="padding-top:20rpx;text-align:left;" >{{introinfo}}</view>
+				</scroll-view>
 			</view>
 		</uni-popup>
 		<uni-popup ref="popemail" type="center">
@@ -147,6 +155,7 @@
 				form:{
 					email:localStorage.getItem("email")||"",
 				},
+				introinfo:"",
 			}
 		},
 		onLoad(options) {
@@ -170,6 +179,10 @@
 			}
 		},
 		methods: {
+			openintro(item){
+				this.introinfo= item.reportInterpretation||"";
+				this.$refs.introframe.open()
+			},
 			sendemail(){
 				if(!this.form.email){app.tip("请输入邮箱");return;}
 				localStorage.setItem("email",this.form.email);
@@ -182,6 +195,16 @@
 			copytext(index){
 				let text = "拓普【实验室收件地址】 广东省广州市海珠区官洲国际生物岛标产三期2栋802单元  拓普基因样本组 18022423929";
 				if(index==2) text="允英【实验室收件地址】 浙江省嘉兴市南湖区汇信路153号允英医学检验所三楼  夏路平收 15751725877";
+				let oInput = document.createElement('input');
+				oInput.value = text;
+				document.body.appendChild(oInput);
+				oInput.select(); // 选择对象;
+				document.execCommand("Copy"); // 执行浏览器复制命令
+				oInput.remove();
+				app.tip("复制成功");
+			},
+			copyintro(){
+				let text = this.introinfo;
 				let oInput = document.createElement('input');
 				oInput.value = text;
 				document.body.appendChild(oInput);
@@ -538,14 +561,14 @@
 
 		.cardicon {
 			font-size: 26rpx;
-			padding: 12rpx 26rpx;
+			padding: 12rpx 20rpx;
 			color: #fff;
 			background: #2894EC;
 			border-radius: 6rpx;
 			line-height: 1;
 
 			&.delete {
-				margin-left: 30rpx;
+				margin-left: 20rpx;
 			}
 
 			&.finish {
@@ -564,8 +587,8 @@
 
 			.list-content {
 				background-color: #FFFFFF;
-				margin-left: 30rpx;
-				margin-right: 30rpx;
+				margin-left: 20rpx;
+				margin-right: 20rpx;
 				box-sizing: border-box;
 				padding: 20rpx;
 				border-radius: 5px 5px 0px 0px;

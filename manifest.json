@@ -57,6 +57,7 @@
             "proxy" : {
                 "/api" : {
                     "target" : "http://weixinapi.cvddr.com", //目标接口域名
+					// "target" : "http://weixinapi-test.cvddr.com", //目标接口域名
                     "changeOrigin" : true, //是否跨域
                     "secure" : false, // 设置支持https协议的代理
                     "pathRewrite" : {

@@ -5,6 +5,7 @@
 	export default {
 		globalData: {
 			baseUrl: "http://weixinapi.cvddr.com",
+			// baseUrl: "http://weixinapi-test.cvddr.com",
 			imageUrl: "https://bgjdapi.ttxyw.cn/upload/mini",
 			mydata: 1,
 			channel: 1,
