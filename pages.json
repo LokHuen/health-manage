@@ -1025,7 +1025,46 @@
 			}
 		}
 
-	],
+	    ,{
+            "path" : "pages/health/health",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "健康跟踪管理",
+                "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor": "#4fbeb7", // 顶部背景颜色
+				"navigationBarTextStyle": "white" ,// 顶部文字颜色
+				"navigationStyle": "custom"
+            }
+            
+        }
+        ,{
+            "path" : "pages/patient/patient-info",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "记录疾病",
+                "enablePullDownRefresh": false
+            }
+            
+        },
+		{
+		    "path" : "pages/patient/patient-self-info",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "健康追踪管理",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
+		{
+		    "path" : "pages/patient/patient-fill-info",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "完善信息",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		}
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",

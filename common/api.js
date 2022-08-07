@@ -10,6 +10,12 @@ var api = {
 	getSgaType: (data) => {
 		return rq("/wx/survey/question/getSgaType", data, "GET");
 	}, //sga类型判断
+	getarealist: (data) => {
+		return rq("/wx/receiverAddress/list", data, "GET");
+	}, //收件地址
+	getareadetail: (data) => {
+		return rq("/wx/receiverAddress/get", data, "GET");
+	}, //收件地址详情
 	screeninroScreen: (data) => {
 		return rq("/wx/patient/screen/intoScreen", data, "GET");
 	}, //进入营养筛查，如果有最近的筛查记录会自动带出筛查信息

@@ -8,11 +8,11 @@
 			<view class="common">{{'商品名称:'+item.commodity}}</view>
 			<view class="common">{{'下单时间:'+item.create_time}}</view>
 			<view class="common">{{'实付款:'+item.pay_amount+'元'}}</view>
-			<view class="common">{{'业务员:'+item.sale}}</view>
-			<view class="common">{{'业务员收益:'+item.salesMoney+'元'}}</view>
 			<view v-show="hio==2" class="common">{{'买家:'+item.patient}}</view>
 			<view v-show="hio==1" class="common">{{'患者名字:'+item.patient}}</view>
 			<view v-show="hio==1" class="common">{{'医生名字:'+item.doctorName}}</view>
+			<view class="common">{{'业务员:'+item.sale}}</view>
+			<view class="common">{{'业务员收益:'+item.salesMoney+'元'}}</view>
 
 			<view style="height: 20rpx;"></view>
 		</view>

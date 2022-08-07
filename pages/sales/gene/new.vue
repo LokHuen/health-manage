@@ -564,6 +564,7 @@
 				uni.chooseImage({
 					count: 9 - this.form.request1Files.length, //默认9
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+					sourceType: ['album', 'camera'],
 					success: (res) => {
 						// console.log(res)
 						this.form.request1Files = this.form.request1Files.concat(res.tempFilePaths);
@@ -582,6 +583,7 @@
 				uni.chooseImage({
 					count: 9 - this.form.bl1Files.length, //默认9
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+					sourceType: ['album', 'camera'],
 					success: (res) => {
 						this.form.bl1Files = this.form.bl1Files.concat(res.tempFilePaths);
 					}

@@ -1,6 +1,6 @@
 {
     "name" : "wxsw_fwh",
-    "appid" : "__UNI__55D564B",
+    "appid" : "__UNI__689F45E",
     "description" : "",
     "versionName" : "1.0.0",
     "versionCode" : "100",
@@ -57,7 +57,8 @@
             "proxy" : {
                 "/api" : {
                     "target" : "http://weixinapi.cvddr.com", //目标接口域名
-					// "target" : "http://weixinapi-test.cvddr.com", //目标接口域名
+
+                    // "target" : "http://weixinapi-test.cvddr.com", //目标接口域名
                     "changeOrigin" : true, //是否跨域
                     "secure" : false, // 设置支持https协议的代理
                     "pathRewrite" : {

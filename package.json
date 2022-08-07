@@ -1,5 +1,8 @@
 {
   "dependencies": {
-    "vue-pdf": "^4.2.0"
+    "echarts": "^5.3.3",
+    "vant": "^2.12.48",
+    "vue-pdf": "^4.2.0",
+    "webpack": "^4.46.0"
   }
 }
