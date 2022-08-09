@@ -21,7 +21,7 @@
 								</view>
 								
 								<view class="line" style="height: 1rpx; width: 100%; background: #EBECF2; display:none;"></view>
-								<text class="suggestion ">建议：{{item.suggestion}}</text>
+								<text class="suggestion" v-show = "suggestionShow == index">建议：{{item.suggestion}}</text>
 							</view>
 						</view>
 					</view>
@@ -143,7 +143,7 @@
 		  	  padding: 30rpx 0 6rpx 44rpx;
 			  text-align:justify;
 			  text-justify:inter-word;
-			  display: none;
+			  // display: none;
 		  }
 		  .up {
 			  display: flex;

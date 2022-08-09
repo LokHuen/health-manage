@@ -17,10 +17,9 @@
 				<view :class="birthday?'has-value':'sex-value'">{{birthday?birthday:'点击选择'}}</view>
 			</picker>
 		</view>
-		<view class="sex-box" v-if="formQrCode==2">
+		<view class="sex-box" >
 			<view class="sex-tips">* 所在城市</view>
-			<picker mode="multiSelector" :range="areaList" :range-key="'name'" @columnchange="columnChange" @cancel="hideArea(1)"
-			 @change="hideArea(0)" style="flex: 1;">
+			<picker mode="multiSelector" :range="areaList" :range-key="'name'" @columnchange="columnChange" @cancel="hideArea(1)" @change="hideArea(0)" style="flex: 1;">
 				<view :class="(city&&province&&hasArea)||infoData.region?'has-value':'sex-value'">{{(city&&province&&hasArea)?(province+' '+city):(infoData.region?infoData.region:'点击选择')}}</view>
 			</picker>
 		</view>

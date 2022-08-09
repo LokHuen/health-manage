@@ -1,16 +1,35 @@
 <template>
 	<!-- 新增病例界面 -->
 	<view class="container">
-          <view class="title">请上传出院小结（尽可能提供）、病理报告、影像 检查单等内容</view>
-		  <view class="pic-content-box">
+          <view class="title">上传加体检报告图片、医院诊断病例、出院小结等内容</view>
+<!-- 		  <view class="pic-content-box">
 		  	<view class="ccimglist">
 				<view v-for="(item,index) in list" :key="index" :class="(index%3==0)?'img-box-first':'img-box'">
 					<image  :src="item" mode="aspectFill" @click="previewImage(index)" class="imagelist"></image>
 					<image src="../../static/icon/icon_remove.png" mode="aspectFill" class="remove-icon" @click="remove(index)"></image>
 				</view>
 		  	</view>
+		  </view> -->
+		  
+		  <view class="info-box">
+			  <text>{{ list }}</text>
+		  	<!-- <view class="title">*上传体检报告照片/病例照片</view> -->
+		  	<view class="example-body" style="display: flex;">
+		  		<uni-file-picker 
+					:auto-upload="false"
+					ref="files"
+					mode="grid" 
+					v-model="list" 
+					file-extname="png,jpg"
+					fileMediatype="image"
+					:limit="9" 
+					title="最多选择9张图片"
+					@select="selectPic">
+				</uni-file-picker>
+		  	</view>
 		  </view>
-		  <view class="upload-box" @click="chosePic">点击上传</view>
+		  
+		  <!-- <view class="upload-box" @click="chosePic">点击上传</view> -->
 		  <view class="button-box">
 		  	<button type="default" class="button" @click="uploadPic">提交</button>
 		  </view>
@@ -28,29 +47,12 @@
 			}
 		},
 		methods: {
-			previewImage(index) {
-				uni.previewImage({
-					urls:this.list,
-					current:index
-				})
+			
+			selectPic(res){
+				console.log(res);
+				this.list = this.list.concat(res.tempFilePaths);
 			},
-			remove(index){
-				this.list.splice(index,1);
-			},
-			chosePic(){
-				if(this.list.length>8){
-					app.tip('最多选取9张图片');
-					return;
-				}
-				uni.chooseImage({
-				    count: 9-this.list.length, //默认9
-				    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-				    // sourceType: ['album'], //从相册选择
-				    success: (res)=>{
-					    this.list = this.list.concat(res.tempFilePaths);
-				    }
-				});
-			},
+			//上传图片
 			uploadPic(){
 				if(this.list.length==0){
 					app.tip('请选择照片');
@@ -65,12 +67,11 @@
 						name: 'file',
 						formData:formData,
 						success:(res)=>{
-							console.log(res.data);
 							let data = JSON.parse(res.data);
 							if(data.status==1){
 								uploadCount ++;
-								this.pathologyUrl = this.pathologyUrl+data.data.pictureUrl+',';
-								console.log('uploadCount=='+uploadCount);
+								this.pathologyUrl = this.pathologyUrl + data.data.pictureUrl + ',';
+								console.log('uploadCount ==' + uploadCount);
 								if(uploadCount == this.list.length){
 									//移除最后的逗号
 									this.pathologyUrl = this.pathologyUrl.substring(0, this.pathologyUrl.length - 1);
@@ -83,6 +84,7 @@
 					});
 				}
 			},
+			
 			submit(){
 				app.savePatientCase({pathologyUrl:this.pathologyUrl}).then(res =>{
 					if(res.status == 1){
@@ -95,11 +97,7 @@
 					}
 				});
 			}
-		},
-		created() {
-			
 		}
-
 	}
 </script>
 
@@ -109,7 +107,6 @@
 		height: 175rpx;
 		margin-top: 12.5rpx;
 		margin-left: 12.5rpx;
-		// background-color: #D2D2D2;
 	}
 	.remove-icon{
 		position: absolute;
@@ -119,19 +116,19 @@
 		top: 0;
 	}
 	.container{
+		padding: 50rpx 30rpx;
+		position: relative;
+		
 		.title{
-			font-size: 15px;
+			font-size: 28rpx;
+			font-weight: 600;
 			color: #333333;
-			padding-top: 40rpx;
-			padding-left: 40rpx;
-			padding-right: 40rpx;
 		}
 		
 		.pic-content-box {
 			.ccimglist {
 				display: flex;
 				flex-wrap: wrap;
-				// justify-content:space-between;
 				margin-left: 44rpx;
 				margin-right: 44rpx;
                 .img-box-first{
@@ -159,20 +156,20 @@
 			color: #59A29F;
 			border: 2rpx solid #52A29E;
 			text-align: center;
-			line-height: 60rpx;
 		}
 		.button-box{
 			position: fixed;
-			bottom: 0;
-			height: 140rpx;
-			width: 100%;
+			bottom: 100rpx;
+			width: 690rpx;
+			
 			.button{
-				height: 90rpx;
-				width: 81%;
-				background-color: #52A29E !important;
-				border-radius: 45rpx;
+				height: 100rpx;
+				margin: 0 auto;
+				background-color: #57C1BB !important;
+				border-radius: 50rpx;
 				color: #FFFFFF;
-				font-size: 17px;
+				font-size: 28rpx;
+				line-height: 100rpx;
 			}
 		}
 	}

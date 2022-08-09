@@ -6,11 +6,17 @@
 			<view class="add-bottom"></view>
 		</view>
 		<view class="pic-content-box" v-for="(item,index) in list" :key="index" v-if="item.pathologyUrl.length>0">
-			<view class="pic-time">{{item.createTime+'添加'}}</view>
+			
+			<view class="title">
+				<view class="pic-time">{{'于' + item.createTime +'时添加'}}</view>
+				<view class="deleteBtn" @click="deleteList(index)">删除</view>
+			</view>
+			
 			<view class="ccimglist">
 				<image v-for="(imgItem,imgIndex) in item.pathologyUrl" :key="imgIndex" :src=imgItem mode="aspectFill" @click="previewImage(item,imgIndex)" :class="(imgIndex%3==0)?'imagelistfirst':'imagelist'"></image>
 			</view>
 		</view>
+
 		<view class="no-data-tips" v-if="list.length ==0">暂无数据</view>
 		<view style="height: 100rpx;"></view>
 
@@ -42,6 +48,9 @@
 			this.getListData();
 		},
 		methods: {
+			deleteList(index) {
+				this.list.splice(index,1);
+			},
 			previewImage(item,imgIndex) {
 				uni.previewImage({
 					urls:item.pathologyUrl,
@@ -98,17 +107,16 @@
 
 <style lang="scss">
 	.container {
-
+		padding:0 30rpx;
+		
 		.add-case-box {
-			height: 200rpx;
 			position: relative;
-
+			padding: 50rpx 157rpx;
 			.dashed-box {
 				text-align: center;
-				margin-top: 60rpx;
-				margin-left: 85rpx;
-				margin-right: 85rpx;
-				height: 120rpx;
+				margin: 0 auto;
+				width: 436rpx;
+				height: 104rpx;
 				line-height: 120rpx;
 				border: 2rpx dashed #52A29E;
 				color: #52A29E;
@@ -119,25 +127,32 @@
 				bottom: 0rpx;
 				left: 0rpx;
 				right: 0rpx;
-				height: 20rpx;
-				background-color: #F7F8F8;
+				height: 1rpx;
+				background-color: #EBECF2;
 			}
 		}
 
 		.pic-content-box {
+			padding: 40rpx 0 30rpx 0;
+			border-bottom: 1rpx solid #EBECF2;
+			.title {
+				font-size: 28rpx;
+				display: flex;
+				justify-content: space-between;
+			}
+			.deleteBtn {
+				color: #52A29E;
+			}
 			.pic-time {
-				font-size: 15px;
+				font-size: 28rpx;
 				color: #333333;
-				padding-top: 40rpx;
-				padding-left: 44rpx;
+				
 			}
 
 			.ccimglist {
 				display: flex;
 				flex-wrap: wrap;
 				// justify-content:space-between;
-				margin-left: 44rpx;
-				margin-right: 44rpx;
 			   
 				.imagelistfirst {
 					margin-top: 20rpx;
