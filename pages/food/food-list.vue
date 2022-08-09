@@ -1,40 +1,34 @@
 <template>
+	<view class="">
 	<!-- 添加食物列表界面 -->
 	<view class="container">
 		<view class="search-box">
-			<image src="../../static/icon/incon_search.png" class="search-icon" mode="widthFix"></image>
-			<input type="text" v-model="searchtext" class="search-input" placeholder="搜索" maxlength="10" @input="change" />
+			<image src="../../static/icon/incon_search.png" class="search-icon" style="height: 33rpx; width: 33rpx;" mode="widthFix"></image>
+			<input type="text" v-model="searchtext" class="search-input" placeholder-style="color:#999999; font-size:28rpx; font-weight: 700; font-family: PingFang SC;" placeholder="搜索" maxlength="10" @input="change" />
 		</view>
 
 		<view class="condition-box" @click="choseFood" v-if="!searchtext">
-			{{foodType.name}}
-			<image src="../../static/icon/right_arrow.png" mode="widthFix" class="condition-arrow"></image>
+			<view>{{foodType.name}}</view>
+			<image src="../../static/icon/icon_arrow_open.png" mode="aspectFit" class="condition-arrow"></image>
 		</view>
-
-		<view class="search-result" v-if="searchtext && listDatas.length>0">搜索结果</view>
-		<view class="list-content-box" v-for="(item,index) in listDatas" :key="index" @click="clickItem(item)">
-			<image :src="item.pic" mode="widthFix" class="list-img"></image>
-			<view class="list-msg">
-				<view class="list-title">{{item.name}}</view>
-				<view class="list-detail">
-					<view class="list-detail-tip"> {{'每'+item.ediblePart+'克含'}} </view>
-					<view class="list-detail-number">{{item.energy}}</view>
-					<view class="list-detail-tip"> 千卡 </view>
-					<view class="list-detail-number">{{item.carbohydrate?item.carbohydrate:0}} </view>
-					<view class="list-detail-tip"> g碳水 </view>
+		<view class="box">
+			<view class="list-content-box" v-for="(item,index) in listDatas" :key="index" @click="clickItem(item)">
+				<image :src="item.pic" mode="widthFix" class="list-img"></image>
+				<view class="list-msg">
+					<view class="list-title">{{item.name}}</view>
+					<view class="list-detail">
+						<view class="list-detail-tip"> {{'每'+item.ediblePart+'克含'}} </view>
+						<view class="list-detail-number">{{item.energy}}</view>
+						<view class="list-detail-tip"> 千卡 </view>
+						<view class="list-detail-number">{{item.carbohydrate?item.carbohydrate:0}} </view>
+						<view class="list-detail-tip"> g碳水 </view>
+					</view>
 				</view>
+			
 			</view>
-
 		</view>
-
-		<view class="bottom-box">
-			<view class="left" @click="openChoseFood">
-				<image src="../../static/img/food.png" mode="widthFix" class="img"></image>
-				<view class="chose-tip">已选食物</view>
-				<view class="chose-number">{{selectItems.length}}</view>
-			</view>
-			<view class="right" @click="next">确定</view>
-		</view>
+		<view class="search-result" v-if="searchtext && listDatas.length>0">搜索结果</view>
+		
 		<view style="height: 200rpx;"></view>
 
 		<uni-popup ref="popup" type="bottom">
@@ -101,6 +95,15 @@
 				<view style="height: 140rpx;"></view>
 			</view>
 		</uni-popup>
+	</view>
+	<view class="bottom-box">
+		<view class="left" @click="openChoseFood">
+			<image src="../../static/img/food.png" mode="widthFix" class="img"></image>
+			<view class="chose-tip">已选食物</view>
+			<view class="chose-number">{{selectItems.length}}</view>
+		</view>
+		<view class="right" @click="next">确定</view>
+		</view>
 	</view>
 </template>
 
@@ -258,16 +261,72 @@
 </script>
 
 <style lang="scss">
+	.bottom-box {
+		position: fixed;
+		bottom: 0;
+		height: 110rpx;
+		width: 100%;
+		z-index: 9;
+		display: flex;
+		justify-content: space-around;
+		box-shadow: 0px 2px 16px 0px rgba(0, 0, 0, 0.14);
+	
+		.left {
+			width: 50%;
+			font-size: 30rpx;
+			background-color: #FFFFFF;
+			display: flex;
+	
+			.img {
+				//background-color: #707578;
+				width: 40rpx;
+				height: 40rpx;
+				margin-left: 89rpx;
+				margin-top: 35rpx;
+			}
+	
+			.chose-tip {
+				margin-left: 25rpx;
+				height: 110rpx;
+				line-height: 110rpx;
+				color: #272727;
+			}
+	
+			.chose-number {
+				margin-left: 10rpx;
+				height: 110rpx;
+				line-height: 110rpx;
+				color: #22AEE9;
+			}
+		}
+	
+		.right {
+			width: 50%;
+			font-size: 38rpx;
+			color: #FFFFFF;
+			line-height: 110rpx;
+			background-color: #4CBDB6;
+			text-align: center;
+		}
+	}
+	.box {
+		padding: 0 30rpx;
+		margin-bottom: 30rpx;
+		border-radius: 20rpx 20rpx 20rpx 20rpx;
+		display: flex;
+		flex-direction: column;
+		box-shadow: 0rpx 2rpx 10rpx rgba(0,0,0,0.05);
+		box-sizing: border-box;
+	}
 	.container {
+		padding: 50rpx 30rpx;
 		.search-box {
-			margin-top: 40rpx;
-			margin-left: 55rpx;
-			margin-right: 55rpx;
-			height: 78rpx;
-			background-color: #F7F7F7;
-			border-radius: 39rpx;
+			height: 73rpx;
+			background-color: #fff;
+			border-radius: 20rpx;
 			display: flex;
 			align-items: center;
+			box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.05);
 
 			.search-icon {
 				margin-left: 20rpx;
@@ -279,7 +338,6 @@
 				margin-left: 10rpx;
 				height: 78rpx;
 				line-height: 78rpx;
-				margin-right: 0rpx;
 				flex: 1;
 			}
 		}
@@ -289,17 +347,19 @@
 			width: 100%;
 			height: 80rpx;
 			line-height: 80rpx;
-			color: #008FD9;
+			color: #22AEE9;
 			text-align: center;
-			font-size: 30rpx;
-			
+			font-size: 28rpx;
+			font-weight: 700;
+			display: flex;
+			align-items: center;
+			justify-content: center;
 
 			.condition-arrow {
 				position: relative;
-				top: -5rpx;
-				margin-left: 15rpx;
-				width: 20rpx;
-				height: 38rpx;
+				margin-left: 6rpx;
+				width: 24rpx;
+				height: 24rpx;
 			}
 		}
 
@@ -311,36 +371,38 @@
 		}
 
 		.list-content-box {
+			padding: 40rpx 0rpx 23rpx 0;
 			display: flex;
-			height: 152rpx;
-			margin-left: 30rpx;
-			margin-right: 30rpx;
-			border-bottom: 2rpx solid #CFCFCF;
+			border-bottom: 1rpx solid #EBECF2;
 
 			.list-img {
 				width: 100rpx;
 				height: 100rpx;
 				background-color: #CFCFCF;
-				margin-top: 30rpx;
 			}
 
 			.list-msg {
-				margin-left: 30rpx;
-				margin-top: 30rpx;
+				padding-left: 30rpx;
 				height: 100rpx;
+				display: flex;
+				flex-direction: column;
+				position: relative;
 
 				.list-title {
-					font-size: 34rpx;
-					color: #272727;
+					font-size: 28rpx;
+					font-weight: 700;
+					color: #333333;
 				}
 
 				.list-detail {
-					margin-top: 10rpx;
-					font-size: 30rpx;
+					padding-top: 17rpx;
+					font-size: 28rpx;
+					font-weight: 700;
+					color: #333333;
 					display: flex;
 
 					.list-detail-number {
-						color: #52A29E;
+						color: #22AEE9;
 					}
 
 					.list-detail-tip {
@@ -351,53 +413,7 @@
 
 		}
 
-		.bottom-box {
-			position: fixed;
-			bottom: 0;
-			height: 110rpx;
-			width: 100%;
-			z-index: 9;
-			display: flex;
-			box-shadow: 0px 2px 16px 0px rgba(0, 0, 0, 0.14);
 
-			.left {
-				font-size: 30rpx;
-				width: 52%;
-				background-color: #FFFFFF;
-				display: flex;
-
-				.img {
-					//background-color: #707578;
-					width: 40rpx;
-					height: 40rpx;
-					margin-left: 89rpx;
-					margin-top: 35rpx;
-				}
-
-				.chose-tip {
-					margin-left: 25rpx;
-					height: 110rpx;
-					line-height: 110rpx;
-					color: #272727;
-				}
-
-				.chose-number {
-					margin-left: 10rpx;
-					height: 110rpx;
-					line-height: 110rpx;
-					color: #EA132D;
-				}
-			}
-
-			.right {
-				font-size: 38rpx;
-				color: #FFFFFF;
-				line-height: 110rpx;
-				width: 48%;
-				background-color: #EA132D;
-				text-align: center;
-			}
-		}
 
 		.popup-bg {
 			background: #FFFFFF;

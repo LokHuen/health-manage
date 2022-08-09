@@ -108,18 +108,20 @@
 <style lang="scss">
 	.container {
 		padding:0 30rpx;
-		
+		// background: #F5F5F5
 		.add-case-box {
 			position: relative;
 			padding: 50rpx 157rpx;
 			.dashed-box {
 				text-align: center;
 				margin: 0 auto;
-				width: 436rpx;
+				width: 100%rpx;
 				height: 104rpx;
-				line-height: 120rpx;
-				border: 2rpx dashed #52A29E;
-				color: #52A29E;
+				line-height: 104rpx;
+				border: 2rpx dashed #4CBDB6;
+				color: #4CBDB6;
+				font-size: 30rpx;
+				font-weight: 700;
 			}
 
 			.add-bottom {

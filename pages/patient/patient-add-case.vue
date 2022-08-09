@@ -12,14 +12,14 @@
 		  </view> -->
 		  
 		  <view class="info-box">
-			  <text>{{ list }}</text>
+			  <!-- <text>{{ list }}</text> -->
 		  	<!-- <view class="title">*上传体检报告照片/病例照片</view> -->
 		  	<view class="example-body" style="display: flex;">
 		  		<uni-file-picker 
 					:auto-upload="false"
 					ref="files"
 					mode="grid" 
-					v-model="list" 
+					v-model="imgList" 
 					file-extname="png,jpg"
 					fileMediatype="image"
 					:limit="9" 
@@ -42,6 +42,7 @@
 	export default {
 		data() {
 			return {
+				imgList: [],
 				list: [],
 				pathologyUrl:''
 			}
