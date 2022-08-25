@@ -1,7 +1,7 @@
 <template>
 	<view class="page">
 			<!--滑动区-->
-			<scroll-view scroll-y style="height: 300vh;" bindscroll="fnScrollEvent" bindscrolltoupper="fnScrollToupper">
+			<scroll-view scroll-y style="height: 100vh;" bindscroll="fnScrollEvent" bindscrolltoupper="fnScrollToupper">
 					<view class="scroll-bg">
 						<view class="box-container">
 							<view class="box record-container" v-for="(item, index) in records" @click="showSuggestion(index)">

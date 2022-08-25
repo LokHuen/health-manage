@@ -54,22 +54,24 @@
 					取消
 					<view class="sure-button" @click="sureAdd">确定</view>
 				</view>
-				<view class="motifyPopup-title">请填写摄入值</view>
-				<view class="motifyPopup-catory">{{currentItem.name}}</view>
-
-				<view class="motifyPopup-detail">
-					<text class="motifyPopup-detail-tip">{{'每'+currentItem.ediblePart+'克含'}} </text>
-					<text class="motifyPopup-detail-number">{{currentItem.energy}}</text>
-					<text class="motifyPopup-detail-tip"> 千卡 </text>
-					<text class="motifyPopup-detail-number">{{currentItem.carbohydrate}} </text>
-					<text class="motifyPopup-detail-tip"> g碳水 </text>
+				<view class="input-box">
+					<view class="motifyPopup-title">请填写摄入值</view>
+					<view class="motifyPopup-catory">{{currentItem.name}}</view>
+					
+					<view class="motifyPopup-detail">
+						<text class="motifyPopup-detail-tip">{{'每'+currentItem.ediblePart+'克含'}} </text>
+						<text class="motifyPopup-detail-number">{{currentItem.energy}}</text>
+						<text class="motifyPopup-detail-tip"> 千卡 </text>
+						<text class="motifyPopup-detail-number">{{currentItem.carbohydrate}} </text>
+						<text class="motifyPopup-detail-tip"> g碳水 </text>
+					</view>
+					<view class="motifyPopup-input-box">
+						<input type="number" :value="currentItem.weight" class="motifyPopup-input"  placeholder-style="color: #999; font-size: 28rpx;" placeholder="摄入值" maxlength="5" @input="motifyInputChang" />
+						<view class="motifyPopup-distance">克</view>
+					</view>
 				</view>
-				<view class="motifyPopup-input-box">
-					<input type="number" :value="currentItem.weight" class="motifyPopup-input" placeholder="摄入值" maxlength="5" @input="motifyInputChang" />
-					<view class="motifyPopup-distance">克</view>
-				</view>
-
-				<view style="height: 200rpx;"></view>
+				
+				<!-- <view style="height: 200rpx;"></view> -->
 			</view>
 		</uni-popup>
 
@@ -261,6 +263,9 @@
 </script>
 
 <style lang="scss">
+	/deep/.uni-popup__wrapper-box {
+		padding-bottom: 0;
+	}
 	.bottom-box {
 		position: fixed;
 		bottom: 0;
@@ -450,42 +455,45 @@
 		.motifyPopup-bg {
 			background: #FFFFFF;
 			border-radius: 20rpx 20rpx 0px 0px;
+			padding: 0rpx 30rpx 100rpx;
 
+			.input-box {
+				padding-top: 60rpx;
+			}
 			.button-box {
 				font-size: 30rpx;
-				padding-left: 40rpx;
 				color: #707578;
-				position: relative;
+				display: flex;
+				justify-content: space-between;
 
 				.sure-button {
-					position: absolute;
-					color: #52A29E;
+					color: #22AEE9;
 					right: 40rpx;
 					top: 0rpx;
 				}
 			}
 
 			.motifyPopup-title {
-				font-size: 30rpx;
-				color: #272727;
+				font-size: 26rpx;
+				color: #333;
 				text-align: center;
-				margin-top: 10rpx;
+				margin-bottom: 70rpx;
 			}
 
 			.motifyPopup-catory {
-				font-size: 36rpx;
-				color: #272727;
+				font-size: 28rpx;
+				color: #333;
 				text-align: center;
-				margin-top: 70rpx;
+				margin-bottom: 20rpx;
 			}
 
 			.motifyPopup-detail {
-				margin-top: 18rpx;
 				font-size: 30rpx;
 				text-align: center;
+				margin-bottom: 50rpx;
 
 				.motifyPopup-detail-number {
-					color: #52A29E;
+					color: #22AEE9;
 				}
 
 				.motifyPopup-detail-tip {
@@ -494,18 +502,20 @@
 			}
 
 			.motifyPopup-input-box {
-				margin-top: 60rpx;
+				
 				height: 52rpx;
 				text-align: center;
 				display: flex;
+				justify-content: center;
 
 				.motifyPopup-input {
-					margin-left: 300rpx;
-					width: 150rpx;
-					border-bottom: 1rpx solid #272727;
+					border-bottom: 1rpx solid #999;
+					width: 84rpx;
 				}
 
-				.motifyPopup-distance {}
+				.motifyPopup-distance {
+					padding-left: 9rpx;
+				}
 			}
 		}
 

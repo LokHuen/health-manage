@@ -941,7 +941,7 @@
 			.code-button {
 				position: absolute;
 				color: #FFFFFF;
-				background-color: #52A29E !important;
+				background-color: #57C1BB !important;
 				height: 60rpx;
 				line-height: 60rpx;
 				font-size: 13px;
@@ -1049,10 +1049,10 @@
 				height: 90rpx;
 				line-height: 90rpx;
 				width: 81%;
-				background-color: #52A29E !important;
+				background-color: #57C1BB !important;
 				border-radius: 45rpx;
 				color: #FFFFFF;
-				font-size: 34rpx;
+				font-size: 28rpx;
 			}
 		}
 

@@ -362,7 +362,7 @@
 				},
 				showDetail: true,
 				hasLoadLindData: 0,
-				splitNumber: 5,
+				splitNumber: 120,
 				daytab: ["今日", "近7天", "近30天"],
 				dayindex: 0,
 				greenindex: 20,

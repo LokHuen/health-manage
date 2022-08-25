@@ -1,40 +1,47 @@
 <template>
 	<!-- 记录运动界面 -->
 	<view class="container">
-		<view class="category-box">
-			运动项目
-			<view class="category">{{info.name}}</view>
-		</view>
-		<view class="space-line"></view>
-		<view class="time-box">
-			<view>运动时长</view>
-			<view style="width: 390rpx;"></view>
-			<input type="text" v-model="duration" placeholder="填写" class="time-input" maxlength="5"/>
-			<view style="margin-left: 10rpx;">分钟</view>
-		</view>
-		<view class="begin-box">
-			<view>运动开始时间</view>
-			<view class="chose-time">
-				<view class="">
-					
-					<biaofun-datetime-picker
-						placeholder="选择"
-						:defaultValue="date"
-						start="2000-02-03 02:08"
-						end="2100-10-28 22:58"
-						fields="minute"
-						@change="changeDatetimePicker"
-					></biaofun-datetime-picker>
-				</view>
-				<image src="../../static/icon/more_icon.png" mode="widthFix" class="more"></image>
+			<view class="category-box box">
+				运动项目
+				<view class="category">{{info.name}}</view>
 			</view>
-		</view>
-		<view class="space-line"></view>
-		<view class="remark-box">
-			 备注
-			 <input type="text" v-model="remark" placeholder="选填" class="remark-input" />
-		</view>
-		<view style="height: 300rpx; background-color: #F7F7F7;"></view>
+			<view class="time-line-box box">
+				<view class="time-box">
+					<view>运动时长</view>
+					<view class="input-container">
+						<input type="text" v-model="duration" placeholder="填写" class="time-input" />
+						<view style="margin-left: 10rpx;">分钟</view>
+					</view>
+					
+				</view>
+				<view class="line"></view>
+				<view class="begin-box">
+					<view>运动开始时间</view>
+					<view class="chose-time">
+						<view class="">
+							<biaofun-datetime-picker
+								placeholder="选择"
+								:defaultValue="date"
+								start="2000-02-03 02:08"
+								end="2100-10-28 22:58"
+								fields="minute"
+								@change="changeDatetimePicker"
+							></biaofun-datetime-picker>
+						</view>
+						<image src="../../static/icon/more_icon.png" mode="widthFix" class="more"></image>
+					</view>
+				</view>
+			</view>
+			<view class="remark-box box">
+				<view class="">
+					<text>备注</text> 
+				</view>
+				<view class="">
+					<input type="text" v-model="remark" placeholder="选填" class="remark-input" />
+				</view>
+				 
+			</view>
+		
 		<view class="save-box">
 			<view class="savc-btn" @click="save">保存</view>
 		</view>
@@ -91,8 +98,30 @@
 
  <style lang="scss">
   .container{
-	  color: #272727;
+	  padding: 30rpx;
 	  font-size: 30rpx;
+	  .time-line-box {
+		  position: relative;
+	  }
+	  .box {
+	  	padding: 0 30rpx;
+	  	margin-bottom: 30rpx;
+	  	border-radius: 20rpx 20rpx 20rpx 20rpx;
+	  	display: flex;
+	  	flex-direction: column;
+	  	box-shadow: 0rpx 2rpx 10rpx rgba(0,0,0,0.05);
+	  	box-sizing: border-box;
+		
+		.line {
+			top: 50%;
+			position: absolute;
+			width: 100%;
+			left: 0;
+			height: 1rpx;
+			background: rgba(235,236,242,0.3900);
+			opacity: 1;
+		}
+	  }
 	  .category-box{
 		  position: relative;
 		  height: 100rpx;
@@ -106,21 +135,14 @@
 			  
 		  }
 	  }
-	  .space-line{
-		  background-color: #F7F7F7;
-		  height: 20rpx;
-	  }
 	  .time-box{
-		  margin-left: 30rpx;
-		  margin-right: 30rpx;
-		  height: 94rpx;
-		  line-height: 94rpx;
-		  border-bottom: 2rpx solid #CFCFCF;
 		  display: flex;
+		  padding: 30rpx 0;
+		  justify-content: space-between;
+		  .input-container {
+			  display: flex;
+		  }
 		  .time-input{
-			  width: 100rpx;
-			  height: 94rpx;
-			  line-height: 94rpx;
 			  text-align: right;
 			  font-size: 30rpx;
 		  }
@@ -128,8 +150,6 @@
 	  .begin-box{
 		  height: 94rpx;
 		  line-height: 94rpx;
-		  margin-left: 30rpx;
-		  margin-right: 30rpx;
 		  position: relative;
 		  .chose-time{
 			  position: absolute;
@@ -146,33 +166,37 @@
 		  }
 	  }
 	  .remark-box{
-		  height: 100rpx;
-		  line-height: 100rpx;
-		  margin-left: 30rpx;
-		  margin-right: 30rpx;
 		  display: flex;
+		  flex-direction: row;
+		  justify-content: space-between;
+		  height: 100rpx;
+		  align-items: center;
+		  
+		  .title{
+			  height: 100%;
+			  line-height: 100rpx;
+		  }
 		  .remark-input{
-			  flex: 1;
-			  margin-left: 20rpx;
-			  height: 100rpx;
 			  line-height: 100rpx;
 			  color: #272727;
 			  font-size: 30rpx;
+			  text-align: right;
 		  }
 	  }
 	  .save-box{
-		  background-color: #F7F7F7;
-		  height: 620rpx;
 		  .savc-btn{
-			  height: 88rpx;
-			  line-height: 88rpx;
-			  width: 600rpx;
-			  font-size: 38rpx;
-			  background-color: #52A29E;
-			  color: #FFFFFF;
+			  position: fixed;
+			  bottom: 124rpx;
 			  text-align: center;
-			  margin-left: 74rpx;
-			  border-radius: 10rpx;
+			  font-size: 28rpx;
+			  line-height: 90rpx;
+			  color: #ffffff;
+			  width: 690rpx;
+			  height: 90rpx;
+			  background: #57C1BB;
+			  box-shadow: 0rpx 2rpx 10rpx rgba(0,0,0,0.0700);
+			  opacity: 1;
+			  border-radius: 45rpx;
 		  }
 	  }
   }

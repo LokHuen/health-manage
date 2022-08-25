@@ -464,9 +464,10 @@
 		.health-update-button {
 			width: 85%;
 			height: 90rpx;
-			font-size: 34rpx;
+			line-height: 90rpx;
+			font-size: 28rpx;
 			color: white;
-			background-color: #52A29E;
+			background-color: #57C1BB;
 			border-radius: 45rpx;
 		}
 	}

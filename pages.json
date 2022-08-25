@@ -536,17 +536,23 @@
 			}
 
 		},
-
 		{
-
 			"path": "pages/sport/record-sport",
-
 			"style": {
-
 				"navigationBarTitleText": "记录运动"
-
 			}
-
+		},
+		{
+			"path": "pages/health/sleep-record",
+			"style": {
+				"navigationBarTitleText": "记录睡眠"
+			}
+		},
+		{
+			"path": "pages/health/health-record",
+			"style": {
+				"navigationBarTitleText": "健康情况记录表"
+			}
 		},
 		{
 
@@ -1023,9 +1029,8 @@
 			"style": {
 				"navigationBarTitleText": ""
 			}
-		}
-
-	    ,{
+		},
+		{
             "path" : "pages/health/health",
             "style" :                                                                                    
             {
@@ -1036,8 +1041,20 @@
 				"navigationStyle": "custom"
             }
             
-        }
-        ,{
+        },
+		{
+		    "path" : "pages/health/patient-nutrition-manage",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "营养管理",
+		        "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor": "#4fbeb7", // 顶部背景颜色
+				"navigationBarTextStyle": "white" ,// 顶部文字颜色
+				"navigationStyle": "custom"
+		    }
+		    
+		},
+		{
             "path" : "pages/patient/patient-info",
             "style" :                                                                                    
             {
@@ -1046,6 +1063,15 @@
             }
             
         },
+		{
+		    "path" : "pages/health/mood-record",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "每日心情记录",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
 		{
 		    "path" : "pages/patient/patient-self-info",
 		    "style" :                                                                                    

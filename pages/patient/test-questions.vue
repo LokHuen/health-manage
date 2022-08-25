@@ -146,7 +146,7 @@
 				showPicker: false,
 				citys:[],
 				chownCity:'',
-				checkedOptions: [],
+				checkedOptions:[],
 				seq:1,  //每页的题目起始数
 				num:0,   //页码
 				beginArray: [],   //题目起始数组
@@ -327,8 +327,8 @@
 			    let optionIds="";
 			    let arr=e.detail.value;
 				let optionList = item.optionList;
-				let diff = getArrDifference(this.checkedOptions,e.detail.value);
-				// console.log(diff,this.checkedOptions,e.detail.value)
+				let diff = getArrDifference(this.checkedOptions, e.detail.value);
+				console.log(diff,this.checkedOptions,e.detail.value)
 				let question = optionList[diff[0]];
 			    for(var i=0;i<arr.length;i++){
 			        optionIds=optionIds+optionList[arr[i]].id+",";
@@ -477,8 +477,13 @@
 			},
 		}
 	}
+	//取两个数组中不一样的值
 	function getArrDifference(arr1, arr2) {
+		// v:当前元素的值
+		// i:当前元素的索引值
+		// arr:当前元素属于的数组对象w
 	   return arr1.concat(arr2).filter(function(v, i, arr) {
+		   // indexOf 与 lastIndexOf 虽然一首一尾开始查找,但是返回的都是从左开始的索引值
 	      return arr.indexOf(v) === arr.lastIndexOf(v);
 	   });
 	}

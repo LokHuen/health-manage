@@ -110,21 +110,76 @@
 </script>
 
 <style lang="scss">
-	.testbox{padding:30rpx 60rpx 0;
-		.question{width:30rpx;}
-		.mintext{font-size:28rpx;color: #666666;padding:20rpx 0 60rpx;}
+	.testbox{
+		padding:30rpx 60rpx 0;
+		
+		.question{
+			width:30rpx;
+			}
+		.mintext{
+			font-size:28rpx;
+			color: #666666;
+			padding:20rpx 0 60rpx;
+			}
 		.chooselist{
 			padding-bottom:40rpx;
-			.title{margin-right:42rpx;font-size: 30rpx;}
-			.itemlist{line-height:68rpx;min-width:142rpx;box-sizing:border-box;padding:0 10rpx;margin:4rpx 20rpx 0rpx 0;color: #666666;border: 1rpx solid #ddd;border-radius: 6rpx;font-size: 30rpx;text-align:center;}
-			.itemlist:last-child{margin-right:0;}
-			.itemlist.on{color:#fff;background: #52A29E;border-color:#52A29E;}
+			.title{
+				margin-right:42rpx;
+				font-size: 30rpx;
+				}
+			.itemlist{
+				line-height:68rpx;
+				min-width:142rpx;
+				box-sizing:border-box;
+				padding:0 10rpx;
+				margin:4rpx 20rpx 0rpx 0;
+				color: #666666;
+				border: 1rpx solid #ddd;
+				border-radius: 6rpx;
+				font-size: 30rpx;
+				text-align:center;
+				}
+			.itemlist:last-child{
+				margin-right:0;
+				}
+			.itemlist.on{
+				color:#fff;
+				background: #57C1BB;
+				border-color: #62e5e1;
+				}
 		}
-		.frameinfo{align-items:unset;font-size: 28rpx;padding-bottom:28rpx;
-			.infoleft{color: #52A29E;}
-			.inforight{color: #666666;flex:1;}
+		.frameinfo{
+			align-items:unset;
+			font-size: 28rpx;
+			padding-bottom:28rpx;
+			
+			.infoleft{
+				color: #52A29E;
+				}
+			.inforight{
+				color: #666666;
+				flex:1;
+				}
 		}
-		.pagebottombt{position:fixed;bottom:60rpx;left:62rpx;right:62rpx;color:#fff;text-align:center;font-size: 38rpx;line-height:88rpx;background: #52A29E;border-radius: 45rpx;}
-		.pagebottombt1{color:#fff;text-align:center;font-size: 38rpx;line-height:88rpx;background: #52A29E;border-radius: 45rpx;}
+		.pagebottombt{
+			position:fixed;
+			bottom:60rpx;
+			left:62rpx;
+			right:62rpx;
+			color:#fff;
+			text-align:center;
+			font-size: 28rpx;
+			line-height:88rpx;
+			background: #57C1BB;
+			border-radius: 45rpx;
+			}
+		.pagebottombt1{
+			color:#fff;
+			text-align:center;
+			font-size: 28rpx;
+			line-height:88rpx;
+			background: #57C1BB;
+			border-radius: 45rpx;
+			}
 	}
 </style>
